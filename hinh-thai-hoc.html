@@ -126,6 +126,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             color: #f8fafc;
+            white-space: pre-line;
         }
         .option-btn:hover:not(:disabled) { background-color: rgba(71, 85, 105, 0.9); border-color: rgba(255, 255, 255, 0.25); }
         .option-btn.selected { background-color: #0284c7 !important; border-color: #38bdf8 !important; font-weight: 700; }
@@ -161,7 +162,7 @@
         .review-item.status-correct { border-left: 5px solid #22c55e; }
         .review-item.status-wrong { border-left: 5px solid #f43f5e; }
         .review-q { font-weight: 600; margin-bottom: 10px; white-space: pre-line; }
-        .review-ans { font-size: 0.95rem; margin: 4px 0; }
+        .review-ans { font-size: 0.95rem; margin: 4px 0; white-space: pre-line; }
 
         .footer-credits { margin-top: 25px; padding-top: 15px; border-top: 1px dashed rgba(255, 255, 255, 0.2); text-align: center; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; font-weight: 400; }
     </style>
@@ -303,12 +304,12 @@ const practiceData = [
     { q: "‘웃음’의 형성 과정으로 맞는 것을 고르십시오.", options: ["웃-(어근) + -음(접사)", "웃음(단일어)", "우-(어근) + -슴(접사)", "웃-(접사) + -음(어근)"], answer: "웃-(어근) + -음(접사)" },
     { q: "‘길러’를 형태소 분석한 결과로 알맞은 것은 무엇입니까?", options: ["길러", "길- + -러", "기르- + -어", "길ㄹ- + -어"], answer: "기르- + -어" },
     { q: "다음 문장에서 자립형태소의 개수를 고르십시오.\n“구름이 걷히고 해가 났다.”", options: ["1", "2", "3", "4"], answer: "2" },
-    { q: "단어 ‘돼지고기덮밥’을 직소분석할 때 가장 알맞은 수형도 형식을 고르십시오.", options: [
-        "돼지고기덮밥\n├── 돼지고기\n│   ├── 돼지\n│   └── 고기\n└── 덮밥\n    ├── 덮\n    └── 밥", 
-        "돼지고기덮밥\n├── 돼지\n└── 고기덮밥\n    ├── 덮\n    └── 밥", 
-        "돼지고기덮밥\n├── 돼지고기덮\n└── 밥", 
-        "돼지고기덮밥\n└── 돼지 / 고기 / 덮 / 밥"
-    ], answer: "돼지고기덮밥\n├── 돼지고기\n│   ├── 돼지\n│   └── 고기\n└── 덮밥\n    ├── 덮\n    └── 밥" }
+    { q: "단어 ‘돼지고기덮밥’을 직소분석할 때 가장 알맞은 형식을 고르십시오.", options: [
+        "돼지고기덮밥\n→ 돼지고기 → 돼지 + 고기\n→ 덮밥 → 덮- + 밥", 
+        "돼지고기덮밥\n→ 돼지고기\n→ 덮밥 → 덮- + 밥", 
+        "돼지고기덮밥\n→ 돼지\n→ 고기\n→ 덮밥 → 덮- + 밥", 
+        "돼지고기덮밥\n→ 돼지고기 → 돼지 + 고기\n→ 덮밥"
+    ], answer: "돼지고기덮밥\n→ 돼지고기 → 돼지 + 고기\n→ 덮밥 → 덮- + 밥" }
 ];
 
 let questions = [];
