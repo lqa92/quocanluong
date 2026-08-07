@@ -67,7 +67,7 @@
         }
         .gallery img {
             width: 100%;
-            height: auto; /* Giữ tỷ lệ gốc */
+            height: auto;
             border-radius: 8px;
             display: block;
         }
@@ -86,7 +86,9 @@
             border-radius: 8px;
             text-decoration: none;
             font-weight: 700;
+            transition: transform 0.2s;
         }
+        .feedback-btn:hover { transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -134,37 +136,8 @@
         </div>
 
         <div class="footer-cta">
-            <a href="#" id="feedback-link" class="feedback-btn">Phản hồi với mình</a>
+            <a href="mailto:quocanluong@gmail.com?subject=Ph%E1%BA%A3n%20h%E1%BB%93i%20v%E1%BB%81%20b%C3%A0i%20vi%E1%BA%BFt%3A%20%2301%20M%E1%BB%99t%20m%C3%ACnh%20%E1%BB%%20H%C3%A0%20Giang" class="feedback-btn">Phản hồi với mình</a>
         </div>
     </div>
-
-    <script>
-        const subject = "Phản hồi về bài viết: #01 Một mình ở Hà Giang";
-        const body = `# Một mình ở Hà Giang
-2025.09 
-
-Cuối tháng 9 năm ngoái, mình trở lại Hà Giang lần thứ ba, sau hai lần ghé vào năm 2016 và 2019. Nhưng lần này có một điều rất khác: mình đi một mình.
-
-Một chiếc xe máy, một balo nhỏ ràng phía sau xe và bốn ngày rong ruổi qua những cung đường vừa quen vừa lạ. Không có bạn đồng hành, nhưng bù lại, mình được tự do dừng lại bất cứ khi nào muốn. Chỗ nào thấy ưng thì chạy chậm lại để ngắm núi, ngắm mây; đôi lúc chỉ đơn giản là đứng giữa một cung đường vắng, nghe gió thổi qua những dãy núi đá hùng vĩ.
-
-Đợt này mình chọn ngủ lại một đêm ở Ma Lé, trong một ngôi nhà cổ khoảng 250 năm tuổi. Ma Lé là nơi mình từng chạy ngang qua vào năm 2019. Lúc đó mình khá ấn tượng với cái tên này và tự nhủ lần sau nhất định phải ghé lại lâu hơn.
-
-Lần này, mình đã làm được.
-
-Giữa không gian cũ kỹ và bình dị ấy, mình có cơ hội cảm nhận rõ hơn cuộc sống của bà con vùng cao: chậm rãi, giản đơn và gần gũi. Mình gặp hai bạn học mỹ thuật lên đây một tháng để thực tập, rồi gặp một bạn quản lý nói giọng miền Nam, thì ra cũng đã ra đây sống gần một năm. Những cuộc gặp gỡ rất tình cờ đó khiến mình trộm nghĩ: hay là mình cũng thử lên đây sống một thời gian?
-
-Hành trình đưa mình đến điểm cực Bắc của Tổ quốc. Đứng giữa núi rừng, nhìn lá cờ Việt Nam tung bay bên cột mốc biên giới sừng sững, tự nhiên trong đầu chỉ bật ra câu hát: Vì đất nước mình còn đẹp lắm, cần chi đâu nước ngoài!
-
-Và rồi là Mã Pí Lèng.
-
-Hơn 20 km đường đèo, một bên là núi đá sừng sững, một bên là vực sâu và dòng Nho Quế phía dưới. Chạy xe giữa khung cảnh ấy, mình cảm nhận rõ sự hùng vĩ của đất trời, nhưng đồng thời cũng nghĩ nhiều hơn về những con người đã góp công, góp sức và cả mồ hôi, xương máu để làm nên con đường Hạnh Phúc.
-
-Lần thứ ba đến Hà Giang, nhưng là lần đầu độc hành. Mình nhận ra có những chuyến đi không chỉ để nhìn thấy một vùng đất.
-
-Mà để hiểu hơn về nó, và cũng để hiểu thêm một chút về chính mình.`;
-
-        const mailtoLink = `mailto:quocanluong@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        document.getElementById('feedback-link').href = mailtoLink;
-    </script>
 </body>
 </html>
