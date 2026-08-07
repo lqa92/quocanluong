@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng dụng Ôn tập từ vựng tiếng Hàn (Câu 11-12 TOPIK II Đọc)</title>
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Google Fonts: Be Vietnam Pro & Noto Sans KR -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #0b1329;
+            --card-bg: #131d38;
+            --primary: #38bdf8;
+            --primary-bg: #1e3a8a;
+            --success: #34d399;
+            --success-bg: #064e3b;
+            --danger: #f87171;
+            --danger-bg: #451a1a;
+            --text-dark: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --radius: 16px;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Be Vietnam Pro', 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Nút quay về */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            color: #38bdf8;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .back-btn:hover {
+            color: #7dd3fc;
+        }
+
+        /* Top Header Brand */
+        .brand-header {
+            background: #0f172a;
+            padding: 30px 20px 24px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .brand-subtitle {
+            font-size: 20px;
+            font-weight: 700;
+            color: #38bdf8;
+            margin: 0 0 12px 0;
+        }
+
+        .brand-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 24px auto 40px auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+            flex: 1;
+        }
+
+        /* Tabs Wrapper Area */
+        .tabs-container {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .tabs-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            background: #0b1329;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            background: #1e293b;
+            color: #f8fafc;
+        }
+
+        .tab-btn.active {
+            background: #0284c7;
+            color: white;
+            border-color: #38bdf8;
+            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
+        }
+
+        .tab-btn.special-tab {
+            background: #451a03;
+            border-color: #78350f;
+            color: #fcd34d;
+        }
+
+        .tab-btn.special-tab.active {
+            background: #d97706;
+            color: white;
+            border-color: #fbbf24;
+        }
+
+        /* Configuration Panel */
+        .config-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .config-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .config-left label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+
+        .config-left select {
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: #0f172a;
+            font-size: 14px;
+            font-weight: 600;
+            outline: none;
+            color: #f8fafc;
+            cursor: pointer;
+        }
+
+        /* Workspace Board */
+        .workspace-card {
+            background: var(--card-bg);
+            padding: 32px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .workspace-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .current-tab-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #38bdf8;
+        }
+
+        .btn-refresh {
+            background: #1e293b;
+            color: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-refresh:hover {
+            background: #334155;
+        }
+
+        /* Matching Grid Column */
+        .game-board {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .column-header {
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .column-kr .column-header {
+            color: #38bdf8;
+            border-bottom: 2px solid #0284c7;
+        }
+
+        .column-vi .column-header {
+            color: #34d399;
+            border-bottom: 2px solid #059669;
+        }
+
+        .column-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Cards Styles */
+        .word-card {
+            background: #0b1329;
+            border: 1px solid var(--border-color);
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s ease;
+            color: var(--text-dark);
+        }
+
+        .word-card:hover:not(.matched) {
+            border-color: #38bdf8;
+            background-color: #1e293b;
+            transform: translateY(-1px);
+        }
+
+        .word-card.selected {
+            background-color: var(--primary-bg);
+            border-color: #38bdf8;
+            color: #38bdf8;
+            font-weight: 600;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+
+        .word-card.matched {
+            background-color: var(--success-bg);
+            border-color: #059669;
+            color: var(--success);
+            cursor: default;
+            font-weight: 500;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .word-card.wrong {
+            background-color: var(--danger-bg);
+            border-color: #f87171;
+            color: #fca5a5;
+            animation: shake 0.3s;
+        }
+
+        /* Success Banner */
+        .success-banner {
+            display: none;
+            text-align: center;
+            color: #34d399;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 16px;
+            background-color: var(--success-bg);
+            border: 1px solid #059669;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        /* Footer Copyright */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+            background: #0f172a;
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+
+        @media (max-width: 768px) {
+            .game-board { grid-template-columns: 1fr; gap: 20px; }
+            .config-bar { flex-direction: column; gap: 16px; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Màn hình nhập Password -->
+    <div id="password-screen" class="fixed inset-0 bg-[#0b1329] z-50 flex items-center justify-center p-4">
+        <div class="bg-[#131d38] border border-slate-700/60 p-8 rounded-2xl shadow-2xl max-w-md w-full text-center">
+            <h2 class="text-2xl font-bold text-white mb-2">🔒 Xác minh truy cập</h2>
+            <p class="text-slate-400 text-sm mb-6">Vui lòng nhập mật khẩu để vào ứng dụng</p>
+            <form onsubmit="checkPassword(event)" class="space-y-4">
+                <div>
+                    <input type="password" id="pass-input" placeholder="Nhập mật khẩu..." autofocus
+                           class="w-full px-4 py-3 rounded-xl bg-[#0b1329] border border-slate-700 text-white placeholder-slate-500 text-center text-lg tracking-widest focus:outline-none focus:border-sky-500 transition">
+                </div>
+                <p id="pass-error" class="text-red-400 text-sm hidden">Mật khẩu không chính xác!</p>
+                <button type="submit" 
+                        class="w-full py-3 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold rounded-xl transition cursor-pointer">
+                    Xác nhận
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Màn hình chính ứng dụng (Mặc định ẩn) -->
+    <div id="app-screen" class="w-full flex flex-col hidden min-h-screen">
+        
+        <!-- Tiêu đề thương hiệu -->
+        <div class="brand-header">
+            <!-- Nút quay về TOPIK 6 WITH ME -->
+            <div class="w-full max-w-6xl mx-auto text-left mb-4 px-4">
+                <a href="index.html#topik" class="back-btn text-base">
+                    ← TOPIK 6 WITH ME
+                </a>
+            </div>
+            <div class="brand-title">🎯 Ứng dụng Ôn tập từ vựng tiếng Hàn</div>
+            <div class="brand-subtitle">(Bài 1 đến Bài 20, Câu 11-12 kỹ năng Đọc TOPIK)</div>
+            <div class="brand-desc">Chọn 1 từ tiếng Hàn và 1 từ tiếng Việt tương ứng để hoàn thành bài học.</div>
+        </div>
+
+        <!-- Vùng Workspace chính -->
+        <div class="main-container">
+            
+            <!-- Khối chứa 11 Tab phân tách theo cặp bài -->
+            <div class="tabs-container">
+                <div class="tabs-grid">
+                    <button class="tab-btn active" onclick="switchTab(1, 'Bài 1-2')">Bài 1-2</button>
+                    <button class="tab-btn" onclick="switchTab(2, 'Bài 3-4')">Bài 3-4</button>
+                    <button class="tab-btn" onclick="switchTab(3, 'Bài 5-6')">Bài 5-6</button>
+                    <button class="tab-btn" onclick="switchTab(4, 'Bài 7-8')">Bài 7-8</button>
+                    <button class="tab-btn" onclick="switchTab(5, 'Bài 9-10')">Bài 9-10</button>
+                    <button class="tab-btn" onclick="switchTab(6, 'Bài 11-12')">Bài 11-12</button>
+                    <button class="tab-btn" onclick="switchTab(7, 'Bài 13-14')">Bài 13-14</button>
+                    <button class="tab-btn" onclick="switchTab(8, 'Bài 15-16')">Bài 15-16</button>
+                    <button class="tab-btn" onclick="switchTab(9, 'Bài 17-18')">Bài 17-18</button>
+                    <button class="tab-btn" onclick="switchTab(10, 'Bài 19-20')">Bài 19-20</button>
+                    <button class="tab-btn special-tab" onclick="switchTab(11, '🎲 TEST TỔNG HỢP (NGẪU NHIÊN)')">🎲 TEST TỔNG HỢP</button>
+                </div>
+            </div>
+
+            <!-- Thanh điều chỉnh số câu (Chỉ hiển thị ở Tab 11) -->
+            <div class="config-bar">
+                <div class="config-left" id="select-wrapper" style="display: none;">
+                    <label for="pair-count">Số lượng cặp từ ôn tập:</label>
+                    <select id="pair-count" onchange="initGame()">
+                        <option value="3">3 Cặp</option>
+                        <option value="5" selected>5 Cặp</option>
+                        <option value="10">10 Cặp</option>
+                    </select>
+                </div>
+                <div id="info-mode-text" style="font-size: 14px; font-weight: 600; color: var(--text-muted)">
+                    Chế độ: Học toàn bộ từ vựng trong bài
+                </div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--text-dark)">
+                    Tiến độ: <span id="correct-count" style="color:var(--success)">0</span> / <span id="max-count">5</span>
+                </div>
+            </div>
+
+            <!-- Banner thông báo khi hoàn thành đúng hết -->
+            <div class="success-banner" id="success-banner">🎉 Xuất sắc! Bạn đã nối chính xác toàn bộ các từ vựng của phần này!</div>
+
+            <!-- Khu vực hiển thị thẻ từ để test -->
+            <div class="workspace-card">
+                <div class="workspace-header">
+                    <div class="current-tab-title" id="current-tab-title">Bài 1-2</div>
+                    <button class="btn-refresh" onclick="initGame()">🔄 Xáo trộn làm lại</button>
+                </div>
+
+                <div class="game-board">
+                    <!-- Cột từ tiếng Hàn -->
+                    <div class="column-kr">
+                        <div class="column-header">Tiếng Hàn</div>
+                        <div class="column-cards" id="korean-column"></div>
+                    </div>
+                    <!-- Cột nghĩa tiếng Việt -->
+                    <div class="column-vi">
+                        <div class="column-header">Tiếng Việt</div>
+                        <div class="column-cards" id="vietnamese-column"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chân trang hiển thị thông tin tác giả -->
+        <div class="footer">
+            Ứng dụng được thiết kế bởi <strong class="text-slate-300">ThS. Lương Quốc An (HUFLIT)</strong>, dựa trên công cụ <strong class="text-slate-300">Gemini</strong>.
+        </div>
+    </div>
+
+<script>
+    // Kiểm tra mật khẩu truy cập
+    function checkPassword(e) {
+        e.preventDefault();
+        const input = document.getElementById('pass-input').value;
+        if (input === '2112') {
+            document.getElementById('password-screen').classList.add('hidden');
+            document.getElementById('app-screen').classList.remove('hidden');
+        } else {
+            document.getElementById('pass-error').classList.remove('hidden');
+        }
+    }
+
+    const rawVocabulary = {
+        1: [
+            { kr: "기존", vi: "Vốn có, sẵn có" }, { kr: "적극적으로", vi: "Một cách tích cực" },
+            { kr: "집중하다", vi: "Tập trung" }, { kr: "저렴하다", vi: "Rẻ" }
+        ],
+        2: [
+            { kr: "운영하다", vi: "Vận hành, điều hành" }, { kr: "부담 없이", vi: "Thoải mái" },
+            { kr: "만족하다", vi: "Hài lòng" }, { kr: "간식", vi: "Đồ ăn vặt" }, { kr: "제공하다", vi: "Cung cấp" }
+        ],
+        3: [
+            { kr: "시상식", vi: "Lễ trao giải" }, { kr: "선정하다", vi: "Tuyển chọn" },
+            { kr: "개최되다", vi: "Được tổ chức" }, { kr: "투표하다", vi: "Bỏ phiếu" },
+            { kr: "수상", vi: "Nhận thưởng" }, { kr: "친환경", vi: "Thân thiện môi trường" }
+        ],
+        4: [
+            { kr: "무덤", vi: "Ngôi mộ" }, { kr: "밝혀지다", vi: "Được làm sáng tỏ" },
+            { kr: "보존되다", vi: "Được bảo tồn" }, { kr: "가치", vi: "Giá trị" }, { kr: "공개하다", vi: "Công khai" }
+        ],
+        5: [
+            { kr: "다리를 떨다", vi: "Rung chân" }, { kr: "개선하다", vi: "Cải thiện" },
+            { kr: "반복하다", vi: "Lặp lại" }, { kr: "진동", vi: "Rung động, rung" }, { kr: "기록", vi: "Lịch sử, ghi chép" }
+        ],
+        6: [
+            { kr: "외출하다", vi: "Đi ra ngoài" }, { kr: "재빨리", vi: "Nhanh chóng" },
+            { kr: "지시하다", vi: "Chỉ thị, hướng dẫn" }, { kr: "응급 처치", vi: "Sơ cứu" }, { kr: "대처하다", vi: "Đối phó, ứng phó" }
+        ],
+        7: [
+            { kr: "무사히", vi: "Bình an vô sự" }, { kr: "전교생", vi: "Toàn bộ học sinh" }
+        ],
+        8: [
+            { kr: "취업", vi: "Xin việc, có việc làm" }, { kr: "자기소개서", vi: "Bản giới thiệu bản thân" },
+            { kr: "면접 대비", vi: "Chuẩn bị phỏng vấn" }, { kr: "선착순", vi: "Theo thứ tự đến trước" }
+        ],
+        9: [
+            { kr: "버려지다", vi: "Bị vứt bỏ" }, { kr: "훈훈하다", vi: "Ấm áp" },
+            { kr: "수리하다", vi: "Sửa chữa" }, { kr: "정성", vi: "Lòng chân thành" }, { kr: "값지다", vi: "Quý giá" }
+        ],
+        10: [
+            { kr: "이색적", vi: "Tính độc đáo" }, { kr: "가만히", vi: "Yên một chỗ" },
+            { kr: "우승자", vi: "Người thắng cuộc" }, { kr: "상장", vi: "Bằng khen" }, { kr: "트로피", vi: "Cờ chiến thắng" }
+        ],
+        11: [
+            { kr: "어려움을 겪다", vi: "Gặp khó khăn" }, { kr: "몸짓", vi: "Điệu bộ/cử chỉ" }
+        ],
+        12: [
+            { kr: "연인", vi: "Người yêu" }, { kr: "장르", vi: "Thể loại" }, { kr: "신경을 쓰다", vi: "Để tâm" }
+        ],
+        13: [
+            { kr: "대상", vi: "Đối tượng" }, { kr: "조종하다", vi: "Điều khiển" },
+            { kr: "희망하다", vi: "Hy vọng, mong muốn" }, { kr: "진행하다", vi: "Tiến hành" }
+        ],
+        14: [
+            { kr: "미끄러지다", vi: "Trợt ngã" }, { kr: "의식을 잃다", vi: "Mất ý thức" },
+            { kr: "짖다", vi: "Sủa (chó)" }, { kr: "여기다", vi: "Cho là" }, { kr: "신고하다", vi: "Trình báo" }
+        ],
+        15: [
+            { kr: "이식하다", vi: "Cấy ghép" }, { kr: "간", vi: "Lá gan" },
+            { kr: "위독하다", vi: "Nguy kịch" }, { kr: "기증하다", vi: "Hiến tặng" }, { kr: "불가능하다", vi: "Bất khả thi" }
+        ],
+        16: [
+            { kr: "1인 가구", vi: "Hộ gia đình 1 người" }, { kr: "낯설다", vi: "Lạ lẫm" },
+            { kr: "비중", vi: "Tỷ trọng" }, { kr: "외식업계", vi: "Ngành dịch vụ ăn uống" }, { kr: "선보이다", vi: "Cho ra mắt" }
+        ],
+        17: [
+            { kr: "수리 센터", vi: "Trung tâm sửa chữa" }, { kr: "부품", vi: "Phụ tùng" },
+            { kr: "교체하다", vi: "Thay thế" }, { kr: "생활화하다", vi: "Phổ biến trong đời sống" }, { kr: "밝히다", vi: "Cho biết, làm rõ" }
+        ],
+        18: [
+            { kr: "빗길", vi: "Đường mưa trơn" }, { kr: "망가지다", vi: "Bị hỏng" }
+        ],
+        19: [
+            { kr: "대표적", vi: "Tính tiêu biểu" }, { kr: "볼거리", vi: "Thứ để xem" },
+            { kr: "산책로", vi: "Đường đi dạo" }, { kr: "관람객", vi: "Khách tham quan" }, { kr: "야간", vi: "Ban đêm" }
+        ],
+        20: [
+            { kr: "승객", vi: "Hành khách" }, { kr: "구조 대원", vi: "Nhân viên cứu hộ" },
+            { kr: "현장", vi: "Hiện trường" }, { kr: "되찾다", vi: "Tìm lại" }
+        ]
+    };
+
+    function getVocabularyForTab(tabNum) {
+        if (tabNum >= 1 && tabNum <= 10) {
+            const firstIdx = (tabNum * 2) - 1;
+            const secondIdx = tabNum * 2;
+            return [...rawVocabulary[firstIdx], ...rawVocabulary[secondIdx]];
+        } else if (tabNum === 11) {
+            let allCombined = [];
+            for (let i = 1; i <= 20; i++) {
+                allCombined = allCombined.concat(rawVocabulary[i]);
+            }
+            return allCombined;
+        }
+        return [];
+    }
+
+    let activeTab = 1;
+    let selectedKrCard = null;
+    let selectedViCard = null;
+    let matchedCount = 0;
+    let totalPairs = 5;
+
+    function switchTab(tabIndex, tabTitleText) {
+        activeTab = tabIndex;
+        document.getElementById('current-tab-title').innerText = tabTitleText;
+        
+        document.querySelectorAll('.tab-btn').forEach((btn, index) => {
+            btn.classList.toggle('active', index + 1 === tabIndex);
+        });
+
+        const selectWrapper = document.getElementById('select-wrapper');
+        const infoModeText = document.getElementById('info-mode-text');
+        
+        if (tabIndex === 11) {
+            selectWrapper.style.display = 'block';
+            infoModeText.style.display = 'none';
+        } else {
+            selectWrapper.style.display = 'none';
+            infoModeText.style.display = 'block';
+        }
+
+        initGame();
+    }
+
+    function shuffle(array) {
+        let currentIndex = array.length, randomIndex;
+        while (currentIndex != 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        }
+        return array;
+    }
+
+    function updateProgressScore() {
+        document.getElementById('correct-count').innerText = matchedCount;
+        document.getElementById('max-count').innerText = totalPairs;
+    }
+
+    function initGame() {
+        selectedKrCard = null;
+        selectedViCard = null;
+        matchedCount = 0;
+        document.getElementById('success-banner').style.display = 'none';
+
+        const tabSourceData = getVocabularyForTab(activeTab);
+        const shuffledSource = shuffle([...tabSourceData]);
+
+        if (activeTab === 11) {
+            totalPairs = parseInt(document.getElementById('pair-count').value);
+        } else {
+            totalPairs = tabSourceData.length;
+        }
+        
+        const selectedPairs = shuffledSource.slice(0, Math.min(totalPairs, tabSourceData.length));
+        totalPairs = selectedPairs.length; 
+
+        updateProgressScore();
+
+        const krList = selectedPairs.map((pair, index) => ({ text: pair.kr, id: index }));
+        const viList = selectedPairs.map((pair, index) => ({ text: pair.vi, id: index }));
+
+        shuffle(krList);
+        shuffle(viList);
+
+        const krColumn = document.getElementById('korean-column');
+        krColumn.innerHTML = '';
+        krList.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'word-card';
+            card.innerText = item.text;
+            card.dataset.id = item.id;
+            card.onclick = () => onCardClicked(card, 'kr');
+            krColumn.appendChild(card);
+        });
+
+        const viColumn = document.getElementById('vietnamese-column');
+        viColumn.innerHTML = '';
+        viList.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'word-card';
+            card.innerText = item.text;
+            card.dataset.id = item.id;
+            card.onclick = () => onCardClicked(card, 'vi');
+            viColumn.appendChild(card);
+        });
+    }
+
+    function onCardClicked(card, type) {
+        if (card.classList.contains('matched') || card.classList.contains('wrong')) return;
+
+        if (type === 'kr') {
+            if (selectedKrCard) selectedKrCard.classList.remove('selected');
+            selectedKrCard = card;
+            card.classList.add('selected');
+        } else {
+            if (selectedViCard) selectedViCard.classList.remove('selected');
+            selectedViCard = card;
+            card.classList.add('selected');
+        }
+
+        if (selectedKrCard && selectedViCard) {
+            verifyMatchedPair();
+        }
+    }
+
+    function verifyMatchedPair() {
+        const krId = selectedKrCard.dataset.id;
+        const viId = selectedViCard.dataset.id;
+
+        if (krId === viId) {
+            selectedKrCard.className = 'word-card matched';
+            selectedViCard.className = 'word-card matched';
+            matchedCount++;
+            updateProgressScore();
+            
+            selectedKrCard = null;
+            selectedViCard = null;
+
+            if (matchedCount === totalPairs) {
+                document.getElementById('success-banner').style.display = 'block';
+            }
+        } else {
+            const tempKr = selectedKrCard;
+            const tempVi = selectedViCard;
+            
+            tempKr.classList.add('wrong');
+            tempVi.classList.add('wrong');
+            
+            selectedKrCard = null;
+            selectedViCard = null;
+
+            setTimeout(() => {
+                tempKr.classList.remove('wrong', 'selected');
+                tempVi.classList.remove('wrong', 'selected');
+            }, 400);
+        }
+    }
+
+    window.onload = initGame;
+</script>
+
+</body>
+</html>
