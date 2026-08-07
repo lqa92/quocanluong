@@ -42,7 +42,6 @@
             position: relative;
             width: 100vw;
             height: 100vh;
-            /* Đường dẫn ảnh từ Google Drive */
             background-image: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.65)), 
                               url('https://lh3.googleusercontent.com/d/18HEjIhJRlBTE8DqQ6nqLxq0BvXsg3mJY');
             background-size: cover;
@@ -223,7 +222,6 @@
             margin-top: 2rem;
         }
 
-        /* Dành riêng cho các danh mục dạng danh sách dọc */
         .card-list {
             display: flex;
             flex-direction: column;
@@ -288,40 +286,92 @@
             color: #38bdf8;
         }
 
+        /* Journey Styles - Đã căn giữa bằng margin: 2rem auto */
+        .journey-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: blur(8px);
+            margin: 2rem auto 0 auto;
+            max-width: 850px;
+        }
+
+        .journey-content-wrapper {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .journey-left {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .journey-image {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .journey-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .journey-title {
+            color: #f97316;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .journey-year {
+            color: #cbd5e1;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .journey-desc {
+            color: #cbd5e1;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .journey-btn {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .journey-btn:hover {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: #38bdf8;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
-            .brand-title {
-                font-size: 2.2rem;
-            }
-            .brand-handle {
-                font-size: 1.1rem;
-            }
-            nav {
-                flex-wrap: wrap;
-                border-radius: 20px;
-                gap: 0.3rem;
-            }
-            nav a {
-                font-size: 0.75rem;
-                padding: 0.4rem 0.6rem;
-            }
-            .social-btn {
-                width: 42px;
-                height: 42px;
-                font-size: 1.2rem;
-            }
-            .sub-tab-content {
-                padding-left: 0.8rem;
-            }
-            .about-avatar-container {
-                position: static;
-                text-align: center;
-                margin-bottom: 1.5rem;
-            }
-            .about-avatar {
-                width: 160px;
-                height: 160px;
-            }
+            .brand-title { font-size: 2.2rem; }
+            .brand-handle { font-size: 1.1rem; }
+            nav { flex-wrap: wrap; border-radius: 20px; gap: 0.3rem; }
+            nav a { font-size: 0.75rem; padding: 0.4rem 0.6rem; }
+            .social-btn { width: 42px; height: 42px; font-size: 1.2rem; }
+            .about-avatar-container { position: static; text-align: center; margin-bottom: 1.5rem; }
+            .about-avatar { width: 160px; height: 160px; }
+            .journey-content-wrapper { flex-direction: column; align-items: center; }
+            .journey-image { width: 100%; }
         }
     </style>
 </head>
@@ -329,32 +379,22 @@
 
     <!-- Main Hero Screen -->
     <div class="hero">
-        <!-- Navigation Tabs (6 Tabs) -->
         <nav>
             <a onclick="showTab('home')" class="nav-btn active" id="btn-home">HOME</a>
             <a onclick="showTab('about')" class="nav-btn" id="btn-about">ABOUT ME</a>
-            <a onclick="showTab('mytrip')" class="nav-btn" id="btn-mytrip">MY TRIP</a>
+            <a onclick="showTab('mytrip')" class="nav-btn" id="btn-mytrip">MY JOURNEYS</a>
             <a onclick="showTab('topik')" class="nav-btn" id="btn-topik">TOPIK 6 WITH ME</a>
             <a onclick="showTab('korean')" class="nav-btn" id="btn-korean">ENJOY KOREAN</a>
             <a onclick="showTab('economics')" class="nav-btn" id="btn-economics">EASY ECONOMICS</a>
         </nav>
 
-        <!-- Profile Title & Socials -->
         <div class="brand-container">
             <h1 class="brand-title">Quoc An Luong</h1>
             <p class="brand-handle">@lqa92</p>
-            
-            <!-- Social Media & Contact Buttons -->
             <div class="social-links">
-                <a href="https://www.facebook.com/lqa92/" target="_blank" class="social-btn" title="Facebook">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="https://www.instagram.com/" target="_blank" class="social-btn" title="Instagram">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="mailto:quocanluong@gmail.com" class="social-btn" title="Gửi Email">
-                    <i class="fas fa-envelope"></i>
-                </a>
+                <a href="https://www.facebook.com/lqa92/" target="_blank" class="social-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/" target="_blank" class="social-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="mailto:quocanluong@gmail.com" class="social-btn" title="Gửi Email"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
     </div>
@@ -369,17 +409,15 @@
 
     <!-- Section: ABOUT ME -->
     <section id="about" class="content-section">
-        <!-- Ảnh đại diện tròn kích thước lớn -->
         <div class="about-avatar-container">
             <img src="https://lh3.googleusercontent.com/d/1tkAXaxkw81_6BiQ3-mWFGxTT6ronnnCu" alt="Quoc An Luong" class="about-avatar">
         </div>
-
         <h2>About Me</h2>
         <div class="card-grid">
             <div class="card">
                 <h3>Giảng viên & Nghiên cứu</h3>
                 <ul>
-                    <li>Hiện đang là giảng viên tiếng Hàn chuyên ngành Hàn Quốc học và ngành Ngôn ngữ Hàn Quốc tại HUFLIT.</li>
+                    <li>Hiện đang là giảng viên tiếng Hàn chuyên ngành Hàn Quốc học và ngành Ngôn ngữ Hàn Quốc tại <a href="https://huflit.edu.vn/vi/" target="_blank" style="color: #38bdf8; text-decoration: none; font-weight: bold;">HUFLIT</a>.</li>
                     <li>Hiện đang học tiếp chương trình thạc sĩ ngành Kinh tế phát triển tại UEH.</li>
                     <li>Lĩnh vực nghiên cứu: Ngôn ngữ & Văn hoá Hàn Quốc, Kinh tế học môi trường.</li>
                 </ul>
@@ -396,13 +434,20 @@
         </div>
     </section>
 
-    <!-- Section: MY TRIP -->
+    <!-- Section: MY JOURNEYS -->
     <section id="mytrip" class="content-section">
-        <h2>My Trip</h2>
-        <div class="card-grid">
-            <div class="card">
-                <h3>Những vùng đất đã qua</h3>
-                <p style="color: #cbd5e1;">Lưu giữ những khoảnh khắc, hình ảnh hành trình khám phá và trải nghiệm văn hóa.</p>
+        <h2>My Journeys</h2>
+        <div class="journey-card">
+            <div class="journey-content-wrapper">
+                <div class="journey-left">
+                    <img src="https://lh3.googleusercontent.com/d/1DIsGX8Sh9MdP7Rk97zboWBnC7VbKtLwW" alt="Một mình ở Hà Giang" class="journey-image">
+                    <a href="blog01" class="journey-btn">Read more</a>
+                </div>
+                <div class="journey-details">
+                    <h3 class="journey-title">#01 #Một mình ở Hà Giang</h3>
+                    <p class="journey-year">2025.09</p>
+                    <p class="journey-desc">Cuối tháng 9 năm ngoái, mình trở lại Hà Giang lần thứ ba, sau hai lần ghé vào năm 2016 và 2019. Nhưng lần này có một điều rất khác: mình đi một mình.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -410,129 +455,32 @@
     <!-- Section: TOPIK 6 WITH ME -->
     <section id="topik" class="content-section">
         <h2>TOPIK 6 With Me</h2>
-        
-        <!-- Sub Tab 1: 쓰기 연습 -->
         <div class="sub-tab-group">
             <div class="sub-tab-title">1) 쓰기 연습</div>
             <div class="sub-tab-content">
-                <a href="duoivanviet.html" class="card-link">
-                    <div class="card">
-                        <h3>
-                            Ôn tập đuôi văn viết
-                            <i class="fas fa-arrow-right link-icon"></i>
-                        </h3>
-                    </div>
-                </a>
-                <a href="wongoji.html" class="card-link">
-                    <div class="card">
-                        <h3>
-                            Luyện viết câu 53 trong khung
-                            <i class="fas fa-arrow-right link-icon"></i>
-                        </h3>
-                    </div>
-                </a>
+                <a href="duoivanviet.html" class="card-link"><div class="card"><h3>Ôn tập đuôi văn viết<i class="fas fa-arrow-right link-icon"></i></h3></div></a>
+                <a href="wongoji.html" class="card-link"><div class="card"><h3>Luyện viết câu 53 trong khung<i class="fas fa-arrow-right link-icon"></i></h3></div></a>
             </div>
         </div>
-
-        <!-- Sub Tab 2: 문법 연습 -->
         <div class="sub-tab-group">
             <div class="sub-tab-title">2) 문법 연습</div>
             <div class="sub-tab-content">
-                <a href="nguphap1-4.html" class="card-link">
-                    <div class="card">
-                        <h3>
-                            Ngữ pháp thường gặp trong câu 1-2, 3-4 môn Đọc
-                            <i class="fas fa-arrow-right link-icon"></i>
-                        </h3>
-                    </div>
-                </a>
+                <a href="nguphap1-4.html" class="card-link"><div class="card"><h3>Ngữ pháp thường gặp trong câu 1-2, 3-4 môn Đọc<i class="fas fa-arrow-right link-icon"></i></h3></div></a>
             </div>
         </div>
-
-        <!-- Sub Tab 3: 어휘 연습 -->
         <div class="sub-tab-group">
             <div class="sub-tab-title">3) 어휘 연습</div>
             <div class="sub-tab-content">
-                <a href="51.html" class="card-link">
-                    <div class="card">
-                        <h3>
-                            Từ vựng Viết câu 51
-                            <i class="fas fa-arrow-right link-icon"></i>
-                        </h3>
-                    </div>
-                </a>
-                <a href="52.html" class="card-link">
-                    <div class="card">
-                        <h3>
-                            Từ vựng Viết câu 52
-                            <i class="fas fa-arrow-right link-icon"></i>
-                        </h3>
-                    </div>
-                </a>
-                <a href="5-10.html" class="card-link">
-                    <div class="card">
-                        <h3>
-                            Từ vựng Đọc câu 5-10
-                            <i class="fas fa-arrow-right link-icon"></i>
-                        </h3>
-                    </div>
-                </a>
-                <a href="11-12.html" class="card-link">
-                    <div class="card">
-                        <h3>
-                            Từ vựng Đọc câu 11-12
-                            <i class="fas fa-arrow-right link-icon"></i>
-                        </h3>
-                    </div>
-                </a>
-                <a href="13-15.html" class="card-link">
-                    <div class="card">
-                        <h3>
-                            Từ vựng Đọc câu 13-15
-                            <i class="fas fa-arrow-right link-icon"></i>
-                        </h3>
-                    </div>
-                </a>
-                <a href="16-18.html" class="card-link">
-                    <div class="card">
-                        <h3>
-                            Từ vựng Đọc câu 16-18
-                            <i class="fas fa-arrow-right link-icon"></i>
-                        </h3>
-                    </div>
-                </a>
-                <a href="19-20.html" class="card-link">
-                    <div class="card">
-                        <h3>
-                            Từ vựng Đọc câu 19-20
-                            <i class="fas fa-arrow-right link-icon"></i>
-                        </h3>
-                    </div>
-                </a>
-                <a href="21-22.html" class="card-link">
-                    <div class="card">
-                        <h3>
-                            Từ vựng Đọc câu 21-22
-                            <i class="fas fa-arrow-right link-icon"></i>
-                        </h3>
-                    </div>
-                </a>
-                <a href="23-24.html" class="card-link">
-                    <div class="card">
-                        <h3>
-                            Từ vựng Đọc câu 23-24
-                            <i class="fas fa-arrow-right link-icon"></i>
-                        </h3>
-                    </div>
-                </a>
-                <a href="25-27.html" class="card-link">
-                    <div class="card">
-                        <h3>
-                            Từ vựng Đọc câu 25-27
-                            <i class="fas fa-arrow-right link-icon"></i>
-                        </h3>
-                    </div>
-                </a>
+                <a href="51.html" class="card-link"><div class="card"><h3>Từ vựng Viết câu 51<i class="fas fa-arrow-right link-icon"></i></h3></div></a>
+                <a href="52.html" class="card-link"><div class="card"><h3>Từ vựng Viết câu 52<i class="fas fa-arrow-right link-icon"></i></h3></div></a>
+                <a href="5-10.html" class="card-link"><div class="card"><h3>Từ vựng Đọc câu 5-10<i class="fas fa-arrow-right link-icon"></i></h3></div></a>
+                <a href="11-12.html" class="card-link"><div class="card"><h3>Từ vựng Đọc câu 11-12<i class="fas fa-arrow-right link-icon"></i></h3></div></a>
+                <a href="13-15.html" class="card-link"><div class="card"><h3>Từ vựng Đọc câu 13-15<i class="fas fa-arrow-right link-icon"></i></h3></div></a>
+                <a href="16-18.html" class="card-link"><div class="card"><h3>Từ vựng Đọc câu 16-18<i class="fas fa-arrow-right link-icon"></i></h3></div></a>
+                <a href="19-20.html" class="card-link"><div class="card"><h3>Từ vựng Đọc câu 19-20<i class="fas fa-arrow-right link-icon"></i></h3></div></a>
+                <a href="21-22.html" class="card-link"><div class="card"><h3>Từ vựng Đọc câu 21-22<i class="fas fa-arrow-right link-icon"></i></h3></div></a>
+                <a href="23-24.html" class="card-link"><div class="card"><h3>Từ vựng Đọc câu 23-24<i class="fas fa-arrow-right link-icon"></i></h3></div></a>
+                <a href="25-27.html" class="card-link"><div class="card"><h3>Từ vựng Đọc câu 25-27<i class="fas fa-arrow-right link-icon"></i></h3></div></a>
             </div>
         </div>
     </section>
@@ -543,24 +491,14 @@
         <div class="card-grid">
             <a href="hinh-thai-hoc.html" class="card-link">
                 <div class="card">
-                    <h3>
-                        Ôn thi cuối kỳ Hình thái học tiếng Hàn
-                        <i class="fas fa-arrow-right link-icon"></i>
-                    </h3>
-                    <p style="color: #cbd5e1; line-height: 1.6; margin-top: 0.8rem;">
-                        Tài liệu tổng hợp hệ thống kiến thức, câu hỏi ôn tập và đề luyện thi dành cho học phần Hình thái học tiếng Hàn.
-                    </p>
+                    <h3>Ôn thi cuối kỳ Hình thái học tiếng Hàn<i class="fas fa-arrow-right link-icon"></i></h3>
+                    <p style="color: #cbd5e1; line-height: 1.6; margin-top: 0.8rem;">Tài liệu tổng hợp hệ thống kiến thức, câu hỏi ôn tập và đề luyện thi dành cho học phần Hình thái học tiếng Hàn.</p>
                 </div>
             </a>
             <a href="doc7.html" class="card-link">
                 <div class="card">
-                    <h3>
-                        Ôn thi cuối kỳ Đọc tiếng Hàn 7
-                        <i class="fas fa-arrow-right link-icon"></i>
-                    </h3>
-                    <p style="color: #cbd5e1; line-height: 1.6; margin-top: 0.8rem;">
-                        Làm quen với câu 25-27 TOPIK, giải thích tiêu đề bài báo.
-                    </p>
+                    <h3>Ôn thi cuối kỳ Đọc tiếng Hàn 7<i class="fas fa-arrow-right link-icon"></i></h3>
+                    <p style="color: #cbd5e1; line-height: 1.6; margin-top: 0.8rem;">Làm quen với câu 25-27 TOPIK, giải thích tiêu đề bài báo.</p>
                 </div>
             </a>
         </div>
@@ -570,60 +508,22 @@
     <section id="economics" class="content-section">
         <h2>EASY ECONOMICS</h2>
         <div class="card-list">
-            <a href="bai1.html" class="card-link">
-                <div class="card">
-                    <h3>
-                        Bài 1: Quy luật Cung - Cầu
-                        <i class="fas fa-arrow-right link-icon"></i>
-                    </h3>
-                </div>
-            </a>
-            <a href="bai2.html" class="card-link">
-                <div class="card">
-                    <h3>
-                        Bài 2: Lựa chọn của người tiêu dùng
-                        <i class="fas fa-arrow-right link-icon"></i>
-                    </h3>
-                </div>
-            </a>
-            <a href="bai3.html" class="card-link">
-                <div class="card">
-                    <h3>
-                        Bài 3: Thị trường
-                        <i class="fas fa-arrow-right link-icon"></i>
-                    </h3>
-                </div>
-            </a>
-            <a href="bai4.html" class="card-link">
-                <div class="card">
-                    <h3>
-                        Bài 4: Lý thuyết Hành vi người sản xuất
-                        <i class="fas fa-arrow-right link-icon"></i>
-                    </h3>
-                </div>
-            </a>
-            <a href="bai5.html" class="card-link">
-                <div class="card">
-                    <h3>
-                        Bài 5: Tiền tệ và ngân hàng
-                        <i class="fas fa-arrow-right link-icon"></i>
-                    </h3>
-                </div>
-            </a>
+            <a href="bai1.html" class="card-link"><div class="card"><h3>Bài 1: Quy luật Cung - Cầu<i class="fas fa-arrow-right link-icon"></i></h3></div></a>
+            <a href="bai2.html" class="card-link"><div class="card"><h3>Bài 2: Lựa chọn của người tiêu dùng<i class="fas fa-arrow-right link-icon"></i></h3></div></a>
+            <a href="bai3.html" class="card-link"><div class="card"><h3>Bài 3: Thị trường<i class="fas fa-arrow-right link-icon"></i></h3></div></a>
+            <a href="bai4.html" class="card-link"><div class="card"><h3>Bài 4: Lý thuyết Hành vi người sản xuất<i class="fas fa-arrow-right link-icon"></i></h3></div></a>
+            <a href="bai5.html" class="card-link"><div class="card"><h3>Bài 5: Tiền tệ và ngân hàng<i class="fas fa-arrow-right link-icon"></i></h3></div></a>
         </div>
     </section>
 
     <script>
         function showTab(tabId) {
-            // Hide all sections
             const sections = document.querySelectorAll('.content-section');
             sections.forEach(section => section.classList.remove('active'));
 
-            // Deactivate all nav buttons
             const navButtons = document.querySelectorAll('.nav-btn');
             navButtons.forEach(btn => btn.classList.remove('active'));
 
-            // Show current section and set active tab
             const targetSection = document.getElementById(tabId);
             if (targetSection) {
                 targetSection.classList.add('active');
@@ -634,13 +534,11 @@
                 targetBtn.classList.add('active');
             }
 
-            // Scroll smoothly to section if not home
             if (tabId !== 'home' && targetSection) {
                 targetSection.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
-        // Hàm kiểm tra và tự động mở tab tương ứng dựa vào thanh địa chỉ (#hash)
         function checkHashAndSwitchTab() {
             const hash = window.location.hash.replace('#', '');
             if (hash) {
@@ -648,10 +546,7 @@
             }
         }
 
-        // Kích hoạt khi vừa tải xong trang
         window.addEventListener('DOMContentLoaded', checkHashAndSwitchTab);
-        
-        // Kích hoạt khi có thay đổi thẻ hash trên thanh địa chỉ (khi người dùng bấm quay lại)
         window.addEventListener('hashchange', checkHashAndSwitchTab);
     </script>
 </body>
