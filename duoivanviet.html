@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn tập Ngữ pháp tiếng Hàn: Đuôi Văn Viết (아/어/여요 ➔ -(ㄴ/는)다)</title>
+    <!-- Nhúng font chữ Plus Jakarta Sans đồng bộ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        body {
+            /* Đường dẫn ảnh nền đồng bộ */
+            background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.85)), 
+                              url('https://lh3.googleusercontent.com/d/13YGXblXo3gWanNadE8JAspxErw5BI0FZ');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Khung chứa hiệu ứng Glassmorphism */
+        .main-container {
+            background-color: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .back-btn {
+            align-self: flex-start;
+            margin-bottom: 20px;
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s ease, background 0.2s ease;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 8px 16px;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .back-btn:hover { color: #7dd3fc; background: rgba(15, 23, 42, 0.8); }
+
+        .correct-animation {
+            animation: pop 0.4s ease-out;
+        }
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Màn hình khóa đăng nhập -->
+    <div id="password-screen" class="main-container max-w-md my-auto text-center">
+        <h2 class="text-2xl font-extrabold text-[#38bdf8] mb-4">Xác thực truy cập</h2>
+        <p class="text-slate-300 text-sm mb-6">Vui lòng nhập mật khẩu để mở khóa ứng dụng ôn tập</p>
+        
+        <form onsubmit="checkPassword(event)" class="space-y-4">
+            <input type="password" id="password-input" placeholder="Nhập mật khẩu..." 
+                class="w-full px-4 py-3 bg-slate-900/80 border border-white/20 rounded-xl text-white focus:outline-none focus:border-sky-400 text-center font-medium placeholder-slate-500">
+            <p id="password-error" class="text-rose-400 text-xs hidden">Mật khẩu không chính xác, vui lòng thử lại!</p>
+            <button type="submit" 
+                class="w-full py-3 bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-xl transition cursor-pointer shadow-md">
+                Xác nhận
+            </button>
+        </form>
+    </div>
+
+    <!-- Nội dung ứng dụng chính (Ẩn ban đầu) -->
+    <div id="app-screen" class="w-full max-w-5xl flex flex-col items-center hidden">
+        
+        <!-- Nút góc trái quay về TOPIK 6 WITH ME -->
+        <a href="index.html#topik" class="back-btn">← TOPIK 6 WITH ME</a>
+
+        <div class="main-container">
+            
+            <!-- Header -->
+            <header class="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 mb-6 border-b border-white/10">
+                <div>
+                    <h1 class="text-2xl font-extrabold text-[#38bdf8] tracking-tight">Ôn tập Ngữ pháp tiếng Hàn</h1>
+                    <p class="text-xs text-slate-300 font-medium mt-1">Luyện tập đuôi câu văn viết: <span class="bg-slate-900/60 px-2 py-0.5 rounded text-sky-400 border border-sky-400/30 font-semibold">-아/어/여요 ➔ -(ㄴ/는)다</span></p>
+                </div>
+                
+                <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+                    <div class="bg-slate-900/60 border border-white/10 text-slate-200 px-3 py-1.5 rounded-xl text-sm font-semibold flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                        Đúng: <span id="score-correct" class="text-emerald-400 font-bold">0</span>/20
+                    </div>
+                    <button onclick="restartQuiz()" class="text-xs font-semibold text-sky-300 hover:text-white bg-sky-600/30 hover:bg-sky-600/50 border border-sky-500/30 px-3.5 py-2 rounded-xl transition-all cursor-pointer">
+                        Xáo trộn & Làm lại
+                    </button>
+                </div>
+            </header>
+
+            <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Khung tương tác chính -->
+                <div class="lg:col-span-2 flex flex-col gap-6">
+                    
+                    <!-- Thanh tiến trình -->
+                    <div class="bg-slate-900/50 rounded-xl border border-white/10 p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Tiến trình học tập</span>
+                            <span class="text-sm font-bold text-sky-400" id="progress-text">Câu 1/20</span>
+                        </div>
+                        <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                            <div id="progress-bar" class="bg-sky-500 h-full rounded-full transition-all duration-300" style="width: 5%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Thẻ câu hỏi -->
+                    <div id="quiz-card" class="bg-slate-900/60 rounded-2xl border border-white/15 p-6 md:p-8 shadow-lg relative overflow-hidden transition-all duration-200">
+                        
+                        <!-- Badge Thể loại -->
+                        <div class="absolute top-4 right-4">
+                            <span id="badge-category" class="text-xs font-bold px-3 py-1 rounded-full bg-sky-950 text-sky-300 border border-sky-500/30 uppercase tracking-wider">
+                                Động từ (V)
+                            </span>
+                        </div>
+
+                        <div class="mt-2 mb-6">
+                            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">ĐỀ BÀI</h3>
+                            <div class="text-lg md:text-xl font-bold text-slate-100 leading-relaxed tracking-wide">
+                                <span id="sentence-prefix">저는 매일 아침에 사과를 </span>
+                                <span id="sentence-target" class="text-sky-300 bg-sky-950/80 px-2.5 py-1 rounded-lg border border-sky-500/40 underline underline-offset-4 font-extrabold">(먹어요)</span>
+                                <span id="sentence-suffix">.</span>
+                            </div>
+                        </div>
+
+                        <!-- Ô nhập liệu -->
+                        <div class="space-y-4">
+                            <div>
+                                <label for="user-answer" class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">ĐÁP ÁN CỦA BẠN (DẠNG VĂN VIẾT)</label>
+                                <input type="text" id="user-answer" 
+                                       class="w-full bg-slate-950/80 border border-white/20 focus:border-sky-400 rounded-xl px-4 py-3.5 text-base font-bold text-white focus:outline-none transition-all placeholder:text-slate-600 tracking-wide"
+                                       placeholder="Nhập câu trả lời bằng tiếng Hàn..."
+                                       autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                            </div>
+
+                            <!-- Nút chức năng -->
+                            <div class="flex gap-3 pt-2">
+                                <button id="btn-prev" onclick="prevQuestion()" class="hidden bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold px-5 py-3.5 rounded-xl transition-all border border-white/10 cursor-pointer">
+                                    Quay lại
+                                </button>
+
+                                <button id="btn-submit" onclick="checkAnswer()" class="flex-1 bg-sky-600 hover:bg-sky-500 text-white font-bold px-6 py-3.5 rounded-xl transition-all shadow cursor-pointer">
+                                    Kiểm tra
+                                </button>
+
+                                <button id="btn-next" onclick="nextQuestion()" class="hidden flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3.5 rounded-xl transition-all shadow cursor-pointer">
+                                    Tiếp theo
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Khung phản hồi / Giải thích -->
+                        <div id="explanation-box" class="hidden mt-6 pt-6 border-t border-white/10 transition-all duration-300">
+                            <div id="feedback-alert" class="p-4 rounded-xl mb-4">
+                                <h4 id="feedback-title" class="font-bold text-base">Trạng thái</h4>
+                                <p id="feedback-text" class="text-sm mt-1">Đáp án đúng của bạn là...</p>
+                            </div>
+                            
+                            <div class="bg-slate-950/60 rounded-xl p-5 border border-white/10">
+                                <h4 class="text-xs font-bold text-sky-400 uppercase tracking-widest mb-2">
+                                    Giải thích chi tiết
+                                </h4>
+                                <p id="explanation-content" class="text-sm text-slate-300 leading-relaxed">
+                                    Giải thích sẽ hiện ở đây...
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Màn hình hoàn thành -->
+                    <div id="complete-card" class="hidden bg-slate-900/60 rounded-2xl border border-white/15 p-8 text-center shadow-lg">
+                        <h2 class="text-2xl font-extrabold text-emerald-400 mb-2">Chúc mừng bạn đã hoàn thành!</h2>
+                        <p class="text-slate-300 text-sm mb-6 max-w-md mx-auto">Bạn đã hoàn thành xuất sắc 20 câu luyện tập chuyển đổi đuôi văn viết một cách chính xác.</p>
+                        
+                        <div class="bg-slate-950/80 rounded-xl p-4 max-w-sm mx-auto mb-6 border border-white/10">
+                            <span class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Kết quả chung cuộc</span>
+                            <span class="text-3xl font-black text-sky-400" id="final-score">20/20</span>
+                        </div>
+
+                        <div class="flex gap-4 max-w-sm mx-auto">
+                            <button onclick="prevQuestion()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold px-4 py-3.5 rounded-xl transition-all border border-white/10 cursor-pointer">
+                                Quay lại xem bài
+                            </button>
+                            <button onclick="restartQuiz()" class="flex-1 bg-sky-600 hover:bg-sky-500 text-white font-bold px-4 py-3.5 rounded-xl transition-all shadow cursor-pointer">
+                                Làm lại lượt mới
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <!-- Cẩm nang tra cứu & Quy tắc -->
+                <div class="flex flex-col gap-6">
+                    
+                    <div class="bg-slate-900/60 rounded-2xl border border-white/15 p-5 shadow-sm">
+                        <h3 class="font-bold text-sky-400 text-base pb-3 mb-4 border-b border-white/10">
+                            Cẩm nang ôn tập (아/어/여요 ➔ -(ㄴ/는)다)
+                        </h3>
+                        
+                        <div class="space-y-3 text-xs">
+                            <!-- Động từ -->
+                            <div class="p-3 bg-slate-950/60 rounded-xl border border-white/10">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="font-bold text-sky-300">Động từ (V)</span>
+                                    <span class="font-mono font-semibold text-sky-400 bg-sky-950 px-2 py-0.5 rounded border border-sky-500/30">V-ㄴ/는다</span>
+                                </div>
+                                <p class="text-slate-400 mb-2">Thêm <strong>-는다</strong> khi có patchim; thêm <strong>-ㄴ다</strong> khi không có patchim.</p>
+                                <div class="text-slate-300 flex justify-between font-semibold">
+                                    <span>먹다 ➔ 먹는다</span>
+                                    <span>가다 ➔ 간다</span>
+                                </div>
+                            </div>
+
+                            <!-- Tính từ -->
+                            <div class="p-3 bg-slate-950/60 rounded-xl border border-white/10">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="font-bold text-emerald-300">Tính từ (A)</span>
+                                    <span class="font-mono font-semibold text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-500/30">A-다</span>
+                                </div>
+                                <p class="text-slate-400 mb-2">Giữ nguyên thể của tính từ (không thêm ㄴ/는).</p>
+                                <div class="text-slate-300 flex justify-between font-semibold">
+                                    <span>행복하다 ➔ 행복하다</span>
+                                    <span>작다 ➔ 작다</span>
+                                </div>
+                            </div>
+
+                            <!-- Danh từ -->
+                            <div class="p-3 bg-slate-950/60 rounded-xl border border-white/10">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="font-bold text-indigo-300">Danh từ + 이다</span>
+                                    <span class="font-mono font-semibold text-indigo-400 bg-indigo-950 px-2 py-0.5 rounded border border-indigo-500/30">N-(이)다</span>
+                                </div>
+                                <p class="text-slate-400 mb-2">Có patchim dùng <strong>-이다</strong>; không patchim dùng <strong>-다</strong>.</p>
+                                <div class="text-slate-300 flex justify-between font-semibold">
+                                    <span>학생 ➔ 학생이다</span>
+                                    <span>의사 ➔ 의사다</span>
+                                </div>
+                            </div>
+
+                            <!-- Quá khứ -->
+                            <div class="p-3 bg-slate-950/60 rounded-xl border border-white/10">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="font-bold text-purple-300">Quá khứ (Past)</span>
+                                    <span class="font-mono font-semibold text-purple-400 bg-purple-950 px-2 py-0.5 rounded border border-purple-500/30">-았/었/였다</span>
+                                </div>
+                                <p class="text-slate-400 mb-2">Đưa về dạng quá khứ chuẩn văn viết đuôi <strong>-다</strong>.</p>
+                                <div class="text-slate-300 flex justify-between font-semibold">
+                                    <span>먹었다 ➔ 먹었다</span>
+                                    <span>행복했다 ➔ 행복했다</span>
+                                </div>
+                            </div>
+
+                            <!-- Tương lai -->
+                            <div class="p-3 bg-slate-950/60 rounded-xl border border-white/10">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="font-bold text-rose-300">Tương lai (Future)</span>
+                                    <span class="font-mono font-semibold text-rose-400 bg-rose-950 px-2 py-0.5 rounded border border-rose-500/30">-을/ㄹ 것이다</span>
+                                </div>
+                                <p class="text-slate-400 mb-2">Đổi đuôi tương lai <strong>-ㄹ/을 거예요</strong> thành <strong>-ㄹ/을 것이다</strong>.</p>
+                                <div class="text-slate-300 flex justify-between font-semibold">
+                                    <span>먹을 것이다</span>
+                                    <span>행복할 것이다</span>
+                                </div>
+                            </div>
+
+                            <!-- Kính ngữ -->
+                            <div class="p-3 bg-slate-950/60 rounded-xl border border-white/10">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="font-bold text-amber-300">Kính ngữ (Honorific)</span>
+                                    <span class="font-mono font-semibold text-amber-400 bg-amber-950 px-2 py-0.5 rounded border border-amber-500/30">-(으)시다</span>
+                                </div>
+                                <p class="text-slate-400 mb-2">Giữ nguyên yếu tố kính ngữ <strong>-(으)시-</strong> rồi thêm đuôi tương ứng.</p>
+                                <div class="text-slate-300 flex flex-col gap-1 font-semibold">
+                                    <div>선생님이세요 ➔ 선생님이시다</div>
+                                    <div>운동을 하세요 ➔ 하신다</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Thẻ mẹo -->
+                    <div class="bg-slate-900/60 rounded-2xl border border-white/15 p-5">
+                        <h4 class="text-emerald-400 font-bold text-sm mb-2">
+                            Mẹo hữu ích khi làm bài
+                        </h4>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Nhấn phím <kbd class="bg-slate-950 px-1.5 py-0.5 rounded border border-white/20 text-sky-300 font-bold">Enter</kbd> lần 1 để hiện đáp án & giải thích, nhấn tiếp <kbd class="bg-slate-950 px-1.5 py-0.5 rounded border border-white/20 text-sky-300 font-bold">Enter</kbd> lần 2 để qua câu mới.
+                        </p>
+                    </div>
+                </div>
+
+            </main>
+
+            <!-- Footer -->
+            <footer class="pt-6 mt-8 border-t border-dashed border-white/20 text-center text-slate-400 text-xs sm:text-sm leading-relaxed">
+                Ứng dụng được thiết kế bởi <strong>Thạc sĩ Lương Quốc An (HUFLIT)</strong> dựa trên công cụ <strong>Gemini</strong>
+            </footer>
+        </div>
+    </div>
+
+    <!-- JS Logic -->
+    <script>
+        // Kiểm tra mật khẩu (Sử dụng mật khẩu 2112)
+        function checkPassword(event) {
+            event.preventDefault();
+            const input = document.getElementById('password-input').value;
+            const errorMsg = document.getElementById('password-error');
+            
+            if (input === '2112') {
+                document.getElementById('password-screen').classList.add('hidden');
+                document.getElementById('app-screen').classList.remove('hidden');
+                startQuiz();
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        // Database of 20 questions
+        const questionsDB = [
+            {
+                id: 1,
+                prefix: "저는 매일 아침에 사과를 ",
+                target: "(먹어요)",
+                suffix: ".",
+                correctAnswers: ["먹는다"],
+                category: "Động từ (V)",
+                explanation: "<strong>먹다</strong> là một Động từ (Verb) có patchim (phụ âm dưới là 'ㄱ'). Theo nguyên tắc chia đuôi văn viết hiện tại đối với Động từ có patchim, ta cộng thêm <strong>-는다</strong> ➔ <strong>먹는다</strong>."
+            },
+            {
+                id: 2,
+                prefix: "날씨가 정말 ",
+                target: "(좋아요)",
+                suffix: ".",
+                correctAnswers: ["좋다"],
+                category: "Tính từ (A)",
+                explanation: "<strong>좋다</strong> là một Tính từ (Adjective). Theo nguyên tắc đuôi văn viết ở thì hiện tại đối với Tính từ, ta giữ nguyên dạng gốc từ điển ➔ <strong>좋다</strong> (không thêm ㄴ/는다)."
+            },
+            {
+                id: 3,
+                prefix: "제 친구는 베트남 ",
+                target: "(사람이에요)",
+                suffix: ".",
+                correctAnswers: ["사람이다"],
+                category: "Danh từ (N) + 이다",
+                explanation: "<strong>사람</strong> là một Danh từ (Noun) kết thúc bằng patchim 'ㅁ'. Công thức chuyển đổi Danh từ hiện tại dạng văn viết là: Danh từ + <strong>이다</strong> ➔ <strong>사람이다</strong>."
+            },
+            {
+                id: 4,
+                prefix: "어제 집에서 영화를 ",
+                target: "(봤어요)",
+                suffix: ".",
+                correctAnswers: ["봤다"],
+                category: "Quá khứ",
+                explanation: "Từ gốc là Động từ <strong>보다</strong> (xem). Đề bài đang chia ở thì quá khứ <strong>봤어요</strong>. Quy tắc chuyển thì quá khứ sang đuôi văn viết cực kỳ đơn giản: thay đuôi 요 bằng đuôi 다 ➔ <strong>봤다</strong>."
+            },
+            {
+                id: 5,
+                prefix: "주말에 친구를 ",
+                target: "(만날 거예요)",
+                suffix: ".",
+                correctAnswers: ["만날 것이다"],
+                category: "Tương lai",
+                explanation: "Từ gốc là Động từ <strong>만나다</strong>. Đề bài sử dụng cấu trúc tương lai <strong>-ㄹ 거예요</strong> (dành cho văn nói, thân mật lịch sự). Khi chuyển sang văn viết, ta sử dụng cấu trúc chuẩn tương đương là <strong>-ㄹ 것이다</strong> ➔ <strong>만날 것이다</strong>."
+            },
+            {
+                id: 6,
+                prefix: "한국어 공부는 아주 ",
+                target: "(재미있어요)",
+                suffix: ".",
+                correctAnswers: ["재미있다"],
+                category: "Tính từ (A)",
+                explanation: "Các từ kết thúc bằng đuôi <strong>있다/없다</strong> (như 재미있다, 맛있다, 없다...) được chia tương tự như một Tính từ trong văn viết hiện tại, tức là giữ nguyên dạng từ điển nguyên thể ➔ <strong>재미있다</strong>."
+            },
+            {
+                id: 7,
+                prefix: "민우 씨는 지금 도서관에 ",
+                target: "(가요)",
+                suffix: ".",
+                correctAnswers: ["간다"],
+                category: "Động từ (V)",
+                explanation: "<strong>가다</strong> là Động từ (Verb) không có patchim dưới gốc từ. Ở thì hiện tại của đuôi văn viết, đối với động từ không có phụ âm cuối, ta thêm phụ âm <strong>-ㄴ다</strong> ➔ <strong>간다</strong>."
+            },
+            {
+                id: 8,
+                prefix: "여기가 제가 다니는 ",
+                target: "(대학교예요)",
+                suffix: ".",
+                correctAnswers: ["대학교다", "대학교이다"],
+                category: "Danh từ (N) + 이다",
+                explanation: "<strong>대학교</strong> là một Danh từ (Noun) không có patchim (kết thúc bằng nguyên âm '요'). Trong văn viết, Danh từ không patchim đi với <strong>-다</strong> (hoặc có thể viết đầy đủ là <strong>-이다</strong>) ➔ <strong>대학교다</strong> / <strong>대학교이다</strong>."
+            },
+            {
+                id: 9,
+                prefix: "시험이 생각보다 너무 ",
+                target: "(어려웠어요)",
+                suffix: ".",
+                correctAnswers: ["어려웠다"],
+                category: "Quá khứ",
+                explanation: "Gốc từ là tính từ bất quy tắc 'ㅂ' <strong>어렵다</strong> (khó). Trong câu gốc đang sử dụng dạng quá khứ thân mật <strong>어려웠어요</strong>. Khi đưa về đuôi văn viết quá khứ, ta thay đổi đuôi 요 thành đuôi 다 ➔ <strong>어려웠다</strong>."
+            },
+            {
+                id: 10,
+                prefix: "내년에는 꼭 한국에 ",
+                target: "(가겠어요)",
+                suffix: ".",
+                correctAnswers: ["가겠다"],
+                category: "Ý chí / Tương lai",
+                explanation: "Từ gốc là Động từ <strong>가다</strong> (đi) kết hợp với đuôi thể hiện ý chí hoặc dự định tương lai <strong>-겠-</strong>. Khi chuyển đuôi câu thân mật lịch sự <strong>-겠어요</strong> sang văn phong viết chuẩn tường thuật, ta chỉ cần thay đuôi bằng <strong>-겠다</strong> ➔ <strong>가겠다</strong>."
+            },
+            {
+                id: 11,
+                prefix: "동생이 방에서 노래를 ",
+                target: "(들어요)",
+                suffix: ".",
+                correctAnswers: ["듣는다"],
+                category: "Động từ (V)",
+                explanation: "Từ gốc là Động từ bất quy tắc 'ㄷ' <strong>듣다</strong> (nghe). Vì chúng ta cộng thêm đuôi phụ âm <strong>-는다</strong> (bắt đầu bằng 'ㄴ') chứ không gặp nguyên âm, nên không biến âm chữ 'ㄷ' thành 'ㄹ'. Vậy giữ nguyên gốc chữ là <strong>듣</strong> + <strong>는다</strong> ➔ <strong>듣는다</strong>."
+            },
+            {
+                id: 12,
+                prefix: "이 구두는 디자인이 참 ",
+                target: "(예뻐요)",
+                suffix: ".",
+                correctAnswers: ["예쁘다"],
+                category: "Tính từ (A)",
+                explanation: "<strong>예쁘다</strong> là một Tính từ (Adjective). Ở thì hiện tại, tính từ được viết dưới dạng nguyên gốc nguyên thể của nó khi viết văn phong tường thuật ➔ <strong>예쁘다</strong>."
+            },
+            {
+                id: 13,
+                prefix: "그분은 우리 학교 ",
+                target: "(선생님이세요)",
+                suffix: ".",
+                correctAnswers: ["선생님이시다"],
+                category: "Kính ngữ (Honorific)",
+                explanation: "<strong>선생님</strong> là danh từ kết hợp với đuôi kính ngữ hiện tại thân mật <strong>-이세요</strong>. Khi chuyển đổi sang đuôi văn phong tường thuật viết, chúng ta phải giữ lại sắc thái kính ngữ lịch sự bằng cách sử dụng cấu trúc tương đương là <strong>-이시다</strong> ➔ <strong>선생님이시다</strong>."
+            },
+            {
+                id: 14,
+                prefix: "그분은 나이가 들어도 아주 ",
+                target: "(건강하세요)",
+                suffix: ".",
+                correctAnswers: ["건강하시다"],
+                category: "Kính ngữ (Honorific)",
+                explanation: "<strong>건강하다</strong> là một Tính từ (Adjective) kết hợp với kính ngữ <strong>-(으)시-</strong> tạo thành <strong>건강하시다</strong> (ở dạng nói thân mật là 건강하세요). Với Tính từ có kính ngữ ở thì hiện tại văn phong viết tường thuật, ta giữ nguyên dạng gốc kính ngữ nguyên thể của nó ➔ <strong>건강하시다</strong>."
+            },
+            {
+                id: 15,
+                prefix: "저녁에는 비가 ",
+                target: "(올 거예요)",
+                suffix: ".",
+                correctAnswers: ["올 것이다"],
+                category: "Tương lai",
+                explanation: "Động từ gốc là <strong>오다</strong> (đến/mưa rơi). Đuôi tương lai dự đoán <strong>올 거예요</strong> được chuyển thành đuôi tương lai chuẩn văn phong viết nghị luận/tường thuật ➔ <strong>올 것이다</strong>."
+            },
+            {
+                id: 16,
+                prefix: "책상 위에 노트북이 ",
+                target: "(있어요)",
+                suffix: ".",
+                correctAnswers: ["있다"],
+                category: "Tính từ (A)",
+                explanation: "Từ <strong>있다</strong> (có/ở) được chia giống như tính từ khi viết văn phong tường thuật hiện tại, vì thế ta chỉ cần dùng dạng nguyên mẫu gốc từ điển của nó ➔ <strong>있다</strong>."
+            },
+            {
+                id: 17,
+                prefix: "아버지는 매일 운동을 ",
+                target: "(하세요)",
+                suffix: ".",
+                correctAnswers: ["하신다"],
+                category: "Kính ngữ (Honorific)",
+                explanation: "Động từ <strong>하다</strong> kết hợp kính ngữ <strong>-(으)시-</strong> tạo thành gốc kính ngữ là <strong>하시다</strong> (thân mật là 하세요). Khi chia đuôi văn viết hiện tại, vì gốc kính ngữ <strong>하시-</strong> không có patchim nên ta áp dụng thêm phụ âm <strong>-ㄴ다</strong> vào dưới gốc ➔ <strong>하신다</strong>."
+            },
+            {
+                id: 18,
+                prefix: "저 식당은 항상 손님이 ",
+                target: "(많아요)",
+                suffix: ".",
+                correctAnswers: ["많다"],
+                category: "Tính từ (A)",
+                explanation: "<strong>많다</strong> là Tính từ (Adjective). Trong văn viết tường thuật ở thì hiện tại, tính từ giữ nguyên dạng gốc từ điển ➔ <strong>많다</strong>."
+            },
+            {
+                id: 19,
+                prefix: "지난주에 고향에 ",
+                target: "(다녀왔어요)",
+                suffix: ".",
+                correctAnswers: ["다녀왔다"],
+                category: "Quá khứ",
+                explanation: "Gốc từ là động từ <strong>다녀오다</strong> (đi rồi về). Đề bài chia ở thì quá khứ thân mật là <strong>다녀왔어요</strong>. Chuyển sang đuôi văn phong viết tường thuật chỉ cần chuyển 요 thành 다 ➔ <strong>다녀왔다</strong>."
+            },
+            {
+                id: 20,
+                prefix: "주말에 자주 집에서 음식을 ",
+                target: "(만들어요)",
+                suffix: ".",
+                correctAnswers: ["만든다"],
+                category: "Động từ (V)",
+                explanation: "<strong>만들다</strong> (làm, chế biến) là Động từ kết thúc bằng phụ âm dưới <strong>'ㄹ' (Bất quy tắc)</strong>. Theo quy tắc, khi gốc từ kết thúc bằng 'ㄹ' gặp đuôi bắt đầu bằng 'ㄴ' (như -ㄴ다 / -는다), phụ âm 'ㄹ' sẽ bị lược bỏ đi. Gốc từ chỉ còn <strong>만드-</strong>, sau đó ta gắn đuôi <strong>-ㄴ다</strong> vào ➔ <strong>만든다</strong>."
+            }
+        ];
+
+        // State variables
+        let currentQuestionsList = [];
+        let currentIndex = 0;
+        let score = 0;
+        let currentQuestionChecked = false;
+
+        // Shuffle function (Fisher-Yates)
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        // Initialize Quiz
+        function startQuiz() {
+            questionsDB.forEach(q => {
+                q.userAnswer = "";
+                q.isChecked = false;
+                q.isCorrect = false;
+            });
+
+            currentQuestionsList = shuffle([...questionsDB]);
+            currentIndex = 0;
+            score = 0;
+            currentQuestionChecked = false;
+
+            document.getElementById("score-correct").innerText = "0";
+            document.getElementById("quiz-card").classList.remove("hidden");
+            document.getElementById("complete-card").classList.add("hidden");
+            
+            showQuestion();
+        }
+
+        // Display current question
+        function showQuestion() {
+            currentQuestionChecked = false;
+            const currentQuestion = currentQuestionsList[currentIndex];
+
+            document.getElementById("progress-text").innerText = `Câu ${currentIndex + 1}/20`;
+            const progressPercent = ((currentIndex + 1) / 20) * 100;
+            document.getElementById("progress-bar").style.width = `${progressPercent}%`;
+
+            document.getElementById("sentence-prefix").innerText = currentQuestion.prefix;
+            document.getElementById("sentence-target").innerText = currentQuestion.target;
+            document.getElementById("sentence-suffix").innerText = currentQuestion.suffix;
+            document.getElementById("badge-category").innerText = currentQuestion.category;
+
+            const btnPrev = document.getElementById("btn-prev");
+            if (currentIndex > 0) {
+                btnPrev.classList.remove("hidden");
+            } else {
+                btnPrev.classList.add("hidden");
+            }
+
+            const inputField = document.getElementById("user-answer");
+            const btnSubmit = document.getElementById("btn-submit");
+            const btnNext = document.getElementById("btn-next");
+            const explanationBox = document.getElementById("explanation-box");
+
+            if (currentQuestion.isChecked) {
+                currentQuestionChecked = true;
+                inputField.value = currentQuestion.userAnswer;
+                inputField.readOnly = true;
+
+                inputField.classList.remove("border-white/20", "bg-slate-950/80", "border-emerald-500", "border-rose-500", "bg-emerald-950/40", "bg-rose-950/40");
+                if (currentQuestion.isCorrect) {
+                    inputField.classList.add("border-emerald-500", "bg-emerald-950/40");
+                    showFeedbackUI(true, currentQuestion);
+                } else {
+                    inputField.classList.add("border-rose-500", "bg-rose-950/40");
+                    showFeedbackUI(false, currentQuestion);
+                }
+
+                btnSubmit.classList.add("hidden");
+                btnNext.classList.remove("hidden");
+                explanationBox.classList.remove("hidden");
+            } else {
+                inputField.value = "";
+                inputField.readOnly = false;
+                inputField.focus();
+                inputField.classList.remove("border-emerald-500", "border-rose-500", "bg-emerald-950/40", "bg-rose-950/40");
+                inputField.classList.add("border-white/20", "bg-slate-950/80");
+
+                btnSubmit.classList.remove("hidden");
+                btnNext.classList.add("hidden");
+                explanationBox.classList.add("hidden");
+            }
+        }
+
+        function showFeedbackUI(isCorrect, questionObj) {
+            const feedbackAlert = document.getElementById("feedback-alert");
+            const feedbackTitle = document.getElementById("feedback-title");
+            const feedbackText = document.getElementById("feedback-text");
+            const explanationContent = document.getElementById("explanation-content");
+
+            if (isCorrect) {
+                feedbackAlert.className = "p-4 rounded-xl mb-4 bg-emerald-950/80 text-emerald-300 border border-emerald-500/40 correct-animation";
+                feedbackTitle.innerText = "Chính xác! Xuất sắc lắm";
+                feedbackText.innerHTML = `Đáp án của bạn hoàn toàn chính xác: <span class="font-bold text-white">${questionObj.correctAnswers.join(" hoặc ")}</span>`;
+            } else {
+                feedbackAlert.className = "p-4 rounded-xl mb-4 bg-rose-950/80 text-rose-300 border border-rose-500/40";
+                feedbackTitle.innerText = "Chưa chính xác mất rồi";
+                feedbackText.innerHTML = `Đáp án đúng phải là: <span class="font-bold underline text-white">${questionObj.correctAnswers.join(" hoặc ")}</span>`;
+            }
+            explanationContent.innerHTML = questionObj.explanation;
+        }
+
+        function checkAnswer() {
+            if (currentQuestionChecked) return;
+
+            const inputField = document.getElementById("user-answer");
+            const userAnswerCleaned = inputField.value.trim().replace(/\s+/g, '');
+            const currentQuestion = currentQuestionsList[currentIndex];
+
+            if (!userAnswerCleaned) {
+                inputField.focus();
+                return;
+            }
+
+            currentQuestionChecked = true;
+            inputField.readOnly = true;
+
+            const isCorrect = currentQuestion.correctAnswers.some(ans => 
+                ans.trim().replace(/\s+/g, '') === userAnswerCleaned
+            );
+
+            currentQuestion.userAnswer = inputField.value;
+            currentQuestion.isChecked = true;
+            currentQuestion.isCorrect = isCorrect;
+
+            score = currentQuestionsList.filter(q => q.isChecked && q.isCorrect).length;
+            document.getElementById("score-correct").innerText = score;
+
+            inputField.classList.remove("border-white/20", "bg-slate-950/80");
+            if (isCorrect) {
+                inputField.classList.add("border-emerald-500", "bg-emerald-950/40");
+            } else {
+                inputField.classList.add("border-rose-500", "bg-rose-950/40");
+            }
+
+            showFeedbackUI(isCorrect, currentQuestion);
+
+            document.getElementById("explanation-box").classList.remove("hidden");
+            document.getElementById("btn-submit").classList.add("hidden");
+            document.getElementById("btn-next").classList.remove("hidden");
+        }
+
+        function prevQuestion() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                document.getElementById("quiz-card").classList.remove("hidden");
+                document.getElementById("complete-card").classList.add("hidden");
+                showQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+            if (currentIndex < currentQuestionsList.length) {
+                showQuestion();
+            } else {
+                document.getElementById("quiz-card").classList.add("hidden");
+                document.getElementById("complete-card").classList.remove("hidden");
+                document.getElementById("final-score").innerText = `${score}/20`;
+            }
+        }
+
+        function restartQuiz() {
+            startQuiz();
+        }
+
+        let enterCooldown = false;
+
+        document.getElementById("user-answer").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                
+                if (enterCooldown) return;
+                
+                const btnSubmit = document.getElementById("btn-submit");
+                const btnNext = document.getElementById("btn-next");
+
+                if (!btnSubmit.classList.contains("hidden")) {
+                    checkAnswer();
+                    enterCooldown = true;
+                    setTimeout(() => { enterCooldown = false; }, 400);
+                } 
+                else if (!btnNext.classList.contains("hidden")) {
+                    nextQuestion();
+                    enterCooldown = true;
+                    setTimeout(() => { enterCooldown = false; }, 400);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
