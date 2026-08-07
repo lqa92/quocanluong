@@ -1,1 +1,499 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn thi cuối kỳ Hình thái học tiếng Hàn</title>
+    <!-- Nhúng font chữ Plus Jakarta Sans đồng bộ với trang chủ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+        body {
+            /* Đường dẫn ảnh nền Google Drive */
+            background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.85)), 
+                              url('https://lh3.googleusercontent.com/d/13YGXblXo3gWanNadE8JAspxErw5BI0FZ');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .back-btn {
+            align-self: flex-start;
+            margin-bottom: 20px;
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s ease;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 8px 16px;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .back-btn:hover { color: #7dd3fc; text-decoration: underline; background: rgba(15, 23, 42, 0.8); }
+        
+        .quiz-container {
+            background-color: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            width: 100%;
+            max-width: 750px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .main-title {
+            text-align: center;
+            color: #38bdf8;
+            font-size: 1.45rem;
+            font-weight: 800;
+            margin-top: 0;
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            letter-spacing: -0.5px;
+        }
+        .menu-screen { text-align: center; padding: 20px 0; }
+        .menu-btn {
+            display: block;
+            width: 100%;
+            max-width: 420px;
+            margin: 16px auto;
+            padding: 16px 20px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.15s, background-color 0.2s, box-shadow 0.2s;
+        }
+        .menu-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+        .btn-theory { background-color: #0284c7; }
+        .btn-theory:hover { background-color: #0369a1; }
+        .btn-practice { background-color: #0d9488; }
+        .btn-practice:hover { background-color: #0f766e; }
+        .btn-exam { background-color: #e11d48; }
+        .btn-exam:hover { background-color: #be123c; }
 
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+        .progress-text { font-weight: 700; color: #38bdf8; }
+        .score-text { font-weight: 700; color: #4ade80; }
+        .timer-text { font-weight: 700; color: #f43f5e; }
+
+        .question-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #f1f5f9;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+        .options-container { display: flex; flex-direction: column; gap: 12px; }
+        .option-btn {
+            background-color: rgba(51, 65, 85, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 14px 18px;
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #f8fafc;
+            white-space: pre-line;
+        }
+        .option-btn:hover:not(:disabled) { background-color: rgba(71, 85, 105, 0.9); border-color: rgba(255, 255, 255, 0.25); }
+        .option-btn.selected { background-color: #0284c7 !important; border-color: #38bdf8 !important; font-weight: 700; }
+        .option-btn.correct { background-color: #15803d !important; border-color: #22c55e !important; font-weight: 700; }
+        .option-btn.wrong { background-color: #be123c !important; border-color: #f43f5e !important; font-weight: 700; }
+        .option-btn:disabled { cursor: default; }
+
+        .controls { display: flex; justify-content: space-between; margin-top: 30px; padding-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .btn-nav {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #0284c7;
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-nav:hover:not(:disabled) { background-color: #0369a1; }
+        .btn-nav:disabled { background-color: #475569; cursor: not-allowed; }
+        .btn-home { background-color: #64748b; }
+        .btn-home:hover { background-color: #475569; }
+        .btn-submit { background-color: #e11d48; }
+        .btn-submit:hover { background-color: #be123c; }
+
+        .result-screen { text-align: center; padding: 20px 0; }
+        .result-screen h2 { color: #4ade80; font-weight: 700; }
+        .btn-action { margin: 10px 5px; padding: 12px 25px; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; }
+
+        .review-container { margin-top: 30px; text-align: left; }
+        .review-item { background-color: rgba(51, 65, 85, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 15px; margin-bottom: 15px; }
+        .review-item.status-correct { border-left: 5px solid #22c55e; }
+        .review-item.status-wrong { border-left: 5px solid #f43f5e; }
+        .review-q { font-weight: 600; margin-bottom: 10px; white-space: pre-line; }
+        .review-ans { font-size: 0.95rem; margin: 4px 0; white-space: pre-line; }
+
+        .footer-credits { margin-top: 25px; padding-top: 15px; border-top: 1px dashed rgba(255, 255, 255, 0.2); text-align: center; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; font-weight: 400; }
+    </style>
+</head>
+<body>
+
+<a href="index.html#korean" class="back-btn">← Quay lại ENJOY KOREAN</a>
+
+<div class="quiz-container">
+    <h1 class="main-title">ÔN TẬP CUỐI KỲ HÌNH THÁI HỌC TIẾNG HÀN</h1>
+
+    <!-- Màn hình chính trắc nghiệm -->
+    <div id="menu-box" class="menu-screen">
+        <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 25px; font-weight: 400;">Vui lòng chọn chế độ học tập:</p>
+        <button class="menu-btn btn-theory" onclick="startMode('theory')">1. Ôn tập Lý thuyết (60 câu)</button>
+        <button class="menu-btn btn-practice" onclick="startMode('practice')">2. Ôn tập Bài tập (20 câu)</button>
+        <button class="menu-btn btn-exam" onclick="startMode('exam')">3. Kiểm tra (Random 20 câu - 10 phút)</button>
+    </div>
+
+    <!-- Màn hình làm bài -->
+    <div id="quiz-box" style="display: none;">
+        <div class="header">
+            <span class="progress-text" id="progress">Câu hỏi 1 / 60</span>
+            <span class="score-text" id="score-display">Điểm: 0</span>
+            <span class="timer-text" id="timer-display" style="display: none;">Thời gian: 10:00</span>
+        </div>
+        <div class="question-title" id="question-text">Đang tải câu hỏi...</div>
+        <div class="options-container" id="options-box"></div>
+        <div class="controls">
+            <button class="btn-nav btn-home" onclick="goHome()">🏠 Menu</button>
+            <div>
+                <button class="btn-nav" id="btn-prev" onclick="prevQuestion()" disabled>← Câu trước</button>
+                <button class="btn-nav" id="btn-next" onclick="nextQuestion()">Câu tiếp →</button>
+                <button class="btn-nav btn-submit" id="btn-finish" onclick="confirmSubmit()" style="display: none;">Nộp bài</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Màn hình kết quả -->
+    <div id="result-box" class="result-screen" style="display: none;">
+        <h2 id="result-title">Hoàn thành bài ôn tập!</h2>
+        <p id="final-score" style="font-size: 1.2rem; margin: 20px 0;"></p>
+        <button class="btn-action btn-theory" onclick="restartMode()">Làm lại chế độ này</button>
+        <button class="btn-action btn-home" onclick="goHome()">Về menu trắc nghiệm</button>
+        
+        <div id="review-section" class="review-container"></div>
+    </div>
+
+    <div class="footer-credits">
+        Trang web này được thiết kế bởi Thạc sĩ Lương Quốc An (HUFLIT) dựa trên công cụ Gemini
+    </div>
+</div>
+
+<script>
+const theoryData = [
+    { q: "문장에서 주어, 목적어, 보어로 쓰이는 단어 부류를 무엇이라고 합니까?", options: ["체언", "용언", "수식언", "독립언"], answer: "체언" },
+    { q: "어근 앞에 붙는 접사를 무엇이라고 합니까?", options: ["어미", "어간", "접미사", "접두사"], answer: "접두사" },
+    { q: "형태론이 연구하는 대상이 아닌 것을 고르십시오.", options: ["단어", "형태소", "단어 형성", "문장 성분"], answer: "문장 성분" },
+    { q: "어휘적인 의미를 가지는 형태소를 무엇이라고 합니까?", options: ["형식형태소", "문법형태소", "실질형태소", "유일형태소"], answer: "실질형태소" },
+    { q: "접사를 어근에 대한 작용에 따라 분류할 때, 어근의 품사를 바꾸는 접사를 무엇이라고 합니까?", options: ["접두사", "접미사", "한정적 접사", "지배적 접사"], answer: "지배적 접사" },
+    { q: "형식형태소에 속하는 것을 모두 포함한 것을 고르십시오.", options: ["자립형태소 전체", "명사, 대명사, 수사", "동사와 형용사의 어간", "조사, 어미, 접두사, 접미사"], answer: "조사, 어미, 접두사, 접미사" },
+    { q: "다음 중 체언에 속하지 않는 것을 고르십시오.", options: ["명사", "조사", "대명사", "수사"], answer: "조사" },
+    { q: "특정 단어의 구성 요소로만 쓰이는 형태소를 무엇이라고 합니까?", options: ["이형태", "유일형태소", "자립형태소", "형식형태소"], answer: "유일형태소" },
+    { q: "문장에서 홀로 쓰일 수 없는 형태소를 무엇이라고 합니까?", options: ["자립형태소", "의존형태소", "실질형태소", "유일형태소"], answer: "의존형태소" },
+    { q: "여러 성분 사이의 관계를 나타내는 단어 부류를 무엇이라고 합니까?", options: ["체언", "관계언", "수식언", "독립언"], answer: "관계언" },
+    { q: "재귀대명사에 대한 설명으로 맞는 것을 고르십시오.", options: ["화자 자신을 대신하는 대명사이다.", "청자 자신을 대신하는 대명사이다.", "모르는 대상을 가리키는 대명사이다.", "앞에 나온 체언을 대신하는 주어로 쓰이는 대명사이다."], answer: "앞에 나온 체언을 대신하는 주어로 쓰이는 대명사이다." },
+    { q: "접사를 어근과 결합하는 위치에 따라 분류할 때, 어근 뒤에 붙는 접사를 무엇이라고 합니까?", options: ["접두사", "접미사", "지배적 접사", "한정적 접사"], answer: "접미사" },
+    { q: "다음 중 능격동사에 대한 설명으로 맞는 것을 고르십시오.", options: ["동작이 주어에만 영향을 미치는 동사이다.", "동작이 목적어에도 영향을 미치는 동사이다.", "자동사와 타동사로 모두 쓰이는 동사이다.", "반드시 목적어와 결합해야 하는 동사이다."], answer: "자동사와 타동사로 모두 쓰이는 동사이다." },
+    { q: "미지칭 대명사에 해당하는 것을 고르십시오.", options: ["아무", "자기", "누구", "당신"], answer: "누구" },
+    { q: "접두 파생에 대한 설명으로 맞는 것을 고르십시오.", options: ["접두사는 어근의 뒤에 결합한다.", "접두사는 문법적 기능만 더해 준다.", "접두사가 결합하면 항상 품사가 바뀐다.", "접두사가 결합해서 만들어진 파생어의 품사는 어근의 품사와 같다."], answer: "접두사가 결합해서 만들어진 파생어의 품사는 어근의 품사와 같다." },
+    { q: "관형사에 대한 설명으로 맞지 않은 것을 고르십시오.", options: ["활용하지 않는다.", "조사와 결합할 수 있다.", "체언 앞에 쓰여 그 체언을 꾸며 준다.", "성상관형사, 수관형사, 지시관형사로 나뉜다."], answer: "조사와 결합할 수 있다." },
+    { q: "부사가 여러 개 겹쳐 쓰일 때의 일반적인 순서로 맞는 것을 고르십시오.", options: ["성상부사 → 지시부사 → 부정부사", "지시부사 → 성상부사 → 부정부사", "부정부사 → 지시부사 → 성상부사", "지시부사 → 부정부사 → 성상부사"], answer: "지시부사 → 성상부사 → 부정부사" },
+    { q: "부정대명사에 대한 설명으로 맞는 것을 고르십시오.", options: ["청자를 대신하는 대명사이다.", "특정한 사람을 가리키지 않을 때 쓰이는 대명사이다.", "화자로부터의 거리에 따라 선택되는 대명사이다.", "앞에 나온 체언을 대신하는 3인칭 주어 대명사이다."], answer: "특정한 사람을 가리키지 않을 때 쓰이는 대명사이다." },
+    { q: "두 단어의 일부를 결합해서 새로운 단어를 만드는 방법을 무엇이라고 합니까?", options: ["두자어 형성", "혼성", "음절 축약", "영파생"], answer: "혼성" },
+    { q: "다음 중 보조사에 해당하는 것을 고르십시오.", options: ["이/가", "을/를", "의", "은/는"], answer: "은/는" },
+    { q: "감탄사에 대한 설명으로 맞는 것을 고르십시오.", options: ["체언을 꾸며 주는 품사이다.", "용언을 꾸며 주는 품사이다.", "화자의 감정이나 의지를 나타내는 품사이다.", "문장 속에서 다른 성분과의 관계를 나타내는 품사이다."], answer: "화자의 감정이나 의지를 나타내는 품사이다." },
+    { q: "어간에 대한 설명으로 맞는 것을 고르십시오.", options: ["자립성이 있는 형태소이다.", "어미와 결합하는 어근이다.", "문법적 의미만을 가진 형태소이다.", "새로운 단어를 만들어 내는 접사이다."], answer: "어미와 결합하는 어근이다." },
+    { q: "형태소의 정의로 가장 알맞은 것을 고르십시오.", options: ["자립성이 있는 말의 단위이다.", "문장을 구성하는 최소 단위이다.", "의미를 가지는 가장 작은 말의 단위이다.", "두 개 이상의 음절로 이루어진 단위이다."], answer: "의미를 가지는 가장 작은 말의 단위이다." },
+    { q: "3인칭대명사에 해당하지 않는 것을 고르십시오.", options: ["그", "그녀", "그분", "저희"], answer: "저희" },
+    { q: "형태를 기준으로 한 단어 분류에 대한 설명으로 맞는 것을 고르십시오.", options: ["단어가 자립성이 있는지 여부에 따라 분류한다.", "문장에서 단어가 어떤 역할을 하는지에 따라 분류한다.", "단어가 공통으로 가지는 추상적 의미에 따라 분류한다.", "문장에서 단어의 형태가 변하는지 여부에 따라 분류한다."], answer: "문장에서 단어의 형태가 변하는지 여부에 따라 분류한다." },
+    { q: "어근과 접사에 대한 설명으로 맞지 않은 것을 고르십시오.", options: ["접사는 어근의 앞이나 뒤에 붙는다.", "어근은 어휘적인 의미를 결정하는 요소이다.", "접사는 문법적인 의미를 가지는 요소이다.", "어근은 항상 접사와만 결합한다."], answer: "어근은 항상 접사와만 결합한다." },
+    { q: "파생법과 합성법을 비교한 설명으로 맞지 않은 것을 고르십시오.", options: ["합성법은 어근과 어근이 결합해서 단어를 만든다.", "파생법은 접사가 어근에 결합해서 단어를 만든다.", "파생법은 접사의 위치에 따라 접두 파생과 접미 파생으로 나뉜다.", "합성법은 결합 방식과 관계없이 모두 같은 유형으로 분류된다."], answer: "합성법은 결합 방식과 관계없이 모두 같은 유형으로 분류된다." },
+    { q: "의존명사를 꾸며 주는 관형어의 유형에 속하지 않는 것을 고르십시오.", options: ["관형사", "체언", "관형격조사", "부사격조사"], answer: "부사격조사" },
+    { q: "다음 중 부사의 분류에 해당하지 않는 것을 고르십시오.", options: ["문장부사", "성분부사", "접속부사", "의지부사"], answer: "의지부사" },
+    { q: "자립형태소에 속하지 않는 것을 고르십시오.", options: ["명사", "부사", "관형사", "서술격조사"], answer: "서술격조사" },
+    { q: "두 어근의 의미와는 다른 제3의 의미를 갖는 합성어를 무엇이라고 합니까?", options: ["대등 합성어", "종속 합성어", "융합 합성어", "통사적 합성어"], answer: "융합 합성어" },
+    { q: "의존명사에 대한 설명으로 맞는 것을 고르십시오.", options: ["감정을 가진 대상을 가리키는 명사이다.", "동작이나 상태의 의미를 갖는 명사이다.", "앞에 관형어가 없어도 문장 구성에 문제가 없는 명사이다.", "이를 수식해 주는 관형어가 앞에 있어야만 하는 명사이다."], answer: "이를 수식해 주는 관형어가 앞에 있어야만 하는 명사이다." },
+    { q: "다음 중 독립언에 해당하는 품사를 고르십시오.", options: ["조사", "수사", "관형사", "감탄사"], answer: "감탄사" },
+    { q: "문장 속 체언이 갖는 자격을 표시해 주는 조사를 무엇이라고 합니까?", options: ["보조사", "격조사", "접속조사", "관형사"], answer: "격조사" },
+    { q: "우리말의 일반적인 문장 구성 방식(어순)에 맞게 결합한 합성어를 무엇이라고 합니까?", options: ["통사적 합성어", "비통사적 합성어", "파생어", "단일어"], answer: "통사적 합성어" },
+    { q: "접두사와 접미사에 대한 설명으로 맞지 않은 것을 고르십시오.", options: ["접두사는 어근 앞에 붙는 접사이다.", "접미사는 어근 뒤에 붙는 접사이다.", "접사가 붙는 위치에 따른 분류이다.", "접두사와 접미사는 모두 자립형태소이다."], answer: "접두사와 접미사는 모두 자립형태소이다." },
+    { q: "다음 중 형태소의 특징을 올바르게 설명한 것은 무엇입니까?", options: ["형태소는 반드시 혼자 사용할 수 있어야 한다.", "형태소는 의미를 가진 가장 작은 단위이다.", "형태소는 항상 더 작은 단위로 나눌 수 있다.", "형태소는 주변 환경과 관계없이 항상 같은 모습으로 나타난다."], answer: "형태소는 의미를 가진 가장 작은 단위이다." },
+    { q: "다음 중 수식언에 속하는 품사를 고르십시오.", options: ["명사, 대명사", "동사, 형용사", "조사, 감탄사", "관형사, 부사"], answer: "관형사, 부사" },
+    { q: "단어들이 공통적으로 가지는 추상적인 의미를 기준으로 품사를 분류하는 기준을 무엇이라고 합니까?", options: ["형태", "기능", "의미", "어원"], answer: "의미" },
+    { q: "품사를 분류하는 세 가지 기준이 아닌 것을 고르십시오.", options: ["형태", "기능", "의미", "어원"], answer: "어원" },
+    { q: "어근의 앞이나 뒤에 붙어 의미나 기능을 더해 주는 요소를 무엇이라고 합니까?", options: ["어간", "접사", "어미", "형태소"], answer: "접사" },
+    { q: "한국어의 형태적 특징에 대한 설명으로 틀린 것을 고르십시오.", options: ["한국어는 교착어에 속한다.", "조사와 어미가 발달되어 있다.", "문법적 요소가 결합할 때 일정한 순서가 존재한다.", "문법적 요소는 주로 단어나 어간의 앞에 결합한다."], answer: "문법적 요소는 주로 단어나 어간의 앞에 결합한다." },
+    { q: "서술성 명사에 대한 설명으로 맞는 것을 고르십시오.", options: ["반드시 사람을 가리키는 명사이다.", "항상 고유명사로만 쓰인다.", "감정을 가진 대상을 가리키는 명사이다.", "동작이나 상태의 의미를 가지며 흔히 접사 ‘하다’와 결합하여 동사나 형용사로 쓰인다."], answer: "동작이나 상태의 의미를 가지며 흔히 접사 ‘하다’와 결합하여 동사나 형용사로 쓰인다." },
+    { q: "둘 이상의 명사구를 이어 주는 조사를 무엇이라고 합니까?", options: ["보조사", "격조사", "접속조사", "서술격조사"], answer: "접속조사" },
+    { q: "다음 중 최소자립형식에 대한 설명으로 맞는 것을 고르십시오.", options: ["문법적 의미만을 가진 형태소이다.", "하나의 단어가 문장 안에서 분리되어 사용될 수 없다는 성질이다.", "어근 앞이나 뒤에 붙어 의미나 기능을 더해 주는 요소이다.", "문장 안에서 다른 요소의 도움 없이 홀로 쓰일 수 있는 최소의 단위이다."], answer: "문장 안에서 다른 요소의 도움 없이 홀로 쓰일 수 있는 최소의 단위이다." },
+    { q: "부사는 문장에서 어떤 요소를 꾸며 줄 수 있습니까?", options: ["문장 전체", "용언", "다른 수식언", "위의 모든 것"], answer: "위의 모든 것" },
+    { q: "본용언과 보조용언에 대한 설명으로 맞는 것을 고르십시오.", options: ["보조용언은 문법적 의미를 나타낸다.", "보조용언은 반드시 본용언과 형태가 다르다.", "본용언은 문장에서 단독으로 서술어로 쓰이지 못한다.", "본용언과 보조용언은 관형사형 어미로 연결된다."], answer: "보조용언은 문법적 의미를 나타낸다." },
+    { q: "양수사에 대한 설명으로 맞는 것을 고르십시오.", options: ["정수만 있고 부정수는 없다.", "고유어 계열로만 쓰인다.", "사물의 순서를 나타내는 수사이다.", "사물의 수량을 나타내는 수사이다."], answer: "사물의 수량을 나타내는 수사이다." },
+    { q: "문장 안에서 체언이 주어의 자격을 가지도록 해 주는 조사를 무엇이라고 합니까?", options: ["주격조사", "목적격조사", "보격조사", "관형격조사"], answer: "주격조사" },
+    { q: "불규칙 활용의 예로 알맞은 것을 고르십시오.", options: ["먹- + -어 → 먹어", "잡- + -아 → 잡아", "좋- + -아서 → 좋아서", "듣- + -어요 → 들어요"], answer: "듣- + -어요 → 들어요" },
+    { q: "품사의 분류 기준 중 ‘기능’에 대한 설명으로 맞는 것을 고르십시오.", options: ["단어의 어원을 살핀다.", "단어가 공통으로 가지는 추상적인 의미를 살핀다.", "문장에서 단어의 형태가 변하는지 여부를 살핀다.", "단어가 문장에서 다른 단어와의 관계 속에서 어떤 역할을 하는지 살핀다."], answer: "단어가 문장에서 다른 단어와의 관계 속에서 어떤 역할을 하는지 살핀다." },
+    { q: "의미 기능을 더해 주며 여러 문장성분에 두루 결합할 수 있는 조사를 무엇이라고 합니까?", options: ["격조사", "접속조사", "보조사", "호격조사"], answer: "보조사" },
+    { q: "단어의 구조를 분석할 때 각 단계의 구성에 참여하는 요소를 무엇이라고 합니까?", options: ["직소", "어근", "형태소", "이형태"], answer: "직소" },
+    { q: "접미 파생에 대한 설명으로 알맞은 것을 고르십시오.", options: ["어근의 앞에 붙는다.", "어근의 품사를 바꾸기도 한다.", "단어의 형태를 변화시키지 않는다.", "어근 없이 혼자서 쓰일 수 있다."], answer: "어근의 품사를 바꾸기도 한다." },
+    { q: "복합어에 대한 설명으로 맞는 것을 고르십시오.", options: ["하나의 어근으로 구성된 단어이다.", "반드시 접두사와 결합해서 만들어진 단어이다.", "조사나 어미가 결합해서 만들어진 단어이다.", "어근과 어근, 또는 어근과 파생접사가 결합하여 형성된 단어이다."], answer: "어근과 어근, 또는 어근과 파생접사가 결합하여 형성된 단어이다." },
+    { q: "보조사에 대한 설명으로 맞는 것을 고르십시오.", options: ["체언에만 결합할 수 있다.", "문장 속 체언의 자격만을 표시한다.", "둘 이상의 명사구가 이어주는 기능만 한다.", "부사나 연결어미의 뒤에도 결합할 수 있다."], answer: "부사나 연결어미의 뒤에도 결합할 수 있다." },
+    { q: "‘큰부리새’를 [[[[크]ㄴ]부리]새]와 같이 나타내는 방식을 무엇이라고 합니까?", options: ["의미 구조", "형태 구조", "수형도 형식", "각괄호 형식"], answer: "각괄호 형식" },
+    { q: "합성어와 파생어를 구별하는 기준으로 맞는 것을 고르십시오.", options: ["어간이 있으면 합성어, 없으면 파생어이다.", "형태가 변하면 파생어, 변하지 않으면 합성어이다.", "자립형태소이면 합성어, 의존형태소이면 파생어이다.", "직접구성요소가 모두 어근이면 합성어, 그중 하나가 접사이면 파생어이다."], answer: "직접구성요소가 모두 어근이면 합성어, 그중 하나가 접사이면 파생어이다." },
+    { q: "기능에 따른 분류 중 서술어로 쓰이는 단어 부류를 무엇이라고 합니까?", options: ["체언", "용언", "수식언", "관계언"], answer: "용언" },
+    { q: "동사와 형용사를 구분하는 특징으로 알맞지 않은 것을 고르십시오.", options: ["동사는 현재 시제 어미 ‘-ㄴ다/-는다’와 결합할 수 있다.", "형용사는 명령형 어미 ‘-아라/-어라’와 결합하기 어렵다.", "동사와 형용사는 모두 문장에서 활용을 한다.", "형용사는 청유형 어미 ‘-자’와 자유롭게 결합한다."], answer: "형용사는 청유형 어미 ‘-자’와 자유롭게 결합한다." }
+];
+
+const practiceData = [
+    { q: "다음 단어들 중에서 모두 합성어인 것을 고르십시오.", options: ["새롭다, 이모, 높푸르다", "평화적, 앞바다, 들볶다", "손발, 뛰어나다, 돌다리", "열리다, 풋사과, 코웃음"], answer: "손발, 뛰어나다, 돌다리" },
+    { q: "다음 문장에서 의존형태소의 개수를 고르십시오.\n“선생님은 사무실에서 책을 읽으신다.”", options: ["4", "5", "6", "7"], answer: "7" },
+    { q: "다음 문장에서 단어의 개수를 고르십시오.\n“하늘이 매우 맑고 파랗게 빛난다.”", options: ["5", "6", "7", "8"], answer: "7" },
+    { q: "다음 문장을 단어로 분석할 때 조사와 어미는 몇 개 있습니까?\n“학생들이 도서관에서 책을 많이 읽었다.”", options: ["조사: 3개, 어미: 2개", "조사: 2개, 어미: 3개", "조사: 3개, 어미: 3개", "조사: 2개, 어미: 2개"], answer: "조사: 3개, 어미: 2개" },
+    { q: "다음 단어들 중에서 모두 의존명사인 것을 고르십시오.", options: ["때문, 시간, 밖", "것, 수, 나름", "마리, 곳, 우리", "따름, 책상, 만큼"], answer: "것, 수, 나름" },
+    { q: "다음 중 용언 활용이 틀린 것을 고르십시오.", options: ["물으면 (묻- + -으면)", "추워도 (춥- + -아/어도)", "낳은 (나- + -은)", "하얀 (하얗- + -은)"], answer: "낳은 (나- + -은)" },
+    { q: "다음 문장에서 실질형태소의 개수를 고르십시오.\n“동생이 마당에서 개를 부른다.”", options: ["3", "4", "5", "6"], answer: "4" },
+    { q: "다음 단어들 중 대등합성어인 것을 고르십시오.", options: ["앞뒤", "김치찌개", "들어가다", "책가방"], answer: "앞뒤" },
+    { q: "다음 단어들 중 비통사적 합성어인 것을 고르십시오.", options: ["알아보다", "큰형", "검붉다", "눈물"], answer: "검붉다" },
+    { q: "다음 단어들 중 접미파생어인 것을 고르십시오.", options: ["비도덕", "군소리", "풋사과", "멋쟁이"], answer: "멋쟁이" },
+    { q: "다음 문장에서 형식형태소의 개수를 고르십시오.\n“물이 깊어서 수영을 못 한다.”", options: ["3", "4", "5", "6"], answer: "5" },
+    { q: "‘둥근달’의 직접구성요소 중 ‘둥근’의 내부 분석으로 맞는 것은 무엇입니까?", options: ["둥글- + -은", "둥그- + -ㄴ", "둥글- + -ㄴ", "둥구- + -ㄹ- + -ㄴ"], answer: "둥글- + -ㄴ" },
+    { q: "‘오늘(부사)  오늘(명사)’와 같은 현상은 무엇입니까?", options: ["혼성", "영파생", "음절 축약", "두자어 형성"], answer: "영파생" },
+    { q: "다음 문장에서 밑줄 친 부분이 어떤 품사에 해당되는지 고르십시오.\n“우리는 이따가 일찍 출발할 것이다.”", options: ["명사", "관형사", "부사", "형용사"], answer: "부사" },
+    { q: "‘햇과일’에서 ‘햇-’이 나타내는 의미를 고르십시오.", options: ["아직 덜 익은 것", "당해에 새로 난 것", "크고 튼튼한 것", "색깔이 붉은 것"], answer: "당해에 새로 난 것" },
+    { q: "다음 중 문장을 단어 단위로 가장 올바르게 분석한 것은 무엇입니까?\n“오늘은 비가 와서 추워요.”", options: ["오늘 / 은 / 비 / 가 / 와서 / 추워요", "오늘은 / 비가 / 와서 / 추워요", "오늘 / 은 / 비 / 가 / 오 / 아서 / 춥 / 어요", "오늘은 / 비 / 가 / 와서 / 추워요"], answer: "오늘 / 은 / 비 / 가 / 와서 / 추워요" },
+    { q: "‘웃음’의 형성 과정으로 맞는 것을 고르십시오.", options: ["웃-(어근) + -음(접사)", "웃음(단일어)", "우-(어근) + -슴(접사)", "웃-(접사) + -음(어근)"], answer: "웃-(어근) + -음(접사)" },
+    { q: "‘길러’를 형태소 분석한 결과로 알맞은 것은 무엇입니까?", options: ["길러", "길- + -러", "기르- + -어", "길ㄹ- + -어"], answer: "기르- + -어" },
+    { q: "다음 문장에서 자립형태소의 개수를 고르십시오.\n“구름이 걷히고 해가 났다.”", options: ["1", "2", "3", "4"], answer: "2" },
+    { q: "단어 ‘돼지고기덮밥’을 직소분석할 때 가장 알맞은 형식을 고르십시오.", options: [
+        "돼지고기덮밥\n→ 돼지고기 → 돼지 + 고기\n→ 덮밥 → 덮- + 밥", 
+        "돼지고기덮밥\n→ 돼지고기\n→ 덮밥 → 덮- + 밥", 
+        "돼지고기덮밥\n→ 돼지\n→ 고기\n→ 덮밥 → 덮- + 밥", 
+        "돼지고기덮밥\n→ 돼지고기 → 돼지 + 고기\n→ 덮밥"
+    ], answer: "돼지고기덮밥\n→ 돼지고기 → 돼지 + 고기\n→ 덮밥 → 덮- + 밥" }
+];
+
+let questions = [];
+let currentIdx = 0;
+let userAnswers = [];
+let currentMode = '';
+let timerInterval = null;
+let timeLeft = 600;
+
+function shuffle(array) {
+    let newArr = JSON.parse(JSON.stringify(array));
+    for (let i = newArr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+    }
+    return newArr;
+}
+
+function startMode(mode) {
+    currentMode = mode;
+    clearInterval(timerInterval);
+    document.getElementById('timer-display').style.display = 'none';
+
+    if (mode === 'theory') {
+        questions = shuffle(theoryData);
+    } else if (mode === 'practice') {
+        questions = shuffle(practiceData);
+    } else if (mode === 'exam') {
+        const combined = [...theoryData, ...practiceData];
+        questions = shuffle(combined).slice(0, 20);
+        startTimer(600);
+    }
+
+    currentIdx = 0;
+    userAnswers = new Array(questions.length).fill(null);
+
+    document.getElementById('menu-box').style.display = 'none';
+    document.getElementById('quiz-box').style.display = 'block';
+    document.getElementById('result-box').style.display = 'none';
+
+    renderQuestion();
+}
+
+function startTimer(seconds) {
+    timeLeft = seconds;
+    const timerDisplay = document.getElementById('timer-display');
+    timerDisplay.style.display = 'inline';
+    
+    updateTimerText();
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerText();
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            alert("Đã hết thời gian 10 phút! Hệ thống sẽ tự động nộp bài.");
+            finishQuiz();
+        }
+    }, 1000);
+}
+
+function updateTimerText() {
+    const mins = Math.floor(timeLeft / 60);
+    const secs = timeLeft % 60;
+    document.getElementById('timer-display').innerText = `Thời gian: ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+}
+
+function renderQuestion() {
+    const qData = questions[currentIdx];
+    document.getElementById('progress').innerText = `Câu hỏi ${currentIdx + 1} / ${questions.length}`;
+    document.getElementById('question-text').innerText = qData.q;
+    
+    if (currentMode !== 'exam') {
+        const correctCount = userAnswers.filter((ans, idx) => ans !== null && ans === questions[idx].answer).length;
+        document.getElementById('score-display').innerText = `Điểm: ${correctCount}`;
+        document.getElementById('score-display').style.display = 'inline';
+    } else {
+        document.getElementById('score-display').style.display = 'none';
+    }
+
+    const optionsBox = document.getElementById('options-box');
+    optionsBox.innerHTML = '';
+    const selectedAns = userAnswers[currentIdx];
+
+    qData.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerText = opt;
+
+        if (currentMode === 'exam') {
+            if (selectedAns === opt) btn.classList.add('selected');
+            btn.onclick = () => selectOption(opt);
+        } else {
+            if (selectedAns !== null) {
+                btn.disabled = true;
+                if (opt === qData.answer) btn.classList.add('correct');
+                if (opt === selectedAns && selectedAns !== qData.answer) btn.classList.add('wrong');
+            } else {
+                btn.onclick = () => selectOption(opt);
+            }
+        }
+
+        optionsBox.appendChild(btn);
+    });
+
+    document.getElementById('btn-prev').disabled = currentIdx === 0;
+    
+    if (currentIdx === questions.length - 1) {
+        document.getElementById('btn-next').style.display = 'none';
+        document.getElementById('btn-finish').style.display = 'inline-block';
+    } else {
+        document.getElementById('btn-next').style.display = 'inline-block';
+        document.getElementById('btn-finish').style.display = 'none';
+    }
+}
+
+function selectOption(opt) {
+    userAnswers[currentIdx] = opt;
+    renderQuestion();
+}
+
+function prevQuestion() {
+    if (currentIdx > 0) {
+        currentIdx--;
+        renderQuestion();
+    }
+}
+
+function nextQuestion() {
+    if (currentIdx < questions.length - 1) {
+        currentIdx++;
+        renderQuestion();
+    }
+}
+
+function confirmSubmit() {
+    const unanswered = userAnswers.filter(ans => ans === null).length;
+    if (unanswered > 0 && currentMode === 'exam') {
+        if (!confirm(`Bạn còn ${unanswered} câu chưa trả lời. Bạn có chắc chắn muốn nộp bài?`)) {
+            return;
+        }
+    }
+    finishQuiz();
+}
+
+function finishQuiz() {
+    clearInterval(timerInterval);
+    document.getElementById('quiz-box').style.display = 'none';
+    document.getElementById('result-box').style.display = 'block';
+    
+    const correctCount = userAnswers.filter((ans, idx) => ans === questions[idx].answer).length;
+    const percentage = Math.round((correctCount / questions.length) * 100);
+    
+    document.getElementById('result-title').innerText = currentMode === 'exam' ? 'Kết Quả Bài Kiểm Tra' : 'Hoàn thành bài ôn tập!';
+    document.getElementById('final-score').innerHTML = 
+        `Bạn trả lời đúng <strong>${correctCount}</strong> / <strong>${questions.length}</strong> câu.<br>Tỷ lệ đúng: <strong>${percentage}%</strong>`;
+
+    const reviewBox = document.getElementById('review-section');
+    reviewBox.innerHTML = '<h3 style="text-align:center; color:#38bdf8; border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 8px;">Chi tiết bài làm</h3>';
+    
+    questions.forEach((q, idx) => {
+        const uAns = userAnswers[idx];
+        const isCorrect = uAns === q.answer;
+        
+        const item = document.createElement('div');
+        item.className = `review-item ${isCorrect ? 'status-correct' : 'status-wrong'}`;
+        
+        item.innerHTML = `
+            <div class="review-q">Câu ${idx + 1}: ${q.q}</div>
+            <div class="review-ans" style="color: ${isCorrect ? '#22c55e' : '#f43f5e'};">
+                Lựa chọn của bạn: <strong>${uAns !== null ? uAns : 'Chưa chọn'}</strong> ${isCorrect ? '✓' : '✗'}
+            </div>
+            ${!isCorrect ? `<div class="review-ans" style="color: #22c55e;">Đáp án đúng: <strong>${q.answer}</strong></div>` : ''}
+        `;
+        reviewBox.appendChild(item);
+    });
+}
+
+function restartMode() {
+    startMode(currentMode);
+}
+
+function goHome() {
+    clearInterval(timerInterval);
+    document.getElementById('quiz-box').style.display = 'none';
+    document.getElementById('result-box').style.display = 'none';
+    document.getElementById('menu-box').style.display = 'block';
+}
+</script>
+
+</body>
+</html>
