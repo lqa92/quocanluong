@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiền Tệ và Ngân Hàng - Kinh Tế Vĩ Mô</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons for Finance & Banking -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+        }
+        .accordion-content {
+            transition: all 0.3s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        .accordion-content.active {
+            max-height: 1500px;
+            opacity: 100;
+            padding-top: 1.25rem;
+            padding-bottom: 1.5rem;
+        }
+        .scale-up {
+            transition: transform 0.3s ease;
+        }
+        .scale-up:hover {
+            transform: scale(1.015);
+        }
+        .scale-balance {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen pb-16">
+
+    <!-- Nút quay lại Easy Economics trên cùng bên trái -->
+    <div class="max-w-5xl mx-auto px-4 pt-4">
+        <a href="index.html#economics" class="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-full font-bold text-xs md:text-sm border border-slate-700 shadow-md transition-all">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>QUAY LẠI EASY ECONOMICS</span>
+        </a>
+    </div>
+
+    <!-- Header / Hero Area (Based on "5과.png" style) -->
+    <header class="bg-gradient-to-r from-emerald-900 via-teal-900 to-sky-950 text-white py-12 px-4 shadow-lg text-center relative overflow-hidden mt-2">
+        <div class="absolute -left-12 -top-12 w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+        <div class="absolute -right-12 -bottom-12 w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+        
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="flex justify-center items-center gap-6 mb-4">
+                <!-- Mascot Left (Bank representation) -->
+                <div class="hidden sm:block bg-white/10 p-2 rounded-xl backdrop-blur-sm border border-white/20">
+                    <svg class="w-16 h-16" viewBox="0 0 100 100">
+                        <path d="M50,15 L15,35 L85,35 Z" fill="#cbd5e1" />
+                        <rect x="20" y="35" width="60" height="10" fill="#94a3b8" />
+                        <rect x="25" y="45" width="8" height="35" fill="#475569" />
+                        <rect x="40" y="45" width="8" height="35" fill="#475569" />
+                        <rect x="55" y="45" width="8" height="35" fill="#475569" />
+                        <rect x="70" y="45" width="8" height="35" fill="#475569" />
+                        <rect x="15" y="80" width="70" height="10" fill="#334155" />
+                        <text x="50" y="31" font-size="8" font-weight="black" fill="#1e293b" text-anchor="middle">BANK</text>
+                    </svg>
+                </div>
+
+                <div class="text-center">
+                    <h1 class="text-3xl md:text-5xl font-black tracking-tight drop-shadow-md uppercase">TIỀN TỆ VÀ NGÂN HÀNG</h1>
+                </div>
+
+                <!-- Mascot Right (Piggy Bank / Savings representation) -->
+                <div class="hidden sm:block bg-white/10 p-2 rounded-xl backdrop-blur-sm border border-white/20">
+                    <svg class="w-16 h-16" viewBox="0 0 100 100">
+                        <!-- Pink Piggy -->
+                        <ellipse cx="50" cy="55" rx="30" ry="22" fill="#f472b6" />
+                        <!-- Snout -->
+                        <ellipse cx="80" cy="58" rx="8" ry="10" fill="#ec4899" />
+                        <circle cx="77" cy="55" r="2" fill="#334155" />
+                        <circle cx="83" cy="55" r="2" fill="#334155" />
+                        <!-- Ear -->
+                        <polygon points="35,38 45,22 55,34" fill="#ec4899" />
+                        <!-- Feet -->
+                        <rect x="35" y="72" width="10" height="12" fill="#db2777" rx="3" />
+                        <rect x="55" y="72" width="10" height="12" fill="#db2777" rx="3" />
+                        <!-- Eye -->
+                        <circle cx="65" cy="46" r="3" fill="#1e293b" />
+                        <!-- Coin slot -->
+                        <ellipse cx="48" cy="33" rx="8" ry="2" fill="#be185d" />
+                        <!-- Floating gold coin -->
+                        <circle cx="48" cy="18" r="8" fill="#facc15" stroke="#eab308" stroke-width="1.5" />
+                        <text x="48" y="21" font-size="9" font-weight="black" fill="#854d0e" text-anchor="middle">$</text>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="mt-6 flex flex-wrap justify-center gap-3">
+                <button onclick="toggleAll(true)" class="bg-slate-800 text-teal-300 border border-teal-500/30 hover:bg-slate-700 font-extrabold text-xs md:text-sm px-4 py-2.5 rounded-full shadow-md transition-all">
+                    <i class="fa-solid fa-folder-open mr-1.5"></i>Mở tất cả các khung
+                </button>
+                <button onclick="toggleAll(false)" class="bg-white/10 text-slate-200 hover:bg-white/20 font-extrabold text-xs md:text-sm px-4 py-2.5 rounded-full backdrop-blur-sm transition-all border border-white/10 shadow-md">
+                    <i class="fa-solid fa-folder-closed mr-1.5"></i>Thu gọn tất cả
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Interactives Container -->
+    <main class="max-w-5xl mx-auto px-4 mt-8 grid grid-cols-1 gap-5">
+
+        <!-- 1. CƠ QUAN TÀI CHÍNH -->
+        <div class="bg-slate-800/90 rounded-2xl border border-emerald-500/30 shadow-lg overflow-hidden scale-up">
+            <button onclick="toggleAccordion('content-1')" class="w-full flex items-center justify-between p-5 bg-emerald-950/40 hover:bg-emerald-900/30 text-left transition-colors focus:outline-none">
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center justify-center w-9 h-9 rounded-full bg-emerald-500 text-slate-950 font-black text-sm shadow-sm">1</span>
+                    <h2 class="text-lg md:text-xl font-black text-emerald-400">1. CƠ QUAN TÀI CHÍNH (FINANCIAL INSTITUTIONS)</h2>
+                </div>
+                <span id="icon-content-1" class="text-emerald-400 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            
+            <div id="content-1" class="accordion-content px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <div class="bg-emerald-950/50 border-l-4 border-emerald-500 p-4 rounded-r-lg mb-4">
+                            <p class="text-slate-200 leading-relaxed text-sm md:text-base font-semibold">
+                                <strong class="text-emerald-400">Cơ quan tài chính</strong> là các tổ chức hoạt động trong lĩnh vực tài chính, thực hiện vai trò huy động và phân phối các nguồn vốn hiệu quả trong nền kinh tế.
+                            </p>
+                        </div>
+                        
+                        <h4 class="font-bold text-slate-300 text-sm mb-3">Phân loại cốt lõi từ sơ đồ:</h4>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div onclick="selectInstitution('bank')" class="cursor-pointer p-3 bg-slate-900/80 hover:bg-emerald-950/60 rounded-xl border border-slate-700 transition-all text-center" id="inst-bank">
+                                <i class="fa-solid fa-building-columns text-emerald-400 text-xl mb-1.5"></i>
+                                <div class="font-extrabold text-xs text-slate-200">Ngân hàng</div>
+                            </div>
+                            <div onclick="selectInstitution('securities')" class="cursor-pointer p-3 bg-slate-900/80 hover:bg-emerald-950/60 rounded-xl border border-slate-700 transition-all text-center" id="inst-securities">
+                                <i class="fa-solid fa-chart-line text-blue-400 text-xl mb-1.5"></i>
+                                <div class="font-extrabold text-xs text-slate-200">Công ty Chứng khoán</div>
+                            </div>
+                            <div onclick="selectInstitution('insurance')" class="cursor-pointer p-3 bg-slate-900/80 hover:bg-emerald-950/60 rounded-xl border border-slate-700 transition-all text-center" id="inst-insurance">
+                                <i class="fa-solid fa-shield-halved text-amber-400 text-xl mb-1.5"></i>
+                                <div class="font-extrabold text-xs text-slate-200">Công ty Bảo hiểm</div>
+                            </div>
+                            <div onclick="selectInstitution('intl')" class="cursor-pointer p-3 bg-slate-900/80 hover:bg-emerald-950/60 rounded-xl border border-slate-700 transition-all text-center" id="inst-intl">
+                                <i class="fa-solid fa-globe text-indigo-400 text-xl mb-1.5"></i>
+                                <div class="font-extrabold text-xs text-slate-200">Cơ quan Tài chính Quốc tế</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic card detail area -->
+                    <div class="bg-slate-900/80 p-6 rounded-2xl border border-emerald-500/20 min-h-[220px] flex flex-col justify-center">
+                        <div id="inst-detail-content" class="text-center">
+                            <i class="fa-solid fa-circle-info text-slate-500 text-3xl mb-3"></i>
+                            <p class="text-sm font-bold text-slate-400">Bấm chọn một trong bốn phân loại bên trái để tìm hiểu chi tiết vai trò thực tế của cơ quan đó.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. NGÂN HÀNG VÀ VAI TRÒ -->
+        <div class="bg-slate-800/90 rounded-2xl border border-sky-500/30 shadow-lg overflow-hidden scale-up">
+            <button onclick="toggleAccordion('content-2')" class="w-full flex items-center justify-between p-5 bg-sky-950/40 hover:bg-sky-900/30 text-left transition-colors focus:outline-none">
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center justify-center w-9 h-9 rounded-full bg-sky-500 text-slate-950 font-black text-sm shadow-sm">2</span>
+                    <h2 class="text-lg md:text-xl font-black text-sky-400">2. NGÂN HÀNG VÀ VAI TRÒ (BANKS AND THEIR ROLES)</h2>
+                </div>
+                <span id="icon-content-2" class="text-sky-400 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            
+            <div id="content-2" class="accordion-content px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <div class="bg-sky-950/50 border-l-4 border-sky-500 p-4 rounded-r-lg mb-4">
+                            <p class="text-slate-200 leading-relaxed text-sm md:text-base font-semibold">
+                                Ngân hàng đóng vai trò là mạch máu của nền kinh tế bằng cách thực hiện các chức năng trung chuyển dòng tiền tối quan trọng:
+                            </p>
+                        </div>
+                        
+                        <div class="space-y-2.5">
+                            <div class="flex items-start gap-3 p-2 bg-slate-900/80 rounded-lg">
+                                <span class="text-sky-400 mt-0.5"><i class="fa-solid fa-piggy-bank"></i></span>
+                                <span class="text-xs text-slate-300"><strong>Huy động & cung cấp vốn:</strong> Nhận tiết kiệm gửi từ người thừa vốn và cấp tín dụng cho người thiếu vốn.</span>
+                            </div>
+                            <div class="flex items-start gap-3 p-2 bg-slate-900/80 rounded-lg">
+                                <span class="text-sky-400 mt-0.5"><i class="fa-solid fa-credit-card"></i></span>
+                                <span class="text-xs text-slate-300"><strong>Trung gian thanh toán:</strong> Giúp thực hiện chuyển tiền, quyết toán giao dịch tiện lợi, bảo mật.</span>
+                            </div>
+                            <div class="flex items-start gap-3 p-2 bg-slate-900/80 rounded-lg">
+                                <span class="text-sky-400 mt-0.5"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+                                <span class="text-xs text-slate-300"><strong>Cung cấp dịch vụ tài chính:</strong> Quản lý tài sản, bảo lãnh, thu hộ...</span>
+                            </div>
+                            <div class="flex items-start gap-3 p-2 bg-sky-950/80 rounded-lg border border-sky-500/30">
+                                <span class="text-sky-400 mt-0.5"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+                                <span class="text-xs text-sky-200"><strong>Tạo tiền (Money Creation):</strong> Thông qua hệ thống cho vay và dự trữ phân đoạn, ngân hàng tạo thêm phương tiện thanh toán cho xã hội.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flow Diagram of Commercial Bank Intermediation -->
+                    <div class="bg-slate-900/80 p-5 rounded-2xl border border-sky-500/20 flex flex-col items-center">
+                        <span class="text-xs font-bold text-sky-400 uppercase tracking-wider mb-4">Sơ đồ Trung gian Tài chính</span>
+                        
+                        <div class="flex justify-between items-center w-full max-w-[320px] relative">
+                            <!-- Depositor -->
+                            <div class="bg-slate-800 p-2.5 rounded-lg border border-slate-700 text-center shadow-sm w-[85px] z-10">
+                                <i class="fa-solid fa-users text-emerald-400 text-lg mb-1"></i>
+                                <span class="text-[9px] font-black text-slate-200 block leading-tight">Người gửi tiền</span>
+                                <span class="text-[8px] text-slate-400 italic">Thừa vốn</span>
+                            </div>
+                            
+                            <!-- Arrow Right -->
+                            <div class="flex flex-col items-center">
+                                <span class="text-[8px] text-slate-400 font-extrabold">Tiết kiệm</span>
+                                <i class="fa-solid fa-arrow-right text-emerald-400 animate-pulse"></i>
+                            </div>
+
+                            <!-- Commercial Bank -->
+                            <div class="bg-sky-600 p-2.5 rounded-xl text-center shadow-md w-[95px] text-white z-10">
+                                <i class="fa-solid fa-building-columns text-sky-200 text-xl mb-1"></i>
+                                <span class="text-[10px] font-black block leading-tight">NGÂN HÀNG</span>
+                                <span class="text-[8px] text-sky-100 font-bold">Trung gian</span>
+                            </div>
+
+                            <!-- Arrow Right -->
+                            <div class="flex flex-col items-center">
+                                <span class="text-[8px] text-slate-400 font-extrabold">Cho vay</span>
+                                <i class="fa-solid fa-arrow-right text-sky-400 animate-pulse"></i>
+                            </div>
+
+                            <!-- Borrower -->
+                            <div class="bg-slate-800 p-2.5 rounded-lg border border-slate-700 text-center shadow-sm w-[85px] z-10">
+                                <i class="fa-solid fa-industry text-blue-400 text-lg mb-1"></i>
+                                <span class="text-[9px] font-black text-slate-200 block leading-tight">Người đi vay</span>
+                                <span class="text-[8px] text-slate-400 italic">Thiếu vốn</span>
+                            </div>
+                        </div>
+                        <p class="text-[9px] text-slate-400 italic text-center mt-4">Ngân hàng thu hút tiền nhàn rỗi để cấp vốn cho hoạt động đầu tư, sản xuất kinh doanh vĩ mô.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. LÃI SUẤT NGÂN HÀNG -->
+        <div class="bg-slate-800/90 rounded-2xl border border-purple-500/30 shadow-lg overflow-hidden scale-up">
+            <button onclick="toggleAccordion('content-3')" class="w-full flex items-center justify-between p-5 bg-purple-950/40 hover:bg-purple-900/30 text-left transition-colors focus:outline-none">
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center justify-center w-9 h-9 rounded-full bg-purple-500 text-slate-950 font-black text-sm shadow-sm">3</span>
+                    <h2 class="text-lg md:text-xl font-black text-purple-400">3. LÃI SUẤT NGÂN HÀNG (BANK INTEREST RATES)</h2>
+                </div>
+                <span id="icon-content-3" class="text-purple-400 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            
+            <div id="content-3" class="accordion-content px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <div class="bg-purple-950/50 border-l-4 border-purple-500 p-4 rounded-r-lg mb-4">
+                            <p class="text-slate-200 leading-relaxed text-sm md:text-base font-semibold">
+                                Mức lãi suất ngân hàng không cố định mà chịu sự biến động phức tạp dưới sự tác động của nhiều nhân tố then chốt trên thị trường:
+                            </p>
+                        </div>
+                        
+                        <div class="space-y-2 text-xs text-slate-300">
+                            <p>📈 <strong class="text-purple-400">Lãi suất cơ bản (NHTW):</strong> Mức sàn định hướng dòng vốn toàn bộ thị trường.</p>
+                            <p>📊 <strong class="text-purple-400">Cung cầu vốn:</strong> Thừa vốn đẩy lãi suất giảm, khát vốn kéo lãi suất vọt lên.</p>
+                            <p>🎈 <strong class="text-purple-400">Lạm phát:</strong> Lạm phát tăng cao buộc lãi suất danh nghĩa phải tăng tương ứng để bù đắp sự mất giá.</p>
+                            <p>🔍 <strong class="text-purple-400">Xếp hạng tín dụng của khách hàng:</strong> Khách rủi ro cao phải chịu lãi suất vay cao (phần bù rủi ro).</p>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Interest Rate Calculator -->
+                    <div class="bg-slate-900/80 p-5 rounded-2xl border border-purple-500/20 flex flex-col items-center">
+                        <span class="text-xs font-bold text-purple-400 uppercase tracking-wider mb-3">Mô phỏng Cách cấu thành lãi suất cho vay</span>
+                        
+                        <div class="bg-slate-800 p-3 rounded-xl border border-purple-500/30 w-full mb-3 text-center shadow-inner">
+                            <span class="text-[9px] font-black text-slate-400 uppercase block">ƯỚC TÍNH LÃI SUẤT CHO VAY NĂM</span>
+                            <span id="rate-display-val" class="text-2xl font-black text-purple-400">6.0 % / năm</span>
+                        </div>
+
+                        <div class="w-full space-y-3">
+                            <div>
+                                <label class="flex justify-between text-[10px] font-bold text-slate-400">
+                                    <span>Lãi suất cơ bản (NHTW):</span>
+                                    <span id="rate-base-display" class="text-purple-400 font-extrabold">4.0%</span>
+                                </label>
+                                <input type="range" id="rate-base-slider" min="1" max="10" step="0.5" value="4" oninput="calculateInterestRate()" class="w-full accent-purple-500 cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="flex justify-between text-[10px] font-bold text-slate-400">
+                                    <span>Lạm phát kỳ vọng:</span>
+                                    <span id="rate-inf-display" class="text-purple-400 font-extrabold">1.5%</span>
+                                </label>
+                                <input type="range" id="rate-inf-slider" min="0" max="8" step="0.5" value="1.5" oninput="calculateInterestRate()" class="w-full accent-purple-500 cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="flex justify-between text-[10px] font-bold text-slate-400">
+                                    <span>Xếp hạng rủi ro của Khách hàng:</span>
+                                    <span id="rate-risk-display" class="text-purple-400 font-extrabold">Rất Thấp (0.5%)</span>
+                                </label>
+                                <input type="range" id="rate-risk-slider" min="1" max="4" value="1" oninput="calculateInterestRate()" class="w-full accent-purple-500 cursor-pointer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. TỶ LỆ DỰ TRỮ VÀ TẠO TIỀN -->
+        <div class="bg-slate-800/90 rounded-2xl border border-amber-500/30 shadow-lg overflow-hidden scale-up">
+            <button onclick="toggleAccordion('content-4')" class="w-full flex items-center justify-between p-5 bg-amber-950/40 hover:bg-amber-900/30 text-left transition-colors focus:outline-none">
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center justify-center w-9 h-9 rounded-full bg-amber-500 text-slate-950 font-black text-sm shadow-sm">4</span>
+                    <h2 class="text-lg md:text-xl font-black text-amber-400">4. TỶ LỆ DỰ TRỮ & TẠO TIỀN (RESERVE RATIO)</h2>
+                </div>
+                <span id="icon-content-4" class="text-amber-400 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            
+            <div id="content-4" class="accordion-content px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <div class="bg-amber-950/50 border-l-4 border-amber-500 p-4 rounded-r-lg mb-4">
+                            <p class="text-slate-200 leading-relaxed text-sm md:text-base font-semibold">
+                                Số tiền bạn gửi vào ngân hàng sẽ không nằm yên trong kho. Ngân hàng áp dụng mô hình <strong class="text-amber-400">Dự trữ phân đoạn</strong>:
+                            </p>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-700">
+                                <h4 class="font-extrabold text-slate-200 text-xs uppercase mb-1">🏦 Tỷ lệ dự trữ bắt buộc (RRR):</h4>
+                                <p class="text-[11px] text-slate-400">Phần trăm số tiền ký quỹ gửi bắt buộc phải giữ lại két hoặc ký gửi an toàn tại Ngân hàng Nhà nước để đảm bảo khả năng thanh toán.</p>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-700">
+                                <h4 class="font-extrabold text-slate-200 text-xs uppercase mb-1">🐷 Tỷ lệ dự trữ dư thừa:</h4>
+                                <p class="text-[11px] text-slate-400">Phần dự trữ vượt trên mức quy định bắt buộc, do chính Ngân hàng Thương mại cân đối tự quyết định quản trị rủi ro.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Money Multiplier interactive sandbox -->
+                    <div class="bg-slate-900/80 p-5 rounded-2xl border border-amber-500/20 flex flex-col items-center">
+                        <span class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">Trình Giả Lập Hệ Số Nhân Tiền & Tạo Tiền</span>
+                        
+                        <div class="bg-slate-800 p-3 rounded-xl border border-amber-500/30 w-full mb-3 text-center shadow-inner">
+                            <div class="text-[9px] font-black text-slate-400">TỔNG LƯỢNG TIỀN ĐƯỢC TẠO RA TRONG NỀN KINH TẾ (M)</div>
+                            <div id="creation-output" class="text-2xl font-black text-amber-400">10,000,000 đ</div>
+                            <div class="text-[9px] text-slate-400 mt-0.5">Số nhân tiền mặt định: m = <span id="creation-multiplier-lbl" class="font-bold">10.0</span> lần</div>
+                        </div>
+
+                        <div class="w-full space-y-3">
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-400 mb-0.5">Tiền gửi ban đầu (D):</label>
+                                <select id="creation-deposit" onchange="runMoneyCreationSimulator()" class="w-full p-2 bg-slate-800 border border-slate-700 rounded text-xs font-extrabold text-slate-200">
+                                    <option value="1000000" selected>1,000,000đ</option>
+                                    <option value="5000000">5,000,000đ</option>
+                                    <option value="10000000">10,000,000đ</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="flex justify-between text-[11px] font-bold text-slate-400 mb-1">
+                                    <span>Tỷ lệ dự trữ bắt buộc (RRR):</span>
+                                    <span id="creation-rrr-lbl" class="text-amber-400 font-extrabold">10%</span>
+                                </label>
+                                <input type="range" id="creation-rrr" min="5" max="25" value="10" oninput="runMoneyCreationSimulator()" class="w-full accent-amber-500 cursor-pointer">
+                                <p class="text-[9px] text-slate-400 italic text-center mt-1">Hạ RRR xuống giúp hệ thống ngân hàng cho vay ra nhiều hơn, tăng số lượng tiền được nhân rộng.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. CUNG TIỀN VÀ CẦU TIỀN -->
+        <div class="bg-slate-800/90 rounded-2xl border border-indigo-500/30 shadow-lg overflow-hidden scale-up">
+            <button onclick="toggleAccordion('content-5')" class="w-full flex items-center justify-between p-5 bg-indigo-950/40 hover:bg-indigo-900/30 text-left transition-colors focus:outline-none">
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center justify-center w-9 h-9 rounded-full bg-indigo-500 text-slate-950 font-black text-sm shadow-sm">5</span>
+                    <h2 class="text-lg md:text-xl font-black text-indigo-400">5. CUNG TIỀN VÀ CẦU TIỀN (MONEY SUPPLY & DEMAND)</h2>
+                </div>
+                <span id="icon-content-5" class="text-indigo-400 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            
+            <div id="content-5" class="accordion-content px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <div class="bg-indigo-950/50 border-l-4 border-indigo-500 p-4 rounded-r-lg mb-4">
+                            <p class="text-slate-200 leading-relaxed text-sm md:text-base font-semibold">
+                                Thị trường tiền tệ đạt trạng thái cân bằng vĩ mô thông qua sự thăng bằng giữa Cung tiền và Cầu tiền:
+                            </p>
+                        </div>
+                        
+                        <div class="space-y-3 text-xs text-slate-300">
+                            <p>💰 <strong class="text-indigo-400">Cung tiền (MS):</strong> Tổng lượng phương tiện thanh toán do Ngân hàng Nhà nước và hệ thống Ngân hàng Thương mại phát hành cung ứng cho nền kinh tế (thường cố định trong ngắn hạn).</p>
+                            <p>👛 <strong class="text-indigo-400">Cầu tiền (MD):</strong> Nhu cầu nắm giữ tiền mặt thực tế của mọi chủ thể kinh tế nhằm mục đích: Giao dịch hàng ngày, dự phòng rủi ro và đầu cơ sinh lời.</p>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Balance scale for Money supply demand -->
+                    <div class="bg-slate-900/80 p-5 rounded-2xl border border-indigo-500/20 flex flex-col items-center">
+                        <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-2">Cán cân trạng thái thị trường tiền tệ</span>
+                        
+                        <!-- Scale Graphics -->
+                        <div class="w-full max-w-[280px] h-[140px] relative">
+                            <svg class="w-full h-full" viewBox="0 0 200 120">
+                                <!-- Base -->
+                                <path d="M90,110 L110,110 L105,75 L95,75 Z" fill="#64748b"/>
+                                <circle cx="100" cy="75" r="5" fill="#475569" />
+                                
+                                <!-- Lever rotating group -->
+                                <g id="msmd-scale-lever" class="scale-balance" style="transform-origin: 100px 75px; transform: rotate(0deg);">
+                                    <line x1="30" y1="75" x2="170" y2="75" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+                                    
+                                    <!-- Left scale plate (MS) -->
+                                    <line x1="30" y1="75" x2="15" y2="105" stroke="#64748b" stroke-width="1.5"/>
+                                    <line x1="30" y1="75" x2="45" y2="105" stroke="#64748b" stroke-width="1.5"/>
+                                    <path d="M10,105 L50,105 L45,110 L15,110 Z" fill="#10b981"/>
+                                    <text x="30" y="101" font-size="7" font-weight="extrabold" fill="#ffffff" text-anchor="middle">MS (Cung)</text>
+
+                                    <!-- Right scale plate (MD) -->
+                                    <line x1="170" y1="75" x2="155" y2="105" stroke="#64748b" stroke-width="1.5"/>
+                                    <line x1="170" y1="75" x2="185" y2="105" stroke="#64748b" stroke-width="1.5"/>
+                                    <path d="M150,105 L190,105 L185,110 L155,110 Z" fill="#eab308"/>
+                                    <text x="170" y="101" font-size="7" font-weight="extrabold" fill="#ffffff" text-anchor="middle">MD (Cầu)</text>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <!-- Scale controller -->
+                        <div class="flex gap-1.5 justify-center mt-2 w-full">
+                            <button onclick="setMsMdScale('ms-high')" class="bg-emerald-950 hover:bg-emerald-900 border border-emerald-500/30 text-emerald-300 text-[9px] font-bold py-1 px-2 rounded">MS > MD (Tiền thừa)</button>
+                            <button onclick="setMsMdScale('equal')" class="bg-indigo-950 hover:bg-indigo-900 border border-indigo-500/30 text-indigo-300 text-[9px] font-bold py-1 px-2 rounded">MS = MD (Cân bằng)</button>
+                            <button onclick="setMsMdScale('md-high')" class="bg-amber-950 hover:bg-amber-900 border border-amber-500/30 text-amber-300 text-[9px] font-bold py-1 px-2 rounded">MS < MD (Khát tiền)</button>
+                        </div>
+                        
+                        <div id="msmd-scale-feedback" class="text-[9.5px] text-slate-400 italic mt-3 min-h-[35px] text-center px-2 flex items-center justify-center">Nhấn nút bên trên để theo dõi biến động lãi suất thị trường vĩ mô.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. NGÂN HÀNG TRUNG ƯƠNG VÀ VAI TRÒ -->
+        <div class="bg-slate-800/90 rounded-2xl border border-slate-700 shadow-lg overflow-hidden scale-up">
+            <button onclick="toggleAccordion('content-6')" class="w-full flex items-center justify-between p-5 bg-slate-800 hover:bg-slate-700 text-left transition-colors focus:outline-none">
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center justify-center w-9 h-9 rounded-full bg-slate-600 text-slate-100 font-black text-sm shadow-sm">6</span>
+                    <h2 class="text-lg md:text-xl font-black text-slate-100">6. NGÂN HÀNG TRUNG ƯƠNG VÀ VAI TRÒ (CENTRAL BANK)</h2>
+                </div>
+                <span id="icon-content-6" class="text-slate-400 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            
+            <div id="content-6" class="accordion-content px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <div class="bg-slate-900/80 border-l-4 border-slate-500 p-4 rounded-r-lg mb-4">
+                            <p class="text-slate-200 leading-relaxed text-sm md:text-base font-semibold">
+                                <strong class="text-slate-100">Ngân hàng Trung ương (như Ngân hàng Nhà nước Việt Nam)</strong> là cơ quan quản lý nhà nước tối cao nắm độc quyền điều hành lĩnh vực tiền tệ:
+                            </p>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-2 text-xs text-slate-300">
+                                <span class="text-emerald-400 font-bold"><i class="fa-solid fa-circle-check"></i></span>
+                                <span><strong>Ngân hàng của các ngân hàng:</strong> Nơi mở tài khoản dự trữ bắt buộc và cứu trợ thanh khoản cuối cùng cho các NHTM.</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs text-slate-300">
+                                <span class="text-emerald-400 font-bold"><i class="fa-solid fa-circle-check"></i></span>
+                                <span><strong>Phát hành tiền:</strong> Độc quyền in ấn và phát hành tiền mặt pháp quy của quốc gia.</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs text-slate-300">
+                                <span class="text-emerald-400 font-bold"><i class="fa-solid fa-circle-check"></i></span>
+                                <span><strong>Điều hành chính sách tiền tệ:</strong> Kiểm soát cung tiền, kiểm soát lạm phát và ổn định kinh tế vĩ mô.</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs text-slate-300">
+                                <span class="text-emerald-400 font-bold"><i class="fa-solid fa-circle-check"></i></span>
+                                <span><strong>Giám sát hệ thống:</strong> Thanh tra và bảo đảm an toàn cho hoạt động toàn bộ hệ thống các tổ chức tín dụng.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Central Bank Hierarchy diagram -->
+                    <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-700 flex flex-col items-center">
+                        <span class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-4">Sơ đồ Kiểm Soát Vĩ Mô</span>
+                        
+                        <!-- Hierarchy structure -->
+                        <div class="flex flex-col items-center w-full max-w-[280px] gap-3">
+                            <!-- NHTW -->
+                            <div class="bg-slate-800 text-white p-3 rounded-lg text-center w-full shadow-md border-b-4 border-emerald-500">
+                                <i class="fa-solid fa-building text-lg mb-1"></i>
+                                <div class="text-xs font-black">NGÂN HÀNG TRUNG ƯƠNG</div>
+                                <div class="text-[8px] text-emerald-300">Cơ quan điều hành tối cao</div>
+                            </div>
+
+                            <div class="text-slate-500"><i class="fa-solid fa-angles-down animate-bounce"></i></div>
+
+                            <!-- Commercial banks row -->
+                            <div class="grid grid-cols-2 gap-3 w-full">
+                                <div class="bg-slate-800 p-2.5 rounded-lg border border-slate-700 text-center shadow-sm">
+                                    <i class="fa-solid fa-building-columns text-sky-400 text-sm mb-1"></i>
+                                    <div class="text-[9px] font-black text-slate-200">Ngân hàng Thương mại A</div>
+                                    <div class="text-[8px] text-slate-400">Dự trữ tại NHTW</div>
+                                </div>
+                                <div class="bg-slate-800 p-2.5 rounded-lg border border-slate-700 text-center shadow-sm">
+                                    <i class="fa-solid fa-building-columns text-sky-400 text-sm mb-1"></i>
+                                    <div class="text-[9px] font-black text-slate-200">Ngân hàng Thương mại B</div>
+                                    <div class="text-[8px] text-slate-400">Chịu giám sát</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. CHÍNH SÁCH TIỀN TỆ -->
+        <div class="bg-slate-800/90 rounded-2xl border border-indigo-500/30 shadow-lg overflow-hidden scale-up">
+            <button onclick="toggleAccordion('content-7')" class="w-full flex items-center justify-between p-5 bg-indigo-950/40 hover:bg-indigo-900/30 text-left transition-colors focus:outline-none">
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center justify-center w-9 h-9 rounded-full bg-indigo-500 text-slate-950 font-black text-sm shadow-sm">7</span>
+                    <h2 class="text-lg md:text-xl font-black text-indigo-400">7. CHÍNH SÁCH TIỀN TỆ (MONETARY POLICY)</h2>
+                </div>
+                <span id="icon-content-7" class="text-indigo-400 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            
+            <div id="content-7" class="accordion-content px-6">
+                <!-- Toggle Mode Selector -->
+                <div class="flex justify-center gap-3 mb-6">
+                    <button onclick="togglePolicyMode('tight')" id="policy-btn-tight" class="px-5 py-2.5 rounded-xl text-xs md:text-sm font-extrabold border transition-all shadow bg-slate-800 border-indigo-500/30 text-indigo-300 hover:bg-indigo-900/40">
+                        📉 Thắt Chặt (Giảm tiền)
+                    </button>
+                    <button onclick="togglePolicyMode('easy')" id="policy-btn-easy" class="px-5 py-2.5 rounded-xl text-xs md:text-sm font-extrabold border transition-all shadow bg-slate-800 border-indigo-500/30 text-indigo-300 hover:bg-indigo-900/40">
+                        📈 Mở Rộng (Tăng tiền)
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <!-- Policy Details Box -->
+                    <div class="bg-indigo-950/30 p-5 rounded-2xl border border-indigo-500/20 min-h-[180px] flex flex-col justify-center">
+                        <h3 id="policy-title" class="text-base font-black text-indigo-300 mb-2">Vui lòng chọn một phương thức chính sách</h3>
+                        <div id="policy-desc" class="text-xs text-slate-300 leading-relaxed space-y-2">
+                            Nhấn nút bên trên để xem tác động chi tiết của chính sách tài chính vĩ mô đối với nền kinh tế xã hội.
+                        </div>
+                    </div>
+
+                    <!-- Interactive Diagram -->
+                    <div class="bg-slate-900/80 p-5 rounded-2xl border border-indigo-500/20 flex flex-col items-center">
+                        <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-3">Tác động lên nền kinh tế</span>
+                        
+                        <div class="grid grid-cols-2 gap-3 w-full">
+                            <!-- Rate Box -->
+                            <div class="bg-slate-800 p-3 rounded-xl border border-slate-700 text-center shadow-sm">
+                                <span class="text-[9px] font-black text-slate-400 block uppercase">Lãi Suất Cho Vay</span>
+                                <span id="policy-visual-rate" class="text-lg font-black text-slate-300">Ổn định</span>
+                            </div>
+                            <!-- Supply Box -->
+                            <div class="bg-slate-800 p-3 rounded-xl border border-slate-700 text-center shadow-sm">
+                                <span class="text-[9px] font-black text-slate-400 block uppercase">Cung Tiền Ms</span>
+                                <span id="policy-visual-supply" class="text-lg font-black text-slate-300">Ổn định</span>
+                            </div>
+                        </div>
+                        <div id="policy-action-banner" class="mt-4 p-2.5 rounded-lg text-center font-extrabold text-xs w-full bg-slate-800 text-slate-300">
+                            Hãy chuyển đổi chế độ để mô phỏng tác động!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. LẠM PHÁT VÀ HẬU QUẢ -->
+        <div class="bg-slate-800/90 rounded-2xl border border-rose-500/30 shadow-lg overflow-hidden scale-up">
+            <button onclick="toggleAccordion('content-8')" class="w-full flex items-center justify-between p-5 bg-rose-950/40 hover:bg-rose-900/30 text-left transition-colors focus:outline-none">
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center justify-center w-9 h-9 rounded-full bg-rose-500 text-slate-950 font-black text-sm shadow-sm">8</span>
+                    <h2 class="text-lg md:text-xl font-black text-rose-400">8. LẠM PHÁT VÀ HẬU QUẢ (INFLATION & CONSEQUENCES)</h2>
+                </div>
+                <span id="icon-content-8" class="text-rose-400 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            
+            <div id="content-8" class="accordion-content px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <div class="bg-rose-950/50 border-l-4 border-rose-500 p-4 rounded-r-lg mb-4">
+                            <p class="text-slate-200 leading-relaxed text-sm md:text-base font-semibold">
+                                <strong class="text-rose-400">Lạm phát (Inflation)</strong> là sự gia tăng liên tục trong mức giá chung của các mặt hàng và dịch vụ theo thời gian, làm giảm giá trị của tiền tệ.
+                            </p>
+                        </div>
+                        
+                        <h4 class="font-extrabold text-slate-300 text-xs uppercase mb-2">Hậu quả vĩ mô từ sơ đồ học liệu:</h4>
+                        <div class="space-y-1.5 text-xs text-slate-300">
+                            <div class="flex items-center gap-2">
+                                <span class="text-rose-400 font-black"><i class="fa-solid fa-circle-xmark"></i></span>
+                                <span><strong>Giảm sức mua thực tế:</strong> Cùng một khoản tiền cũ mua được ít vật phẩm hơn.</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-rose-400 font-black"><i class="fa-solid fa-circle-xmark"></i></span>
+                                <span><strong>Giảm giá trị đồng tiền nội tệ:</strong> Đồng tiền bị mất giá nghiêm trọng.</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-rose-400 font-black"><i class="fa-solid fa-circle-xmark"></i></span>
+                                <span><strong>Tăng chi phí sản xuất:</strong> Nguyên vật liệu đắt đỏ làm doanh nghiệp ngưng trệ sản xuất.</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-rose-400 font-black"><i class="fa-solid fa-circle-xmark"></i></span>
+                                <span><strong>Bất ổn kinh tế:</strong> Khó lập dự toán kế hoạch dài hạn, cản trở phát triển đầu tư.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Inflation Simulator with grocery cart -->
+                    <div class="bg-slate-900/80 p-5 rounded-2xl border border-rose-500/20 flex flex-col items-center">
+                        <span class="text-xs font-bold text-rose-400 uppercase tracking-wider mb-2">Mô phỏng sức mua thực tế giỏ hàng hóa</span>
+                        
+                        <div class="bg-slate-800 p-3 rounded-xl border border-rose-500/30 w-full mb-3 text-center shadow-inner">
+                            <div class="text-[9px] font-black text-slate-400">GIỎ HÀNG HÓA VỚI TỜ TIỀN 100,000 đ</div>
+                            <div class="flex justify-center gap-2 my-2" id="inflation-cart-items">
+                                <!-- Dynamic grocery icons based on inflation -->
+                            </div>
+                            <span id="inflation-result-lbl" class="text-xs font-black text-rose-400">Mua được toàn bộ (100% sức mua)</span>
+                        </div>
+
+                        <!-- Inflation slider -->
+                        <div class="w-full">
+                            <label class="flex justify-between text-[11px] font-bold text-slate-400 mb-1">
+                                <span>Mức tỷ lệ lạm phát hàng năm:</span>
+                                <span id="inflation-rate-lbl" class="text-rose-400 font-extrabold">0% (Bình thường)</span>
+                            </label>
+                            <input type="range" id="inflation-slider" min="0" max="300" step="50" value="0" oninput="runInflationSimulator()" class="w-full accent-rose-500 cursor-pointer">
+                            <div class="flex justify-between text-[9px] text-slate-400 font-bold px-1 mt-1">
+                                <span>0% (Ổn định)</span>
+                                <span>150% (Cao)</span>
+                                <span>300% (Phi mã)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TÓM LẠI BÀI HỌC -->
+        <div class="bg-slate-800/90 rounded-2xl border border-slate-700 p-5 shadow-sm">
+            <h3 class="text-sm md:text-base font-black text-slate-200 uppercase mb-2 flex items-center gap-2">
+                <span class="text-amber-400"><i class="fa-solid fa-lightbulb"></i></span> TÓM LẠI (SUMMARY)
+            </h3>
+            <p class="text-xs md:text-sm text-slate-300 leading-relaxed">
+                Tiền tệ và ngân hàng là nền tảng cốt lõi của nền kinh tế, giúp huy động nguồn lực tài chính nhàn rỗi và phân bổ nguồn vốn hiệu quả đến nơi cần sản xuất. Việc Ngân hàng Trung ương điều tiết và ổn định giá trị đồng tiền bằng các công cụ chính sách có tầm ảnh hưởng trực tiếp đến đà thúc đẩy tăng trưởng kinh tế bền vững vĩ mô.
+            </p>
+        </div>
+
+        <!-- MINI QUIZ (KOREAN QUESTIONS + VIETNAMESE FEEDBACK) -->
+        <div class="mt-4 bg-slate-800/90 rounded-2xl border border-slate-700 shadow-md p-6">
+            <h2 class="text-xl md:text-2xl font-black text-slate-100 text-center mb-6 flex items-center justify-center gap-2">
+                <span class="text-teal-400 animate-pulse"><i class="fa-solid fa-circle-question"></i></span> MINI QUIZ: 금융 및 은행 통화이론 마스터!
+            </h2>
+            
+            <div id="quiz-container" class="space-y-6">
+                <!-- Question 1 -->
+                <div class="border-b border-slate-700 pb-5">
+                    <p class="font-bold text-slate-200 text-sm md:text-base mb-3">Q1. 국가의 통화 정책을 조율하고 시중 은행들을 관리 감독하며 통화 발행권을 독점하는 최상위 금융 기관은 무엇입니까?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs md:text-sm">
+                        <button onclick="checkAnswer(1, 'A', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            A. 상업은행
+                        </button>
+                        <button onclick="checkAnswer(1, 'B', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            B. 증권회사
+                        </button>
+                        <button onclick="checkAnswer(1, 'C', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            C. 중앙은행
+                        </button>
+                        <button onclick="checkAnswer(1, 'D', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            D. 글로벌 국제금융기구
+                        </button>
+                    </div>
+                    <div id="feedback-1" class="hidden mt-2 p-2.5 rounded text-xs font-bold transition-all"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="border-b border-slate-700 pb-5">
+                    <p class="font-bold text-slate-200 text-sm md:text-base mb-3">Q2. 중앙은행이 법정지급준비율을 하락시켰을 때 시중 통화 창출 효과에 미치는 영향으로 가장 올바른 설명은 무엇입니까?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs md:text-sm">
+                        <button onclick="checkAnswer(2, 'A', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            A. 예금 승수 효과가 하락하여 총 통화량이 대폭 감소하게 된다.
+                        </button>
+                        <button onclick="checkAnswer(2, 'B', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            B. 은행들이 더 많은 대출을 실행할 수 있어 총 통화량이 대폭 신장된다.
+                        </button>
+                        <button onclick="checkAnswer(2, 'C', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            C. 이자율이 가파르게 상승하여 시중 신용 거래가 마비된다.
+                        </button>
+                        <button onclick="checkAnswer(2, 'D', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            D. 예비적 통화 수요만 무제한으로 증가하고 시장 변화는 없다.
+                        </button>
+                    </div>
+                    <div id="feedback-2" class="hidden mt-2 p-2.5 rounded text-xs font-bold transition-all"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="pb-2">
+                    <p class="font-bold text-slate-200 text-sm md:text-base mb-3">Q3. 고인플레이션 상황을 제어하고 물가를 조속히 안정시키기 위하여 중앙은행이 실행해야 할 올바른 통화 정책 방향은 무엇입니까?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs md:text-sm">
+                        <button onclick="checkAnswer(3, 'A', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            A. 긴축 통화 정책 (금리 인상, 대출 제한)
+                        </button>
+                        <button onclick="checkAnswer(3, 'B', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            B. 확장 통화 정책 (금리 인하, 통화 공급 신장)
+                        </button>
+                        <button onclick="checkAnswer(3, 'C', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            C. 상업은행 지급준비율의 전면 폐지
+                        </button>
+                        <button onclick="checkAnswer(3, 'D', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            D. 정부 소득세의 전면 철폐를 통한 간접적 통화 확대
+                        </button>
+                    </div>
+                    <div id="feedback-3" class="hidden mt-2 p-2.5 rounded text-xs font-bold transition-all"></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center mt-12 px-4 text-xs md:text-sm text-slate-500 font-bold border-t border-slate-800 pt-6">
+        <p>Ứng dụng này được thiết kế bởi ThS. Lương Quốc An (HUFLIT) dựa trên công cụ Gemini</p>
+    </footer>
+
+    <!-- JavaScript block -->
+    <script>
+        window.onload = function() {
+            // Open the core sections for active study automatically
+            toggleAccordion('content-2');
+            toggleAccordion('content-4');
+            toggleAccordion('content-7');
+
+            // Setup default widget visual states
+            selectInstitution('bank');
+            calculateInterestRate();
+            runMoneyCreationSimulator();
+            setMsMdScale('equal');
+            togglePolicyMode('tight');
+            runInflationSimulator();
+        }
+
+        // Accordion controller
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                if (icon) icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.classList.add('active');
+                if (icon) icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Global expander
+        function toggleAll(expand) {
+            const contents = document.querySelectorAll('.accordion-content');
+            contents.forEach(content => {
+                const id = content.id;
+                const icon = document.getElementById('icon-' + id);
+                if (expand) {
+                    content.classList.add('active');
+                    if (icon) icon.style.transform = 'rotate(180deg)';
+                } else {
+                    content.classList.remove('active');
+                    if (icon) icon.style.transform = 'rotate(0deg)';
+                }
+            });
+        }
+
+        // SECTION 1: Institution selection details
+        function selectInstitution(type) {
+            const items = ['bank', 'securities', 'insurance', 'intl'];
+            items.forEach(item => {
+                document.getElementById('inst-' + item).className = "cursor-pointer p-3 bg-slate-900/80 hover:bg-emerald-950/60 rounded-xl border border-slate-700 transition-all text-center";
+            });
+
+            const activeNode = document.getElementById('inst-' + type);
+            activeNode.className = "cursor-pointer p-3 bg-emerald-950/80 rounded-xl border-2 border-emerald-500 transition-all text-center shadow-sm";
+
+            const detailBox = document.getElementById('inst-detail-content');
+            
+            if (type === 'bank') {
+                detailBox.innerHTML = `
+                    <i class="fa-solid fa-building-columns text-emerald-400 text-3xl mb-3 animate-pulse"></i>
+                    <h3 class="font-black text-emerald-300 text-sm mb-1">🏦 HỆ THỐNG NGÂN HÀNG</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Bao gồm các Ngân hàng thương mại thương thảo kinh doanh. Nhận tiền gửi nhàn rỗi (huy động vốn) từ công chúng và tổ chức sản xuất vay mượn thúc đẩy kinh doanh xã hội.
+                    </p>
+                `;
+            } else if (type === 'securities') {
+                detailBox.innerHTML = `
+                    <i class="fa-solid fa-chart-line text-blue-400 text-3xl mb-3 animate-pulse"></i>
+                    <h3 class="font-black text-blue-300 text-sm mb-1">📈 CÔNG TY CHỨNG KHOÁN</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Hỗ trợ doanh nghiệp phát hành cổ phiếu, trái phiếu trực tiếp để huy động nguồn lực tài chính trung và dài hạn từ thị trường vốn đại chúng.
+                    </p>
+                `;
+            } else if (type === 'insurance') {
+                detailBox.innerHTML = `
+                    <i class="fa-solid fa-shield-halved text-amber-400 text-3xl mb-3 animate-pulse"></i>
+                    <h3 class="font-black text-amber-300 text-sm mb-1">🛡️ CÔNG TY BẢO HIỂM</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Huy động quỹ tiền mặt phòng ngừa rủi ro từ những người mua bảo hiểm, chuyển hóa nguồn vốn nhàn rỗi này thành các khoản đầu tư sinh lời trung, dài hạn vào nền vĩ mô.
+                    </p>
+                `;
+            } else {
+                detailBox.innerHTML = `
+                    <i class="fa-solid fa-globe text-indigo-400 text-3xl mb-3 animate-pulse"></i>
+                    <h3 class="font-black text-indigo-300 text-sm mb-1">🌐 CƠ QUAN TÀI CHÍNH QUỐC TẾ</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Các định chế tài chính đa quốc gia lớn như IMF, WB, ADB chuyên cung cấp hỗ trợ nguồn tài chính dài hạn ổn định vĩ mô cho các dự án phát triển cơ sở hạ tầng nhà nước.
+                    </p>
+                `;
+            }
+        }
+
+        // SECTION 3: Interest rate dynamic calculation
+        function calculateInterestRate() {
+            const baseVal = parseFloat(document.getElementById('rate-base-slider').value);
+            const infVal = parseFloat(document.getElementById('rate-inf-slider').value);
+            const riskIndex = parseInt(document.getElementById('rate-risk-slider').value);
+
+            let riskVal = 0.5;
+            let riskLbl = "Rất Thấp (0.5%)";
+            if (riskIndex === 2) { riskVal = 1.5; riskLbl = "Thấp (1.5%)"; }
+            else if (riskIndex === 3) { riskVal = 3.0; riskLbl = "Trung Bình (3.0%)"; }
+            else if (riskIndex === 4) { riskVal = 5.0; riskLbl = "Rất Cao (5.0%)"; }
+
+            // Dynamic calculation formula: Interest Rate = Base + Inflation + Risk
+            const finalRate = baseVal + infVal + riskVal;
+
+            document.getElementById('rate-base-display').innerText = baseVal.toFixed(1) + "%";
+            document.getElementById('rate-inf-display').innerText = infVal.toFixed(1) + "%";
+            document.getElementById('rate-risk-display').innerText = riskLbl;
+            document.getElementById('rate-display-val').innerText = finalRate.toFixed(1) + " % / năm";
+        }
+
+        // SECTION 4: Money multiplier and Creation simulator
+        function runMoneyCreationSimulator() {
+            const deposit = parseFloat(document.getElementById('creation-deposit').value);
+            const rrrPct = parseInt(document.getElementById('creation-rrr').value);
+            
+            // Calculate Money Multiplier: m = 1 / RRR
+            const multiplier = 1 / (rrrPct / 100);
+            const totalMoney = deposit * multiplier;
+
+            document.getElementById('creation-rrr-lbl').innerText = rrrPct + "%";
+            document.getElementById('creation-multiplier-lbl').innerText = multiplier.toFixed(1);
+            document.getElementById('creation-output').innerText = totalMoney.toLocaleString('vi-VN') + " đ";
+        }
+
+        // SECTION 5: MS MD scale balance controller
+        function setMsMdScale(action) {
+            const scale = document.getElementById('msmd-scale-lever');
+            const feedback = document.getElementById('msmd-scale-feedback');
+
+            if (action === 'ms-high') {
+                scale.style.transform = "rotate(-12deg)"; // MS is heavy (lowers on left)
+                feedback.innerHTML = "📊 <strong>MS > MD (Thừa tiền mặt):</strong> Khi lượng tiền lưu thông vượt quá nhu cầu nắm giữ thực tế của công chúng. <span class='text-emerald-400 font-black'>Lãi suất thị trường sẽ có xu hướng GIẢM để kích thích dòng chảy!</span>";
+            } else if (action === 'md-high') {
+                scale.style.transform = "rotate(12deg)"; // MD is heavy (lowers on right)
+                feedback.innerHTML = "⚠️ <strong>MS < MD (Khát tiền mặt):</strong> Nhu cầu nắm giữ tiền an toàn để giao dịch của dân chúng quá lớn mà nguồn cung gò bó. <span class='text-rose-400 font-black'>Lãi suất thị trường sẽ TĂNG mạnh do khan hiếm tiền tệ!</span>";
+            } else {
+                scale.style.transform = "rotate(0deg)"; // Balanced
+                feedback.innerHTML = "⚖️ <strong>MS = MD (Cân bằng tiền tệ):</strong> Thị trường tiền đạt sự thăng bằng tối ưu. <span class='text-indigo-400 font-black'>Lãi suất thị trường ổn định và định hình vững chắc đà phát triển!</span>";
+            }
+        }
+
+        // SECTION 7: Monetary policy mode toggle
+        function togglePolicyMode(mode) {
+            const tightBtn = document.getElementById('policy-btn-tight');
+            const easyBtn = document.getElementById('policy-btn-easy');
+            const title = document.getElementById('policy-title');
+            const desc = document.getElementById('policy-desc');
+            
+            const visualRate = document.getElementById('policy-visual-rate');
+            const visualSupply = document.getElementById('policy-visual-supply');
+            const actionBanner = document.getElementById('policy-action-banner');
+
+            // Reset buttons
+            [tightBtn, easyBtn].forEach(btn => {
+                btn.className = "px-5 py-2.5 rounded-xl text-xs md:text-sm font-extrabold border transition-all shadow bg-slate-800 border-indigo-500/30 text-indigo-300 hover:bg-indigo-900/40";
+            });
+
+            if (mode === 'tight') {
+                tightBtn.className = "px-5 py-2.5 rounded-xl text-xs md:text-sm font-extrabold border transition-all shadow-md bg-indigo-600 border-indigo-500 text-white shadow-indigo-900/50";
+                
+                title.innerText = "📉 CHÍNH SÁCH TIỀN TỆ THẮT CHẶT";
+                desc.innerHTML = `
+                    <p class="mb-1.5">• <strong>Mục đích:</strong> Giảm lượng tiền lưu thông nhằm kiềm chế đà gia tăng của lạm phát vĩ mô.</p>
+                    <p class="mb-1.5">• <strong>Hành động:</strong> Ngân hàng Nhà nước tiến hành <strong class="text-indigo-400">Tăng lãi suất điều hành</strong>, tăng tỷ lệ RRR hoặc phát hành trái phiếu thu hút tiền tệ về.</p>
+                    <p class="mb-1.5">• <strong>Hệ quả:</strong> Thắt chặt và giới hạn đà tín dụng của xã hội, kìm hãm tiêu dùng để hạ nhiệt lạm phát thành công.</p>
+                `;
+
+                visualRate.innerText = "TĂNG CỰC CAO";
+                visualRate.className = "text-lg font-black text-rose-400 animate-pulse";
+                visualSupply.innerText = "CO HẸP ↓";
+                visualSupply.className = "text-lg font-black text-rose-400";
+                
+                actionBanner.innerText = "🎯 KẾT QUẢ: KIỀM CHẾ LẠM PHÁT THÀNH CÔNG!";
+                actionBanner.className = "mt-4 p-2.5 rounded-lg text-center font-extrabold text-xs w-full bg-rose-950 border border-rose-800 text-rose-300";
+            } else {
+                easyBtn.className = "px-5 py-2.5 rounded-xl text-xs md:text-sm font-extrabold border transition-all shadow-md bg-indigo-600 border-indigo-500 text-white shadow-indigo-900/50";
+                
+                title.innerText = "📈 CHÍNH SÁCH TIỀN TỆ MỞ RỘNG";
+                desc.innerHTML = `
+                    <p class="mb-1.5">• <strong>Mục đích:</strong> Tăng tổng lượng tiền lưu thông nhằm kích thích tăng trưởng kinh tế, vực dậy thị trường suy thoái.</p>
+                    <p class="mb-1.5">• <strong>Hành động:</strong> Ngân hàng Nhà nước tiến hành <strong class="text-emerald-400">Giảm lãi suất điều hành</strong>, hạ tỷ lệ dự trữ bắt buộc RRR và mua ròng giấy tờ có giá.</p>
+                    <p class="mb-1.5">• <strong>Hệ quả:</strong> Nới lỏng tín dụng rộng rãi, tạo động lực to lớn cho đầu tư, thúc đẩy doanh nghiệp phát triển sản xuất.</p>
+                `;
+
+                visualRate.innerText = "GIẢM CỰC THẤP";
+                visualRate.className = "text-lg font-black text-emerald-400 animate-pulse";
+                visualSupply.innerText = "BÙNG NỔ ↑";
+                visualSupply.className = "text-lg font-black text-emerald-400";
+
+                actionBanner.innerText = "🎯 KẾT QUẢ: THÚC ĐẨY TĂNG TRƯỞNG KINH TẾ!";
+                actionBanner.className = "mt-4 p-2.5 rounded-lg text-center font-extrabold text-xs w-full bg-emerald-950 border border-emerald-800 text-emerald-300";
+            }
+        }
+
+        // SECTION 8: Inflation grocery simulator
+        function runInflationSimulator() {
+            const rate = parseInt(document.getElementById('inflation-slider').value);
+            document.getElementById('inflation-rate-lbl').innerText = rate + "%";
+
+            const container = document.getElementById('inflation-cart-items');
+            const resultLabel = document.getElementById('inflation-result-lbl');
+
+            // Visual food icons list
+            const breadIcon = `<span class="bg-slate-800 p-2 rounded-lg border border-slate-700 flex flex-col items-center"><i class="fa-solid fa-bread-slice text-amber-400 text-xl"></i><span class="text-[8px] font-bold text-slate-300 mt-1">Bánh mì</span></span>`;
+            const eggIcon = `<span class="bg-slate-800 p-2 rounded-lg border border-slate-700 flex flex-col items-center"><i class="fa-solid fa-egg text-yellow-400 text-xl"></i><span class="text-[8px] font-bold text-slate-300 mt-1">Trứng</span></span>`;
+            const milkIcon = `<span class="bg-slate-800 p-2 rounded-lg border border-slate-700 flex flex-col items-center"><i class="fa-solid fa-prescription-bottle text-blue-400 text-xl"></i><span class="text-[8px] font-bold text-slate-300 mt-1">Sữa hộp</span></span>`;
+            const appleIcon = `<span class="bg-slate-800 p-2 rounded-lg border border-slate-700 flex flex-col items-center"><i class="fa-solid fa-apple-whole text-red-400 text-xl"></i><span class="text-[8px] font-bold text-slate-300 mt-1">Táo quả</span></span>`;
+
+            if (rate === 0) {
+                container.innerHTML = breadIcon + eggIcon + milkIcon + appleIcon;
+                resultLabel.innerText = "Mua đầy đủ toàn bộ giỏ hàng (Sức mua: 100%)";
+                resultLabel.className = "text-xs font-black text-emerald-400";
+            } else if (rate === 50) {
+                container.innerHTML = breadIcon + eggIcon + milkIcon;
+                resultLabel.innerText = "Mất giá trị vừa phải (Sức mua: 75%)";
+                resultLabel.className = "text-xs font-black text-amber-400";
+            } else if (rate === 100) {
+                container.innerHTML = breadIcon + eggIcon;
+                resultLabel.innerText = "Hàng hóa đắt gấp đôi (Sức mua: 50%)";
+                resultLabel.className = "text-xs font-black text-orange-400";
+            } else if (rate === 150) {
+                container.innerHTML = breadIcon;
+                resultLabel.innerText = "Chỉ mua được sản phẩm tối thiểu (Sức mua: 25%)";
+                resultLabel.className = "text-xs font-black text-rose-400";
+            } else {
+                container.innerHTML = `<span class="text-xs text-rose-400 font-extrabold italic">Không mua nổi bất kỳ sản phẩm nào!</span>`;
+                resultLabel.innerText = "SỨC MUA CHẠM ĐÁY! TIỀN MẤT GIÁ TRỊ HOÀN TOÀN";
+                resultLabel.className = "text-xs font-black text-red-400 animate-pulse";
+            }
+        }
+
+        // MINI QUIZ SYSTEM
+        const quizAnswers = {
+            1: 'C',
+            2: 'B',
+            3: 'A'
+        };
+
+        function checkAnswer(qNum, choice, btn) {
+            const feedback = document.getElementById('feedback-' + qNum);
+            const parent = btn.parentElement;
+            const buttons = parent.querySelectorAll('button');
+
+            // Disable all options
+            buttons.forEach(b => {
+                b.disabled = true;
+                b.className = "text-left p-3 rounded-lg border border-slate-800 bg-slate-900/40 text-slate-500 opacity-60 font-semibold cursor-not-allowed";
+            });
+
+            if (choice === quizAnswers[qNum]) {
+                btn.className = "text-left p-3 rounded-lg border-2 border-emerald-500 bg-emerald-950/80 text-emerald-300 font-black shadow-sm";
+                feedback.className = "mt-2 p-2.5 rounded text-xs font-bold bg-emerald-950 border border-emerald-800 text-emerald-300 block";
+                feedback.innerHTML = "✨ 정답입니다! (Chính xác!) " + getQuizExplanation(qNum);
+            } else {
+                btn.className = "text-left p-3 rounded-lg border-2 border-red-500 bg-red-950/80 text-red-300 font-black shadow-sm";
+                feedback.className = "mt-2 p-2.5 rounded text-xs font-bold bg-red-950 border border-red-800 text-red-300 block";
+                feedback.innerHTML = "❌ 오답입니다. (Chưa đúng rồi.) " + getQuizExplanation(qNum);
+
+                // Highlight correct button
+                buttons.forEach(b => {
+                    if (b.innerText.trim().startsWith(quizAnswers[qNum])) {
+                        b.className = "text-left p-3 rounded-lg border border-emerald-500 bg-emerald-950/50 text-emerald-300 font-bold";
+                    }
+                });
+            }
+        }
+
+        function getQuizExplanation(qNum) {
+            if (qNum === 1) {
+                return "Ngân hàng Trung ương (중앙은행) là định chế tài chính công của một quốc gia, được giao phó vai trò điều hành chính sách tiền tệ quốc gia, in ấn và phát hành độc quyền tiền mặt và giám sát hệ thống Ngân hàng Thương mại. Do đó chọn C.";
+            } else if (qNum === 2) {
+                return "Khi Ngân hàng Trung ương hạ tỷ lệ dự trữ bắt buộc RRR (법정지급준비율 인하), các ngân hàng thương mại được giữ lại ít tiền dự trữ hơn và giải ngân cho vay ra nền kinh tế nhiều hơn. Theo cơ chế hệ số nhân tiền, lượng cung tiền Ms ngoài thị trường sẽ bùng nổ gia tăng. Do đó chọn B.";
+            } else {
+                return "Để kiềm chế và dập tắt lạm phát phi mã (Hyperinflation), Ngân hàng Trung ương cần thắt chặt cung tiền (긴축 통화 정책). Bằng cách tăng lãi suất điều hành để khuyến khích dân gửi tiết kiệm và giảm đà tín dụng tiêu dùng, lượng tiền lưu thông sẽ co hẹp lại giúp giá cả ổn định. Do đó chọn A.";
+            }
+        }
+    </script>
+</body>
+</html>
