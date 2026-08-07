@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOPIK II 읽기 25~27번 문제 연습</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+        }
+        .option-btn:hover { background-color: #334155; border-color: #64748b; }
+        .selected { background-color: #1e3a8a !important; border-color: #3b82f6 !important; ring: 2px solid #3b82f6; color: #93c5fd !important; }
+        .correct { background-color: #064e3b !important; border-color: #22c55e !important; color: #6ee7b7 !important; }
+        .wrong { background-color: #7f1d1d !important; border-color: #ef4444 !important; color: #fca5a5 !important; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen p-4 md:p-8">
+    
+    <!-- Nút quay lại ENJOY KOREAN trên cùng bên trái -->
+    <div class="max-w-3xl mx-auto mb-4">
+        <a href="index.html#korean" class="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-full font-bold text-xs md:text-sm border border-slate-700 shadow-md transition-all">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>QUAY LẠI ENJOY KOREAN</span>
+        </a>
+    </div>
+
+    <div id="app" class="max-w-3xl mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-slate-100 mb-2 tracking-tight">TOPIK II 읽기 25~27번 문제 연습</h1>
+            <p class="text-sm md:text-base text-slate-400 font-medium">Ứng dụng được thiết kế bởi ThS. Lương Quốc An (HUFLIT), dựa trên công cụ Gemini</p>
+        </header>
+
+        <div id="main-view" class="bg-slate-800/90 rounded-3xl shadow-xl border border-slate-700 p-6 md:p-10">
+            <div id="menu-screen" class="space-y-6">
+                <div class="p-6 bg-slate-900/80 rounded-2xl border border-blue-500/30">
+                    <h2 class="text-xl font-bold text-blue-400 mb-4">학습 모드 선택</h2>
+                    <div class="space-y-4">
+                        <button onclick="startPractice()" class="w-full py-4 px-6 bg-blue-600 text-white rounded-xl text-lg font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-900/40">연습 모드 (학습용)</button>
+                        <button onclick="startExam()" class="w-full py-4 px-6 bg-emerald-600 text-white rounded-xl text-lg font-bold hover:bg-emerald-700 transition shadow-lg shadow-emerald-900/40">시험 모드 (15문제/10분)</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="game-screen" class="hidden">
+                <div id="game-header" class="flex justify-between items-center mb-6 text-sm font-semibold text-slate-400 uppercase tracking-wider">
+                    <span id="progress-text" class="bg-slate-700 text-slate-200 px-3 py-1 rounded-full"></span>
+                    <span id="timer-text" class="font-mono text-xl text-rose-400"></span>
+                </div>
+                <div id="question-container" class="space-y-6"></div>
+                <div id="feedback-container" class="mt-8 p-6 rounded-2xl bg-slate-900/80 border border-slate-700 hidden"></div>
+                <div id="controls" class="mt-8 flex justify-between"></div>
+            </div>
+
+            <div id="result-screen" class="hidden text-center py-8">
+                <h2 class="text-3xl font-bold text-slate-100 mb-6">시험 결과</h2>
+                <div id="score-display" class="text-6xl font-black text-blue-400 mb-4"></div>
+                <p id="evaluation" class="text-xl text-slate-300 mb-8"></p>
+                <div class="flex gap-4 justify-center">
+                    <button onclick="showReview()" class="bg-blue-600 text-white py-3 px-8 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg">상세 결과 보기</button>
+                    <button onclick="location.reload()" class="bg-slate-700 text-slate-100 py-3 px-8 rounded-xl font-bold hover:bg-slate-600 transition shadow-lg">처음으로</button>
+                </div>
+            </div>
+
+            <div id="review-screen" class="hidden mt-8">
+                <h2 class="text-2xl font-bold text-slate-100 mb-6">상세 오답 노트</h2>
+                <div id="review-container" class="space-y-8"></div>
+                <button onclick="location.reload()" class="mt-8 w-full bg-slate-700 hover:bg-slate-600 text-white py-4 rounded-xl font-bold">처음으로 돌아가기</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "관광버스 추락, 안전벨트로 승객 전원 목숨 건져", options: ["관광버스가 추락했지만 승객들이 안전벨트 덕분에 모두 살았다.", "관광버스 추락 사고 이후 안전벨트를 하는 승객이 더 많아졌다.", "관광버스가 추락하자 일부 승객이 안전벨트를 풀고 탈출하였다.", "관광버스가 추락하면서 안전벨트를 한 일부 승객이 크게 다쳤다."], options_trans: ["① Xe bus du lịch rơi nhưng nhờ dây an toàn nên toàn bộ hành khách đã sống sót.", "② Sau vụ tai nạn xe bus du lịch, số lượng hành khách thắt dây an toàn đã tăng lên.", "③ Khi xe bus rơi, một số hành khách đã tháo dây an toàn và thoát ra ngoài.", "④ Khi xe bus rơi, một số hành khách thắt dây an toàn đã bị thương nặng."], answer: 0, exp: { vocab: [{ term: "관광버스", note: "Xe bus du lịch" }, { term: "추락", note: "Rơi từ trên cao xuống" }, { term: "안전벨트", note: "Dây an toàn" }, { term: "승객", note: "Hành khách" }, { term: "전원", note: "Toàn bộ" }, { term: "목숨 건지다", note: "Vớt được tính mạng (nghĩa đen) / Cứu sống (nghĩa bóng)" }], correct: "Đáp án đúng là ①. Tiêu đề nói '승객 전원 목숨 건져' (toàn bộ hành khách giữ mạng sống) khớp hoàn toàn với nội dung '승객들이 모두 살았다'.", wrong: "Các đáp án khác sai vì: ② Không có thông tin về việc số người thắt dây tăng lên. ③ Không có thông tin về hành khách tự tháo dây. ④ Thông tin bị thương trái ngược với thông tin sống sót." } },
+            { q: "침묵 깬 김민수 의원, 대통령 선거 출마설 부인", options: ["김 의원이 대통령 선거에 나가느냐는 질문에 계속 답하지 않고 있다.", "김 의원이 마음을 바꾸어 대통령 선거에 나가겠다고 최종 발표하였다.", "김 의원이 대통령 선거에 나간다고 선언하자 사람들이 열렬히 환영했다.", "김 의원이 대통령 선거에 나간다는 것이 사실이 아니라고 입장을 밝혔다."], options_trans: ["① Nghị sĩ Kim vẫn không trả lời các câu hỏi về việc có ra tranh cử tổng thống hay không.", "② Nghị sĩ Kim thay đổi suy nghĩ và tuyên bố cuối cùng sẽ ra tranh cử tổng thống.", "③ Khi nghị sĩ Kim tuyên bố ra tranh cử, mọi người đã nhiệt liệt hoan nghênh.", "④ Nghị sĩ Kim đã bày tỏ lập trường rằng thông tin ông ra tranh cử là không đúng sự thật."], answer: 3, exp: { vocab: [{ term: "침묵", note: "Sự im lặng" }, { term: "침묵 깬", note: "Phá vỡ sự im lặng (nghĩa đen) / Lên tiếng sau thời gian dài im lặng (nghĩa bóng)" }, { term: "의원", note: "Nghị sĩ" }, { term: "대통령 선거", note: "Bầu cử tổng thống" }, { term: "출마설", note: "Tin đồn ra tranh cử" }, { term: "부인", note: "Phủ nhận" }], correct: "Đáp án đúng là ④. '출마설 부인' (phủ nhận tin đồn tranh cử) có nghĩa là khẳng định thông tin đó không phải là sự thật.", wrong: "① '침묵 깬' nghĩa là ông ấy đã lên tiếng, trái với 'tiếp tục không trả lời'. ② '부인' (phủ nhận) trái với việc 'tuyên bố ra tranh cử'. ③ Không có thông tin về phản ứng của người dân." } },
+            { q: "민간 우주선 무사 귀환, 우주여행 시대 '성큼'", options: ["사람들의 응원 속에 민간 우주선이 긴 우주여행을 마치고 돌아왔다.", "사람들은 민간 우주선이 우주여행에서 무사히 돌아오기를 기대했다.", "민간 우주선이 무사히 돌아오면서 우주여행의 가능성이 더욱 높아졌다.", "민간 우주선이 돌아오지 않자 우주여행에 대한 우려의 목소리가 커졌다."], options_trans: ["① Trong sự cổ vũ của mọi người, tàu vũ trụ tư nhân đã kết thúc chuyến hành trình dài và trở về.", "② Mọi người đã mong đợi tàu vũ trụ tư nhân trở về an toàn từ chuyến du lịch vũ trụ.", "③ Khi tàu vũ trụ tư nhân trở về an toàn, khả năng du lịch vũ trụ đã tăng cao hơn nữa.", "④ Khi tàu vũ trụ không trở về, những tiếng nói lo ngại về du lịch vũ trụ ngày càng lớn."], answer: 2, exp: { vocab: [{ term: "민간", note: "Tư nhân" }, { term: "우주선", note: "Tàu vũ trụ" }, { term: "무사 귀환", note: "Trở về an toàn" }, { term: "우주여행", note: "Du lịch vũ trụ" }, { term: "시대", note: "Thời đại" }, { term: "성큼", note: "Bước sải dài (nghĩa đen) / Đến gần nhanh chóng (nghĩa bóng)" }], correct: "Đáp án đúng là ③. '성큼' (bước gần hơn) chỉ việc thời đại du lịch vũ trụ đang đến gần nhờ sự thành công của chuyến bay.", wrong: "① Không đề cập đến 'sự cổ vũ'. ② Tiêu đề là kết quả đã xảy ra, không nói về sự kỳ vọng. ④ Tin tức là '무사' (an toàn), trái với việc không trở về." } },
+            { q: "드라마 '진실' 인기 효과, 원작 베스트셀러 1위", options: ["드라마 '진실'이 인기를 얻으면서 원작이 판매량 1위를 차지했다.", "드라마 '진실'이 시청률 1위가 되자 원작 작가에 대한 관심이 높아졌다.", "드라마 '진실'의 인기로 원작 작가의 모든 작품들의 판매율이 상승했다.", "드라마 '진실'이 원작의 인기 요소를 추가해 시청률 1위의 드라마가 됐다."], options_trans: ["① Khi bộ phim 'Sự thật' trở nên nổi tiếng, tác phẩm gốc đã chiếm vị trí số 1 về doanh số.", "② Khi phim 'Sự thật' đạt rating số 1, sự quan tâm dành cho tác giả tác phẩm gốc tăng cao.", "③ Do sự nổi tiếng của phim 'Sự thật', doanh số của tất cả các tác phẩm của tác giả này đều tăng.", "④ Phim 'Sự thật' trở thành phim rating số 1 bằng cách thêm các yếu tố nổi tiếng của nguyên tác."], answer: 0, exp: { vocab: [{ term: "드라마", note: "Phim truyền hình" }, { term: "인기", note: "Sự nổi tiếng" }, { term: "효과", note: "Hiệu quả" }, { term: "원작", note: "Tác phẩm gốc" }, { term: "베스트셀러", note: "Sách bán chạy nhất" }, { term: "1위", note: "Vị trí số 1" }], correct: "Đáp án đúng là ①. Phim nổi tiếng (nhân tố chính) dẫn đến tác phẩm gốc đứng số 1 về doanh thu bán chạy.", wrong: "② Bài báo nói về 'sách', không nói về sự quan tâm tới 'tác giả'. ③ Chỉ nói về 'tác phẩm gốc', không nói về 'tất cả tác phẩm' khác. ④ Đây là nguyên nhân sai trình tự logic." } },
+            { q: "기습 폭우에 차량 '엉금엉금', 출근길 정체", options: ["폭우로 피해를 입은 차량들이 늘면서 사람들의 출근이 늦어졌다.", "큰비에 차량 사고가 잇따르면서 출근하던 사람들이 곤란을 겪었다.", "갑자기 많이 쏟아진 비로 차들이 천천히 운행하면서 출근길이 막혔다.", "계속된 비에 대중교통 이용자가 한꺼번에 몰리면서 출근길이 혼잡해졌다."], options_trans: ["① Khi xe bị thiệt hại do mưa lớn ngày càng nhiều, việc đi làm của mọi người bị chậm trễ.", "② Khi tai nạn xe cộ xảy ra liên tiếp trong mưa lớn, người đi làm gặp khó khăn.", "③ Do lượng mưa bất ngờ lớn, các phương tiện di chuyển chậm khiến đường đi làm bị tắc nghẽn.", "④ Khi mưa kéo dài, người sử dụng phương tiện công cộng đổ dồn lại khiến đường đi làm trở nên đông đúc."], answer: 2, exp: { vocab: [{ term: "기습", note: "Tấn công bất ngờ" }, { term: "폭우", note: "Mưa lớn" }, { term: "차량", note: "Phương tiện" }, { term: "엉금엉금", note: "Bò chậm chạp (nghĩa đen) / Xe di chuyển cực kỳ chậm (nghĩa bóng)" }, { term: "출근길", note: "Đường đi làm" }, { term: "정체", note: "Ùn tắc" }], correct: "Đáp án đúng là ③. '엉금엉금' tả xe đi rất chậm do mưa lớn, dẫn đến kẹt xe giờ đi làm (정체).", wrong: "① Không đề cập đến 'thiệt hại xe'. ② Không nói về 'tai nạn'. ④ Không nói về 'phương tiện công cộng' mà nói về tình trạng xe nói chung." } },
+            { q: "온라인 거래 사기 급증, 정부 대책 마련은 미흡", options: ["온라인 거래 사기가 늘었지만 정부의 대책 마련은 충분하지 않다.", "온라인 시장에서 거래 사기가 증가해 정부가 대책을 수립하고 있다.", "온라인 거래 사기를 막기 위해 마련한 정부의 대책은 큰 효과가 없었다.", "온라인 거래 사기 피해자들을 위해 정부가 대책을 마련하겠다고 발표했다."], options_trans: ["① Lừa đảo giao dịch trực tuyến tăng lên nhưng các biện pháp đối phó của chính phủ chưa đủ.", "② Khi lừa đảo giao dịch trên thị trường trực tuyến tăng, chính phủ đang xây dựng các biện pháp.", "③ Các biện pháp của chính phủ được chuẩn bị để ngăn chặn lừa đảo trực tuyến không có hiệu quả lớn.", "④ Chính phủ đã tuyên bố sẽ đưa ra các biện pháp cho các nạn nhân lừa đảo trực tuyến."], answer: 0, exp: { vocab: [{ term: "온라인 거래", note: "Giao dịch trực tuyến" }, { term: "사기", note: "Lừa đảo" }, { term: "급증", note: "Tăng đột ngột" }, { term: "정부", note: "Chính phủ" }, { term: "대책", note: "Đối sách" }, { term: "마련", note: "Chuẩn bị" }, { term: "미흡", note: "Thiếu sót" }], correct: "Đáp án đúng là ①. '미흡' có nghĩa là thiếu sót, không đầy đủ, khớp với 'đối sách không đủ'.", wrong: "② Bài viết nói đối sách 'thiếu', không nói đang xây dựng. ③ Không đề cập đối sách đó đã thử và không hiệu quả. ④ Bài không nói về việc chính phủ cam kết làm mới." } },
+            { q: "가수 진영, 3년 만의 콘서트에 구름 관중", options: ["가수 진영이 3년 만에 콘서트를 열자 수많은 관중이 몰렸다.", "가수 진영이 3년 내에 다시 콘서트를 열기로 관중에게 약속했다.", "가수 진영이 3년간 준비한 콘서트를 열었으나 관중의 호응이 적었다.", "가수 진영이 3년 만에 하는 콘서트에 많은 관중을 모으려고 홍보했다."], options_trans: ["① Khi ca sĩ Jinyoung mở concert sau 3 năm, hàng nghìn khán giả đã đổ xô đến.", "② Ca sĩ Jinyoung đã hứa với khán giả sẽ mở concert lại trong vòng 3 năm.", "③ Ca sĩ Jinyoung đã mở concert chuẩn bị trong 3 năm nhưng khán giả phản ứng ít.", "④ Ca sĩ Jinyoung đã quảng bá để thu hút nhiều khán giả đến concert sau 3 năm."], answer: 0, exp: { vocab: [{ term: "가수", note: "Ca sĩ" }, { term: "3년 만에", note: "Sau 3 năm" }, { term: "콘서트", note: "Buổi hòa nhạc" }, { term: "구름 관중", note: "Đám mây khán giả (nghĩa đen) / Khán giả đông nghịt như mây (nghĩa bóng)" }, { term: "관중", note: "Khán giả" }], correct: "Đáp án đúng là ①. '구름 관중' là ẩn dụ cho việc có rất đông người đến xem.", wrong: "② Không có nội dung hứa hẹn. ③ '구름 관중' trái ngược với 'phản ứng ít'. ④ Không nói về mục đích quảng bá." } },
+            { q: "한국 탁구의 간판 김수미, 올해 국제 대회 금메달 싹쓸이", options: ["올해 국제 탁구 대회에서 한국 대표 김수미의 금메달 가능성이 높아졌다.", "한국 탁구계가 김수미를 내세워 올해 국제 대회의 금메달을 노리고 있다.", "한국의 대표 탁구 선수 김수미가 올해 국제 대회에서 모두 금메달을 땄다.", "한국 탁구 선수 김수미가 올해 국제 대회에서 금메달을 따고자 훈련 중이다."], options_trans: ["① Khả năng giành huy chương vàng của đại diện Hàn Quốc Kim Sumi tại giải bóng bàn quốc tế năm nay đã tăng lên.", "② Giới bóng bàn Hàn Quốc đang nhắm đến huy chương vàng giải quốc tế năm nay bằng cách đưa Kim Sumi ra.", "③ Vận động viên bóng bàn đại diện Hàn Quốc Kim Sumi đã giành tất cả huy chương vàng tại các giải quốc tế năm nay.", "④ Vận động viên bóng bàn Kim Sumi đang tập luyện để giành huy chương vàng tại các giải quốc tế năm nay."], answer: 2, exp: { vocab: [{ term: "한국 탁구", note: "Bóng bàn Hàn Quốc" }, { term: "간판", note: "Biển hiệu (nghĩa đen) / Gương mặt đại diện (nghĩa bóng)" }, { term: "국제 대회", note: "Giải đấu quốc tế" }, { term: "금메달", note: "Huy chương vàng" }, { term: "싹쓸이", note: "Quét sạch (nghĩa đen) / Giành lấy tất cả (nghĩa bóng)" }], correct: "Đáp án đúng là ③. '싹쓸이' có nghĩa là giành hết tất cả (các huy chương vàng).", wrong: "①, ②, ④ đều mô tả việc 'đang' hoặc 'sẽ' làm, trong khi tiêu đề nói về kết quả đã đạt được trong năm nay." } },
+            { q: "대출 금리 하락세, 부동산 시장 기지개", options: ["대출 금리가 떨어지면서 부동산 시장이 살아나기 시작했다.", "부동산 시장에 대한 규제가 대출 금리 하락에 영향을 미쳤다.", "대출 금리가 하락했지만 부동산 시장의 거래는 줄어들고 있다.", "부동산 시장을 활성화하려고 대출 금리 안정화 대책이 논의되고 있다."], options_trans: ["① Khi lãi suất vay giảm, thị trường bất động sản bắt đầu sống lại.", "② Quy định về thị trường bất động sản đã gây ảnh hưởng đến việc giảm lãi suất vay.", "③ Lãi suất vay đã giảm nhưng giao dịch trên thị trường bất động sản đang giảm.", "④ Các biện pháp ổn định lãi suất vay đang được thảo luận để kích hoạt thị trường bất động sản."], answer: 0, exp: { vocab: [{ term: "대출", note: "Vay tiền" }, { term: "금리", note: "Lãi suất" }, { term: "하락세", note: "Xu hướng giảm" }, { term: "부동산 시장", note: "Thị trường bất động sản" }, { term: "기지개", note: "Vươn vai (nghĩa đen) / Bắt đầu phục hồi sau thời gian dài trì trệ (nghĩa bóng)" }], correct: "Đáp án đúng là ①. '기지개' ẩn dụ cho việc thị trường bất động sản bắt đầu hoạt động trở lại.", wrong: "② Không nói về nguyên nhân của lãi suất. ③ Trái ngược với '기지개' (thị trường đang phục hồi). ④ Bài không nói về việc đang thảo luận đối sách." } },
+            { q: "모처럼의 황금연휴, 여행사 예약 문의 '껑충'", options: ["연휴가 짧아서 여행 상품을 찾는 예약 문의가 줄어들었다.", "값이 비싸더라도 연휴 기간에 여행을 가려는 사람이 많아졌다.", "오랜만에 오는 긴 연휴를 맞아 여행사에 예약 상담이 대폭 늘었다.", "매년 돌아오는 연휴를 앞두고 여행사마다 적극적인 홍보를 시작했다."], options_trans: ["① Vì kỳ nghỉ ngắn nên các yêu cầu đặt chỗ tìm sản phẩm du lịch đã giảm.", "② Số người muốn đi du lịch trong kỳ nghỉ tăng lên ngay cả khi giá đắt.", "③ Nhờ kỳ nghỉ dài sau bao lâu mới có, tư vấn đặt chỗ tại các công ty du lịch đã tăng vọt.", "④ Mỗi công ty du lịch đều bắt đầu quảng bá tích cực trước kỳ nghỉ diễn ra hàng năm."], answer: 2, exp: { vocab: [{ term: "모처럼", note: "Sau bao lâu" }, { term: "황금연휴", note: "Kỳ nghỉ vàng" }, { term: "여행사", note: "Công ty du lịch" }, { term: "예약 문의", note: "Yêu cầu đặt chỗ" }, { term: "껑충", note: "Nhảy bước dài (nghĩa đen) / Tăng nhanh vọt (nghĩa bóng)" }], correct: "Đáp án đúng là ③. '껑충' chỉ sự tăng mạnh của các câu hỏi đặt chỗ tại công ty du lịch.", wrong: "① Trái ngược với '껑충'. ② Không đề cập đến giá cả. ④ Không đề cập đến việc quảng bá." } },
+            { q: "김민수 '올해의 선수상' 수상 유력, 야구팬들 기대 고조", options: ["김민수가 상을 받아서 야구팬들이 매우 기뻐하고 있다.", "김민수가 야구팬들의 큰 기대에도 불구하고 상을 받지 못했다.", "김민수가 상을 받을 가능성이 많아 야구팬들의 기대가 높아지고 있다.", "김민수가 상을 받는 데 실패했지만 야구팬들에게 많은 응원을 받았다."], options_trans: ["① Kim Minsoo đã nhận giải nên người hâm mộ bóng chày đang rất vui mừng.", "② Kim Minsoo không nhận được giải thưởng dù có sự kỳ vọng lớn của fan bóng chày.", "③ Kim Minsoo có khả năng cao nhận giải nên kỳ vọng của fan bóng chày đang tăng lên.", "④ Kim Minsoo thất bại trong việc nhận giải nhưng đã nhận được nhiều sự cổ vũ của fan."], answer: 2, exp: { vocab: [{ term: "올해의 선수상", note: "Giải thưởng cầu thủ của năm" }, { term: "수상", note: "Nhận giải" }, { term: "유력", note: "Khả năng cao" }, { term: "야구팬", note: "Người hâm mộ bóng chày" }, { term: "기대 고조", note: "Sự kỳ vọng được đẩy lên cao" }], correct: "Đáp án đúng là ③. '유력' có nghĩa là khả năng cao, dẫn đến sự kỳ vọng của fan tăng lên.", wrong: "① Chưa trao giải, mới là '유력' (khả năng cao). ② Trái ngược với khả năng nhận giải cao. ④ Không nói về việc thất bại." } },
+            { q: "지지부진한 태풍 피해 복구, 속 터지는 인주 주민들", options: ["태풍 피해가 매년 발생해 인주 주민들이 대책을 요구했다.", "태풍 피해를 복구하는 일에 인주 주민들의 참여가 저조하다.", "태풍 피해를 막기 위한 방안이 인주 주민들에게 호응을 얻고 있다.", "태풍 피해 복구가 잘 진행되지 않아 인주 주민들이 답답해하고 있다."], options_trans: ["① Vì thiệt hại do bão xảy ra hàng năm nên cư dân Inju đã yêu cầu đối sách.", "② Sự tham gia của cư dân Inju trong việc khôi phục thiệt hại do bão là rất thấp.", "③ Phương án ngăn chặn thiệt hại do bão đang nhận được sự ủng hộ của cư dân Inju.", "④ Việc khôi phục thiệt hại do bão không tiến triển tốt khiến cư dân Inju đang cảm thấy bực bội."], answer: 3, exp: { vocab: [{ term: "지지부진", note: "Trì trệ" }, { term: "태풍", note: "Bão" }, { term: "피해 복구", note: "Khôi phục thiệt hại" }, { term: "속 터지는", note: "Bụng nổ tung (nghĩa đen) / Bực bội, nóng ruột (nghĩa bóng)" }, { term: "주민", note: "Cư dân" }], correct: "Đáp án đúng là ④. '속 터지는' diễn tả sự bức xúc của cư dân vì việc khôi phục diễn ra chậm chạp.", wrong: "① Không đề cập đến tần suất hàng năm. ② Không nói về việc cư dân tham gia. ③ Trái ngược với '속 터지는'." } },
+            { q: "TV 프로그램 방영 효과 '톡톡', 인주시는 관광객 물결", options: ["TV 프로그램 제작자들이 관광객을 촬영하러 인주시로 모여들었다.", "인주시가 TV 프로그램에 나온 덕분에 많은 관광객이 방문하고 있다.", "인주시가 관광객 유치를 위해 TV 프로그램 홍보 방송을 준비하고 있다.", "TV 프로그램 방송 후에 관광객이 증가해 인주시에 여러 문제가 발생했다."], options_trans: ["① Các nhà sản xuất chương trình TV đã đổ xô đến thành phố Inju để quay khách du lịch.", "② Nhờ xuất hiện trên chương trình TV, thành phố Inju đang thu hút nhiều khách du lịch đến thăm.", "③ Thành phố Inju đang chuẩn bị chương trình quảng bá TV để thu hút khách du lịch.", "④ Sau khi chương trình TV phát sóng, khách du lịch tăng lên và nhiều vấn đề phát sinh tại Inju."], answer: 1, exp: { vocab: [{ term: "방영", note: "Phát sóng" }, { term: "효과", note: "Hiệu quả" }, { term: "톡톡", note: "Tiếng gõ (nghĩa đen) / Từ mô phỏng chỉ hiệu quả rất rõ rệt (nghĩa bóng)" }, { term: "인주시", note: "Thành phố Inju" }, { term: "관광객 물결", note: "Làn sóng khách du lịch (nghĩa đen) / Lượng khách đông nghịt (nghĩa bóng)" }], correct: "Đáp án đúng là ②. Hiệu quả từ việc lên sóng giúp thành phố Inju thu hút nhiều khách du lịch.", wrong: "① Nội dung về khách du lịch, không phải về đội ngũ sản xuất. ③ Không đề cập đến việc chuẩn bị quảng bá. ④ Không nói về các vấn đề tiêu cực." } },
+            { q: "김수미 선수 시상대에 올라, 펜싱 종목 메달 가뭄 끝", options: ["김 선수가 펜싱 대표팀에서 메달을 목표로 열심히 훈련했다.", "김 선수가 메달을 따면서 오랜만에 펜싱 종목에서 메달이 나왔다.", "김 선수가 가장 많은 메달을 따며 펜싱 종목에서 신기록을 세웠다.", "김 선수가 펜싱 종목에서 좋은 경기를 펼쳤지만 아쉽게 메달을 놓쳤다."], options_trans: ["① Vận động viên Kim đã luyện tập chăm chỉ với mục tiêu huy chương tại đội tuyển đấu kiếm.", "② Khi vận động viên Kim giành huy chương, sau thời gian dài đã có huy chương ở bộ môn đấu kiếm.", "③ Vận động viên Kim đã thiết lập kỷ lục mới ở môn đấu kiếm bằng việc giành nhiều huy chương nhất.", "④ Vận động viên Kim đã thi đấu tốt ở môn đấu kiếm nhưng đáng tiếc đã tuột mất huy chương."], answer: 1, exp: { vocab: [{ term: "시상대", note: "Bục nhận giải" }, { term: "펜싱", note: "Đấu kiếm" }, { term: "메달 가뭄", note: "Hạn hán huy chương (nghĩa đen) / Sự thiếu hụt huy chương lâu ngày (nghĩa bóng)" }, { term: "끝", note: "Kết thúc" }], correct: "Đáp án đúng là ②. '메달 가뭄 끝' có nghĩa là sự chờ đợi lâu ngày đã kết thúc bằng việc giành huy chương.", wrong: "① Thông tin về luyện tập không có trong bài. ③ Không nói về kỷ lục. ④ Trái ngược với việc lên bục nhận giải." } },
+            { q: "선 넘은 악성 댓글, 처벌은 여전히 솜방망이", options: ["악의적인 댓글이 줄어든 만큼 처벌 수위를 낮추자는 의견이 제기됐다.", "악의적인 댓글에 대한 처벌을 강화했으나 피해는 감소하지 않고 있다.", "악의적인 댓글이 지나치게 심각해졌음에도 처벌 수위는 아직도 너무 낮다.", "악의적인 댓글이 계속 이어지자 피해자들이 무거운 처벌을 요구하고 나섰다."], options_trans: ["① Ý kiến yêu cầu hạ thấp mức xử phạt đã được đưa ra vì bình luận ác ý giảm đi.", "② Đã tăng cường xử phạt bình luận ác ý nhưng thiệt hại không hề giảm.", "③ Mặc dù bình luận ác ý đã trở nên quá nghiêm trọng nhưng mức xử phạt vẫn còn quá thấp.", "④ Khi bình luận ác ý tiếp tục kéo dài, các nạn nhân đã đứng ra yêu cầu xử phạt nặng."], answer: 2, exp: { vocab: [{ term: "선 넘은", note: "Vượt qua đường kẻ (nghĩa đen) / Vượt quá giới hạn (nghĩa bóng)" }, { term: "악성 댓글", note: "Bình luận ác ý" }, { term: "처벌", note: "Xử phạt" }, { term: "솜방망이", note: "Cây gậy làm bằng bông (nghĩa đen) / Hình phạt quá nhẹ (nghĩa bóng)" }], correct: "Đáp án đúng là ③. '솜방망이' ẩn dụ việc xử phạt quá nhẹ so với mức độ nghiêm trọng của hành vi.", wrong: "① Không đề cập đến việc giảm bớt bình luận. ② Không nói về việc đã tăng cường phạt. ④ Không đề cập đến yêu cầu của nạn nhân." } }
+        ];
+
+        let currentMode = '';
+        let currentIndex = 0;
+        let activeQuestions = [];
+        let examAnswers = new Array(15).fill(null);
+        let timeLeft = 600;
+        let timerInterval = null;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function prepareTest() {
+            activeQuestions = JSON.parse(JSON.stringify(questions));
+            activeQuestions = shuffleArray(activeQuestions);
+            activeQuestions.forEach(q => {
+                let optionsWithMeta = q.options.map((opt, i) => ({
+                    text: opt,
+                    trans: q.options_trans[i],
+                    isCorrect: (i === q.answer)
+                }));
+                optionsWithMeta = shuffleArray(optionsWithMeta);
+                q.options = optionsWithMeta.map(o => o.text);
+                q.options_trans = optionsWithMeta.map(o => o.trans);
+                q.answer = optionsWithMeta.findIndex(o => o.isCorrect);
+            });
+        }
+
+        function startPractice() {
+            currentMode = 'practice';
+            currentIndex = 0;
+            activeQuestions = questions;
+            document.getElementById('menu-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            renderQuestion();
+        }
+
+        function startExam() {
+            currentMode = 'exam';
+            currentIndex = 0;
+            prepareTest();
+            examAnswers = new Array(15).fill(null);
+            timeLeft = 600;
+            document.getElementById('menu-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            document.getElementById('timer-text').innerText = '10:00';
+            timerInterval = setInterval(updateTimer, 1000);
+            renderQuestion();
+        }
+
+        function updateTimer() {
+            timeLeft--;
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            document.getElementById('timer-text').innerText = `${mins}:${secs.toString().padStart(2, '0')}`;
+            if (timeLeft <= 0) finishExam();
+        }
+
+        function renderQuestion() {
+            const q = activeQuestions[currentIndex];
+            const container = document.getElementById('question-container');
+            document.getElementById('progress-text').innerText = `Câu ${currentIndex + 1} / ${activeQuestions.length}`;
+            
+            let html = `<h3 class="text-xl font-bold text-slate-100 mb-6 leading-relaxed">${currentIndex + 1}. ${q.q}</h3><div class="grid grid-cols-1 gap-4">`;
+            q.options.forEach((opt, idx) => {
+                const isSelected = examAnswers[currentIndex] === idx;
+                html += `<button class="option-btn p-5 text-left border-2 border-slate-700 bg-slate-900/60 rounded-xl transition-all font-medium text-slate-200 ${isSelected ? 'selected' : ''}" onclick="selectAnswer(${idx})">${idx+1}. ${opt}</button>`;
+            });
+            html += `</div>`;
+            container.innerHTML = html;
+
+            if(currentMode === 'practice') {
+                document.getElementById('feedback-container').classList.add('hidden');
+            }
+            updateControls();
+        }
+
+        function selectAnswer(idx) {
+            if(currentMode === 'practice') {
+                const q = activeQuestions[currentIndex];
+                const buttons = document.querySelectorAll('.option-btn');
+                buttons.forEach((b, i) => {
+                    b.disabled = true;
+                    if(i === q.answer) b.classList.add('correct');
+                    else if(i === idx && i !== q.answer) b.classList.add('wrong');
+                });
+                renderFeedback(q);
+                document.getElementById('feedback-container').classList.remove('hidden');
+            } else {
+                examAnswers[currentIndex] = idx;
+                renderQuestion();
+            }
+        }
+
+        function renderFeedback(q) {
+            let vocabHTML = q.exp.vocab.map(v => `<li class="text-sm text-slate-300"><strong class="text-slate-100">${v.term}:</strong> ${v.note}</li>`).join('');
+            let transHTML = q.options_trans.map((t, i) => `<p class="text-sm ${i === q.answer ? 'text-green-400 font-bold' : 'text-slate-400'}">${t}</p>`).join('');
+            const fb = document.getElementById('feedback-container');
+            fb.innerHTML = `
+                <div class="space-y-6">
+                    <div class="border-b border-slate-700 pb-2"><p class="font-bold text-lg text-slate-100">Giải thích chi tiết</p></div>
+                    <div><p class="font-semibold text-blue-400 mb-2">💡 Phân tích từ vựng:</p><ul class="list-disc ml-5 space-y-1">${vocabHTML}</ul></div>
+                    <div><p class="font-semibold text-purple-400 mb-2">📝 Dịch nghĩa các đáp án:</p><div class="space-y-2 bg-slate-800 p-3 rounded-lg border border-slate-700">${transHTML}</div></div>
+                    <div><p class="font-semibold text-green-400 mb-1">✅ Giải thích đáp án đúng:</p><p class="text-sm text-slate-300 leading-relaxed">${q.exp.correct}</p></div>
+                    <div><p class="font-semibold text-red-400 mb-1">❌ Giải thích các đáp án sai:</p><p class="text-sm text-slate-300 leading-relaxed">${q.exp.wrong}</p></div>
+                </div>
+            `;
+        }
+
+        function updateControls() {
+            const controls = document.getElementById('controls');
+            let html = `<button onclick="prev()" ${currentIndex === 0 ? 'disabled' : ''} class="px-6 py-2.5 bg-slate-700 text-slate-200 font-semibold rounded-xl hover:bg-slate-600 disabled:opacity-50 transition">이전</button>`;
+            if(currentIndex < activeQuestions.length - 1) {
+                html += `<button onclick="next()" class="px-6 py-2.5 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition">다음</button>`;
+            } else {
+                html += `<button onclick="finishExam()" class="px-6 py-2.5 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 transition">제출</button>`;
+            }
+            controls.innerHTML = html;
+        }
+
+        function next() { if(currentIndex < activeQuestions.length -1) { currentIndex++; renderQuestion(); } }
+        function prev() { if(currentIndex > 0) { currentIndex--; renderQuestion(); } }
+
+        function finishExam() {
+            clearInterval(timerInterval);
+            let score = 0;
+            examAnswers.forEach((ans, idx) => { if(ans === activeQuestions[idx].answer) score++; });
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+            document.getElementById('score-display').innerText = `${score} / 15`;
+            document.getElementById('evaluation').innerText = score > 12 ? "훌륭합니다! 아주 잘하셨어요." : score > 8 ? "좋습니다! 조금만 더 하면 완벽해요." : "더 열심히 연습해 보세요.";
+        }
+
+        function showReview() {
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('review-screen').classList.remove('hidden');
+            const container = document.getElementById('review-container');
+            container.innerHTML = '';
+            
+            activeQuestions.forEach((q, idx) => {
+                const userAns = examAnswers[idx];
+                const isCorrect = userAns === q.answer;
+                
+                let vocabHTML = q.exp.vocab.map(v => `<li class="text-sm text-slate-300"><strong class="text-slate-100">${v.term}:</strong> ${v.note}</li>`).join('');
+                let transHTML = q.options_trans.map((t, i) => `<p class="text-sm ${i === q.answer ? 'text-green-400 font-bold' : 'text-slate-400'}">${t}</p>`).join('');
+
+                const div = document.createElement('div');
+                div.className = "bg-slate-900/80 p-6 rounded-2xl shadow-sm border border-slate-700";
+                
+                div.innerHTML = `
+                    <h3 class="font-bold text-slate-100 mb-4">${idx + 1}. ${q.q}</h3>
+                    <div class="mb-4 space-y-2">
+                        ${q.options.map((opt, i) => `
+                            <div class="p-3 border rounded-lg text-sm ${i === q.answer ? 'bg-emerald-950 border-emerald-500 text-emerald-300 font-bold' : (i === userAns ? 'bg-red-950 border-red-500 text-red-300' : 'bg-slate-800 border-slate-700 text-slate-300')}">
+                                ${i+1}. ${opt}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="mt-4 p-4 bg-slate-800 rounded-xl border border-slate-700 space-y-4">
+                        <p class="font-bold ${isCorrect ? 'text-green-400' : 'text-red-400'}">${isCorrect ? '✅ 정답입니다.' : '❌ 오답입니다.'}</p>
+                        <div><p class="font-semibold text-blue-400 mb-2 text-sm">💡 Phân tích từ vựng:</p><ul class="list-disc ml-5 space-y-1">${vocabHTML}</ul></div>
+                        <div><p class="font-semibold text-purple-400 mb-2 text-sm">📝 Dịch nghĩa các đáp án:</p><div class="space-y-1 bg-slate-900 p-3 rounded-lg border border-slate-700">${transHTML}</div></div>
+                        <div><p class="font-semibold text-green-400 mb-1 text-sm">✅ Giải thích đáp án đúng:</p><p class="text-sm text-slate-300 leading-relaxed">${q.exp.correct}</p></div>
+                        <div><p class="font-semibold text-red-400 mb-1 text-sm">❌ Giải thích các đáp án sai:</p><p class="text-sm text-slate-300 leading-relaxed">${q.exp.wrong}</p></div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+    </script>
+</body>
+</html>
