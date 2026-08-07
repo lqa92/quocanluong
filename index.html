@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quoc An Luong (@lqa92)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --text-light: #ffffff;
+            --text-dark: #1a1a1a;
+            --bg-glass: rgba(255, 255, 255, 0.15);
+            --border-glass: rgba(255, 255, 255, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Hero Background Section */
+        .hero {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            /* Đường dẫn ảnh từ Google Drive */
+            background-image: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.65)), 
+                              url('https://lh3.googleusercontent.com/d/18HEjIhJRlBTE8DqQ6nqLxq0BvXsg3mJY');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        /* Navigation Tabs */
+        nav {
+            width: 100%;
+            max-width: 1050px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glass);
+            border-radius: 50px;
+            padding: 0.6rem 1rem;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            padding: 0.6rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.25);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Profile Branding Header */
+        .brand-container {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: auto;
+            margin-top: auto;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .brand-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-handle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            opacity: 0.9;
+            color: #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Social Buttons */
+        .social-links {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glass);
+            color: var(--text-light);
+            font-size: 1.4rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            background: rgba(255, 255, 255, 0.35);
+            color: #ffffff;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            color: var(--text-light);
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.8rem;
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card-link {
+            text-decoration: none;
+            display: block;
+            color: inherit;
+        }
+
+        .card-link:hover .card {
+            transform: translateY(-5px);
+            border-color: rgba(56, 189, 248, 0.5);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .card h3 {
+            margin-bottom: 1rem;
+            color: #38bdf8;
+            font-size: 1.3rem;
+        }
+
+        .card ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .card ul li {
+            position: relative;
+            padding-left: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .card ul li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #38bdf8;
+            font-weight: bold;
+        }
+
+        .link-icon {
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+            color: #38bdf8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .brand-title {
+                font-size: 2.2rem;
+            }
+            .brand-handle {
+                font-size: 1.1rem;
+            }
+            nav {
+                flex-wrap: wrap;
+                border-radius: 20px;
+                gap: 0.3rem;
+            }
+            nav a {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.6rem;
+            }
+            .social-btn {
+                width: 42px;
+                height: 42px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Hero Screen -->
+    <div class="hero">
+        <!-- Navigation Tabs (5 Tabs) -->
+        <nav>
+            <a onclick="showTab('home')" class="nav-btn active" id="btn-home">HOME</a>
+            <a onclick="showTab('about')" class="nav-btn" id="btn-about">ABOUT ME</a>
+            <a onclick="showTab('mytrip')" class="nav-btn" id="btn-mytrip">MY TRIP</a>
+            <a onclick="showTab('topik')" class="nav-btn" id="btn-topik">TOPIK 6 WITH ME</a>
+            <a onclick="showTab('korean')" class="nav-btn" id="btn-korean">TIẾNG HÀN CÙNG QUỐC AN</a>
+        </nav>
+
+        <!-- Profile Title & Socials -->
+        <div class="brand-container">
+            <h1 class="brand-title">Quoc An Luong</h1>
+            <p class="brand-handle">@lqa92</p>
+            
+            <!-- Social Media & Contact Buttons -->
+            <div class="social-links">
+                <a href="https://www.facebook.com/lqa92/" target="_blank" class="social-btn" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank" class="social-btn" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="mailto:quocanluong@gmail.com" class="social-btn" title="Gửi Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section: HOME -->
+    <section id="home" class="content-section active">
+        <h2>안녕하세요!</h2>
+        <p style="margin-top: 1rem; color: #cbd5e1; line-height: 1.7;">
+            Chào mừng bạn đến với không gian cá nhân của Quốc An. Đây là nơi chia sẻ những hành trình di chuyển, niềm đam mê giảng dạy và học tập tiếng Hàn của mình.
+        </p>
+    </section>
+
+    <!-- Section: ABOUT ME -->
+    <section id="about" class="content-section">
+        <h2>About Me</h2>
+        <div class="card-grid">
+            <div class="card">
+                <h3>Giảng viên & Nghiên cứu</h3>
+                <ul>
+                    <li>Hiện đang là giảng viên tiếng Hàn chuyên ngành Hàn Quốc học và ngành Ngôn ngữ Hàn Quốc tại HUFLIT.</li>
+                    <li>Hiện đang học tiếp chương trình thạc sĩ ngành Kinh tế phát triển tại UEH.</li>
+                    <li>Lĩnh vực nghiên cứu: Ngôn ngữ & Văn hoá Hàn Quốc, Kinh tế học môi trường.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Chuyên môn Giảng dạy & Năng lực Ngôn ngữ</h3>
+                <ul>
+                    <li>Đạt thành tích "kỷ lục" với <strong>24 lần sở hữu chứng chỉ TOPIK cấp 6</strong>, trong đó mức điểm xuất sắc nhất từng ghi nhận là <strong>292/300</strong>.</li>
+                    <li><strong>Thực hành tiếng Hàn:</strong> Có kinh nghiệm trên 10 năm giảng dạy các kỹ năng Nghe, Đọc, Viết và Ngữ pháp từ sơ cấp đến cao cấp.</li>
+                    <li><strong>Lý thuyết Ngôn ngữ Hàn Quốc:</strong> Đảm nhận các học phần Hình thái học và Cú pháp học tiếng Hàn.</li>
+                    <li><strong>Hàn Quốc học & Môn chuyên ngành:</strong> Từng có kinh nghiệm giảng dạy các học phần Địa lý Hàn Quốc, Tiếng Hàn thương mại.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: MY TRIP -->
+    <section id="mytrip" class="content-section">
+        <h2>My Trip</h2>
+        <div class="card-grid">
+            <div class="card">
+                <h3>Những vùng đất đã qua</h3>
+                <p style="color: #cbd5e1;">Lưu giữ những khoảnh khắc, hình ảnh hành trình khám phá và trải nghiệm văn hóa.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: TOPIK 6 WITH ME -->
+    <section id="topik" class="content-section">
+        <h2>TOPIK 6 With Me</h2>
+        <div class="card-grid">
+            <div class="card">
+                <h3>Kinh nghiệm & Chiến thuật</h3>
+                <p style="color: #cbd5e1;">Chia sẻ lộ trình ôn luyện, bí quyết đạt điểm cao trong các kỹ năng Đọc, Nghe và Viết TOPIK II.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: TIẾNG HÀN CÙNG QUỐC AN -->
+    <section id="korean" class="content-section">
+        <h2>Tiếng Hàn cùng Quốc An</h2>
+        <div class="card-grid">
+            <a href="https://quocanluong-stack.github.io/hinhthaihoctienghan/" target="_blank" class="card-link">
+                <div class="card">
+                    <h3>
+                        Ôn thi cuối kỳ Hình thái học tiếng Hàn
+                        <i class="fas fa-arrow-up-right-from-square link-icon"></i>
+                    </h3>
+                    <p style="color: #cbd5e1; line-height: 1.6;">
+                        Tài liệu tổng hợp hệ thống kiến thức, câu hỏi ôn tập và đề luyện thi dành cho học phần Hình thái học tiếng Hàn.
+                    </p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <script>
+        function showTab(tabId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            // Deactivate all nav buttons
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => btn.classList.remove('active'));
+
+            // Show current section and set active tab
+            const targetSection = document.getElementById(tabId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            const targetBtn = document.getElementById('btn-' + tabId);
+            if (targetBtn) {
+                targetBtn.classList.add('active');
+            }
+
+            // Scroll smoothly to section if not home
+            if (tabId !== 'home') {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
