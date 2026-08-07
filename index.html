@@ -27,7 +27,7 @@
     <style>
         :root {
             --primary-color: #2c3e50;
-            --accent-color: #3498db;
+            --accent-color: #D4C4A1; /* Đổi màu accent sang Vàng Cát */
             --text-light: #ffffff;
             --text-dark: #1a1a1a;
             --bg-glass: rgba(255, 255, 255, 0.15);
@@ -42,7 +42,7 @@
         }
 
         body {
-            /* Đã chuyển sang tone Xanh Rêu Đậm (Dark Forest Black) */
+            /* Background Xanh Rêu Đậm */
             background-color: #1E221C; 
             color: var(--text-dark);
             overflow-x: hidden;
@@ -201,7 +201,6 @@
         /* Sub Tab Container Styles */
         .sub-tab-group {
             margin-top: 2rem;
-            /* Tone rêu tối mờ cho khung bao ngoài */
             background: rgba(38, 43, 37, 0.6); 
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
@@ -242,7 +241,6 @@
         }
 
         .card {
-            /* Card sáng hơn nền chính (#1E221C) một chút theo tone rêu */
             background: #262B25; 
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 12px;
@@ -259,14 +257,13 @@
 
         .card-link:hover .card {
             transform: translateX(6px);
-            border-color: rgba(56, 189, 248, 0.5);
-            /* Sáng hơn khi hover (rêu nhạt hơn) */
+            border-color: rgba(212, 196, 161, 0.5); /* Viền màu vàng cát mờ */
             background: #323830; 
         }
 
         .card h3 {
             margin-bottom: 0;
-            color: #38bdf8;
+            color: var(--accent-color); /* Áp dụng Vàng Cát */
             font-size: 1.1rem;
             display: flex;
             align-items: center;
@@ -290,19 +287,18 @@
             content: "•";
             position: absolute;
             left: 0;
-            color: #38bdf8;
+            color: var(--accent-color); /* Áp dụng Vàng Cát */
             font-weight: bold;
         }
 
         .link-icon {
             font-size: 0.9rem;
             margin-left: 0.5rem;
-            color: #38bdf8;
+            color: var(--accent-color); /* Áp dụng Vàng Cát */
         }
 
         /* Journey Styles */
         .journey-card {
-            /* Đồng bộ với background của card */
             background: #262B25; 
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 16px;
@@ -341,7 +337,7 @@
         }
 
         .journey-title {
-            color: #f97316;
+            color: var(--accent-color); /* Áp dụng Vàng Cát */
             font-size: 1.5rem;
             font-weight: 700;
         }
@@ -364,7 +360,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 0.5rem 1.2rem;
             border-radius: 8px;
-            color: #38bdf8;
+            color: var(--accent-color); /* Áp dụng Vàng Cát */
             text-decoration: none;
             font-weight: 600;
             font-size: 0.9rem;
@@ -372,8 +368,8 @@
         }
 
         .journey-btn:hover {
-            background: rgba(56, 189, 248, 0.1);
-            border-color: #38bdf8;
+            background: rgba(212, 196, 161, 0.1); /* Hover Vàng Cát nhạt */
+            border-color: var(--accent-color); /* Áp dụng Vàng Cát */
         }
 
         /* Responsive Design */
@@ -432,7 +428,8 @@
             <div class="card">
                 <h3>Giảng viên & Nghiên cứu</h3>
                 <ul>
-                    <li>Hiện đang là giảng viên tiếng Hàn chuyên ngành Hàn Quốc học và ngành Ngôn ngữ Hàn Quốc tại <a href="https://huflit.edu.vn/vi/" target="_blank" style="color: #38bdf8; text-decoration: none; font-weight: bold;">HUFLIT</a>.</li>
+                    <!-- Đã đổi màu link HUFLIT thành màu Vàng Cát -->
+                    <li>Hiện đang là giảng viên tiếng Hàn chuyên ngành Hàn Quốc học và ngành Ngôn ngữ Hàn Quốc tại <a href="https://huflit.edu.vn/vi/" target="_blank" style="color: var(--accent-color); text-decoration: none; font-weight: bold;">HUFLIT</a>.</li>
                     <li>Hiện đang học tiếp chương trình thạc sĩ ngành Kinh tế phát triển tại UEH.</li>
                     <li>Lĩnh vực nghiên cứu: Ngôn ngữ & Văn hoá Hàn Quốc, Kinh tế học môi trường.</li>
                 </ul>
