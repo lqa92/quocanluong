@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tập viết chữ trong Wongoji cùng thầy An</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Sans KR', sans-serif;
+      background-color: #0f172a; /* Slate 900 - Dark mode background */
+      color: #f8fafc;
+    }
+
+    /* Style riêng cho nút Back góc trái trên */
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 18px;
+      border-radius: 9999px;
+      border: 1px solid #1e293b;
+      background-color: #1e293b;
+      color: #38bdf8;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .back-btn:hover {
+      background-color: #334155;
+      color: #7dd3fc;
+      border-color: #475569;
+    }
+    
+    /* Wongoji Warm Book Paper (Giấy ngà vàng đọc sách) */
+    :root {
+      --wongoji-border: #7c705a;
+      --wongoji-border-light: rgba(124, 112, 90, 0.3);
+      --wongoji-text: #2c251e;
+      --wongoji-bg: #f3ebd7; /* Nền giấy ngà ấm mịn dịu mắt */
+    }
+
+    /* Print styling to isolate the manuscript papers */
+    @media print {
+      body {
+        background: white !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      #print-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .wongoji-page {
+        box-shadow: none !important;
+        border: none !important;
+        background: #f3ebd7 !important;
+        page-break-after: always;
+        margin: 0 0 10mm 0 !important;
+        transform: scale(1) !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen text-slate-100 flex flex-col transition-colors duration-200">
+
+  <header class="bg-slate-800/80 backdrop-blur border-b border-slate-700/80 text-white shadow-lg no-print sticky top-0 z-40">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-start">
+        <!-- Nút góc trái quay về TOPIK 6 WITH ME -->
+        <a href="index.html#topik" class="back-btn">← TOPIK 6 WITH ME</a>
+        
+        <div class="flex items-center gap-3">
+          <div class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 p-2 rounded-lg font-extrabold text-lg tracking-wider">원고지</div>
+          <h1 class="text-lg md:text-xl font-bold tracking-tight text-slate-100 hidden md:block">Tập viết chữ trong Wongoji</h1>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-xs bg-slate-700 border border-slate-600 px-3 py-1.5 rounded-full text-emerald-400 font-mono font-semibold">Khung chuẩn 25 x 12 (300 ô)</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-5xl w-full mx-auto p-4 flex flex-col gap-6">
+    
+    <section class="bg-slate-800 rounded-xl shadow-xl p-5 border border-slate-700 no-print">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+        <div>
+          <label for="name-input" class="block text-sm font-bold text-slate-300 mb-1">Họ tên học viên:</label>
+          <input type="text" id="name-input" class="w-full p-2.5 bg-slate-900 border border-slate-700 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all text-sm text-slate-100 placeholder-slate-500" placeholder="Ví dụ: Nguyễn Văn A..." oninput="updateWongoji()">
+        </div>
+        <div>
+          <label for="exercise-input" class="block text-sm font-bold text-slate-300 mb-1">Bài tập số:</label>
+          <input type="text" id="exercise-input" class="w-full p-2.5 bg-slate-900 border border-slate-700 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all text-sm text-slate-100 placeholder-slate-500" placeholder="Ví dụ: Viết câu 53 TOPIK..." oninput="updateWongoji()">
+        </div>
+        <div>
+          <label for="page-num-input" class="block text-sm font-bold text-slate-300 mb-1">Trang số:</label>
+          <input type="text" id="page-num-input" class="w-full p-2.5 bg-slate-900 border border-slate-700 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all text-sm text-slate-100 placeholder-slate-500" placeholder="Ví dụ: 1, 2, 3..." oninput="updateWongoji()">
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-sm font-bold text-slate-300 mb-1">Đính kèm ảnh đề bài (Không bắt buộc):</label>
+        <div class="flex items-center gap-3">
+          <input type="file" id="image-upload" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+          <button onclick="document.getElementById('image-upload').click()" class="bg-slate-700 hover:bg-slate-600 border border-slate-600 text-slate-200 text-xs font-bold px-4 py-2 rounded-lg transition-all flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            Chọn ảnh đề bài
+          </button>
+          <button id="remove-image-btn" onclick="removeUploadedImage()" class="hidden text-xs font-semibold text-rose-400 hover:text-rose-300 bg-rose-950/50 hover:bg-rose-900/50 border border-rose-800 px-3 py-2 rounded-lg transition-all">
+            Xóa ảnh đã chọn
+          </button>
+          <span id="upload-status" class="text-xs text-slate-400 font-medium">Chưa có ảnh nào được tải lên</span>
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center mb-3">
+        <label for="text-input" class="font-bold text-slate-200 flex items-center gap-2 text-base">
+          <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+          </svg>
+          Nhập văn bản viết chữ của bạn
+        </label>
+        <div class="flex gap-2">
+          <button onclick="clearText()" class="text-xs font-semibold text-rose-400 hover:text-rose-300 bg-rose-950/40 hover:bg-rose-900/50 border border-rose-800/60 px-3 py-1.5 rounded-lg transition-all">
+            Xóa sạch
+          </button>
+        </div>
+      </div>
+      
+      <textarea id="text-input" class="w-full h-44 p-3.5 bg-slate-900 border border-slate-700 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-sans text-base leading-relaxed text-slate-100 outline-none transition-all placeholder-slate-500" placeholder="Gõ hoặc dán chữ tại đây. Văn bản sẽ tự động chuyển đổi hiển thị ngay xuống lưới ô ly bên dưới..."></textarea>
+      
+      <div class="mt-4 flex flex-col md:flex-row justify-between items-center gap-4 pt-4 border-t border-slate-700">
+        <div class="grid grid-cols-3 gap-3 w-full md:w-auto text-center">
+          <div class="bg-slate-900/80 px-3.5 py-2 rounded-lg border border-slate-700/80">
+            <span class="block text-[10px] uppercase tracking-wider font-bold text-slate-400">Ký tự</span>
+            <strong id="stat-total-chars" class="text-slate-200 text-base">0</strong>
+          </div>
+          <div class="bg-slate-900/80 px-3.5 py-2 rounded-lg border border-slate-700/80">
+            <span class="block text-[10px] uppercase tracking-wider font-bold text-slate-400">Ô đã dùng</span>
+            <strong id="stat-used-cells" class="text-slate-200 text-base">0</strong>
+          </div>
+          <div class="bg-slate-900/80 px-3.5 py-2 rounded-lg border border-slate-700/80">
+            <span class="block text-[10px] uppercase tracking-wider font-bold text-slate-400">Trang giấy</span>
+            <strong id="stat-pages" class="text-emerald-400 text-base">1</strong>
+          </div>
+        </div>
+
+        <div class="flex gap-2 w-full md:w-auto justify-end">
+          <button onclick="downloadAsImages()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 shadow-lg shadow-emerald-950 transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+            Tải ảnh PNG
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <!-- Khung bọc ngoài cùng hỗ trợ cuộn mượt mà trên mọi thiết bị di động -->
+      <div class="w-full flex flex-col items-center overflow-x-auto pb-4 scrolling-touch">
+        <div id="print-area" class="w-full flex flex-col items-center gap-8 py-2">
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-slate-800/60 text-slate-400 text-center py-4 text-xs border-t border-slate-700/80 mt-auto no-print">
+    <div class="max-w-5xl mx-auto px-4">
+      <p>Ứng dụng được tạo bởi ThS. Lương Quốc An (HUFLIT) dựa trên công cụ Gemini.</p>
+    </div>
+  </footer>
+
+  <div id="toast" class="fixed bottom-5 right-5 bg-slate-800 border border-slate-700 text-white px-4 py-3 rounded-lg shadow-2xl translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-2 pointer-events-none">
+    <span id="toast-icon" class="text-emerald-400">✓</span>
+    <span id="toast-text" class="text-sm font-medium">Hệ thống đã cập nhật!</span>
+  </div>
+
+  <script>
+    // Constants config
+    const GRID_COLS = 25;
+    const GRID_ROWS = 12;
+    
+    // Biến lưu trữ chuỗi base64 của ảnh được tải lên
+    let uploadedImageBase64 = "";
+
+    // Toast Alert system
+    function showToast(message, isSuccess = true) {
+      const toast = document.getElementById('toast');
+      const text = document.getElementById('toast-text');
+      const icon = document.getElementById('toast-icon');
+      
+      text.innerText = message;
+      icon.innerHTML = isSuccess ? '✓' : '⚠️';
+      icon.className = isSuccess ? 'text-emerald-400 font-bold' : 'text-amber-400 font-bold';
+      
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
+
+    const textInput = document.getElementById('text-input');
+    textInput.addEventListener('input', updateWongoji);
+
+    // Helpers to validate categories
+    function isDigit(char) {
+      return /[0-9]/.test(char);
+    }
+    
+    // Standard lowercase letters check
+    function isLowercaseEnglish(char) {
+      return /^[a-z]$/.test(char);
+    }
+    
+    function isUppercaseEnglish(char) {
+      return /^[A-Z]$/.test(char);
+    }
+
+    // Core engine translating characters to structured layout cells with explicit grouping IDs
+    function parseTextToCells(text) {
+      const cells = [];
+      let i = 0;
+      let groupCounter = 0;
+      
+      while (i < text.length) {
+        const char = text[i];
+        
+        // RULE: No space cell added after period or comma.
+        if (char === '.' || char === ',') {
+          cells.push({
+            text: char,
+            type: 'punctuation-overflow',
+            rawType: 'punctuation',
+            charCount: 1,
+            canOverflow: true,
+            groupId: 'punct_special_' + (groupCounter++)
+          });
+          i++;
+          // Skip the immediately following space if there is one
+          if (i < text.length && text[i] === ' ') {
+            i++;
+          }
+          continue;
+        }
+
+        // RULE: Thêm quy tắc sau dấu ? và dấu ! thì bỏ trống 1 ô (Nếu ký tự sau đã là khoảng trắng thì bỏ qua)
+        if (char === '?' || char === '!') {
+          cells.push({
+            text: char,
+            type: 'punctuation-overflow',
+            rawType: 'punctuation',
+            charCount: 1,
+            canOverflow: true,
+            groupId: 'punct_special_' + (groupCounter++)
+          });
+          
+          // Thêm một ô trống tự động sau dấu ? hoặc !
+          cells.push({
+            text: ' ',
+            type: 'space',
+            rawType: 'space',
+            charCount: 1,
+            groupId: 'space_auto_' + (groupCounter++)
+          });
+          
+          i++;
+          // Tránh bị dư khoảng trắng nếu người dùng đã gõ dấu cách ngay sau dấu ? hoặc !
+          if (i < text.length && text[i] === ' ') {
+            i++;
+          }
+          continue;
+        }
+
+        // Rule: Numbers -> 2 digits per cell.
+        if (isDigit(char)) {
+          let numStr = "";
+          const currentGroupId = 'num_seq_' + (groupCounter++);
+          while (i < text.length && isDigit(text[i])) {
+            numStr += text[i];
+            i++;
+            // Decimal point/comma separator logic within digits
+            if (i < text.length && /[\.,]/.test(text[i]) && i + 1 < text.length && isDigit(text[i+1])) {
+              numStr += text[i];
+              i++;
+            }
+          }
+          
+          for (let j = 0; j < numStr.length; j += 2) {
+            const chunk = numStr.substring(j, j + 2);
+            cells.push({
+              text: chunk,
+              type: chunk.length === 2 ? 'number-pair' : 'number-single',
+              rawType: 'number',
+              charCount: chunk.length,
+              groupId: currentGroupId
+            });
+          }
+          continue;
+        }
+        
+        // Rule: English lowercase -> 2 chars per cell
+        if (isLowercaseEnglish(char)) {
+          let alphaStr = "";
+          const currentGroupId = 'lower_seq_' + (groupCounter++);
+          while (i < text.length && isLowercaseEnglish(text[i])) {
+            alphaStr += text[i];
+            i++;
+          }
+          
+          for (let j = 0; j < alphaStr.length; j += 2) {
+            const chunk = alphaStr.substring(j, j + 2);
+            cells.push({
+              text: chunk,
+              type: chunk.length === 2 ? 'alpha-pair' : 'alpha-single',
+              rawType: 'alpha-lowercase',
+              charCount: chunk.length,
+              groupId: currentGroupId
+            });
+          }
+          continue;
+        }
+        
+        // Rule: English uppercase -> 1 char per cell
+        if (isUppercaseEnglish(char)) {
+          cells.push({
+            text: char,
+            type: 'alpha-uppercase',
+            rawType: 'alpha-uppercase',
+            charCount: 1,
+            groupId: 'upper_' + (groupCounter++)
+          });
+          i++;
+          continue;
+        }
+        
+        // Rule: Percent sign -> 1 cell
+        if (char === '%') {
+          cells.push({
+            text: '%',
+            type: 'percent',
+            rawType: 'percent',
+            charCount: 1,
+            groupId: 'percent_' + (groupCounter++)
+          });
+          i++;
+          continue;
+        }
+        
+        // Other overflowable punctuation marks
+        const overflowPunct = [')', ']', '}', '"', "'", '”', '’'];
+        if (overflowPunct.includes(char)) {
+          cells.push({
+            text: char,
+            type: 'punctuation-overflow',
+            rawType: 'punctuation',
+            charCount: 1,
+            canOverflow: true,
+            groupId: 'punct_overflow_' + (groupCounter++)
+          });
+          i++;
+          continue;
+        }
+        
+        // Spaces & other standard language characters (Vietnamese, Korean, etc.)
+        cells.push({
+          text: char,
+          type: char === ' ' ? 'space' : 'standard',
+          rawType: char === ' ' ? 'space' : 'standard',
+          charCount: 1,
+          groupId: 'std_' + (groupCounter++)
+        });
+        i++;
+      }
+      
+      return cells;
+    }
+
+    function processInputToCells(rawText) {
+      const paragraphs = rawText.split('\n');
+      let allCells = [];
+      
+      paragraphs.forEach((p, index) => {
+        let trimmedP = p.trimStart();
+        
+        if (trimmedP === '') {
+          if (index > 0 && index < paragraphs.length - 1) {
+            allCells.push({ type: 'paragraph-break' });
+          }
+          return;
+        }
+        
+        let pCells = parseTextToCells(trimmedP);
+        
+        if (pCells.length > 0) {
+          // Automatic 1-cell indentation *ONLY* at paragraph 1
+          if (index === 0) {
+            pCells.unshift({ text: ' ', type: 'space', rawType: 'space', charCount: 1, groupId: 'space_indent' });
+          }
+          
+          if (allCells.length > 0) {
+            allCells.push({ type: 'paragraph-break' });
+          }
+          allCells = allCells.concat(pCells);
+        }
+      });
+      
+      return allCells;
+    }
+
+    // Grid alignment factoring the requested 26th column spillover overflow rules
+    function arrangePages(cells) {
+      const pages = [];
+      let currentPage = [];
+      let currentRow = [];
+      
+      let i = 0;
+      let isVeryFirstCell = true;
+      
+      while (i < cells.length) {
+        const cell = cells[i];
+        
+        if (cell.type === 'paragraph-break') {
+          if (currentRow.length > 0) {
+            while (currentRow.length < GRID_COLS) {
+              currentRow.push({ text: '', type: 'empty' });
+            }
+            currentRow.push(null); // No spillover
+            currentPage.push(currentRow);
+            currentRow = [];
+            
+            if (currentPage.length === GRID_ROWS) {
+              pages.push(currentPage);
+              currentPage = [];
+            }
+          }
+          i++;
+          continue;
+        }
+        
+        // RULE: Discard space if it falls at the beginning of a line
+        if (currentRow.length === 0) {
+          if (cell.type === 'space' && !isVeryFirstCell) {
+            i++;
+            continue;
+          }
+        }
+        
+        // 26th column overflow rule processing
+        if (currentRow.length === GRID_COLS) {
+          const nextCell = cells[i];
+          let canOverflow = false;
+          
+          if (nextCell && nextCell.type !== 'paragraph-break') {
+            const prevCell = currentRow[GRID_COLS - 1];
+            
+            if (nextCell.canOverflow) {
+              canOverflow = true;
+            } else if (nextCell.type === 'percent') {
+              if (prevCell && prevCell.rawType === 'number') {
+                canOverflow = true;
+              }
+            } else if (nextCell.type === 'number-pair' || nextCell.type === 'number-single') {
+              if (prevCell && prevCell.groupId && prevCell.groupId === nextCell.groupId) {
+                let remainingCharsInGroup = 0;
+                let tempIdx = i;
+                while (tempIdx < cells.length && cells[tempIdx].groupId === nextCell.groupId) {
+                  remainingCharsInGroup += cells[tempIdx].charCount || 0;
+                  tempIdx++;
+                }
+                if (remainingCharsInGroup <= 2) {
+                  canOverflow = true;
+                }
+              }
+            } else if (nextCell.type === 'alpha-pair' || nextCell.type === 'alpha-single') {
+              if (prevCell && prevCell.groupId && prevCell.groupId === nextCell.groupId) {
+                let remainingCharsInGroup = 0;
+                let tempIdx = i;
+                while (tempIdx < cells.length && cells[tempIdx].groupId === nextCell.groupId) {
+                  remainingCharsInGroup += cells[tempIdx].charCount || 0;
+                  tempIdx++;
+                }
+                if (remainingCharsInGroup <= 2) {
+                  canOverflow = true;
+                }
+              }
+            }
+          }
+          
+          if (canOverflow) {
+            currentRow.push({
+              ...nextCell,
+              isOverflow: true
+            });
+            i++;
+          } else {
+            currentRow.push(null);
+          }
+          
+          currentPage.push(currentRow);
+          currentRow = [];
+          
+          if (currentPage.length === GRID_ROWS) {
+            pages.push(currentPage);
+            currentPage = [];
+          }
+          continue;
+        }
+        
+        currentRow.push({
+          ...cell,
+          isOverflow: false
+        });
+        isVeryFirstCell = false;
+        i++;
+      }
+      
+      if (currentRow.length > 0) {
+        while (currentRow.length < GRID_COLS) {
+          currentRow.push({ text: '', type: 'empty' });
+        }
+        currentRow.push(null);
+        currentPage.push(currentRow);
+      }
+      
+      if (currentPage.length > 0) {
+        while (currentPage.length < GRID_ROWS) {
+          const emptyRow = [];
+          for (let c = 0; c < GRID_COLS; c++) {
+            emptyRow.push({ text: '', type: 'empty' });
+          }
+          emptyRow.push(null);
+          currentPage.push(emptyRow);
+        }
+        pages.push(currentPage);
+      }
+      
+      if (pages.length === 0) {
+        const emptyPage = [];
+        for (let r = 0; r < GRID_ROWS; r++) {
+          const emptyRow = [];
+          for (let c = 0; c < GRID_COLS; c++) {
+            emptyRow.push({ text: '', type: 'empty' });
+          }
+          emptyRow.push(null);
+          emptyPage.push(emptyRow);
+        }
+        pages.push(emptyPage);
+      }
+      
+      return pages;
+    }
+
+    // Xử lý tệp hình ảnh tải lên thành Base64
+    function handleImageUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          uploadedImageBase64 = e.target.result;
+          document.getElementById('upload-status').innerText = `Đã tải ảnh: ${file.name}`;
+          document.getElementById('remove-image-btn').classList.remove('hidden');
+          updateWongoji();
+          showToast("Đã tải lên ảnh đề bài!");
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Xóa ảnh đã tải
+    function removeUploadedImage() {
+      uploadedImageBase64 = "";
+      document.getElementById('image-upload').value = "";
+      document.getElementById('upload-status').innerText = "Chưa có ảnh nào được tải lên";
+      document.getElementById('remove-image-btn').classList.add('hidden');
+      updateWongoji();
+      showToast("Đã gỡ ảnh đề bài!");
+    }
+
+    // Dynamic compiler injecting grids into the preview panel
+    function updateWongoji() {
+      const rawText = textInput.value;
+      const parsedCells = processInputToCells(rawText);
+      
+      // Live stats counters
+      const charCount = rawText.replace(/\n/g, '').length;
+      const usedCellsCount = parsedCells.filter(c => c.type !== 'paragraph-break').length;
+      document.getElementById('stat-total-chars').innerText = charCount;
+      document.getElementById('stat-used-cells').innerText = usedCellsCount;
+
+      const pages = arrangePages(parsedCells);
+      document.getElementById('stat-pages').innerText = rawText.trim() === '' ? 1 : pages.length;
+
+      const printArea = document.getElementById('print-area');
+      
+      // Đảm bảo thẻ cha luôn cho phép cuộn ngang ổn định trên thiết bị di động
+      printArea.parentElement.className = "w-full flex flex-col items-center overflow-x-auto pb-4 scrolling-touch";
+      
+      // Remove existing pages for clean render
+      printArea.querySelectorAll('.wongoji-page').forEach(el => el.remove());
+
+      // Lấy thông tin Họ tên, Bài tập và Trang từ ô nhập
+      const nameVal = document.getElementById('name-input').value.trim();
+      const exerciseVal = document.getElementById('exercise-input').value.trim();
+      const pageNumVal = document.getElementById('page-num-input').value.trim();
+
+      // Loop page rendering
+      pages.forEach((page, pageIdx) => {
+        const pageEl = document.createElement('div');
+        
+        // Wongoji page style với nền ngà vàng kiểu giấy in sách cao cấp
+        pageEl.className = "wongoji-page bg-[var(--wongoji-bg)] border border-amber-900/20 rounded-xl p-5 md:p-6 shadow-2xl flex flex-col gap-3 relative transition-all duration-200 block mx-auto shrink-0";
+        pageEl.id = `wongoji-page-${pageIdx + 1}`;
+        
+        // Ép trình duyệt giữ cố định 850px thông qua minWidth và maxWidth, tránh bị bóp méo khung
+        pageEl.style.width = "850px";
+        pageEl.style.minWidth = "850px";
+        pageEl.style.maxWidth = "850px";
+        
+        // NẾU CÓ ẢNH ĐỀ BÀI: Khóa cứng tỷ lệ tổng thể là 1 : 1.28 (Rộng 850px, Cao 1088px)
+        if (uploadedImageBase64 && pageIdx === 0) {
+          pageEl.style.height = "1088px"; 
+        } else {
+          pageEl.style.height = "auto";
+        }
+        
+        const pageHeader = document.createElement('div');
+        pageHeader.className = "flex justify-between items-center border-b border-amber-900/15 pb-1.5 mb-1 no-print";
+        pageHeader.innerHTML = `
+          <div class="text-xs font-bold text-amber-950/60 tracking-wider">Lưới Bản Thảo (25 x 12)</div>
+          <div class="text-xs bg-amber-950/10 px-2.5 py-0.5 rounded font-mono text-amber-950/80 font-bold">Trang ${pageIdx + 1} / ${pages.length}</div>
+        `;
+        pageEl.appendChild(pageHeader);
+
+        // HIỂN THỊ THÔNG TIN HỌ TÊN, BÀI TẬP VÀ TRANG TRÊN ĐẦU LƯỚI BẢN THẢO (NẾU CÓ NHẬP)
+        if (nameVal || exerciseVal || pageNumVal) {
+          const infoRow = document.createElement('div');
+          infoRow.className = "w-full flex gap-6 text-sm font-bold text-amber-950/80 select-none pb-1.5 border-b border-amber-900/15";
+          
+          let infoHtml = "";
+          if (nameVal) {
+            infoHtml += `<span>Họ tên: <span class="text-[var(--wongoji-text)]">${nameVal}</span></span>`;
+          }
+          if (exerciseVal) {
+            infoHtml += `<span>Bài tập: <span class="text-[var(--wongoji-text)]">${exerciseVal}</span></span>`;
+          }
+          if (pageNumVal) {
+            infoHtml += `<span>Trang: <span class="text-[var(--wongoji-text)]">${pageNumVal}</span></span>`;
+          }
+          
+          infoRow.innerHTML = infoHtml;
+          pageEl.appendChild(infoRow);
+        }
+
+        // CHÈN HÌNH ẢNH ĐỀ BÀI VÀO TRANG ĐẦU TIÊN (NẾU CÓ TẢI LÊN)
+        if (uploadedImageBase64 && pageIdx === 0) {
+          const imageContainer = document.createElement('div');
+          imageContainer.className = "w-full flex items-center justify-center border border-dashed border-amber-900/20 rounded-lg p-2 bg-[#f8f4ea]/60 overflow-hidden mb-2 mt-1";
+          imageContainer.style.flex = "1 1 0%";
+          imageContainer.style.minHeight = "0";
+          
+          const imgEl = document.createElement('img');
+          imgEl.src = uploadedImageBase64;
+          imgEl.className = "max-w-full max-h-full w-auto h-auto object-contain rounded";
+          
+          imageContainer.appendChild(imgEl);
+          pageEl.appendChild(imageContainer);
+        }
+
+        const gridContainer = document.createElement('div');
+        gridContainer.className = "relative flex flex-col gap-1 w-full overflow-x-auto";
+        
+        // Rulers: Col headers
+        const colIndexRow = document.createElement('div');
+        colIndexRow.className = "grid w-full mb-1 text-[9px] font-mono font-bold text-amber-950/50 select-none";
+        colIndexRow.style.gridTemplateColumns = `repeat(${GRID_COLS}, minmax(0, 1fr)) minmax(0, 1.2fr)`;
+        
+        for (let col = 1; col <= GRID_COLS; col++) {
+          const num = document.createElement('div');
+          num.className = "text-center";
+          num.innerText = col;
+          colIndexRow.appendChild(num);
+        }
+        const col26Label = document.createElement('div');
+        col26Label.className = "text-center text-rose-700 font-bold bg-rose-200/50 rounded scale-90";
+        col26Label.innerText = "+1";
+        colIndexRow.appendChild(col26Label);
+        gridContainer.appendChild(colIndexRow);
+
+        // Rows
+        page.forEach((row, rowIdx) => {
+          const rowEl = document.createElement('div');
+          rowEl.className = "grid w-full relative items-center";
+          rowEl.style.gridTemplateColumns = `repeat(${GRID_COLS}, minmax(0, 1fr)) minmax(0, 1.2fr)`;
+          
+          // Row side indices
+          const rowLabel = document.createElement('div');
+          rowLabel.className = "absolute -left-4 top-1/2 -translate-y-1/2 text-[9px] font-mono font-bold text-amber-950/50 select-none no-print";
+          rowLabel.innerText = rowIdx + 1;
+          rowEl.appendChild(rowLabel);
+
+          // Cells
+          row.forEach((cell, cellIdx) => {
+            const cellOuter = document.createElement('div');
+            const isCol26 = cellIdx === GRID_COLS;
+            
+            if (isCol26) {
+              cellOuter.className = "aspect-[1/1.25] flex items-center justify-center relative ml-1.5 transition-all rounded";
+              if (cell) {
+                cellOuter.className += " border-2 border-dashed border-rose-400 bg-rose-100/70 text-rose-800 font-bold";
+              } else {
+                cellOuter.className += " border border-dashed border-amber-900/20 bg-amber-950/5 opacity-40";
+              }
+            } else {
+              // Lòng ô màu kem mềm dịu (#f8f4ea) giảm chói tối đa
+              cellOuter.className = "aspect-[1/1.25] flex items-center justify-center relative bg-[#f8f4ea]/90 border border-[var(--wongoji-border-light)]";
+              
+              // Custom borders matching standard grid Look
+              let borderStyle = "border-top: 1px solid var(--wongoji-border-light); border-bottom: 1px solid var(--wongoji-border-light);";
+              if (cellIdx === 0) {
+                borderStyle += " border-left: 2px solid var(--wongoji-border);";
+              } else {
+                borderStyle += " border-left: 1px solid var(--wongoji-border-light);";
+              }
+              
+              if (cellIdx === GRID_COLS - 1) {
+                borderStyle += " border-right: 2px solid var(--wongoji-border);";
+              } else {
+                borderStyle += " border-right: 1px solid var(--wongoji-border-light);";
+              }
+              
+              if (rowIdx === 0) {
+                borderStyle += " border-top: 2px solid var(--wongoji-border);";
+              }
+              if (rowIdx === GRID_ROWS - 1) {
+                borderStyle += " border-bottom: 2px solid var(--wongoji-border);";
+              }
+              cellOuter.style.cssText = borderStyle;
+            }
+
+            if (cell && cell.text !== '') {
+              const textSpan = document.createElement('span');
+              
+              // CĂN CHỈNH TRUNG TÂM HOÀN HẢO (TranslateY -3px)
+              textSpan.className = "font-sans text-center flex items-center justify-center w-full h-full text-[var(--wongoji-text)] text-[22px] md:text-[24px] font-semibold";
+              textSpan.style.display = "flex";
+              textSpan.style.alignItems = "center";
+              textSpan.style.justifyContent = "center";
+              textSpan.style.lineHeight = "1";
+              textSpan.style.transform = "translateY(-3px)"; 
+              textSpan.innerText = cell.text;
+
+              // Đồng bộ kích thước font chữ của các dạng ô đặc biệt khác
+              if (cell.type.includes('number')) {
+                textSpan.className += " text-blue-800 font-bold text-[15px] tracking-tighter";
+              } else if (cell.type.includes('alpha-pair')) {
+                textSpan.className += " text-emerald-900 font-bold text-[15px] tracking-tight";
+              } else if (cell.type.includes('alpha-single')) {
+                textSpan.className += " text-emerald-900 text-[15px]";
+              } else if (cell.type === 'alpha-uppercase') {
+                textSpan.className += " text-purple-900 font-bold text-[18px]";
+              } else if (cell.type === 'percent') {
+                textSpan.className += " text-amber-800 font-bold text-[18px]";
+              } else if (cell.type === 'punctuation-overflow') {
+                textSpan.className += " text-rose-800 font-bold text-[18px]";
+              }
+
+              cellOuter.appendChild(textSpan);
+            } else if (cell && cell.type === 'space') {
+              const spaceDot = document.createElement('div');
+              spaceDot.className = "w-1 h-1 rounded-full bg-amber-900/30";
+              cellOuter.appendChild(spaceDot);
+            }
+
+            rowEl.appendChild(cellOuter);
+          });
+
+          gridContainer.appendChild(rowEl);
+        });
+
+        pageEl.appendChild(gridContainer);
+        
+        const pageFooter = document.createElement('div');
+        pageFooter.className = "flex justify-between items-center text-[10px] text-amber-950/50 font-bold pt-1 mt-1 border-t border-amber-900/15 select-none";
+        pageFooter.innerHTML = `
+          <span>원고지 300자 (25 × 12)</span>
+          <span>Trang ${pageIdx + 1}</span>
+        `;
+        pageEl.appendChild(pageFooter);
+
+        printArea.appendChild(pageEl);
+      });
+    }
+
+    function clearText() {
+      textInput.value = "";
+      document.getElementById('name-input').value = "";
+      document.getElementById('exercise-input').value = "";
+      document.getElementById('page-num-input').value = "";
+      removeUploadedImage();
+      updateWongoji();
+      showToast("Đã xóa sạch nội dung!");
+    }
+
+    // Export using html2canvas
+    function downloadAsImages() {
+      const pages = document.querySelectorAll('.wongoji-page');
+      if (pages.length === 0 || textInput.value.trim() === '') {
+        showToast("Không có nội dung để tải ảnh!", false);
+        return;
+      }
+
+      showToast("Đang chuẩn bị ảnh tải về...");
+      
+      pages.forEach((page, index) => {
+        html2canvas(page, {
+          scale: 2, // Double quality rendering
+          backgroundColor: null,
+          useCORS: true
+        }).then(canvas => {
+          const link = document.createElement('a');
+          link.download = `Wongoji_Thầy_An_Trang_${index + 1}.png`;
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+          
+          if (index === pages.length - 1) {
+            showToast("Đã tải xuống thành công tất cả trang!");
+          }
+        });
+      });
+    }
+
+    // Render initially
+    window.onload = function() {
+      updateWongoji();
+    }
+  </script>
+</body>
+</html>
