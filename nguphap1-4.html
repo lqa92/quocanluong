@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng dụng Ôn tập Ngữ pháp tiếng Hàn (TOPIK II)</title>
+    <!-- Nhúng font chữ Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        body {
+            /* Đường dẫn ảnh nền đồng bộ */
+            background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.85)), 
+                              url('https://lh3.googleusercontent.com/d/13YGXblXo3gWanNadE8JAspxErw5BI0FZ');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Khung chứa hiệu ứng Glassmorphism */
+        .main-container {
+            background-color: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            width: 100%;
+            max-width: 900px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .back-btn {
+            align-self: flex-start;
+            margin-bottom: 20px;
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s ease, background 0.2s ease;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 8px 16px;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .back-btn:hover { color: #7dd3fc; background: rgba(15, 23, 42, 0.8); }
+
+        /* Style cho nút game trên nền tối */
+        .option-btn-dark {
+            background-color: rgba(51, 65, 85, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #f8fafc;
+            transition: all 0.2s ease;
+        }
+        .option-btn-dark:hover:not(.matched):not(.selected) {
+            background-color: rgba(71, 85, 105, 0.9);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Trạng thái Matching */
+        .selected {
+            background-color: #0284c7 !important;
+            color: white !important;
+            border-color: #38bdf8 !important;
+            font-weight: 700;
+        }
+        .matched {
+            background-color: #15803d !important;
+            color: #f8fafc !important;
+            border-color: #22c55e !important;
+            opacity: 0.5;
+            font-weight: bold;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Màn hình khóa đăng nhập -->
+    <div id="password-screen" class="main-container max-w-md my-auto text-center">
+        <h2 class="text-2xl font-extrabold text-[#38bdf8] mb-4">Xác thực truy cập</h2>
+        <p class="text-slate-300 text-sm mb-6">Vui lòng nhập mật khẩu để mở khóa ứng dụng ôn tập</p>
+        
+        <form onsubmit="checkPassword(event)" class="space-y-4">
+            <input type="password" id="password-input" placeholder="Nhập mật khẩu..." 
+                class="w-full px-4 py-3 bg-slate-900/80 border border-white/20 rounded-xl text-white focus:outline-none focus:border-sky-400 text-center font-medium placeholder-slate-500">
+            <p id="password-error" class="text-rose-400 text-xs hidden">Mật khẩu không chính xác, vui lòng thử lại!</p>
+            <button type="submit" 
+                class="w-full py-3 bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-xl transition cursor-pointer shadow-md">
+                Xác nhận
+            </button>
+        </form>
+    </div>
+
+    <!-- Nội dung ứng dụng chính (Ẩn ban đầu) -->
+    <div id="app-screen" class="w-full max-w-4xl flex flex-col items-center hidden">
+        <!-- Nút góc trái chuyển về TOPIK 6 WITH ME -->
+        <a href="index.html#korean" class="back-btn">← TOPIK 6 WITH ME</a>
+
+        <div class="main-container">
+            <header class="text-center mb-8 border-b border-white/10 pb-4">
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-[#38bdf8] mb-2 tracking-tight">Ứng dụng Ôn tập Ngữ pháp tiếng Hàn</h1>
+                <p class="text-slate-300 text-sm">Cùng nhau lấy trọn 8 điểm của 4 câu đầu môn Đọc TOPIK nha các tình yêu!!</p>
+            </header>
+
+            <!-- Danh mục bài học -->
+            <div class="flex flex-wrap gap-2 justify-center mb-6 bg-slate-900/50 p-3 rounded-xl border border-white/10 backdrop-blur-md" id="grammar-tabs">
+                <button onclick="switchCategory('lien-ket')" id="tab-cat-lien-ket" class="px-4 py-2 font-bold text-xs sm:text-sm rounded-lg border transition cursor-pointer bg-sky-600 text-white border-sky-400 shadow-sm">
+                    Ngữ pháp liên kết
+                </button>
+                <button onclick="switchCategory('ket-thuc')" id="tab-cat-ket-thuc" class="px-4 py-2 font-bold text-xs sm:text-sm rounded-lg border transition cursor-pointer bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-700">
+                    Ngữ pháp kết thúc
+                </button>
+                <button onclick="switchCategory('tong-hop')" id="tab-cat-tong-hop" class="px-4 py-2 font-bold text-xs sm:text-sm rounded-lg border transition cursor-pointer bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-700">
+                    Tổng hợp (Trộn chung)
+                </button>
+                <button onclick="switchCategory('tuong-dong')" id="tab-cat-tuong-dong" class="px-4 py-2 font-bold text-xs sm:text-sm rounded-lg border transition cursor-pointer bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-700">
+                    Ngữ pháp tương đồng
+                </button>
+            </div>
+
+            <!-- Tùy chọn số lượng câu -->
+            <div class="bg-slate-800/60 p-4 rounded-xl border border-white/10 mb-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <span class="font-bold text-slate-200 text-sm" id="mode-selection-label">Chọn số cặp ngẫu nhiên để thi:</span>
+                <div class="flex gap-2">
+                    <button onclick="changePairCount(3)" id="btn-mode-3" class="px-5 py-2 font-bold text-xs sm:text-sm rounded-lg border transition cursor-pointer bg-sky-600 text-white border-sky-400 shadow-sm">3 Câu</button>
+                    <button onclick="changePairCount(5)" id="btn-mode-5" class="px-5 py-2 font-bold text-xs sm:text-sm rounded-lg border transition cursor-pointer bg-slate-800 text-slate-300 border-slate-600 hover:bg-slate-700">5 Câu</button>
+                    <button onclick="changePairCount(10)" id="btn-mode-10" class="px-5 py-2 font-bold text-xs sm:text-sm rounded-lg border transition cursor-pointer bg-slate-800 text-slate-300 border-slate-600 hover:bg-slate-700">10 Câu</button>
+                </div>
+            </div>
+
+            <!-- Khung làm bài -->
+            <div class="bg-slate-800/80 p-6 rounded-2xl border border-white/15 shadow-lg mb-8">
+                <div class="flex justify-between items-center mb-6 flex-wrap gap-2 border-b border-white/10 pb-4">
+                    <h2 class="text-base font-bold text-[#38bdf8] flex items-center gap-2" id="current-test-title">
+                        Đề thi: Ngữ pháp liên kết (Ngẫu nhiên 3 cặp)
+                    </h2>
+                    <button onclick="initGame()" class="px-4 py-2 bg-sky-600 text-white font-semibold rounded-lg hover:bg-sky-500 transition cursor-pointer text-xs sm:text-sm shadow">
+                        Đổi đề thi mới
+                    </button>
+                </div>
+
+                <!-- Giao diện nối từ (Matching) -->
+                <div id="matching-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-md font-bold text-center text-sky-300 mb-4 pb-2 border-b border-sky-500/30">Ngữ pháp Hàn</h3>
+                        <div class="space-y-3" id="korean-column"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-md font-bold text-center text-emerald-300 mb-4 pb-2 border-b border-emerald-500/30">Ý nghĩa Việt</h3>
+                        <div class="space-y-3" id="vietnamese-column"></div>
+                    </div>
+                </div>
+
+                <!-- Giao diện Trắc nghiệm -->
+                <div id="quiz-container" class="hidden space-y-6"></div>
+
+                <!-- Thông báo hoàn thành -->
+                <div id="congrats-message" class="hidden mt-8 text-center p-4 bg-emerald-950/80 text-emerald-300 font-bold rounded-xl border border-emerald-500/40 shadow-lg">
+                    Tuyệt vời! Bạn đã hoàn thành chính xác tất cả các cấu trúc trong đề thi này!
+                </div>
+            </div>
+
+            <footer class="pt-4 border-t border-dashed border-white/20 text-center text-slate-400 text-xs sm:text-sm leading-relaxed">
+                Trang web này được thiết kế bởi <strong>Thạc sĩ Lương Quốc An (HUFLIT)</strong> dựa trên công cụ <strong>Gemini</strong>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Kiểm tra mật khẩu
+        function checkPassword(event) {
+            event.preventDefault();
+            const input = document.getElementById('password-input').value;
+            const errorMsg = document.getElementById('password-error');
+            
+            if (input === 'quocandeptrai') {
+                document.getElementById('password-screen').classList.add('hidden');
+                document.getElementById('app-screen').classList.remove('hidden');
+                initGame();
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        const lienKetData = [
+            { kr: "-다가", vi: "Hoán chuyển" }, { kr: "-고 나서", vi: "Thứ tự" }, { kr: "-(으)ㄴ/는데", vi: "Đối lập, Dẫn nhập" }, { kr: "-(으)려고", vi: "Mục đích" }, { kr: "-(으)하려면", vi: "Giả thiết ý muốn" }, { kr: "-느라(고)", vi: "Lí do, đồng thời" }, { kr: "-아/어/여야", vi: "Điều kiện" }, { kr: "-(으)ㄹ까 봐(서)", vi: "Lo ngại" }, { kr: "-거나", vi: "Lựa chọn" }, { kr: "-자마자", vi: "Thứ tự, tức khắc" }, { kr: "-(으)ㄹ수록", vi: "Tăng tiến" }, { kr: "-아/어/여서", vi: "Lí do, Thứ tự" }, { kr: "-아/어/여서 그런지", vi: "Lí do dự đoán" }, { kr: "-더니", vi: "Chứng kiến sự thay đổi" }, { kr: "-았/었/였더니", vi: "Trải nghiệm rồi phát hiện hoặc kết quả" }, { kr: "-거든", vi: "Điều kiện một lần" }, { kr: "-(으)면", vi: "Điều kiện" }, { kr: "-(으)ㄹ지", vi: "Băn khoăn lựa chọn" }, { kr: "-(으)니까", vi: "Trải nghiệm rồi phát hiện" }, { kr: "-(으)면서", vi: "Đồng thời" }, { kr: "-던데", vi: "Kết quả trải nghiệm trở thành tình huống hoặc đối lập" }, { kr: "-(으)ㄹ 텐데", vi: "Dự đoán trở thành tình huống" }, { kr: "-다가 보니(까)", vi: "Nguyên nhân lặp lại nhiều lần" }, { kr: "-든지", vi: "Lựa chọn, không liên quan" }, { kr: "-(으)ㄴ/는 데다가", vi: "Thêm ý" }, { kr: "-(으)ㄴ/는 대신에", vi: "Thay thế, Bù đắp" }, { kr: "-아/어/여도", vi: "Giả thiết, đối lập" }, { kr: "-는 김에", vi: "Sẵn tiện" }, { kr: "-는 바람에", vi: "Nguyên nhân xấu đột phát" }, { kr: "-(으)ㄴ/는 덕분에", vi: "Nguyên nhân tốt" }, { kr: "-(으)ㄴ 채(로)", vi: "Duy trì trạng thái" }, { kr: "-도록", vi: "Mục đích, Đến mức, đến khi" }, { kr: "-기에/길래", vi: "Nguyên nhân" }, { kr: "-더라도", vi: "Giả thiết, đối lập" }, { kr: "-다가 보면", vi: "Giả thiết xảy ra nhiều lần" }
+        ];
+
+        const ketThucData = [
+            { kr: "-아/어/여 놓다(두다)", vi: "Làm trước, làm sẵn" }, { kr: "-기로 했다", vi: "Quyết định, Quyết tâm" }, { kr: "-(으)면 되다", vi: "Điều kiện, phương pháp" }, { kr: "-게 하다", vi: "Sai khiến" }, { kr: "-게 되다", vi: "Bị động, Thay đổi" }, { kr: "-(으)ㄴ 적이 있다", vi: "Kinh nghiệm" }, { kr: "-아/어/여 있다", vi: "Duy trì trạng thái" }, { kr: "-아/어/여 가다", vi: "Làm tới tương lai, Gần đạt tới" }, { kr: "-아/어/여 오다", vi: "Làm từ quá khứ tới hiện tại" }, { kr: "-(으)ㄴ/는 셈이다", vi: "Phán đoán chủ quan" }, { kr: "-(으)ㄹ 뻔했다", vi: "Suýt nữa xảy ra" }, { kr: "-곤 하다", vi: "Thường xuyên" }, { kr: "-기 십상이다", vi: "Dễ dàng xảy ra" }, { kr: "-나 보다", vi: "Quan sát dự đoán" }, { kr: "-(으)ㄴ/는 모양이다", vi: "Quan sát dự đoán" }, { kr: "-기 마련이다", vi: "Điều hiển nhiên" }, { kr: "-아/어/여 버렸다", vi: "Tiếc nuối, Trút hết gánh nặng" }, { kr: "-고 말았다", vi: "Kết cục đã xảy ra" }, { kr: "-아/어/여 보이다", vi: "Phán đoán chủ quan" }, { kr: "-(으)ㄴ/는 척하다", vi: "Giả vờ, ra vẻ" }, { kr: "-(으)ㄹ지도 모르다", vi: "Dự đoán, lo lắng" }, { kr: "-(으)ㄹ 리가 없다", vi: "Dự đoán, khẳng định không xảy ra" }, { kr: "-(으)ㄹ까 하다", vi: "Dự định" }, { kr: "-는/-(으)ㄴ 편이다", vi: "Tương đối" }
+        ];
+
+        const tuongDongGroups = [
+            ["-(으)ㄴ/는 것 같다", "-(으)ㄴ/는 듯하다", "-나/-(으)ㄴ가 보다", "-(으)ㄴ/는 모양이다"],
+            ["-(으)ㄹ 정도로", "-(으)ㄹ 만큼", "-게"],
+            ["-기 마련이다", "-는 법이다", "-게 돼 있다"],
+            ["-(으)ㄹ 수밖에 없다", "-아/어야만 하다"],
+            ["-(으)ㄹ 뿐만 아니라", "-는 데다가", "-는 것은 물론(이고)"],
+            ["-는 바람에", "-는 통에", "-는 탓에"],
+            ["-(으)ㄹ까 봐(서)", "-(으)ㄹ지도 몰라서", "-(으)ㄹ 것 같아서"],
+            ["-자마자", "-는 대로", "-(으)면 바로", "-기가 무섭게"],
+            ["-(으)ㄴ/는 셈이다", "-거나 같다", "-거나 마찬가지다", "-거나 다름없다"],
+            ["-(으)나 마나", "-아/어도", "-지 않아도"],
+            ["-게", "-도록"],
+            ["-는 길에", "-다가"],
+            ["-기 십상이다", "-기가 쉽다"],
+            ["-(으)ㄹ 뿐이다", "-(으)ㄹ 따름이다"],
+            ["N + 일 뿐이다", "N + 에 불과하다", "N + 에 지나지 않는다"],
+            ["-았/었/였어야 했다", "-(으)ㄹ 걸 그랬다"],
+            ["-는 대로", "-는 것처럼"],
+            ["-에 달려 있다", "-기 나름이다"],
+            ["-(으)ㄹ지도 모르다", "-(으)ㄹ 수도 있다"],
+            ["-(으)ㄹ 만하다", "-(으)ㄹ 수 있다"],
+            ["-은/는커녕", "-은/는 물론이고", "-뿐만 아니라"],
+            ["-(으)ㄴ/는 척하다", "-(으)ㄴ/는 체하다"],
+            ["-아/어/여 봐야", "-아/어/여 봤자", "-아/어도", "-(으)ㄴ다고 해도"],
+            ["-(으)려던 참이다", "-(으)하려고 했다", "-(으)ㄹ까 했다"],
+            ["-기 위해서", "-(으)려고", "-고자"],
+            ["-듯이", "-는 것처럼"],
+            ["-(으)ㄴ/는 반면에", "-는 데 반해", "-지만"],
+            ["-(으)ㄴ/는데도", "-지만"],
+            ["-(으)면서도", "-지만"],
+            ["-든지", "-더라도"],
+            ["-(으)ㄴ/는가 하면", "-지만", "-고"],
+            ["-도록", "-때까지"],
+            ["-(ㄴ/는)다기에/길래", "-(ㄴ/는)다고 해서"],
+            ["-(으)하려면", "-기 위해서는"],
+            ["-아/어/여 보이다", "-(으)ㄴ/는 것 같다"],
+            ["-(으)ㄹ 리가 없다", "-지 않을 것이다"],
+            ["-기만 하면", "-(으)ㄹ 때마다"],
+            ["-(으)ㄴ 채로", "-고", "-고서"],
+            ["-고도", "-는데도", "-지만"],
+            ["-(으)ㄴ/는 줄 알았다(몰랐다)", "-(으)ㄹ 거라고 생각했다(생각하지 못했다)"],
+            ["-(으)ㄴ 나머지", "-는 탓에"],
+            ["-에 따르면", "-에 의하면"],
+            ["-는 동안", "-는 사이에"],
+            ["-(으)면 좋겠다", "-기를 바라다"]
+        ];
+
+        let currentCategory = 'lien-ket'; 
+        let currentPairCount = 3; 
+        let selectedKr = null; let selectedVi = null; let matchedCount = 0;
+        let currentActiveList = [];
+        let quizAnswers = {};
+
+        function shuffle(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+
+        function switchCategory(category) {
+            const tabs = ['lien-ket', 'ket-thuc', 'tong-hop', 'tuong-dong'];
+            tabs.forEach(cat => {
+                const tabBtn = document.getElementById(`tab-cat-${cat}`);
+                if (cat === category) {
+                    tabBtn.className = "px-4 py-2 font-bold text-xs sm:text-sm rounded-lg border transition cursor-pointer bg-sky-600 text-white border-sky-400 shadow-sm";
+                } else {
+                    tabBtn.className = "px-4 py-2 font-bold text-xs sm:text-sm rounded-lg border transition cursor-pointer bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700";
+                }
+            });
+
+            currentCategory = category;
+            document.getElementById('mode-selection-label').innerText = category === 'tuong-dong' ? "Chọn số câu trắc nghiệm để thi:" : "Chọn số cặp ngẫu nhiên để thi:";
+            
+            updateTitleText();
+            initGame();
+        }
+
+        function changePairCount(count) {
+            [3, 5, 10].forEach(num => {
+                const btn = document.getElementById(`btn-mode-${num}`);
+                if (num === count) btn.className = "px-5 py-2 font-bold text-xs sm:text-sm rounded-lg border transition cursor-pointer bg-sky-600 text-white border-sky-400 shadow-sm";
+                else btn.className = "px-5 py-2 font-bold text-xs sm:text-sm rounded-lg border transition cursor-pointer bg-slate-800 text-slate-300 border-slate-600 hover:bg-slate-700";
+            });
+            currentPairCount = count;
+            updateTitleText();
+            initGame();
+        }
+
+        function updateTitleText() {
+            let catName = "";
+            if (currentCategory === 'lien-ket') catName = "Ngữ pháp liên kết";
+            else if (currentCategory === 'ket-thuc') catName = "Ngữ pháp kết thúc";
+            else if (currentCategory === 'tong-hop') catName = "Tổng hợp (Trộn chung)";
+            else if (currentCategory === 'tuong-dong') catName = "Trắc nghiệm ngữ pháp tương đồng";
+
+            document.getElementById('current-test-title').innerText = `Đề thi: ${catName} (Ngẫu nhiên ${currentPairCount} ${currentCategory === 'tuong-dong' ? 'câu' : 'cặp'})`;
+        }
+
+        function initGame() {
+            document.getElementById('congrats-message').classList.add('hidden');
+            quizAnswers = {};
+
+            if (currentCategory === 'tuong-dong') {
+                document.getElementById('matching-container').classList.add('hidden');
+                document.getElementById('quiz-container').classList.remove('hidden');
+                initQuizGame();
+            } else {
+                document.getElementById('matching-container').classList.remove('hidden');
+                document.getElementById('quiz-container').classList.add('hidden');
+                initMatchingGame();
+            }
+        }
+
+        function initMatchingGame() {
+            selectedKr = null; selectedVi = null; matchedCount = 0;
+            let pool = [];
+            if (currentCategory === 'lien-ket') pool = [...lienKetData];
+            else if (currentCategory === 'ket-thuc') pool = [...ketThucData];
+            else if (currentCategory === 'tong-hop') pool = [...lienKetData, ...ketThucData];
+
+            shuffle(pool);
+            currentActiveList = pool.slice(0, currentPairCount);
+
+            const krList = shuffle(currentActiveList.map((g, index) => ({ id: index + '-' + g.kr, text: g.kr })));
+            const viList = shuffle(currentActiveList.map((g, index) => ({ id: index + '-' + g.kr, text: g.vi })));
+
+            const krColumn = document.getElementById('korean-column');
+            const viColumn = document.getElementById('vietnamese-column');
+            krColumn.innerHTML = ''; viColumn.innerHTML = '';
+
+            krList.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = "w-full p-4 text-left font-medium text-base option-btn-dark rounded-xl transition cursor-pointer shadow-sm";
+                btn.innerText = item.text; btn.dataset.id = item.id;
+                btn.onclick = () => handleSelectMatching(btn, 'kr');
+                krColumn.appendChild(btn);
+            });
+
+            viList.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = "w-full p-4 text-left font-medium text-base option-btn-dark rounded-xl transition cursor-pointer shadow-sm";
+                btn.innerText = item.text; btn.dataset.id = item.id;
+                btn.onclick = () => handleSelectMatching(btn, 'vi');
+                viColumn.appendChild(btn);
+            });
+        }
+
+        function handleSelectMatching(element, type) {
+            if (element.classList.contains('matched')) return;
+            if (type === 'kr') {
+                if (selectedKr === element) { element.classList.remove('selected'); selectedKr = null; return; }
+                if (selectedKr) selectedKr.classList.remove('selected');
+                selectedKr = element; selectedKr.classList.add('selected');
+            } else {
+                if (selectedVi === element) { element.classList.remove('selected'); selectedVi = null; return; }
+                if (selectedVi) selectedVi.classList.remove('selected');
+                selectedVi = element; selectedVi.classList.add('selected');
+            }
+            if (selectedKr && selectedVi) {
+                if (selectedKr.dataset.id === selectedVi.dataset.id) {
+                    selectedKr.classList.remove('selected'); selectedVi.classList.remove('selected');
+                    selectedKr.classList.add('matched'); selectedVi.classList.add('matched');
+                    selectedKr = null; selectedVi = null; matchedCount++;
+                    if (matchedCount === currentActiveList.length) {
+                        document.getElementById('congrats-message').classList.remove('hidden');
+                        document.getElementById('congrats-message').innerText = "Tuyệt vời! Bạn đã ghép chính xác tất cả các cặp ngữ pháp!";
+                    }
+                } else {
+                    const wrongKr = selectedKr; const wrongVi = selectedVi;
+                    wrongKr.classList.add('bg-rose-900/80', 'border-rose-500'); wrongVi.classList.add('bg-rose-900/80', 'border-rose-500');
+                    selectedKr = null; selectedVi = null;
+                    setTimeout(() => {
+                        wrongKr.classList.remove('selected', 'bg-rose-900/80', 'border-rose-500');
+                        wrongVi.classList.remove('selected', 'bg-rose-900/80', 'border-rose-500');
+                    }, 400);
+                }
+            }
+        }
+
+        function initQuizGame() {
+            const quizContainer = document.getElementById('quiz-container');
+            quizContainer.innerHTML = '';
+
+            let allGroupIndexes = Array.from({length: tuongDongGroups.length}, (_, i) => i);
+            shuffle(allGroupIndexes);
+            let selectedGroupIndexes = allGroupIndexes.slice(0, currentPairCount);
+
+            let flatGrammarsPool = [];
+            tuongDongGroups.forEach(g => flatGrammarsPool = flatGrammarsPool.concat(g));
+
+            selectedGroupIndexes.forEach((groupIdx, qIndex) => {
+                let targetGroup = [...tuongDongGroups[groupIdx]];
+                shuffle(targetGroup);
+
+                let questionGrammar = targetGroup[0];
+                let correctAnswer = targetGroup[1];
+
+                let wrongChoices = [];
+                let wrongPool = flatGrammarsPool.filter(item => !tuongDongGroups[groupIdx].includes(item));
+                shuffle(wrongPool);
+                
+                for(let item of wrongPool) {
+                    if(!wrongChoices.includes(item) && item !== questionGrammar) {
+                        wrongChoices.push(item);
+                    }
+                    if(wrongChoices.length === 3) break;
+                }
+
+                let finalChoices = [correctAnswer, ...wrongChoices];
+                shuffle(finalChoices);
+
+                const quizBlock = document.createElement('div');
+                quizBlock.className = "p-5 bg-slate-900/60 border border-white/10 rounded-xl space-y-3";
+                quizBlock.innerHTML = `
+                    <div class="font-bold text-slate-200 text-base">Câu hỏi ${qIndex + 1}: Ngữ pháp nào tương đồng với cấu trúc <span class="text-sky-300 text-lg font-extrabold">"${questionGrammar}"</span>?</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="choices-grid-${qIndex}"></div>
+                `;
+                quizContainer.appendChild(quizBlock);
+
+                const choicesGrid = document.getElementById(`choices-grid-${qIndex}`);
+                finalChoices.forEach(choice => {
+                    const btn = document.createElement('button');
+                    btn.id = `btn-quiz-${qIndex}-${choice}`;
+                    btn.className = "w-full p-3 text-left font-medium rounded-lg option-btn-dark transition cursor-pointer text-sm shadow-sm";
+                    btn.innerText = choice;
+                    btn.onclick = () => handleSelectQuiz(qIndex, choice, correctAnswer, finalChoices);
+                    choicesGrid.appendChild(btn);
+                });
+            });
+        }
+
+        function handleSelectQuiz(qIndex, selectedChoice, correctAnswer, allChoices) {
+            if (quizAnswers[qIndex] !== undefined) return;
+            
+            quizAnswers[qIndex] = selectedChoice;
+
+            allChoices.forEach(choice => {
+                const btn = document.getElementById(`btn-quiz-${qIndex}-${choice}`);
+                if (choice === correctAnswer) {
+                    btn.className = "w-full p-3 text-left rounded-lg transition cursor-pointer text-sm shadow-sm bg-emerald-700 text-white border-emerald-500 font-extrabold scale-[1.01]";
+                }
+                if (choice === selectedChoice && selectedChoice !== correctAnswer) {
+                    btn.className = "w-full p-3 text-left rounded-lg transition cursor-pointer text-sm shadow-sm bg-rose-700 text-white border-rose-500 font-bold opacity-80";
+                }
+                btn.style.pointerEvents = 'none';
+            });
+
+            if (Object.keys(quizAnswers).length === currentPairCount) {
+                document.getElementById('congrats-message').classList.remove('hidden');
+                document.getElementById('congrats-message').innerText = "Chúc mừng! Bạn đã hoàn thành toàn bộ bài kiểm tra ngữ pháp tương đồng!";
+            }
+        }
+    </script>
+</body>
+</html>
