@@ -183,7 +183,7 @@
         }
 
         .sub-tab-content {
-            padding-left: 1.5rem; /* Thụt vào xíu cho các mục con */
+            padding-left: 1.5rem;
             display: flex;
             flex-direction: column;
             gap: 0.8rem;
@@ -193,6 +193,14 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        /* Dành riêng cho các danh mục dạng danh sách dọc */
+        .card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
             margin-top: 2rem;
         }
 
@@ -212,7 +220,7 @@
         }
 
         .card-link:hover .card {
-            transform: translateX(6px); /* Hiệu ứng đẩy nhẹ sang phải */
+            transform: translateX(6px);
             border-color: rgba(56, 189, 248, 0.5);
             background: rgba(255, 255, 255, 0.08);
         }
@@ -430,7 +438,7 @@
     <!-- Section: EASY ECONOMICS -->
     <section id="economics" class="content-section">
         <h2>EASY ECONOMICS</h2>
-        <div class="card-grid">
+        <div class="card-list">
             <a href="bai1.html" class="card-link">
                 <div class="card">
                     <h3>
