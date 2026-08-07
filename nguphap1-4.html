@@ -114,7 +114,7 @@
 
     <!-- Nội dung ứng dụng chính (Ẩn ban đầu) -->
     <div id="app-screen" class="w-full max-w-4xl flex flex-col items-center hidden">
-        <!-- Đã sửa href thành index.html#topik để trỏ chính xác về tab TOPIK 6 WITH ME -->
+        <!-- Đường dẫn về tab TOPIK 6 WITH ME -->
         <a href="index.html#topik" class="back-btn">← TOPIK 6 WITH ME</a>
 
         <div class="main-container">
@@ -188,13 +188,13 @@
     </div>
 
     <script>
-        // Kiểm tra mật khẩu
+        // Kiểm tra mật khẩu (Đã cập nhật mật khẩu mới: 2112)
         function checkPassword(event) {
             event.preventDefault();
             const input = document.getElementById('password-input').value;
             const errorMsg = document.getElementById('password-error');
             
-            if (input === 'quocandeptrai') {
+            if (input === '2112') {
                 document.getElementById('password-screen').classList.add('hidden');
                 document.getElementById('app-screen').classList.remove('hidden');
                 initGame();
