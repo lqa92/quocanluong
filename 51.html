@@ -52,7 +52,7 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between p-4 md:p-8">
 
-    <!-- Màn hình nhập Password -->
+    <!-- Màn hình nhập Password (Mặc định hiển thị phủ toàn màn hình) -->
     <div id="password-screen" class="fixed inset-0 bg-[#0b1329] z-50 flex items-center justify-center p-4">
         <div class="bg-[#131d38] border border-slate-700/60 p-8 rounded-2xl shadow-2xl max-w-md w-full text-center">
             <h2 class="text-2xl font-bold text-white mb-2">🔒 Xác minh truy cập</h2>
@@ -126,18 +126,6 @@
     </footer>
 
     <script>
-        // Kiểm tra mật khẩu truy cập
-        function checkPassword(e) {
-            e.preventDefault();
-            const input = document.getElementById('pass-input').value;
-            if (input === '2112') {
-                document.getElementById('password-screen').classList.add('hidden');
-                document.getElementById('app-screen').classList.remove('hidden');
-            } else {
-                document.getElementById('pass-error').classList.remove('hidden');
-            }
-        }
-
         // Dữ liệu từ vựng câu 51
         const vocabularyData = {
             "1-3": [
@@ -252,6 +240,26 @@
         let selectedVi = null;
         let matchedCount = 0;
         let currentActiveWords = [];
+        let isAppInitialized = false;
+
+        // Kiểm tra mật khẩu truy cập (Mật khẩu chính xác: 2112)
+        function checkPassword(e) {
+            e.preventDefault();
+            const input = document.getElementById('pass-input').value;
+            if (input === '2112') {
+                document.getElementById('password-screen').classList.add('hidden');
+                document.getElementById('app-screen').classList.remove('hidden');
+                
+                // Chỉ khởi tạo giao diện ứng dụng sau khi xác minh đúng mật khẩu
+                if (!isAppInitialized) {
+                    createTabs();
+                    initGame(keysList[0]);
+                    isAppInitialized = true;
+                }
+            } else {
+                document.getElementById('pass-error').classList.remove('hidden');
+            }
+        }
 
         function shuffle(array) {
             return array.sort(() => Math.random() - 0.5);
@@ -268,6 +276,7 @@
 
         function createTabs() {
             const tabsContainer = document.getElementById('tabs-container');
+            tabsContainer.innerHTML = '';
             
             keysList.forEach((key, index) => {
                 const button = document.createElement('button');
@@ -406,10 +415,6 @@
                 }
             }
         }
-
-        // Khởi tạo ứng dụng
-        createTabs();
-        initGame(keysList[0]);
     </script>
 </body>
 </html>
