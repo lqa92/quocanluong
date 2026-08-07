@@ -374,10 +374,24 @@
             }
 
             // Scroll smoothly to section if not home
-            if (tabId !== 'home') {
+            if (tabId !== 'home' && targetSection) {
                 targetSection.scrollIntoView({ behavior: 'smooth' });
             }
         }
+
+        // Hàm kiểm tra và tự động mở tab tương ứng dựa vào thanh địa chỉ (#hash)
+        function checkHashAndSwitchTab() {
+            const hash = window.location.hash.replace('#', '');
+            if (hash) {
+                showTab(hash);
+            }
+        }
+
+        // Kích hoạt khi vừa tải xong trang
+        window.addEventListener('DOMContentLoaded', checkHashAndSwitchTab);
+        
+        // Kích hoạt khi có thay đổi thẻ hash trên thanh địa chỉ (khi người dùng bấm quay lại)
+        window.addEventListener('hashchange', checkHashAndSwitchTab);
     </script>
 </body>
 </html>
