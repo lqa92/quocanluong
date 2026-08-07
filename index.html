@@ -161,6 +161,34 @@
             display: block;
         }
 
+        /* Sub Tab Container Styles */
+        .sub-tab-group {
+            margin-top: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .sub-tab-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.6rem;
+        }
+
+        .sub-tab-content {
+            padding-left: 1.5rem; /* Thụt vào xíu cho các mục con */
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -171,8 +199,8 @@
         .card {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 1.8rem;
+            border-radius: 12px;
+            padding: 1.2rem 1.5rem;
             backdrop-filter: blur(8px);
             transition: transform 0.3s ease, border-color 0.3s ease;
         }
@@ -184,7 +212,7 @@
         }
 
         .card-link:hover .card {
-            transform: translateY(-5px);
+            transform: translateX(6px); /* Hiệu ứng đẩy nhẹ sang phải */
             border-color: rgba(56, 189, 248, 0.5);
             background: rgba(255, 255, 255, 0.08);
         }
@@ -192,7 +220,10 @@
         .card h3 {
             margin-bottom: 0;
             color: #38bdf8;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .card ul {
@@ -243,6 +274,9 @@
                 width: 42px;
                 height: 42px;
                 font-size: 1.2rem;
+            }
+            .sub-tab-content {
+                padding-left: 0.8rem;
             }
         }
     </style>
@@ -326,31 +360,51 @@
     <!-- Section: TOPIK 6 WITH ME -->
     <section id="topik" class="content-section">
         <h2>TOPIK 6 With Me</h2>
-        <div class="card-grid">
-            <a href="nguphap1-4.html" class="card-link">
-                <div class="card">
-                    <h3>
-                        Ngữ pháp thường gặp trong câu 1-2, 3-4 môn Đọc
-                        <i class="fas fa-arrow-right link-icon"></i>
-                    </h3>
-                </div>
-            </a>
-            <a href="duoivanviet.html" class="card-link">
-                <div class="card">
-                    <h3>
-                        Ôn tập đuôi văn viết
-                        <i class="fas fa-arrow-right link-icon"></i>
-                    </h3>
-                </div>
-            </a>
-            <a href="wongoji.html" class="card-link">
-                <div class="card">
-                    <h3>
-                        Luyện viết câu 53 trong khung
-                        <i class="fas fa-arrow-right link-icon"></i>
-                    </h3>
-                </div>
-            </a>
+        
+        <!-- Sub Tab 1: 쓰기 연습 -->
+        <div class="sub-tab-group">
+            <div class="sub-tab-title">1) 쓰기 연습</div>
+            <div class="sub-tab-content">
+                <a href="duoivanviet.html" class="card-link">
+                    <div class="card">
+                        <h3>
+                            Ôn tập đuôi văn viết
+                            <i class="fas fa-arrow-right link-icon"></i>
+                        </h3>
+                    </div>
+                </a>
+                <a href="wongoji.html" class="card-link">
+                    <div class="card">
+                        <h3>
+                            Luyện viết câu 53 trong khung
+                            <i class="fas fa-arrow-right link-icon"></i>
+                        </h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Sub Tab 2: 문법 연습 -->
+        <div class="sub-tab-group">
+            <div class="sub-tab-title">2) 문법 연습</div>
+            <div class="sub-tab-content">
+                <a href="nguphap1-4.html" class="card-link">
+                    <div class="card">
+                        <h3>
+                            Ngữ pháp thường gặp trong câu 1-2, 3-4 môn Đọc
+                            <i class="fas fa-arrow-right link-icon"></i>
+                        </h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Sub Tab 3: 읽기 어휘 연습 -->
+        <div class="sub-tab-group">
+            <div class="sub-tab-title">3) 읽기 어휘 연습</div>
+            <div class="sub-tab-content">
+                <!-- Các bài học bổ sung sau này sẽ thêm vào đây -->
+            </div>
         </div>
     </section>
 
