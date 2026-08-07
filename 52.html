@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng dụng Ôn tập từ vựng tiếng Hàn (Câu 52 TOPIK II)</title>
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <!-- Google Fonts: Be Vietnam Pro & Noto Sans KR -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', 'Noto Sans KR', sans-serif;
+            background-color: #0b1329;
+            color: #f1f5f9;
+        }
+
+        /* Nút quay về */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            color: #38bdf8;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .back-btn:hover {
+            color: #7dd3fc;
+        }
+
+        /* Trạng thái được chọn */
+        .selected {
+            background-color: #1e3a8a !important;
+            color: #38bdf8 !important;
+            border-color: #38bdf8 !important;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+
+        /* Trạng thái đã ghép đúng */
+        .matched {
+            background-color: #064e3b !important;
+            color: #34d399 !important;
+            border-color: #059669 !important;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-4 md:p-8">
+
+    <!-- Màn hình nhập Password -->
+    <div id="password-screen" class="fixed inset-0 bg-[#0b1329] z-50 flex items-center justify-center p-4">
+        <div class="bg-[#131d38] border border-slate-700/60 p-8 rounded-2xl shadow-2xl max-w-md w-full text-center">
+            <h2 class="text-2xl font-bold text-white mb-2">🔒 Xác minh truy cập</h2>
+            <p class="text-slate-400 text-sm mb-6">Vui lòng nhập mật khẩu để vào ứng dụng</p>
+            <form onsubmit="checkPassword(event)" class="space-y-4">
+                <div>
+                    <input type="password" id="pass-input" placeholder="Nhập mật khẩu..." autofocus
+                           class="w-full px-4 py-3 rounded-xl bg-[#0b1329] border border-slate-700 text-white placeholder-slate-500 text-center text-lg tracking-widest focus:outline-none focus:border-sky-500 transition">
+                </div>
+                <p id="pass-error" class="text-red-400 text-sm hidden">Mật khẩu không chính xác!</p>
+                <button type="submit" 
+                        class="w-full py-3 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold rounded-xl transition cursor-pointer">
+                    Xác nhận
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Màn hình chính ứng dụng (Mặc định ẩn) -->
+    <div id="app-screen" class="w-full max-w-5xl mx-auto flex flex-col items-center hidden">
+        
+        <!-- Nút quay về TOPIK 6 WITH ME -->
+        <div class="w-full mb-6">
+            <a href="index.html#topik" class="back-btn text-lg">
+                ← TOPIK 6 WITH ME
+            </a>
+        </div>
+
+        <div class="main-container w-full">
+            <header class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-white mb-2">🎯 Ứng dụng Ôn tập từ vựng tiếng Hàn</h1>
+                <p class="text-xl font-semibold text-sky-400 mb-3">(Bài 1 đến 50, Câu 52 kỹ năng Viết TOPIK)</p>
+                <p class="text-slate-400 text-sm">Chọn 1 từ tiếng Hàn và 1 từ tiếng Việt tương ứng để hoàn thành bài học.</p>
+            </header>
+
+            <!-- Thanh Tabs (Các Nhóm Bài + Mode Ngẫu Nhiên) -->
+            <div class="flex flex-wrap gap-2 justify-center mb-8 bg-[#131d38] p-4 rounded-xl border border-slate-800 shadow-lg" id="tabs-container">
+                <!-- Tabs sẽ được tự động render bằng JS -->
+            </div>
+
+            <!-- Vùng hiển thị trò chơi Matching -->
+            <div class="bg-[#131d38] p-6 rounded-2xl border border-slate-800 shadow-xl mb-8">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+                    <h2 class="text-xl font-bold text-sky-400" id="current-lesson-title">Bài 1-2</h2>
+                    <button onclick="initGame(currentLesson)" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium rounded-lg transition cursor-pointer">
+                        🔄 Làm lại bài này
+                    </button>
+                </div>
+
+                <!-- Khu vực chơi game -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Cột tiếng Hàn -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-center text-slate-300 mb-4 pb-2 border-b-2 border-sky-500">Tiếng Hàn</h3>
+                        <div class="space-y-3" id="korean-column"></div>
+                    </div>
+
+                    <!-- Cột tiếng Việt -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-center text-slate-300 mb-4 pb-2 border-b-2 border-emerald-500">Tiếng Việt</h3>
+                        <div class="space-y-3" id="vietnamese-column"></div>
+                    </div>
+                </div>
+
+                <!-- Thông báo chúc mừng -->
+                <div id="congrats-message" class="hidden mt-8 text-center p-4 bg-emerald-950/80 border border-emerald-500/30 text-emerald-300 font-bold rounded-xl animate-bounce">
+                    🎉 Xuất sắc! Bạn đã hoàn thành tất cả các từ của bài này!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thông tin bản quyền chân trang -->
+    <footer class="w-full py-6 text-center text-slate-500 text-sm mt-auto border-t border-slate-800/60">
+        <p class="font-medium">Ứng dụng được thiết kế bởi <strong class="text-slate-300">ThS. Lương Quốc An (HUFLIT)</strong>, dựa trên công cụ <strong class="text-slate-300">Gemini</strong></p>
+    </footer>
+
+    <script>
+        // Kiểm tra mật khẩu truy cập
+        function checkPassword(e) {
+            e.preventDefault();
+            const input = document.getElementById('pass-input').value;
+            if (input === '2112') {
+                document.getElementById('password-screen').classList.add('hidden');
+                document.getElementById('app-screen').classList.remove('hidden');
+            } else {
+                document.getElementById('pass-error').classList.remove('hidden');
+            }
+        }
+
+        // Toàn bộ dữ liệu 14 cụm bài từ bài 1 đến 50 từ nguồn cung cấp
+        const vocabularyData = {
+            "1-2": [
+                { kr: "습도", vi: "Độ ẩm" },
+                { kr: "습기 제거제", vi: "Chất hút ẩm" },
+                { kr: "보관하다", vi: "Bảo quản" },
+                { kr: "망가지다", vi: "Bị hỏng" },
+                { kr: "없애다", vi: "Loại bỏ" },
+                { kr: "입술", vi: "Môi" },
+                { kr: "주름", vi: "Nếp nhăn" },
+                { kr: "하품하다", vi: "Ngáp" }
+            ],
+            "3-4": [
+                { kr: "그늘", vi: "Bóng râm" },
+                { kr: "매연", vi: "Khói thải" },
+                { kr: "먼지", vi: "Bụi" },
+                { kr: "분석되다", vi: "Được phân tích" },
+                { kr: "대체로", vi: "Nói chung" },
+                { kr: "줄이다", vi: "Giảm bớt" },
+                { kr: "무조건", vi: "Bất chấp" },
+                { kr: "해소하다", vi: "Giải tỏa" },
+                { kr: "전문가", vi: "Chuyên gia" }
+            ],
+            "5-6": [
+                { kr: "세균", vi: "Vi khuẩn" },
+                { kr: "예방하다", vi: "Ngăn ngừa" },
+                { kr: "제대로", vi: "Đúng đắn, đầy đủ" },
+                { kr: "저축하다", vi: "Để dành tiền" },
+                { kr: "수입", vi: "Thu nhập" },
+                { kr: "일부", vi: "Một phần" },
+                { kr: "나머지", vi: "Phần còn lại" },
+                { kr: "실제로", vi: "Thực tế" }
+            ],
+            "7-8": [
+                { kr: "끊임없이", vi: "Không ngừng nghỉ" },
+                { kr: "실패하다", vi: "Thất bại" },
+                { kr: "경험하다", vi: "Trải nghiệm" },
+                { kr: "두렵다", vi: "Lo sợ" },
+                { kr: "이어지다", vi: "Dẫn đến" },
+                { kr: "증상", vi: "Triệu chứng" },
+                { kr: "일시적", vi: "Tính nhất thời" },
+                { kr: "없어지다", vi: "Biến mất" }
+            ],
+            "9-10": [
+                { kr: "자녀", vi: "Con cái" },
+                { kr: "유전인자", vi: "Nhân tố di truyền" },
+                { kr: "습관", vi: "Thói quen" },
+                { kr: "요인", vi: "Yếu tố" },
+                { kr: "영향을미치다", vi: "Ảnh hưởng" },
+                { kr: "들이마시다", vi: "Hít vào" },
+                { kr: "굳다", vi: "Cứng" },
+                { kr: "풀어 놓다", vi: "Thả lỏng" },
+                { kr: "담그다", vi: "Ngâm" }
+            ],
+            "11-12": [
+                { kr: "초기", vi: "Giai đoạn đầu" },
+                { kr: "심리 상태", vi: "Trạng thái tâm lý" },
+                { kr: "분위기", vi: "Bầu không khí" },
+                { kr: "감정", vi: "Cảm xúc" },
+                { kr: "들리다", vi: "Cho nghe" },
+                { kr: "겨울잠", vi: "Giấc ngủ đông" },
+                { kr: "체내", vi: "Trong cơ thể" },
+                { kr: "기온", vi: "Nhiệt độ khí quyển" },
+                { kr: "조절하다", vi: "Điều chỉnh" },
+                { kr: "생존", vi: "Sinh tồn" },
+                { kr: "체온", vi: "Nhiệt độ cơ thể" }
+            ],
+            "13-14": [
+                { kr: "재활용", vi: "Tái chế" },
+                { kr: "올바르다", vi: "Đúng đắn" },
+                { kr: "분류하다", vi: "Phân loại" },
+                { kr: "과정", vi: "Quá trình" },
+                { kr: "섞이다", vi: "Bị trộn lẫn" },
+                { kr: "당황하다", vi: "Hoảng hốt" },
+                { kr: "그대로 두다", vi: "Để nguyên như vậy" },
+                { kr: "자연스럽다", vi: "Tự nhiên" }
+            ],
+            "15-16": [
+                { kr: "불가능하다", vi: "Bất khả thi" },
+                { kr: "포기하다", vi: "Từ bỏ" },
+                { kr: "확률", vi: "Xác suất" },
+                { kr: "긍정적", vi: "Tích cực" },
+                { kr: "부정적", vi: "Tiêu cực" },
+                { kr: "뿌리", vi: "Rễ cây" },
+                { kr: "썩다", vi: "Bị thối rữa" },
+                { kr: "살펴보기", vi: "Xem xét" },
+                { kr: "마르다", vi: "Khô" }
+            ],
+            "17-18": [
+                { kr: "실온", vi: "Nhiệt độ phòng" },
+                { kr: "약사", vi: "Dược sĩ" },
+                { kr: "자세히", vi: "Chi tiết" },
+                { kr: "성분", vi: "Thành phần" },
+                { kr: "변하다", vi: "Biến đổi" },
+                { kr: "기침하다", vi: "Ho" },
+                { kr: "막다", vi: "Chặn" },
+                { kr: "전하다", vi: "Truyền, chuyển" },
+                { kr: "의사", vi: "Bác sĩ" },
+                { kr: "침", vi: "Nước bọt" },
+                { kr: "묻다", vi: "Dính" }
+            ],
+            "19-20": [
+                { kr: "시계 바늘", vi: "Kim đồng hồ" },
+                { kr: "본격적", vi: "Một cách chính thức" },
+                { kr: "생산되다", vi: "Được sản xuất" },
+                { kr: "방향", vi: "Phương hướng" },
+                { kr: "녹음되다", vi: "Được ghi âm" },
+                { kr: "평소", vi: "Mọi khi" },
+                { kr: "전달되다", vi: "Được truyền đạt, truyền tải" },
+                { kr: "머리뼈", vi: "Xương đầu" }
+            ],
+            "21-22": [
+                { kr: "근육", vi: "Cơ bắp" },
+                { kr: "턱", vi: "Cằm" },
+                { kr: "눈물 주머니", vi: "Tuyến lệ" },
+                { kr: "누르다", vi: "Nhấn, đè" },
+                { kr: "움직임", vi: "Sự chuyển động" },
+                { kr: "잎", vi: "Lá" },
+                { kr: "화려하다", vi: "Lộng lẫy" },
+                { kr: "상대적", vi: "Tính tương đối" },
+                { kr: "벌", vi: "Con ong" },
+                { kr: "유혹하다", vi: "Cám dỗ" },
+                { kr: "전략", vi: "Chiến lược" },
+                { kr: "꽃을 피우다", vi: "Nở hoa" }
+            ],
+            "23-25": [
+                { kr: "무리하다", vi: "Quá sức" },
+                { kr: "적응하다", vi: "Thích nghi" },
+                { kr: "맨손 체조", vi: "Thể dục tay không" },
+                { kr: "눈에 띄다", vi: "Nổi bật" },
+                { kr: "투명하다", vi: "Trong suốt" },
+                { kr: "상황", vi: "Tình hình" },
+                { kr: "갈증", vi: "Cơn khát nước" },
+                { kr: "탄산음료", vi: "Đồ uống có ga" },
+                { kr: "빠져나가다", vi: "Thoát ra ngoài" }
+            ],
+            "26-27": [
+                { kr: "보증금", vi: "Tiền đặt cọc" },
+                { kr: "손해", vi: "Tổn thất" },
+                { kr: "금액", vi: "Số tiền" },
+                { kr: "일정하다", vi: "Cố định, nhất định" },
+                { kr: "돌려받다", vi: "Nhận lại" },
+                { kr: "제도", vi: "Chế độ" },
+                { kr: "건조하다", vi: "Khô" },
+                { kr: "횟수", vi: "Số lần" },
+                { kr: "반복하다", vi: "Lặp lại" }
+            ],
+            "28-30": [
+                { kr: "속도", vi: "Tốc độ" },
+                { kr: "규칙적", vi: "Tính quy tắc" },
+                { kr: "진동", vi: "Rung động" },
+                { kr: "뇌", vi: "Não bộ" },
+                { kr: "처리하다", vi: "Xử lý" },
+                { kr: "안정감", vi: "Cảm giác ổn định" },
+                { kr: "피ro", vi: "Sự mệt mỏi" },
+                { kr: "단지", vi: "Chỉ là" },
+                { kr: "호르몬", vi: "Hormone" },
+                { kr: "방해하다", vi: "Cản trở" },
+                { kr: "잠을 깨우다", vi: "Đánh thức giấc ngủ" },
+                { kr: "오히려", vi: "Ngược lại" }
+            ],
+            "31-34": [
+                { kr: "차이", vi: "Chênh lệch" },
+                { kr: "골프공", vi: "Bóng golf" },
+                { kr: "구멍", vi: "Lỗ" },
+                { kr: "저항", vi: "Sức cản" },
+                { kr: "날다", vi: "Bay" },
+                { kr: "낙타", vi: "Lạc đà" },
+                { kr: "수분", vi: "Lượng nước" },
+                { kr: "지장", vi: "Trở ngại" },
+                { kr: "유지하다", vi: "Duy trì" },
+                { kr: "저장하다", vi: "Lưu trữ" }
+            ],
+            "35-37": [
+                { kr: "고춧가루", vi: "Bột ớt" },
+                { kr: "얼룩", vi: "Vết bẩn, vết ố" },
+                { kr: "햇빛", vi: "Ánh nắng" },
+                { kr: "사라지다", vi: "Biến mất" },
+                { kr: "녹다", vi: "Tan chảy" },
+                { kr: "사막", vi: "Sa mạc" },
+                { kr: "줄기", vi: "Thân cây" },
+                { kr: "살아남다", vi: "Sống sót" },
+                { kr: "기운", vi: "Hơi" },
+                { kr: "꺼내다", vi: "Lấy ra" }
+            ],
+            "38-40": [
+                { kr: "물방울", vi: "Giọt nước" },
+                { kr: "본래", vi: "Vốn dĩ" },
+                { kr: "관찰하다", vi: "Quan sát" },
+                { kr: "합치다", vi: "Hợp lại" },
+                { kr: "퍼지다", vi: "Được lan toả" },
+                { kr: "해롭다", vi: "Có hại" },
+                { kr: "배변하다", vi: "Bài tiết" },
+                { kr: "숙면", vi: "Giấc ngủ sâu" },
+                { kr: "속이 쓰리다", vi: "Cồn cào ruột" },
+                { kr: "가능성", vi: "Khả năng" },
+                { kr: "속담", vi: "Tục ngữ" },
+                { kr: "자체", vi: "Bản thân" }
+            ],
+            "41-43": [
+                { kr: "낭비되다", vi: "Bị lãng phí" },
+                { kr: "회전문", vi: "Cửa xoay" },
+                { kr: "설치하다", vi: "Lắp đặt" },
+                { kr: "여닫다", vi: "Đóng mở" },
+                { kr: "막다", vi: "Ngăn chặn" },
+                { kr: "대량", vi: "Số lượng lớn" },
+                { kr: "중독되다", vi: "Bị nghiện" },
+                { kr: "지나치다", vi: "Quá mức" },
+                { kr: "두통", vi: "Đau đầu" },
+                { kr: "보충하다", vi: "Bổ sung" },
+                { kr: "흘리다, 흐르다", vi: "Chảy" }
+            ],
+            "44-45": [
+                { kr: "햇볕", vi: "Ánh nắng" },
+                { kr: "상하다", vi: "Bị hỏng" },
+                { kr: "그늘지다", vi: "Có bóng râm" },
+                { kr: "뚜껑", vi: "Nắp đậy" },
+                { kr: "비치다", vi: "Soi chiếu" },
+                { kr: "식습관", vi: "Thói quen ăn uống" },
+                { kr: "치아", vi: "Răng" },
+                { kr: "급격하다", vi: "Đột ngột" },
+                { kr: "부피", vi: "Thể tích" }
+            ],
+            "46-47": [
+                { kr: "종이컵", vi: "Ly giấy" },
+                { kr: "타다", vi: "Bị cháy" },
+                { kr: "온도", vi: "Nhiệt độ" },
+                { kr: "열", vi: "Nhiệt" },
+                { kr: "끓다", vi: "Sôi" },
+                { kr: "끓이다", vi: "Đun sôi" },
+                { kr: "짜증이 나다", vi: "Bực mình" },
+                { kr: "돌리다", vi: "Xoay, quay đi" }
+            ],
+            "48-50": [
+                { kr: "나비", vi: "Con bướm" },
+                { kr: "날개", vi: "Cánh" },
+                { kr: "아름다움", vi: "Vẻ đẹp" },
+                { kr: "똑바로", vi: "Thẳng tắp" },
+                { kr: "맞추다", vi: "Canh theo cho đúng" },
+                { kr: "칫솔", vi: "Bàn chải" },
+                { kr: "욕실", vi: "Nhà tắm" },
+                { kr: "바람이 통하다", vi: "Thoáng gió" },
+                { kr: "제공하다", vi: "Cung cấp" },
+                { kr: "깜짝 놀라다", vi: "Giật mình" },
+                { kr: "달아나다", vi: "Chạy trốn" },
+                { kr: "식물학자", vi: "Nhà thực vật học" }
+            ]
+        };
+
+        const keysList = Object.keys(vocabularyData);
+        let currentLesson = keysList[0]; 
+        let selectedKr = null;
+        let selectedVi = null;
+        let matchedCount = 0;
+        let currentActiveWords = [];
+
+        function shuffle(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+
+        function getRandomWordsFromAllLessons(count = 20) {
+            let allWords = [];
+            for (let lesson in vocabularyData) {
+                allWords = allWords.concat(vocabularyData[lesson]);
+            }
+            shuffle(allWords);
+            return allWords.slice(0, count);
+        }
+
+        function createTabs() {
+            const tabsContainer = document.getElementById('tabs-container');
+            
+            keysList.forEach((key, index) => {
+                const button = document.createElement('button');
+                button.innerText = `Bài ${key}`;
+                button.id = `tab-${key}`;
+                button.className = `px-3 py-1.5 font-semibold text-xs rounded-lg border transition cursor-pointer ${
+                    index === 0 
+                    ? 'bg-sky-600 text-white border-sky-500 shadow-md' 
+                    : 'bg-[#0b1329] text-slate-300 border-slate-700 hover:bg-slate-800'
+                }`;
+                button.onclick = () => switchLesson(key);
+                tabsContainer.appendChild(button);
+            });
+
+            const randomButton = document.createElement('button');
+            randomButton.innerText = `🎲 TEST TỔNG HỢP (20 TỪ)`;
+            randomButton.id = `tab-random`;
+            randomButton.className = `px-3 py-1.5 font-bold text-xs rounded-lg border transition cursor-pointer bg-amber-950/60 text-amber-300 border-amber-600/50 hover:bg-amber-900/60`;
+            randomButton.onclick = () => switchLesson('random');
+            tabsContainer.appendChild(randomButton);
+        }
+
+        function switchLesson(lessonId) {
+            const oldTab = document.getElementById(`tab-${currentLesson}`);
+            if (oldTab) {
+                if (currentLesson === 'random') {
+                    oldTab.className = "px-3 py-1.5 font-bold text-xs rounded-lg border transition cursor-pointer bg-amber-950/60 text-amber-300 border-amber-600/50 hover:bg-amber-900/60";
+                } else {
+                    oldTab.className = "px-3 py-1.5 font-semibold text-xs rounded-lg border transition cursor-pointer bg-[#0b1329] text-slate-300 border-slate-700 hover:bg-slate-800";
+                }
+            }
+            
+            const newTab = document.getElementById(`tab-${lessonId}`);
+            if (lessonId === 'random') {
+                newTab.className = "px-3 py-1.5 font-bold text-xs rounded-lg border transition cursor-pointer bg-purple-600 text-white border-purple-500 shadow-md";
+                document.getElementById('current-lesson-title').innerText = `🎲 Đang Kiểm Tra Ngẫu Nhiên 20 Từ Tổng Hợp`;
+            } else {
+                newTab.className = "px-3 py-1.5 font-semibold text-xs rounded-lg border transition cursor-pointer bg-sky-600 text-white border-sky-500 shadow-md";
+                document.getElementById('current-lesson-title').innerText = `Bài ${lessonId}`;
+            }
+            
+            currentLesson = lessonId;
+            initGame(lessonId);
+        }
+
+        function initGame(lessonId) {
+            selectedKr = null;
+            selectedVi = null;
+            matchedCount = 0;
+            document.getElementById('congrats-message').classList.add('hidden');
+
+            if (lessonId === 'random') {
+                currentActiveWords = getRandomWordsFromAllLessons(20);
+            } else {
+                currentActiveWords = vocabularyData[lessonId];
+            }
+
+            const krList = shuffle(currentActiveWords.map((w, index) => ({ id: index + '-' + w.kr, text: w.kr })));
+            const viList = shuffle(currentActiveWords.map((w, index) => ({ id: index + '-' + w.kr, text: w.vi })));
+
+            const krColumn = document.getElementById('korean-column');
+            const viColumn = document.getElementById('vietnamese-column');
+
+            krColumn.innerHTML = '';
+            viColumn.innerHTML = '';
+
+            krList.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = "w-full p-3 text-left font-medium text-base bg-[#0b1329] text-slate-200 hover:bg-slate-800 border border-slate-700/80 rounded-xl transition cursor-pointer shadow-sm";
+                btn.innerText = item.text;
+                btn.dataset.id = item.id;
+                btn.onclick = () => handleSelect(btn, 'kr');
+                krColumn.appendChild(btn);
+            });
+
+            viList.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = "w-full p-3 text-left font-medium text-base bg-[#0b1329] text-slate-200 hover:bg-slate-800 border border-slate-700/80 rounded-xl transition cursor-pointer shadow-sm";
+                btn.innerText = item.text;
+                btn.dataset.id = item.id;
+                btn.onclick = () => handleSelect(btn, 'vi');
+                viColumn.appendChild(btn);
+            });
+        }
+
+        function handleSelect(element, type) {
+            if (element.classList.contains('matched')) return;
+
+            if (type === 'kr') {
+                if (selectedKr === element) {
+                    element.classList.remove('selected');
+                    selectedKr = null;
+                    return;
+                }
+                if (selectedKr) selectedKr.classList.remove('selected');
+                selectedKr = element;
+                selectedKr.classList.add('selected');
+            } else {
+                if (selectedVi === element) {
+                    element.classList.remove('selected');
+                    selectedVi = null;
+                    return;
+                }
+                if (selectedVi) selectedVi.classList.remove('selected');
+                selectedVi = element;
+                selectedVi.classList.add('selected');
+            }
+
+            if (selectedKr && selectedVi) {
+                if (selectedKr.dataset.id === selectedVi.dataset.id) {
+                    selectedKr.classList.remove('selected');
+                    selectedVi.classList.remove('selected');
+                    selectedKr.classList.add('matched');
+                    selectedVi.classList.add('matched');
+                    
+                    selectedKr = null;
+                    selectedVi = null;
+                    matchedCount++;
+
+                    if (matchedCount === currentActiveWords.length) {
+                        document.getElementById('congrats-message').classList.remove('hidden');
+                    }
+                } else {
+                    const wrongKr = selectedKr;
+                    const wrongVi = selectedVi;
+                    wrongKr.classList.add('bg-rose-950/80', 'border-rose-500', 'text-rose-200');
+                    wrongVi.classList.add('bg-rose-950/80', 'border-rose-500', 'text-rose-200');
+                    
+                    selectedKr = null;
+                    selectedVi = null;
+
+                    setTimeout(() => {
+                        wrongKr.classList.remove('selected', 'bg-rose-950/80', 'border-rose-500', 'text-rose-200');
+                        wrongVi.classList.remove('selected', 'bg-rose-950/80', 'border-rose-500', 'text-rose-200');
+                    }, 400);
+                }
+            }
+        }
+
+        createTabs();
+        initGame(keysList[0]);
+    </script>
+</body>
+</html>
