@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cấu Trúc Thị Trường - Kinh Tế Vi Mô</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+        }
+        .accordion-content {
+            transition: all 0.3s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        .accordion-content.active {
+            max-height: 1400px;
+            opacity: 100;
+            padding-top: 1.25rem;
+            padding-bottom: 1.5rem;
+        }
+        .scale-up {
+            transition: transform 0.3s ease;
+        }
+        .scale-up:hover {
+            transform: scale(1.01);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen pb-16">
+
+    <!-- Nút quay lại Easy Economics trên cùng bên trái -->
+    <div class="max-w-5xl mx-auto px-4 pt-4">
+        <a href="index.html#economics" class="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-full font-bold text-xs md:text-sm border border-slate-700 shadow-md transition-all">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>QUAY LẠI EASY ECONOMICS</span>
+        </a>
+    </div>
+
+    <!-- Header / Hero Area (Reference to "3과.png") -->
+    <header class="bg-gradient-to-r from-emerald-900 via-teal-900 to-indigo-950 text-white py-12 px-4 shadow-lg text-center relative overflow-hidden mt-2">
+        <div class="absolute -left-12 -top-12 w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+        <div class="absolute -right-12 -bottom-12 w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+        
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="flex justify-center items-center gap-6 mb-4">
+                <!-- Mascot Left (Boy seller from 3과.png) -->
+                <div class="hidden sm:block bg-white/10 p-2 rounded-xl backdrop-blur-sm border border-white/20">
+                    <svg class="w-16 h-16" viewBox="0 0 100 100">
+                        <rect x="20" y="45" width="60" height="40" fill="#b45309" rx="2"/>
+                        <rect x="15" y="40" width="70" height="8" fill="#d97706" rx="2"/>
+                        <path d="M25,40 L30,15 L70,15 L75,40 Z" fill="#e11d48" opacity="0.8"/>
+                        <rect x="35" y="15" width="30" height="25" fill="#f1f5f9"/>
+                        <!-- Little Seller Head -->
+                        <circle cx="50" cy="27" r="10" fill="#fed7aa"/>
+                        <path d="M40,25 Q50,15 60,25" fill="#7c2d12"/>
+                        <circle cx="47" cy="26" r="1" fill="#000"/>
+                        <circle cx="53" cy="26" r="1" fill="#000"/>
+                        <path d="M47,31 Q50,34 53,31" fill="none" stroke="#000" stroke-width="1.5"/>
+                    </svg>
+                </div>
+
+                <div class="text-center">
+                    <h1 class="text-3xl md:text-5xl font-black tracking-tight drop-shadow-md uppercase">THỊ TRƯỜNG</h1>
+                </div>
+
+                <!-- Mascot Right (Girl with shopping cart from 3과.png) -->
+                <div class="hidden sm:block bg-white/10 p-2 rounded-xl backdrop-blur-sm border border-white/20">
+                    <svg class="w-16 h-16" viewBox="0 0 100 100">
+                        <!-- Girl Head -->
+                        <circle cx="50" cy="40" r="14" fill="#fed7aa"/>
+                        <path d="M34,35 C34,15 66,15 66,35" fill="#451a03"/>
+                        <circle cx="45" cy="40" r="1.5" fill="#000"/>
+                        <circle cx="55" cy="40" r="1.5" fill="#000"/>
+                        <path d="M46,47 Q50,51 54,47" fill="none" stroke="#000" stroke-width="1.5"/>
+                        <!-- Shopping Cart icon -->
+                        <rect x="42" y="65" width="20" height="15" fill="none" stroke="#e11d48" stroke-width="3" rx="2"/>
+                        <circle cx="46" cy="84" r="3" fill="#1e293b"/>
+                        <circle cx="58" cy="84" r="3" fill="#1e293b"/>
+                        <path d="M35,62 L42,65 L45,80 L62,80" fill="none" stroke="#1e293b" stroke-width="3"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="mt-6 flex flex-wrap justify-center gap-3">
+                <button onclick="toggleAll(true)" class="bg-slate-800 text-teal-300 border border-teal-500/30 hover:bg-slate-700 font-extrabold text-xs md:text-sm px-4 py-2.5 rounded-full shadow-md transition-all">
+                    <i class="fa-solid fa-folder-open mr-1.5"></i>Mở tất cả các khung
+                </button>
+                <button onclick="toggleAll(false)" class="bg-white/10 text-slate-200 hover:bg-white/20 font-extrabold text-xs md:text-sm px-4 py-2.5 rounded-full backdrop-blur-sm transition-all border border-white/10 shadow-md">
+                    <i class="fa-solid fa-folder-closed mr-1.5"></i>Thu gọn tất cả
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Interactives Container -->
+    <main class="max-w-5xl mx-auto px-4 mt-8 grid grid-cols-1 gap-5">
+
+        <!-- 1. CẠNH TRANH HOÀN HẢO -->
+        <div class="bg-slate-800/90 rounded-2xl border border-emerald-500/30 shadow-lg overflow-hidden scale-up">
+            <button onclick="toggleAccordion('content-1')" class="w-full flex items-center justify-between p-5 bg-emerald-950/40 hover:bg-emerald-900/30 text-left transition-colors focus:outline-none">
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center justify-center w-9 h-9 rounded-full bg-emerald-500 text-slate-950 font-black text-sm shadow-sm">1</span>
+                    <h2 class="text-lg md:text-xl font-black text-emerald-400">1. CẠNH TRANH HOÀN HẢO (PERFECT COMPETITION)</h2>
+                </div>
+                <span id="icon-content-1" class="text-emerald-400 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            
+            <div id="content-1" class="accordion-content px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <div class="bg-emerald-950/50 border-l-4 border-emerald-500 p-4 rounded-r-lg mb-4">
+                            <p class="text-slate-200 leading-relaxed text-sm md:text-base font-semibold">
+                                Thị trường <strong class="text-emerald-400">Cạnh tranh hoàn hảo</strong> là mô hình lý thuyết nơi có rất nhiều người bán và người mua, sản phẩm hoàn toàn giống nhau và không ai có khả năng ảnh hưởng đến giá thị trường.
+                            </p>
+                        </div>
+                        
+                        <div class="space-y-2.5">
+                            <div class="flex items-center gap-3 text-sm text-slate-300">
+                                <span class="text-emerald-400"><i class="fa-solid fa-circle-check"></i></span>
+                                <span><strong>Nhiều người bán/người mua:</strong> Mọi cá nhân đều phải chấp nhận mức giá do thị trường chung thiết lập.</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-slate-300">
+                                <span class="text-emerald-400"><i class="fa-solid fa-circle-check"></i></span>
+                                <span><strong>Tự do gia nhập/rút khỏi:</strong> Không có bất kỳ rào cản pháp lý hoặc kinh tế nào ngăn cản doanh nghiệp.</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-slate-300">
+                                <span class="text-emerald-400"><i class="fa-solid fa-circle-check"></i></span>
+                                <span><strong>Sản phẩm đồng nhất:</strong> Các sản phẩm giống hệt nhau (ví dụ: nông sản, gạo, lúa mì).</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-slate-300">
+                                <span class="text-emerald-400"><i class="fa-solid fa-circle-check"></i></span>
+                                <span><strong>Đầy đủ thông tin:</strong> Người mua và bán nắm rõ chất lượng, giá cả trên thị trường.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Diagram -->
+                    <div class="bg-slate-900/80 p-5 rounded-2xl border border-emerald-500/20 flex flex-col items-center">
+                        <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">Đường cầu doanh nghiệp (Nằm ngang)</span>
+                        
+                        <!-- SVG graph -->
+                        <div class="relative w-full max-w-[280px] h-[180px]">
+                            <svg class="w-full h-full" viewBox="0 0 100 100">
+                                <line x1="15" y1="10" x2="15" y2="85" stroke="#94a3b8" stroke-width="1.5"/>
+                                <line x1="15" y1="85" x2="95" y2="85" stroke="#94a3b8" stroke-width="1.5"/>
+                                <text x="5" y="13" font-size="6" font-weight="bold" fill="#94a3b8">Giá (P)</text>
+                                <text x="88" y="93" font-size="6" font-weight="bold" fill="#94a3b8">Sản lượng (Q)</text>
+                                
+                                <!-- Horizontal Demand Line -->
+                                <line id="pc-demand-line" x1="15" y1="50" x2="85" y2="50" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+                                <text id="pc-demand-text" x="87" y="52" font-size="5" font-weight="black" fill="#34d399">D (AR=MR)</text>
+                            </svg>
+                        </div>
+                        
+                        <!-- Price Slider -->
+                        <div class="w-full max-w-[220px] mt-3">
+                            <label class="block text-center text-xs font-bold text-slate-400 mb-1">
+                                Điều chỉnh Giá thị trường (P): <span id="pc-price-display" class="text-emerald-400 font-extrabold">15.000đ</span>
+                            </label>
+                            <input type="range" id="pc-price-slider" min="25" max="75" value="50" oninput="updatePCChart(this.value)" class="w-full accent-emerald-500 cursor-pointer">
+                            <p class="text-[10px] text-slate-400 italic text-center mt-1">Doanh nghiệp bắt buộc phải bán ở giá này dù sản lượng (Q) tăng hay giảm.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. ĐỘC QUYỀN -->
+        <div class="bg-slate-800/90 rounded-2xl border border-rose-500/30 shadow-lg overflow-hidden scale-up">
+            <button onclick="toggleAccordion('content-2')" class="w-full flex items-center justify-between p-5 bg-rose-950/40 hover:bg-rose-900/30 text-left transition-colors focus:outline-none">
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center justify-center w-9 h-9 rounded-full bg-rose-500 text-slate-950 font-black text-sm shadow-sm">2</span>
+                    <h2 class="text-lg md:text-xl font-black text-rose-400">2. ĐỘC QUYỀN (MONOPOLY)</h2>
+                </div>
+                <span id="icon-content-2" class="text-rose-400 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            
+            <div id="content-2" class="accordion-content px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <div class="bg-rose-950/50 border-l-4 border-rose-500 p-4 rounded-r-lg mb-4">
+                            <p class="text-slate-200 leading-relaxed text-sm md:text-base font-semibold">
+                                Thị trường <strong class="text-rose-400">Độc quyền</strong> là nơi chỉ có duy nhất một doanh nghiệp cung ứng sản phẩm, không có sản phẩm thay thế gần gũi.
+                            </p>
+                        </div>
+                        
+                        <div class="space-y-2.5">
+                            <div class="flex items-center gap-3 text-sm text-slate-300">
+                                <span class="text-rose-400"><i class="fa-solid fa-lock"></i></span>
+                                <span><strong>Độc quyền về năng lực / sáng chế:</strong> Nắm giữ công nghệ cốt lõi hoặc giấy phép bản quyền của nhà nước.</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-slate-300">
+                                <span class="text-rose-400"><i class="fa-solid fa-lock"></i></span>
+                                <span><strong>Rào cản gia nhập lớn:</strong> Chi phí đầu tư khổng lồ hoặc luật định khiến đối thủ không thể gia nhập.</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-slate-300">
+                                <span class="text-rose-400"><i class="fa-solid fa-lock"></i></span>
+                                <span><strong>Sức mạnh định đoạt giá:</strong> Doanh nghiệp chủ động tăng giảm giá bằng cách điều tiết sản lượng bán ra.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Diagram -->
+                    <div class="bg-slate-900/80 p-5 rounded-2xl border border-rose-500/20 flex flex-col items-center">
+                        <span class="text-xs font-bold text-rose-400 uppercase tracking-wider mb-2">Đường cầu doanh nghiệp độc quyền (Dốc xuống)</span>
+                        
+                        <!-- SVG graph -->
+                        <div class="relative w-full max-w-[280px] h-[180px]">
+                            <svg class="w-full h-full" viewBox="0 0 100 100">
+                                <line x1="15" y1="10" x2="15" y2="85" stroke="#94a3b8" stroke-width="1.5"/>
+                                <line x1="15" y1="85" x2="95" y2="85" stroke="#94a3b8" stroke-width="1.5"/>
+                                <text x="5" y="13" font-size="6" font-weight="bold" fill="#94a3b8">P</text>
+                                <text x="88" y="93" font-size="6" font-weight="bold" fill="#94a3b8">Q</text>
+                                
+                                <!-- Downward Sloping Demand Line -->
+                                <line x1="20" y1="25" x2="80" y2="75" stroke="#f43f5e" stroke-width="3" stroke-linecap="round"/>
+                                <text x="82" y="78" font-size="5" font-weight="black" fill="#fb7185">D (AR)</text>
+                                
+                                <!-- Dynamic coordinates -->
+                                <line id="mono-proj-y" x1="15" y1="50" x2="50" y2="50" stroke="#64748b" stroke-dasharray="2,2"/>
+                                <line id="mono-proj-x" x1="50" y1="50" x2="50" y2="85" stroke="#64748b" stroke-dasharray="2,2"/>
+                                <circle id="mono-dot" cx="50" cy="50" r="4.5" fill="#f43f5e"/>
+                            </svg>
+                        </div>
+                        
+                        <!-- Output Slider -->
+                        <div class="w-full max-w-[220px] mt-3">
+                            <label class="block text-center text-xs font-bold text-slate-400 mb-1">
+                                Sản lượng mục tiêu (Q): <span id="mono-q-display" class="text-rose-400 font-extrabold">Vừa phải</span>
+                            </label>
+                            <input type="range" id="mono-slider" min="20" max="80" value="50" oninput="updateMonoChart(this.value)" class="w-full accent-rose-500 cursor-pointer">
+                            <p class="text-[10px] text-slate-400 italic text-center mt-1">Muốn bán nhiều sản phẩm hơn (Q↑), độc quyền bắt buộc phải giảm giá bán (P↓).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. ĐỘC QUYỀN NHÓM -->
+        <div class="bg-slate-800/90 rounded-2xl border border-purple-500/30 shadow-lg overflow-hidden scale-up">
+            <button onclick="toggleAccordion('content-3')" class="w-full flex items-center justify-between p-5 bg-purple-950/40 hover:bg-purple-900/30 text-left transition-colors focus:outline-none">
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center justify-center w-9 h-9 rounded-full bg-purple-500 text-slate-950 font-black text-sm shadow-sm">3</span>
+                    <h2 class="text-lg md:text-xl font-black text-purple-400">3. ĐỘC QUYỀN NHÓM (OLIGOPOLY)</h2>
+                </div>
+                <span id="icon-content-3" class="text-purple-400 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            
+            <div id="content-3" class="accordion-content px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <div class="bg-purple-950/50 border-l-4 border-purple-500 p-4 rounded-r-lg mb-4">
+                            <p class="text-slate-200 leading-relaxed text-sm md:text-base font-semibold">
+                                Thị trường <strong class="text-purple-400">Độc quyền nhóm</strong> là nơi chỉ có một vài tập đoàn/doanh nghiệp lớn thống lĩnh thị trường (ví dụ: thị trường viễn thông, hàng không).
+                            </p>
+                        </div>
+                        
+                        <div class="space-y-2.5">
+                            <div class="flex items-center gap-3 text-sm text-slate-300">
+                                <span class="text-purple-400"><i class="fa-solid fa-users-gear"></i></span>
+                                <span><strong>Vài doanh nghiệp bắt tay nhau:</strong> Các quyết định về giá bán hay sản lượng thường có xu hướng ngầm liên kết hoặc thỏa hiệp.</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-slate-300">
+                                <span class="text-purple-400"><i class="fa-solid fa-users-gear"></i></span>
+                                <span><strong>Phụ thuộc lẫn nhau:</strong> Mọi động thái thay đổi giá của một hãng đều tác động trực tiếp và kích hoạt phản ứng từ các hãng đối thủ.</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-slate-300">
+                                <span class="text-purple-400"><i class="fa-solid fa-users-gear"></i></span>
+                                <span><strong>Không tự ý hạ giá/tăng sản lượng:</strong> Nếu một hãng tự hạ giá, các hãng khác cũng sẽ hạ giá theo, dẫn đến cuộc chiến dìm giá vô ích.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Diagram -->
+                    <div class="bg-slate-900/80 p-5 rounded-2xl border border-purple-500/20 flex flex-col items-center">
+                        <span class="text-xs font-bold text-purple-400 uppercase tracking-wider mb-2">Đường cầu gãy khúc (Kinked Demand Curve)</span>
+                        
+                        <!-- SVG graph -->
+                        <div class="relative w-full max-w-[280px] h-[180px]">
+                            <svg class="w-full h-full" viewBox="0 0 100 100">
+                                <line x1="15" y1="10" x2="15" y2="85" stroke="#94a3b8" stroke-width="1.5"/>
+                                <line x1="15" y1="85" x2="95" y2="85" stroke="#94a3b8" stroke-width="1.5"/>
+                                <text x="5" y="13" font-size="6" font-weight="bold" fill="#94a3b8">P</text>
+                                <text x="88" y="93" font-size="6" font-weight="bold" fill="#94a3b8">Q</text>
+                                
+                                <!-- Kinked Demand Line (M20,30 L50,50 L80,85) -->
+                                <path d="M20,30 L50,50 L80,85" fill="none" stroke="#a855f7" stroke-width="3" stroke-linecap="round"/>
+                                <text x="82" y="80" font-size="5" font-weight="black" fill="#c084fc">D (AR)</text>
+                                
+                                <!-- Kink position projection -->
+                                <line x1="15" y1="50" x2="50" y2="50" stroke="#64748b" stroke-dasharray="2,2"/>
+                                <line x1="50" y1="50" x2="50" y2="85" stroke="#64748b" stroke-dasharray="2,2"/>
+                                <circle id="olig-dot" cx="50" cy="50" r="4.5" fill="#a855f7"/>
+                                
+                                <!-- Helper Text explaining Kink -->
+                                <text x="53" y="47" font-size="4.5" font-weight="black" fill="#e9d5ff">Điểm gãy</text>
+                            </svg>
+                        </div>
+                        
+                        <!-- Oligopoly Interaction -->
+                        <div class="w-full max-w-[220px] mt-3 text-center">
+                            <div class="flex gap-1.5 justify-center">
+                                <button onclick="simulateOligopoly('up')" class="bg-purple-950/80 hover:bg-purple-900 border border-purple-500/30 text-purple-300 text-[10px] font-bold py-1 px-2.5 rounded">Tự ý tăng giá ↑</button>
+                                <button onclick="simulateOligopoly('down')" class="bg-purple-950/80 hover:bg-purple-900 border border-purple-500/30 text-purple-300 text-[10px] font-bold py-1 px-2.5 rounded">Tự ý giảm giá ↓</button>
+                                <button onclick="simulateOligopoly('reset')" class="bg-slate-700 hover:bg-slate-600 text-slate-200 text-[10px] font-bold py-1 px-2.5 rounded">Đặt lại</button>
+                            </div>
+                            <div id="olig-feedback" class="text-[10px] text-slate-400 italic mt-2 min-h-[30px] flex items-center justify-center">Bấm các nút trên để xem phản ứng tâm lý của các đối thủ.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. CẠNH TRANH ĐỘC QUYỀN -->
+        <div class="bg-slate-800/90 rounded-2xl border border-sky-500/30 shadow-lg overflow-hidden scale-up">
+            <button onclick="toggleAccordion('content-4')" class="w-full flex items-center justify-between p-5 bg-sky-950/40 hover:bg-sky-900/30 text-left transition-colors focus:outline-none">
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center justify-center w-9 h-9 rounded-full bg-sky-500 text-slate-950 font-black text-sm shadow-sm">4</span>
+                    <h2 class="text-lg md:text-xl font-black text-sky-400">4. CẠNH TRANH ĐỘC QUYỀN (MONOPOLISTIC COMPETITION)</h2>
+                </div>
+                <span id="icon-content-4" class="text-sky-400 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            
+            <div id="content-4" class="accordion-content px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <div class="bg-sky-950/50 border-l-4 border-sky-500 p-4 rounded-r-lg mb-4">
+                            <p class="text-slate-200 leading-relaxed text-sm md:text-base font-semibold">
+                                Thị trường <strong class="text-sky-400">Cạnh tranh độc quyền</strong> kết hợp các yếu tố của cả cạnh tranh và độc quyền. Có nhiều hãng bán các mặt hàng tương tự nhưng có sự khác biệt rõ rệt về thương hiệu.
+                            </p>
+                        </div>
+                        
+                        <div class="space-y-2.5">
+                            <div class="flex items-center gap-3 text-sm text-slate-300">
+                                <span class="text-sky-400"><i class="fa-solid fa-store"></i></span>
+                                <span><strong>Nhiều người bán/người mua:</strong> Các doanh nghiệp tự ý đưa ra quyết định mà không lo sợ sự trả đũa gay gắt từ một hãng cụ thể.</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-slate-300">
+                                <span class="text-sky-400"><i class="fa-solid fa-store"></i></span>
+                                <span><strong>Tự do gia nhập/rút lui:</strong> Rào cản tương đối thấp trong việc mở một cửa hàng mới.</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-slate-300">
+                                <span class="text-sky-400"><i class="fa-solid fa-store"></i></span>
+                                <span><strong>Sản phẩm khác biệt hoá:</strong> Đây là cốt lõi! Nhờ có sự khác biệt thương hiệu (Cafe, Tiệm bánh, Shop thời trang) nên mỗi doanh nghiệp có một tập khách hàng trung thành riêng, giúp họ giữ được quyền định đoạt một phần giá bán.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Diagram -->
+                    <div class="bg-slate-900/80 p-5 rounded-2xl border border-sky-500/20 flex flex-col items-center">
+                        <span class="text-xs font-bold text-sky-400 uppercase tracking-wider mb-2">Đường cầu dốc xuống rất thoải</span>
+                        
+                        <!-- SVG graph -->
+                        <div class="relative w-full max-w-[280px] h-[180px]">
+                            <svg class="w-full h-full" viewBox="0 0 100 100">
+                                <line x1="15" y1="10" x2="15" y2="85" stroke="#94a3b8" stroke-width="1.5"/>
+                                <line x1="15" y1="85" x2="95" y2="85" stroke="#94a3b8" stroke-width="1.5"/>
+                                <text x="5" y="13" font-size="6" font-weight="bold" fill="#94a3b8">P</text>
+                                <text x="88" y="93" font-size="6" font-weight="bold" fill="#94a3b8">Q</text>
+                                
+                                <!-- Flatter Demand Line -->
+                                <line id="flat-demand-line" x1="20" y1="40" x2="80" y2="55" stroke="#0ea5e9" stroke-width="3" stroke-linecap="round"/>
+                                <text x="82" y="58" font-size="5" font-weight="black" fill="#38bdf8">D (AR)</text>
+                                
+                                <!-- Dynamic Point -->
+                                <circle id="mc-dot" cx="50" cy="47.5" r="4.5" fill="#0ea5e9"/>
+                                <line id="mc-proj-y" x1="15" y1="47.5" x2="50" y2="47.5" stroke="#64748b" stroke-dasharray="2,2"/>
+                                <line id="mc-proj-x" x1="50" y1="47.5" x2="50" y2="85" stroke="#64748b" stroke-dasharray="2,2"/>
+                            </svg>
+                        </div>
+                        
+                        <!-- Toggle Brand Differences -->
+                        <div class="w-full max-w-[240px] mt-3">
+                            <label class="block text-center text-xs font-bold text-slate-400 mb-1">Mô phỏng Nhóm Ngành Khác Biệt Hóa:</label>
+                            <div class="flex gap-1 justify-center">
+                                <button onclick="selectBrand('cafe')" id="btn-cafe" class="bg-sky-600 text-white text-[10px] font-bold py-1 px-2 rounded shadow">☕ Quán Cafe</button>
+                                <button onclick="selectBrand('bakery')" id="btn-bakery" class="bg-sky-950/80 text-sky-300 border border-sky-500/30 text-[10px] font-bold py-1 px-2 rounded">🥖 Tiệm Bánh</button>
+                                <button onclick="selectBrand('fashion')" id="btn-fashion" class="bg-sky-950/80 text-sky-300 border border-sky-500/30 text-[10px] font-bold py-1 px-2 rounded">🧥 Thời Trang</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. TỔNG KẾT & SO SÁNH QUY LUẬT -->
+        <div class="bg-slate-800/90 rounded-2xl border border-amber-500/30 shadow-lg overflow-hidden scale-up">
+            <button onclick="toggleAccordion('content-5')" class="w-full flex items-center justify-between p-5 bg-amber-950/40 hover:bg-amber-900/30 text-left transition-colors focus:outline-none">
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center justify-center w-9 h-9 rounded-full bg-amber-500 text-slate-950 font-black text-sm shadow-sm"><i class="fa-solid fa-list-check"></i></span>
+                    <h2 class="text-lg md:text-xl font-black text-amber-400">TÓM TẮT & SO SÁNH CÁC LOẠI THỊ TRƯỜNG</h2>
+                </div>
+                <span id="icon-content-5" class="text-amber-400 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            
+            <div id="content-5" class="accordion-content px-6">
+                <!-- Comparison Slider Sandbox -->
+                <div class="bg-slate-900/80 p-5 rounded-2xl border border-amber-500/20 mb-6">
+                    <h4 class="text-center font-extrabold text-amber-400 text-sm md:text-base mb-2">
+                        💡 THƯỚC ĐO MỨC ĐỘ CẠNH TRANH TRÊN THỊ TRƯỜNG
+                    </h4>
+                    <p class="text-[11px] text-slate-400 text-center mb-4">Di chuyển thanh trượt để xem sự thay đổi mức độ cạnh tranh giảm dần từ Trái sang Phải</p>
+                    
+                    <div class="max-w-md mx-auto px-4">
+                        <input type="range" id="comp-slider" min="1" max="4" value="1" oninput="updateComparisonState(this.value)" class="w-full accent-amber-500 cursor-pointer">
+                        <div class="flex justify-between text-[10px] text-slate-400 font-bold mt-1">
+                            <span>CẠNH TRANH NHẤT</span>
+                            <span></span>
+                            <span></span>
+                            <span>ĐỘC QUYỀN NHẤT</span>
+                        </div>
+                    </div>
+
+                    <!-- Highlight Display box -->
+                    <div id="comp-result-box" class="mt-5 p-4 bg-slate-800 rounded-xl border border-amber-500/20 shadow-sm transition-all duration-300">
+                        <!-- Dynamic Content will be injected here -->
+                    </div>
+                </div>
+
+                <!-- Footer Note from 3과.png -->
+                <div class="bg-amber-950/40 border-2 border-dashed border-amber-500/40 p-4 rounded-xl flex items-start gap-3">
+                    <span class="text-amber-400 text-lg mt-0.5"><i class="fa-solid fa-lightbulb"></i></span>
+                    <div>
+                        <strong class="text-amber-400 text-sm uppercase">LƯU Ý QUAN TRỌNG:</strong>
+                        <p class="text-slate-300 text-xs md:text-sm mt-0.5">
+                            Các loại hình cấu trúc thị trường phản ánh <strong>mức độ cạnh tranh khác nhau</strong> giữa các doanh nghiệp. Càng dịch chuyển về phía Độc quyền, khả năng kiểm soát giá cả của doanh nghiệp càng gia tăng và quyền lợi của người tiêu dùng càng bị thu hẹp.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. MINI QUIZ (KOREAN + VIETNAMESE FEEDBACK) -->
+        <div class="mt-4 bg-slate-800/90 rounded-2xl border border-slate-700 shadow-md p-6">
+            <h2 class="text-xl md:text-2xl font-black text-slate-100 text-center mb-6 flex items-center justify-center gap-2">
+                <span class="text-indigo-400 animate-pulse"><i class="fa-solid fa-circle-question"></i></span> MINI QUIZ: 시장 구조 마스터!
+            </h2>
+            
+            <div id="quiz-container" class="space-y-6">
+                <!-- Question 1 -->
+                <div class="border-b border-slate-700 pb-5">
+                    <p class="font-bold text-slate-200 text-sm md:text-base mb-3">Q1. 완전경쟁시장의 개별 기업이 직면하는 수요곡선의 형태는 무엇입니까?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs md:text-sm">
+                        <button onclick="checkAnswer(1, 'A', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            A. 우하향하는 가파른 형태의 직선
+                        </button>
+                        <button onclick="checkAnswer(1, 'B', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            B. 시장 가격 수준에서 수평선 모양
+                        </button>
+                        <button onclick="checkAnswer(1, 'C', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            C. 특정 지점에서 급격히 굴절된 형태
+                        </button>
+                        <button onclick="checkAnswer(1, 'D', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            D. 우상향하는 전형적인 공급 형태
+                        </button>
+                    </div>
+                    <div id="feedback-1" class="hidden mt-2 p-2.5 rounded text-xs font-bold transition-all"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="border-b border-slate-700 pb-5">
+                    <p class="font-bold text-slate-200 text-sm md:text-base mb-3">Q2. 독점 시장과 비교할 때, 과점 시장에서 흔히 관찰되는 '굴절수요곡선'의 가장 큰 발생 원인은 무엇입니까?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs md:text-sm">
+                        <button onclick="checkAnswer(2, 'A', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            A. 정부의 엄격한 법적 진입 장벽
+                        </button>
+                        <button onclick="checkAnswer(2, 'B', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            B. 완벽하게 동질적인 제품의 생산
+                        </button>
+                        <button onclick="checkAnswer(2, 'C', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            C. 기업 간의 강한 상호의존성과 보복 행위 우려
+                        </button>
+                        <button onclick="checkAnswer(2, 'D', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            D. 공급자의 무한대에 가까운 시장 자율 가격 수용
+                        </button>
+                    </div>
+                    <div id="feedback-2" class="hidden mt-2 p-2.5 rounded text-xs font-bold transition-all"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="pb-2">
+                    <p class="font-bold text-slate-200 text-sm md:text-base mb-3">Q3. 독점적 경쟁시장의 개별 기업이 일정한 수준의 가격 결정 능력을 가질 수 있는 핵심 요인은 무엇입니까?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs md:text-sm">
+                        <button onclick="checkAnswer(3, 'A', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            A. 제품의 브랜드 이미지, 디자인 등 차별화 효과
+                        </button>
+                        <button onclick="checkAnswer(3, 'B', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            B. 시장 진입 장벽이 완벽히 봉쇄되어 있기 때문
+                        </button>
+                        <button onclick="checkAnswer(3, 'C', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            C. 판매자가 오직 시장에 두 명만 존재하기 때문
+                        </button>
+                        <button onclick="checkAnswer(3, 'D', this)" class="text-left p-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700/60 transition-all font-semibold text-slate-300">
+                            D. 가격 담합 연합(카르텔) 협정 체결
+                        </button>
+                    </div>
+                    <div id="feedback-3" class="hidden mt-2 p-2.5 rounded text-xs font-bold transition-all"></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center mt-12 px-4 text-xs md:text-sm text-slate-500 font-bold border-t border-slate-800 pt-6">
+        <p>Ứng dụng này được thiết kế bởi ThS. Lương Quốc An (HUFLIT) dựa trên công cụ Gemini</p>
+    </footer>
+
+    <script>
+        // Init systems
+        window.onload = function() {
+            // Open first structures automatically for dynamic preview
+            toggleAccordion('content-1');
+            toggleAccordion('content-5');
+            
+            // Set up initial interactive values
+            updatePCChart(50);
+            updateMonoChart(50);
+            updateComparisonState(1);
+        }
+
+        // Accordion Controls
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                if (icon) icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.classList.add('active');
+                if (icon) icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Global expander
+        function toggleAll(expand) {
+            const contents = document.querySelectorAll('.accordion-content');
+            contents.forEach(content => {
+                const id = content.id;
+                const icon = document.getElementById('icon-' + id);
+                if (expand) {
+                    content.classList.add('active');
+                    if (icon) icon.style.transform = 'rotate(180deg)';
+                } else {
+                    content.classList.remove('active');
+                    if (icon) icon.style.transform = 'rotate(0deg)';
+                }
+            });
+        }
+
+        // Chart 1: Perfect Competition (PC) updates
+        function updatePCChart(val) {
+            const line = document.getElementById('pc-demand-line');
+            const txt = document.getElementById('pc-demand-text');
+            const display = document.getElementById('pc-price-display');
+
+            const mapY = 100 - val;
+            line.setAttribute('y1', mapY);
+            line.setAttribute('y2', mapY);
+            txt.setAttribute('y', mapY + 2);
+
+            const simulatedPrice = Math.round(val * 300);
+            display.innerText = simulatedPrice.toLocaleString('vi-VN') + "đ";
+        }
+
+        // Chart 2: Monopoly updates
+        function updateMonoChart(val) {
+            const qVal = parseFloat(val);
+            const mapX = qVal;
+            const ratio = (qVal - 20) / 60;
+            const mapY = 25 + (ratio * 50);
+
+            document.getElementById('mono-proj-y').setAttribute('y1', mapY);
+            document.getElementById('mono-proj-y').setAttribute('y2', mapY);
+            document.getElementById('mono-proj-y').setAttribute('x2', mapX);
+
+            document.getElementById('mono-proj-x').setAttribute('x1', mapX);
+            document.getElementById('mono-proj-x').setAttribute('x2', mapX);
+            document.getElementById('mono-proj-x').setAttribute('y1', mapY);
+
+            document.getElementById('mono-dot').setAttribute('cx', mapX);
+            document.getElementById('mono-dot').setAttribute('cy', mapY);
+
+            const desc = document.getElementById('mono-q-display');
+            if (qVal < 40) {
+                desc.innerText = "Ít (Giá Bán Cực Đắt đỏ)";
+                desc.className = "text-rose-400 font-extrabold";
+            } else if (qVal <= 60) {
+                desc.innerText = "Vừa Phải (Giá Trung Bình)";
+                desc.className = "text-amber-400 font-extrabold";
+            } else {
+                desc.innerText = "Nhiều (Muốn xả nhiều phải hạ Giá rẻ)";
+                desc.className = "text-emerald-400 font-extrabold";
+            }
+        }
+
+        // Chart 3: Oligopoly text simulator
+        function simulateOligopoly(action) {
+            const dot = document.getElementById('olig-dot');
+            const feedback = document.getElementById('olig-feedback');
+
+            if (action === 'up') {
+                dot.setAttribute('cx', '35');
+                dot.setAttribute('cy', '40');
+                feedback.innerHTML = "🚫 <strong>Bạn tăng giá:</strong> Các đối thủ khác <strong>KHÔNG</strong> tăng theo. Bạn sẽ mất sạch khách hàng! (Đường cầu phía trên điểm gãy rất co giãn).";
+                feedback.className = "text-[10px] text-rose-300 font-bold mt-2 min-h-[30px] flex items-center justify-center bg-rose-950/80 border border-rose-800 rounded p-1.5";
+            } else if (action === 'down') {
+                dot.setAttribute('cx', '65');
+                dot.setAttribute('cy', '67.5');
+                feedback.innerHTML = "⚠️ <strong>Bạn hạ giá:</strong> Tất cả đối thủ lập tức <strong>HẠ GIÁ THEO</strong> để giữ khách. Cuối cùng, sản lượng tăng rất ít nhưng lợi nhuận cả ngành cùng sụt giảm! (Đường cầu phía dưới điểm gãy rất ít co giãn).";
+                feedback.className = "text-[10px] text-amber-300 font-bold mt-2 min-h-[30px] flex items-center justify-center bg-amber-950/80 border border-amber-800 rounded p-1.5";
+            } else {
+                dot.setAttribute('cx', '50');
+                dot.setAttribute('cy', '50');
+                feedback.innerText = "Trạng thái ổn định tại điểm gãy. Không hãng nào có động lực tự ý thay đổi giá.";
+                feedback.className = "text-[10px] text-slate-400 italic mt-2 min-h-[30px] flex items-center justify-center";
+            }
+        }
+
+        // Chart 4: Monopolistic Competition Brands
+        function selectBrand(brand) {
+            const line = document.getElementById('flat-demand-line');
+            const dot = document.getElementById('mc-dot');
+            const projY = document.getElementById('mc-proj-y');
+            const projX = document.getElementById('mc-proj-x');
+
+            const btnCafe = document.getElementById('btn-cafe');
+            const btnBakery = document.getElementById('btn-bakery');
+            const btnFashion = document.getElementById('btn-fashion');
+
+            // Reset buttons
+            [btnCafe, btnBakery, btnFashion].forEach(btn => {
+                btn.className = "bg-sky-950/80 text-sky-300 border border-sky-500/30 text-[10px] font-bold py-1 px-2 rounded";
+            });
+
+            if (brand === 'cafe') {
+                btnCafe.className = "bg-sky-600 text-white text-[10px] font-bold py-1 px-2 rounded shadow";
+                line.setAttribute('y1', '40'); line.setAttribute('y2', '55');
+                dot.setAttribute('cx', '50'); dot.setAttribute('cy', '47.5');
+                projY.setAttribute('y1', '47.5'); projY.setAttribute('y2', '47.5'); projY.setAttribute('x2', '50');
+                projX.setAttribute('x1', '50'); projX.setAttribute('x2', '50'); projX.setAttribute('y1', '47.5');
+            } else if (brand === 'bakery') {
+                btnBakery.className = "bg-sky-600 text-white text-[10px] font-bold py-1 px-2 rounded shadow";
+                line.setAttribute('y1', '35'); line.setAttribute('y2', '60');
+                dot.setAttribute('cx', '40'); dot.setAttribute('cy', '45.4');
+                projY.setAttribute('y1', '45.4'); projY.setAttribute('y2', '45.4'); projY.setAttribute('x2', '40');
+                projX.setAttribute('x1', '40'); projX.setAttribute('x2', '40'); projX.setAttribute('y1', '45.4');
+            } else {
+                btnFashion.className = "bg-sky-600 text-white text-[10px] font-bold py-1 px-2 rounded shadow";
+                line.setAttribute('y1', '30'); line.setAttribute('y2', '45');
+                dot.setAttribute('cx', '55'); dot.setAttribute('cy', '38.75');
+                projY.setAttribute('y1', '38.75'); projY.setAttribute('y2', '38.75'); projY.setAttribute('x2', '55');
+                projX.setAttribute('x1', '55'); projX.setAttribute('x2', '55'); projX.setAttribute('y1', '38.75');
+            }
+        }
+
+        // Section 5: Comparison Matrix state manager
+        function updateComparisonState(val) {
+            const box = document.getElementById('comp-result-box');
+            
+            const matrixData = {
+                1: {
+                    title: "1. CẠNH TRANH HOÀN HẢO (Perfect Competition)",
+                    color: "border-emerald-500 text-emerald-300 bg-emerald-950/40",
+                    details: `
+                        <div class="grid grid-cols-2 gap-2 text-xs md:text-sm text-slate-200">
+                            <div>👥 <strong>Số lượng hãng:</strong> Vô số người bán siêu nhỏ.</div>
+                            <div>📦 <strong>Sản phẩm:</strong> Đồng nhất tuyệt đối (gạo, muối).</div>
+                            <div>🚪 <strong>Rào cản gia nhập:</strong> Hoàn toàn tự do (bằng 0).</div>
+                            <div>🏷️ <strong>Quyền định giá:</strong> Không có (chấp nhận giá thị trường).</div>
+                        </div>
+                    `
+                },
+                2: {
+                    title: "2. CẠNH TRANH ĐỘC QUYỀN (Monopolistic Competition)",
+                    color: "border-sky-500 text-sky-300 bg-sky-950/40",
+                    details: `
+                        <div class="grid grid-cols-2 gap-2 text-xs md:text-sm text-slate-200">
+                            <div>👥 <strong>Số lượng hãng:</strong> Rất nhiều doanh nghiệp vừa và nhỏ.</div>
+                            <div>📦 <strong>Sản phẩm:</strong> Khác biệt hóa thương hiệu (cafe, quần áo).</div>
+                            <div>🚪 <strong>Rào cản gia nhập:</strong> Rất thấp, dễ mở cửa hàng.</div>
+                            <div>🏷️ <strong>Quyền định giá:</strong> Có một phần nhỏ (nhờ khách quen).</div>
+                        </div>
+                    `
+                },
+                3: {
+                    title: "3. ĐỘC QUYỀN NHÓM (Oligopoly)",
+                    color: "border-purple-500 text-purple-300 bg-purple-950/40",
+                    details: `
+                        <div class="grid grid-cols-2 gap-2 text-xs md:text-sm text-slate-200">
+                            <div>👥 <strong>Số lượng hãng:</strong> Một vài tập đoàn khổng lồ thống lĩnh.</div>
+                            <div>📦 <strong>Sản phẩm:</strong> Có thể đồng nhất hoặc khác biệt hóa.</div>
+                            <div>🚪 <strong>Rào cản gia nhập:</strong> Lớn (vốn đầu tư lớn, công nghệ cao).</div>
+                            <div>🏷️ <strong>Quyền định giá:</strong> Có sức mạnh lớn (thường bắt tay thỏa hiệp).</div>
+                        </div>
+                    `
+                },
+                4: {
+                    title: "4. ĐỘC QUYỀN HOÀN TOÀN (Monopoly)",
+                    color: "border-rose-500 text-rose-300 bg-rose-950/40",
+                    details: `
+                        <div class="grid grid-cols-2 gap-2 text-xs md:text-sm text-slate-200">
+                            <div>👥 <strong>Số lượng hãng:</strong> Duy nhất một doanh nghiệp thống trị độc tôn.</div>
+                            <div>📦 <strong>Sản phẩm:</strong> Độc nhất, hoàn toàn không có sản phẩm thay thế.</div>
+                            <div>🚪 <strong>Rào cản gia nhập:</strong> Bị phong tỏa hoàn toàn (rào cản cực lớn).</div>
+                            <div>🏷️ <strong>Quyền định giá:</strong> Toàn quyền định đoạt giá bán thị trường.</div>
+                        </div>
+                    `
+                }
+            };
+
+            const data = matrixData[val];
+            box.className = `mt-5 p-4 rounded-xl border-t-4 shadow-sm transition-all duration-300 ${data.color}`;
+            box.innerHTML = `
+                <h5 class="font-extrabold text-sm md:text-base mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-chart-line"></i> ${data.title}
+                </h5>
+                ${data.details}
+            `;
+        }
+
+        // Section 6: Quiz Mechanics
+        const answers = {
+            1: 'B',
+            2: 'C',
+            3: 'A'
+        };
+
+        function checkAnswer(qNum, choice, btn) {
+            const feedback = document.getElementById('feedback-' + qNum);
+            const parent = btn.parentElement;
+            const buttons = parent.querySelectorAll('button');
+
+            // Disable all buttons in this section
+            buttons.forEach(b => {
+                b.disabled = true;
+                b.className = "text-left p-3 rounded-lg border border-slate-800 bg-slate-900/40 text-slate-500 opacity-60 font-semibold cursor-not-allowed";
+            });
+
+            if (choice === answers[qNum]) {
+                btn.className = "text-left p-3 rounded-lg border-2 border-emerald-500 bg-emerald-950/80 text-emerald-300 font-black shadow-sm";
+                feedback.className = "mt-2 p-2.5 rounded text-xs font-bold bg-emerald-950 border border-emerald-800 text-emerald-300 block";
+                feedback.innerHTML = "✨ 정답입니다! (Chính xác!) " + getQuizExplanation(qNum);
+            } else {
+                btn.className = "text-left p-3 rounded-lg border-2 border-red-500 bg-red-950/80 text-red-300 font-black shadow-sm";
+                feedback.className = "mt-2 p-2.5 rounded text-xs font-bold bg-red-950 border border-red-800 text-red-300 block";
+                feedback.innerHTML = "❌ 오답입니다. (Chưa đúng rồi.) " + getQuizExplanation(qNum);
+
+                // Highlight correct button
+                buttons.forEach(b => {
+                    if (b.innerText.trim().startsWith(answers[qNum])) {
+                        b.className = "text-left p-3 rounded-lg border border-emerald-500 bg-emerald-950/50 text-emerald-300 font-bold";
+                    }
+                });
+            }
+        }
+
+        function getQuizExplanation(qNum) {
+            if (qNum === 1) {
+                return "Trong thị trường cạnh tranh hoàn hảo (Perfect Competition), doanh nghiệp chỉ là 'người nhận giá' (Price Taker) từ tổng cung-cầu thị trường nên đường cầu mà họ đối mặt hoàn toàn nằm ngang (B).";
+            } else if (qNum === 2) {
+                return "Đường cầu gãy khúc (Kinked Demand Curve) ở thị trường độc quyền nhóm (Oligopoly) phản ánh sự phụ thuộc lẫn nhau: nếu hãng tăng giá, các đối thủ không theo; nếu hãng hạ giá, các đối thủ lập tức hạ theo để bảo vệ thị phần (C).";
+            } else {
+                return "Thị trường cạnh tranh độc quyền (Monopolistic Competition) có nhiều người bán, rào cản thấp, nhưng các doanh nghiệp giữ được một phần quyền định giá là nhờ chiến lược khác biệt hóa sản phẩm thương hiệu (Product Differentiation) (A).";
+            }
+        }
+    </script>
+</body>
+</html>
