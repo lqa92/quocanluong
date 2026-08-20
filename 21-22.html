@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng dụng Ôn tập từ vựng tiếng Hàn (Câu 19-20 TOPIK II Đọc)</title>
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Google Fonts: Be Vietnam Pro & Noto Sans KR -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #0b1329;
+            --card-bg: #131d38;
+            --primary: #38bdf8;
+            --primary-bg: #1e3a8a;
+            --success: #34d399;
+            --success-bg: #064e3b;
+            --danger: #f87171;
+            --danger-bg: #451a1a;
+            --text-dark: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --radius: 16px;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Be Vietnam Pro', 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Nút quay về */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            color: #38bdf8;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .back-btn:hover {
+            color: #7dd3fc;
+        }
+
+        /* Top Header Brand */
+        .brand-header {
+            background: #0f172a;
+            padding: 30px 20px 24px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .brand-subtitle {
+            font-size: 20px;
+            font-weight: 700;
+            color: #38bdf8;
+            margin: 0 0 12px 0;
+        }
+
+        .brand-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 24px auto 40px auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+            flex: 1;
+        }
+
+        /* Tabs Wrapper Area */
+        .tabs-container {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .tabs-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            background: #0b1329;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            background: #1e293b;
+            color: #f8fafc;
+        }
+
+        .tab-btn.active {
+            background: #0284c7;
+            color: white;
+            border-color: #38bdf8;
+            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
+        }
+
+        .tab-btn.special-tab {
+            background: #451a03;
+            border-color: #78350f;
+            color: #fcd34d;
+        }
+
+        .tab-btn.special-tab.active {
+            background: #d97706;
+            color: white;
+            border-color: #fbbf24;
+        }
+
+        /* Configuration Panel */
+        .config-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .config-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .config-left label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+
+        .config-left select {
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: #0f172a;
+            font-size: 14px;
+            font-weight: 600;
+            outline: none;
+            color: #f8fafc;
+            cursor: pointer;
+        }
+
+        /* Workspace Board */
+        .workspace-card {
+            background: var(--card-bg);
+            padding: 32px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .workspace-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .current-tab-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #38bdf8;
+        }
+
+        .btn-refresh {
+            background: #1e293b;
+            color: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-refresh:hover {
+            background: #334155;
+        }
+
+        /* Matching Grid Column */
+        .game-board {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .column-header {
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .column-kr .column-header {
+            color: #38bdf8;
+            border-bottom: 2px solid #0284c7;
+        }
+
+        .column-vi .column-header {
+            color: #34d399;
+            border-bottom: 2px solid #059669;
+        }
+
+        .column-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Cards Styles */
+        .word-card {
+            background: #0b1329;
+            border: 1px solid var(--border-color);
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s ease;
+            color: var(--text-dark);
+        }
+
+        .word-card:hover:not(.matched) {
+            border-color: #38bdf8;
+            background-color: #1e293b;
+            transform: translateY(-1px);
+        }
+
+        .word-card.selected {
+            background-color: var(--primary-bg);
+            border-color: #38bdf8;
+            color: #38bdf8;
+            font-weight: 600;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+
+        .word-card.matched {
+            background-color: var(--success-bg);
+            border-color: #059669;
+            color: var(--success);
+            cursor: default;
+            font-weight: 500;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .word-card.wrong {
+            background-color: var(--danger-bg);
+            border-color: #f87171;
+            color: #fca5a5;
+            animation: shake 0.3s;
+        }
+
+        /* Success Banner */
+        .success-banner {
+            display: none;
+            text-align: center;
+            color: #34d399;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 16px;
+            background-color: var(--success-bg);
+            border: 1px solid #059669;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        /* Footer Copyright */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+            background: #0f172a;
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+
+        @media (max-width: 768px) {
+            .game-board { grid-template-columns: 1fr; gap: 20px; }
+            .config-bar { flex-direction: column; gap: 16px; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Màn hình nhập Password -->
+    <div id="password-screen" class="fixed inset-0 bg-[#0b1329] z-50 flex items-center justify-center p-4">
+        <div class="bg-[#131d38] border border-slate-700/60 p-8 rounded-2xl shadow-2xl max-w-md w-full text-center">
+            <h2 class="text-2xl font-bold text-white mb-2">🔒 Xác minh truy cập</h2>
+            <p class="text-slate-400 text-sm mb-6">Vui lòng nhập mật khẩu để vào ứng dụng</p>
+            <form onsubmit="checkPassword(event)" class="space-y-4">
+                <div>
+                    <input type="password" id="pass-input" placeholder="Nhập mật khẩu..." autofocus
+                           class="w-full px-4 py-3 rounded-xl bg-[#0b1329] border border-slate-700 text-white placeholder-slate-500 text-center text-lg tracking-widest focus:outline-none focus:border-sky-500 transition">
+                </div>
+                <p id="pass-error" class="text-red-400 text-sm hidden">Mật khẩu không chính xác!</p>
+                <button type="submit" 
+                        class="w-full py-3 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold rounded-xl transition cursor-pointer">
+                    Xác nhận
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Màn hình chính ứng dụng (Mặc định ẩn) -->
+    <div id="app-screen" class="w-full flex flex-col hidden min-h-screen">
+
+        <!-- Tiêu đề thương hiệu -->
+        <div class="brand-header">
+            <div class="w-full max-w-6xl mx-auto text-left mb-4 px-4">
+                <a href="index.html#topik" class="back-btn text-base">
+                    ← TOPIK 6 WITH ME
+                </a>
+            </div>
+            <div class="brand-title">🎯 Ứng dụng Ôn tập từ vựng tiếng Hàn</div>
+            <div class="brand-subtitle">(Bài 1 đến Bài 15, Câu 19-20 kỹ năng Đọc TOPIK)</div>
+            <div class="brand-desc">Chọn một từ tiếng Hàn bên trái và nghĩa tiếng Việt tương ứng bên phải.</div>
+        </div>
+
+        <!-- Vùng Workspace chính -->
+        <div class="main-container">
+            
+            <!-- Khối chứa 17 Tab phân tách riêng biệt từ Bài 1 đến Bài 16 và Tổng Ôn Tập -->
+            <div class="tabs-container">
+                <div class="tabs-grid">
+                    <button class="tab-btn active" onclick="switchTab(1, 'Bài 1')">Bài 1</button>
+                    <button class="tab-btn" onclick="switchTab(2, 'Bài 2')">Bài 2</button>
+                    <button class="tab-btn" onclick="switchTab(3, 'Bài 3')">Bài 3</button>
+                    <button class="tab-btn" onclick="switchTab(4, 'Bài 4')">Bài 4</button>
+                    <button class="tab-btn" onclick="switchTab(5, 'Bài 5')">Bài 5</button>
+                    <button class="tab-btn" onclick="switchTab(6, 'Bài 6')">Bài 6</button>
+                    <button class="tab-btn" onclick="switchTab(7, 'Bài 7')">Bài 7</button>
+                    <button class="tab-btn" onclick="switchTab(8, 'Bài 8')">Bài 8</button>
+                    <button class="tab-btn" onclick="switchTab(9, 'Bài 9')">Bài 9</button>
+                    <button class="tab-btn" onclick="switchTab(10, 'Bài 10')">Bài 10</button>
+                    <button class="tab-btn" onclick="switchTab(11, 'Bài 11')">Bài 11</button>
+                    <button class="tab-btn" onclick="switchTab(12, 'Bài 12')">Bài 12</button>
+                    <button class="tab-btn" onclick="switchTab(13, 'Bài 13')">Bài 13</button>
+                    <button class="tab-btn" onclick="switchTab(14, 'Bài 14')">Bài 14</button>
+                    <button class="tab-btn" onclick="switchTab(15, 'Bài 15')">Bài 15</button>
+                    <button class="tab-btn" onclick="switchTab(16, 'Bài 16 (속담, 관용어)')">Bài 16 (속담, 관용어)</button>
+                    <button class="tab-btn special-tab" onclick="switchTab(17, '🎲 TỔNG ÔN TẬP NGẪU NHIÊN')">🎲 TỔNG ÔN TẬP</button>
+                </div>
+            </div>
+
+            <!-- Thanh cấu hình và tiến độ -->
+            <div class="config-bar">
+                <div class="config-left" id="select-wrapper" style="display: none;">
+                    <label for="pair-count">Số lượng cặp từ kiểm tra:</label>
+                    <select id="pair-count" onchange="initGame()">
+                        <option value="3">3 Cặp</option>
+                        <option value="5" selected>5 Cặp</option>
+                        <option value="10">10 Cặp</option>
+                    </select>
+                </div>
+                <div id="info-mode-text" style="font-size: 14px; font-weight: 600; color: var(--text-muted)">
+                    Chế độ: Học toàn bộ từ vựng của bài
+                </div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--text-dark)">
+                    Tiến độ: <span id="correct-count" style="color:var(--success)">0</span> / <span id="max-count">0</span>
+                </div>
+            </div>
+
+            <!-- Banner thông báo khi hoàn thành -->
+            <div class="success-banner" id="success-banner">🎉 Xuất sắc! Bạn đã nối chính xác toàn bộ các từ vựng của phần này!</div>
+
+            <!-- Khu vực hiển thị bảng tương tác thẻ từ -->
+            <div class="workspace-card">
+                <div class="workspace-header">
+                    <div class="current-tab-title" id="current-tab-title">Bài 1</div>
+                    <button class="btn-refresh" onclick="initGame()">🔄 Xáo trộn & Làm mới</button>
+                </div>
+
+                <div class="game-board">
+                    <!-- Cột từ tiếng Hàn -->
+                    <div class="column-kr">
+                        <div class="column-header">Tiếng Hàn</div>
+                        <div class="column-cards" id="korean-column"></div>
+                    </div>
+                    <!-- Cột nghĩa tiếng Việt -->
+                    <div class="column-vi">
+                        <div class="column-header">Tiếng Việt</div>
+                        <div class="column-cards" id="vietnamese-column"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chân trang -->
+        <div class="footer">
+            Ứng dụng được thiết kế bởi <strong class="text-slate-300">ThS. Lương Quốc An (HUFLIT)</strong>, dựa trên công cụ <strong class="text-slate-300">Gemini</strong>.
+        </div>
+    </div>
+
+<script>
+    // Kiểm tra mật khẩu truy cập
+    function checkPassword(e) {
+        e.preventDefault();
+        const input = document.getElementById('pass-input').value;
+        if (input === '2112') {
+            document.getElementById('password-screen').classList.add('hidden');
+            document.getElementById('app-screen').classList.remove('hidden');
+        } else {
+            document.getElementById('pass-error').classList.remove('hidden');
+        }
+    }
+
+    // Kho dữ liệu từ vựng từ Bài 1 đến Bài 16
+    const originalVocabulary = {
+        1: [
+            { kr: "기상청", vi: "Cục khí tượng" },
+            { kr: "예보", vi: "Dự báo" },
+            { kr: "적설량", vi: "Lượng tuyết tích tụ" },
+            { kr: "수분", vi: "Độ ẩm" },
+            { kr: "시설물", vi: "Công trình, cơ sở vật chất" },
+            { kr: "단계", vi: "Mức độ, giai đoạn" }
+        ],
+        2: [
+            { kr: "농어촌", vi: "Vùng nông, ngư thôn" },
+            { kr: "지방 의회", vi: "Hội đồng địa phương" },
+            { kr: "이동 판매", vi: "Bán hàng lưu động" },
+            { kr: "손잡다", vi: "Hợp tác" },
+            { kr: "실시하다", vi: "Thực hiện" }
+        ],
+        3: [
+            { kr: "내놓다", vi: "Quyên góp, đưa ra" },
+            { kr: "바닥", vi: "Mặt đất" },
+            { kr: "동전", vi: "Tiền xu" },
+            { kr: "줍다", vi: "Nhặt được" },
+            { kr: "참되다", vi: "Chân chính, đích thực" },
+            { kr: "액수", vi: "Số tiền" }
+        ],
+        4: [
+            { kr: "폐교", vi: "Trường bị đóng cửa" },
+            { kr: "위기", vi: "Khủng hoảng, nguy cơ" },
+            { kr: "벗어나다", vi: "Thoát khỏi" },
+            { kr: "특성화하다", vi: "Chuyên biệt hóa" },
+            { kr: "협조하다", vi: "Hợp tác" },
+            { kr: "요청하다", vi: "Yêu cầu" },
+            { kr: "개최하다", vi: "Tổ chức, sự kiện" }
+        ],
+        5: [
+            { kr: "부담감", vi: "Cảm giác áp lực" },
+            { kr: "성적을 거두다", vi: "Đạt thành tích" },
+            { kr: "지도하다", vi: "Huấn luyện" },
+            { kr: "떠올리다", vi: "Gợi nhớ" },
+            { kr: "주의를 주다", vi: "Nhắc nhở" },
+            { kr: "중심", vi: "Trọng tâm, thăng bằng" }
+        ],
+        6: [
+            { kr: "개인 정보", vi: "Thông tin cá nhân" },
+            { kr: "유출되다", vi: "Bị rò rỉ" },
+            { kr: "잠재우다", vi: "Làm lắng xuống" },
+            { kr: "대책", vi: "Biện pháp đối phó" },
+            { kr: "비난를 받다", vi: "Bị chỉ trích" },
+            { kr: "마련하다", vi: "Chuẩn bị" }
+        ],
+        7: [
+            { kr: "공휴일", vi: "Ngày nghỉ lễ" },
+            { kr: "검토하다", vi: "Xem xét" },
+            { kr: "활성화하다", vi: "Thúc đẩy, kích thích" },
+            { kr: "침체되다", vi: "Bị trì trệ" },
+            { kr: "가계 소득", vi: "Thu nhập hộ gia đình" },
+            { kr: "급감하다", vi: "Giảm mạnh" },
+            { kr: "지출", vi: "Chi tiêu" }
+        ],
+        8: [
+            { kr: "화분", vi: "Chậu cây" },
+            { kr: "털다", vi: "Giũ, vẩy" },
+            { kr: "유도하다", vi: "Khuyến khích, dẫn dắt" },
+            { kr: "종이 수건", vi: "Khăn giấy" },
+            { kr: "원료", vi: "Nguyên liệu" },
+            { kr: "자원", vi: "Tài nguyên" },
+            { kr: "이어지다", vi: "Dẫn đến" },
+            { kr: "실천", vi: "Việc thực hiện, hành động" }
+        ],
+        9: [
+            { kr: "이자", vi: "Lãi suất" },
+            { kr: "수수료", vi: "Phí" },
+            { kr: "각종", vi: "Các loại" },
+            { kr: "혜택", vi: "Ưu đãi" },
+            { kr: "디지털 환경", vi: "Môi trường số" },
+            { kr: "가입하다", vi: "Đăng ký tham gia" }
+        ],
+        10: [
+            { kr: "유료", vi: "Trả phí" },
+            { kr: "검색하다", vi: "Tìm kiếm" },
+            { kr: "경향", vi: "Xu hướng" },
+            { kr: "추천하다", vi: "Đề xuất" },
+            { kr: "기법", vi: "Kỹ thuật" },
+            { kr: "도입하다", vi: "Áp dụng, đưa vào" }
+        ],
+        11: [
+            { kr: "시각 장애인", vi: "Người khiếm thị" },
+            { kr: "올록볼록하다", vi: "Gồ ghề" },
+            { kr: "블록", vi: "Gạch chỉ dẫn" },
+            { kr: "관리 부실", vi: "Quản lý kém" },
+            { kr: "제 역할", vi: "Đúng chức năng" },
+            { kr: "깨지다", vi: "Bị vỡ" },
+            { kr: "끊어지다", vi: "Bị đứt, gián đoạn" },
+            { kr: "구조물", vi: "Công trình" },
+            { kr: "충돌하다", vi: "Va chạm trực diện" },
+            { kr: "보행", vi: "Đi bộ" }
+        ],
+        12: [
+            { kr: "수요", vi: "Nhu cầu" },
+            { kr: "돈벌이", vi: "Việc kiếm tiền" },
+            { kr: "급급하다", vi: "Chỉ chăm chăm vào" },
+            { kr: "복제품", vi: "Bản sao" },
+            { kr: "행태", vi: "Hành vi xấu" }
+        ],
+        13: [
+            { kr: "내비게이션", vi: "Thiết bị chỉ đường" },
+            { kr: "목적지", vi: "Điểm đến" },
+            { kr: "낯설다", vi: "Xa lạ" },
+            { kr: "특성", vi: "Đặc tính" },
+            { kr: "의존하다", vi: "Phụ thuộc" },
+            { kr: "지나치다", vi: "Quá mức" }
+        ],
+        14: [
+            { kr: "돌보다", vi: "Chăm sóc" },
+            { kr: "달래다", vi: "Xoa dịu" },
+            { kr: "정서적", vi: "Mang tính cảm xúc" },
+            { kr: "위안", vi: "Sự an ủi" }
+        ],
+        15: [
+            { kr: "화재", vi: "Hỏa hoạn" },
+            { kr: "소리를 지르다", vi: "Hét lên" },
+            { kr: "도움을 요청하다", vi: "Cầu cứu" },
+            { kr: "두툼하다", vi: "Dày" },
+            { kr: "위급하다", vi: "Nguy cấp" },
+            { kr: "귀중하다", vi: "Quý giá" }
+        ],
+        16: [
+            { kr: "고개를 들다", vi: "Ngẩng mặt lên, lộ diện" },
+            { kr: "마음을 졸이다", vi: "Bồn chồn, thấp thỏm" },
+            { kr: "얼굴이 피다", vi: "Mặt mày rạng rỡ, hớn hở" },
+            { kr: "호흡을 맞추다", vi: "Ăn ý, phối hợp nhịp nhàng" },
+            { kr: "진땀을 흘리다", vi: "Đổ mồ hôi hột, lo sợ" },
+            { kr: "허리를 굽히다", vi: "Cúi mình, nhún nhường, nhẫn nhịn" },
+            { kr: "발 벗고 나서다", vi: "Hăng hái xắn tay áo giúp đỡ" },
+            { kr: "눈을 감아 주다", vi: "Nhắm mắt bỏ qua sai lầm" },
+            { kr: "눈을 딱 감다", vi: "Nhắm mắt làm liều, nhắm mắt quyết định" },
+            { kr: "머리를 맞대다", vi: "Chụm đầu lại để thảo luận" },
+            { kr: "손에 땀을 쥐다", vi: "Hồi hộp, nghẹt thở (đến mức mồ hôi tay ra)" },
+            { kr: "목에 힘을 주다", vi: "Tỏ ra kiêu ngạo, vênh váo" },
+            { kr: "입 밖에 내다", vi: "Thốt ra, nói ra miệng" },
+            { kr: "한 술 더 뜨다", vi: "Được voi đòi tiên" },
+            { kr: "귓등으로 듣다", vi: "Bỏ ngoài tai, nghe phớt lờ" },
+            { kr: "손을 떼다", vi: "Rửa tay gác kiếm, dừng lại không làm nữa" },
+            { kr: "등을 돌리다", vi: "Quay lưng lại, ngoảnh mặt đi" },
+            { kr: "발뺌을 하다", vi: "Chối bỏ trách nhiệm, thoái thác" },
+            { kr: "허리띠를 졸라매다", vi: "Thắt lưng buộc bụng (tiết kiệm)" },
+            { kr: "입을 막다", vi: "Bịt miệng, bịt đầu mối" },
+            { kr: "입맛에 맞다", vi: "Hợp khẩu vị, hợp ý" },
+            { kr: "눈치를 보다", vi: "Nhìn trước ngó sau, để ý nét mặt người khác" },
+            { kr: "얼굴을 붉히다", vi: "Đỏ mặt (vì ngượng, xấu hổ hoặc giận dữ)" },
+            { kr: "귓가에 맴돌다", vi: "(Câu nói) vảng vất bên tai" },
+            { kr: "입을 모으다", vi: "Đồng thanh, nhất trí ý kiến" },
+            { kr: "발이 묶이다", vi: "Bị chân tay bó buộc, không đi đâu được" },
+            { kr: "가슴에 새기다", vi: "Khắc sâu vào lòng" },
+            { kr: "어깨가 무겁다", vi: "Trách nhiệm nặng nề trên vai" },
+            { kr: "발목을 잡다", vi: "Ngáng chân, nắm thóp, cản trở phát triển" },
+            { kr: "가슴을 울리다", vi: "Rung động lòng người" },
+            { kr: "손을 맞잡다", vi: "Bắt tay hợp tác" },
+            { kr: "앞뒤를 재다", vi: "Cân nhắc trước sau" },
+            { kr: "귀를 기울이다", vi: "Lắng nghe chân thành, chú ý nghe" },
+            { kr: "담을 쌓다", vi: "Không giao lưu" },
+            { kr: "못을 박다", vi: "Gây tổn thương sâu sắc" },
+            { kr: "고개를 숙이다", vi: "Cúi đầu (khâm phục, đầu hàng hoặc hối lỗi)" },
+            { kr: "손이 크다", vi: "Rộng rãi (xài đồ không tiếc)" },
+            { kr: "발이 넓다", vi: "Quan hệ rộng" },
+            { kr: "귀에 거슬리다", vi: "Chướng tai, gai ốc" },
+            { kr: "입을 놀리다", vi: "Nói năng lung tung, nhiều chuyện" },
+            { kr: "눈에 띄다", vi: "Nổi bật, đập vào mắt" },
+            { kr: "열을 올리다", vi: "Nhiệt tình, hăng hái làm" },
+            { kr: "골치가 아프다", vi: "Đau đầu, nhức óc (vì rắc rối)" },
+            { kr: "가슴을 치다", vi: "Tiếc nuối, đau khổ" },
+            { kr: "발걸음을 맞추다", vi: "Sát cánh, hòa cùng nhịp bước" },
+            { kr: "손을 대다", vi: "Bắt tay vào làm, đụng tay vào" },
+            { kr: "한 발 물러서다", vi: "Lùi một bước, nhượng bộ" },
+            { kr: "눈길을 끌다", vi: "Thu hút sự chú ý" },
+            { kr: "손을 벌리다", vi: "Xin xỏ, xòe tay xin trợ giúp" },
+            { kr: "마음을 열다", vi: "Mở lòng" },
+            { kr: "얼굴을 내밀다", vi: "Lộ diện, xuất hiện" },
+            { kr: "입에 침이 마르다", vi: "Khen ngợi hết lời" },
+            { kr: "너 나 할 것 없이", vi: "Bất kể ai, tất cả mọi người" },
+            { kr: "콧대가 높다", vi: "Vênh váo, kiêu ngạo, chảnh" },
+            { kr: "귀에 못이 박히다", vi: "Nghe phát chán, nghe đi nghe lại đến thủng tai" },
+            { kr: "발을 빼다", vi: "Rút lui, phủi tay né tránh" },
+            { kr: "등을 떠밀다", vi: "Ép buộc, xúi giục, thúc lưng" },
+            { kr: "어깨를 펴다", vi: "Tự tin, ngẩng cao đầu" },
+            { kr: "제 눈에 안경", vi: "Vừa mắt mình" },
+            { kr: "엎질러진 물", vi: "Gạo đã nấu thành cơm" },
+            { kr: "싼 게 비지떡", vi: "Của rẻ là của ôi" },
+            { kr: "티끌 모아 태산", vi: "Góp gió thành bão" },
+            { kr: "땅 짚고 헤엄치기", vi: "Dễ như trở bàn tay" },
+            { kr: "불난 집에 부채질하기", vi: "Đổ thêm dầu vào lửa" },
+            { kr: "쓰면 뱉고 달면 삼키기", vi: "Ngọt ngào thì nuốt, đắng chát thì nhả" },
+            { kr: "소 잃고 외양간 고치기", vi: "Mất bò mới lo làm chuồng" },
+            { kr: "그림의 떡", vi: "Bánh vẽ (thấy mà không ăn được)" },
+            { kr: "새 발의 피", vi: "Hạt cát trên sa mạc" },
+            { kr: "우물 안 개구리", vi: "Ếch ngồi đáy giếng" }
+        ]
+    };
+
+    function getVocabularyForTab(tabNum) {
+        if (tabNum >= 1 && tabNum <= 15) {
+            return originalVocabulary[tabNum];
+        } else if (tabNum === 16) {
+            // Lấy ngẫu nhiên 7 tục ngữ/quán dụng ngữ
+            const shuffledIdioms = shuffle([...originalVocabulary[16]]);
+            return shuffledIdioms.slice(0, 7);
+        } else if (tabNum === 17) {
+            // Tổng ôn tập
+            let totalCombined = [];
+            for (let i = 1; i <= 16; i++) {
+                totalCombined = totalCombined.concat(originalVocabulary[i]);
+            }
+            return totalCombined;
+        }
+        return [];
+    }
+
+    let activeTab = 1;
+    let selectedKrCard = null;
+    let selectedViCard = null;
+    let matchedCount = 0;
+    let totalPairs = 0;
+
+    function switchTab(tabIndex, tabTitleText) {
+        activeTab = tabIndex;
+        document.getElementById('current-tab-title').innerText = tabTitleText;
+        
+        document.querySelectorAll('.tab-btn').forEach((btn, index) => {
+            btn.classList.toggle('active', index + 1 === tabIndex);
+        });
+
+        const selectWrapper = document.getElementById('select-wrapper');
+        const infoModeText = document.getElementById('info-mode-text');
+        
+        if (tabIndex === 17) {
+            selectWrapper.style.display = 'block';
+            infoModeText.style.display = 'none';
+        } else if (tabIndex === 16) {
+            selectWrapper.style.display = 'none';
+            infoModeText.style.display = 'block';
+            infoModeText.innerText = 'Chế độ: Kiểm tra ngẫu nhiên 7 tục ngữ/quán dụng ngữ mỗi lần';
+        } else {
+            selectWrapper.style.display = 'none';
+            infoModeText.style.display = 'block';
+            infoModeText.innerText = 'Chế độ: Học toàn bộ từ vựng của bài';
+        }
+
+        initGame();
+    }
+
+    function shuffle(array) {
+        let currentIndex = array.length, randomIndex;
+        while (currentIndex != 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        }
+        return array;
+    }
+
+    function updateProgressScore() {
+        document.getElementById('correct-count').innerText = matchedCount;
+        document.getElementById('max-count').innerText = totalPairs;
+    }
+
+    function initGame() {
+        selectedKrCard = null;
+        selectedViCard = null;
+        matchedCount = 0;
+        document.getElementById('success-banner').style.display = 'none';
+
+        const tabSourceData = getVocabularyForTab(activeTab);
+        const shuffledSource = shuffle([...tabSourceData]);
+
+        if (activeTab === 17) {
+            totalPairs = parseInt(document.getElementById('pair-count').value);
+        } else {
+            totalPairs = tabSourceData.length;
+        }
+        
+        const selectedPairs = shuffledSource.slice(0, Math.min(totalPairs, tabSourceData.length));
+        totalPairs = selectedPairs.length; 
+
+        updateProgressScore();
+
+        const krList = selectedPairs.map((pair, index) => ({ text: pair.kr, id: index }));
+        const viList = selectedPairs.map((pair, index) => ({ text: pair.vi, id: index }));
+
+        shuffle(krList);
+        shuffle(viList);
+
+        const krColumn = document.getElementById('korean-column');
+        krColumn.innerHTML = '';
+        krList.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'word-card';
+            card.innerText = item.text;
+            card.dataset.id = item.id;
+            card.onclick = () => onCardClicked(card, 'kr');
+            krColumn.appendChild(card);
+        });
+
+        const viColumn = document.getElementById('vietnamese-column');
+        viColumn.innerHTML = '';
+        viList.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'word-card';
+            card.innerText = item.text;
+            card.dataset.id = item.id;
+            card.onclick = () => onCardClicked(card, 'vi');
+            viColumn.appendChild(card);
+        });
+    }
+
+    function onCardClicked(card, type) {
+        if (card.classList.contains('matched') || card.classList.contains('wrong')) return;
+
+        if (type === 'kr') {
+            if (selectedKrCard) selectedKrCard.classList.remove('selected');
+            selectedKrCard = card;
+            card.classList.add('selected');
+        } else {
+            if (selectedViCard) selectedViCard.classList.remove('selected');
+            selectedViCard = card;
+            card.classList.add('selected');
+        }
+
+        if (selectedKrCard && selectedViCard) {
+            verifyMatchedPair();
+        }
+    }
+
+    function verifyMatchedPair() {
+        const krId = selectedKrCard.dataset.id;
+        const viId = selectedViCard.dataset.id;
+
+        if (krId === viId) {
+            selectedKrCard.className = 'word-card matched';
+            selectedViCard.className = 'word-card matched';
+            matchedCount++;
+            updateProgressScore();
+            
+            selectedKrCard = null;
+            selectedViCard = null;
+
+            if (matchedCount === totalPairs) {
+                document.getElementById('success-banner').style.display = 'block';
+            }
+        } else {
+            const tempKr = selectedKrCard;
+            const tempVi = selectedViCard;
+            
+            tempKr.classList.add('wrong');
+            tempVi.classList.add('wrong');
+            
+            selectedKrCard = null;
+            selectedViCard = null;
+
+            setTimeout(() => {
+                tempKr.classList.remove('wrong', 'selected');
+                tempVi.classList.remove('wrong', 'selected');
+            }, 400);
+        }
+    }
+
+    window.onload = initGame;
+</script>
+
+</body>
+</html>
