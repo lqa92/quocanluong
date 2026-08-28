@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#02 Sapa mùa gặt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)), 
+                        url('https://lh3.googleusercontent.com/d/1bGNBSOBImyfXJrQd7ZvSVAlxhEKBW5De') no-repeat center center fixed;
+            background-size: cover;
+            color: #cbd5e1;
+            line-height: 1.8;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Nút Trở về My Journey */
+        .back-nav {
+            margin-bottom: 2rem;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #38bdf8;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 { color: #f97316; margin-bottom: 0.5rem; }
+        .date { font-weight: 600; color: #94a3b8; margin-bottom: 2rem; display: block; }
+        p { margin-bottom: 1.5rem; }
+        
+        /* Gallery giữ nguyên tỷ lệ ảnh */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+        }
+
+        .footer-cta {
+            margin-top: 4rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+        }
+        .feedback-btn {
+            display: inline-block;
+            background: #38bdf8;
+            color: #0f172a;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: transform 0.2s;
+        }
+        .feedback-btn:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Nút Trở về My Journeys -->
+        <div class="back-nav">
+            <a href="index.html#mytrip" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Trở về My Journeys
+            </a>
+        </div>
+
+        <h1>#02 Sapa mùa gặt</h1>
+        <span class="date">2026.08</span>
+        
+        <p>Mình quay trở lại Sapa sau gần bốn năm. Vẫn là mùa lúa chín vàng, nhưng lần này mình đi sớm hơn gần một tháng, vào cuối tháng 8. Sau ngày Lập Thu, thời tiết Sapa dường như mát mẻ hơn nhiều so với những ngày giữa hè nóng nực. Chuyến đi lại đúng vào mùa bão ngoài Vịnh Bắc Bộ nên miền Tây Bắc cũng ít nhiều bị ảnh hưởng. Nếu Hà Nội, Ninh Bình có những ngày mưa suốt 16 tiếng thì Sapa cũng không hề kém cạnh, mỗi ngày chắc phải mưa chừng 8 tiếng. Những lúc trời hửng nắng vì thế trở thành khoảng thời gian hiếm hoi để xách máy ra những cánh đồng vàng óng, tranh thủ chụp vội vài tấm ảnh.</p>
+
+        <p>Thật ra, mình đã đi Tây Bắc, Đông Bắc Việt Nam khá nhiều lần. Điều mình thích nhất ở nơi đây chính là bầu không khí, trong lành hơn rất nhiều so với những thành phố tấp nập xe cộ. Đặc biệt là sau những cơn mưa, vạn vật như trở nên tươi tắn hẳn. Cảm giác vừa chạy xe, vừa không cần đeo khẩu trang, thỉnh thoảng lại hít một hơi thật sâu. Ta nói, cái mát của gió cứ thế đi vào trong phổi, len qua từng nhịp thở, làm cho người ta có cảm giác mọi phiền muộn cũng được rửa trôi.</p>
+
+        <p>Nhiều người bảo Sapa ngày càng đô thị hóa, khách sạn mọc lên như nấm. Những lần trước đến đây, mình cũng từng có cảm giác như vậy. Đôi khi còn thấy bực bội vì những công trình xây dựng đầy khói bụi ngay giữa trung tâm thị xã. Ấy thế mà lần này, mình lại có một cái nhìn khác. Chỉ cần chịu khó đi ra khỏi trung tâm vài kilômét, đến những bản làng của người dân như Tả Van, Lao Chải, Ý Linh Hồ, bạn mới cảm nhận được thiên nhiên và con người nơi đây mộc mạc mà dịu dàng biết mấy.</p>
+
+        <p>Mình sẽ quay lại Sapa để khám phá những bản làng xa hơn. Nhưng chắc chắn, vẫn sẽ là vào một mùa lúa, một mùa gặt nào đó. Ai quen biết mình hẳn sẽ biết mình thích mùa thu đến chừng nào.</p>
+
+        <div class="gallery">
+            <img src="https://lh3.googleusercontent.com/d/1GC4lrLwVfNT8AZbrvD74KSgM7nPU6-ks" alt="Sapa mùa gặt">
+            <img src="https://lh3.googleusercontent.com/d/1BtOYSxmNWdz0hrjAQESrAbe-4kAI09zW" alt="Sapa mùa gặt">
+            <img src="https://lh3.googleusercontent.com/d/1VkO_jK9ktzkzWfmppbpzqTxiNlkTnIi4" alt="Sapa mùa gặt">
+            <img src="https://lh3.googleusercontent.com/d/1yv7bEb_WI5N9lE120BF97GLReMzbCT8f" alt="Sapa mùa gặt">
+            <img src="https://lh3.googleusercontent.com/d/1vIydjvQXP-m5bQx9um7q7qsN7Z4cZRZM" alt="Sapa mùa gặt">
+            <img src="https://lh3.googleusercontent.com/d/17TKkVReRa1uXGrH9kikximJM6QbG5kTy" alt="Sapa mùa gặt">
+            <img src="https://lh3.googleusercontent.com/d/1lrE-QUPFbFoVfo0sB-Ls4--aCZrqwTXr" alt="Sapa mùa gặt">
+            <img src="https://lh3.googleusercontent.com/d/1XhCqpvx5yd_FfcEUg9eMdYX6r_fQlfAZ" alt="Sapa mùa gặt">
+        </div>
+
+        <div class="footer-cta">
+            <a href="mailto:quocanluong@gmail.com?subject=Ph%E1%BA%A3n%20h%E1%BB%93i%20v%E1%BB%81%20b%C3%A0i%20vi%E1%BA%BFt%3A%20%2302%20Sapa%20m%C3%B9a%20g%E1%BA%B7t" class="feedback-btn">Phản hồi với mình</a>
+        </div>
+    </div>
+</body>
+</html>
