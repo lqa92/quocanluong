@@ -188,13 +188,13 @@
     </div>
 
     <script>
-        // Kiểm tra mật khẩu (Đã cập nhật mật khẩu mới: 2112)
+        // Kiểm tra mật khẩu (Cho phép mật khẩu: 2112 và 1992)
         function checkPassword(event) {
             event.preventDefault();
-            const input = document.getElementById('password-input').value;
+            const input = document.getElementById('password-input').value.trim();
             const errorMsg = document.getElementById('password-error');
             
-            if (input === '2112') {
+            if (input === '2112' || input === '1992') {
                 document.getElementById('password-screen').classList.add('hidden');
                 document.getElementById('app-screen').classList.remove('hidden');
                 initGame();
