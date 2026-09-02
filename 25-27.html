@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng dụng Ôn tập từ vựng tiếng Hàn (Câu 25-27 TOPIK II Đọc)</title>
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Google Fonts: Be Vietnam Pro & Noto Sans KR -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #0b1329;
+            --card-bg: #131d38;
+            --primary: #38bdf8;
+            --primary-bg: #0c4a6e;
+            --amber: #fbbf24;
+            --amber-bg: #451a03;
+            --success: #34d399;
+            --success-bg: #064e3b;
+            --danger: #f87171;
+            --danger-bg: #451a1a;
+            --text-dark: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --radius: 16px;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Be Vietnam Pro', 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            color: #38bdf8;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .back-btn:hover {
+            color: #7dd3fc;
+        }
+
+        .brand-header {
+            background: #0f172a;
+            padding: 30px 20px 24px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 8px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .brand-subtitle {
+            font-size: 18px;
+            font-weight: 700;
+            color: #38bdf8;
+            margin: 0 0 10px 0;
+        }
+
+        .brand-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .main-container {
+            max-width: 1240px;
+            width: 100%;
+            margin: 24px auto 40px auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+            flex: 1;
+        }
+
+        /* Tabs Navigation */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background: #1e293b;
+            color: #f8fafc;
+        }
+
+        .nav-btn.active {
+            background: #0284c7;
+            color: white;
+            border-color: #38bdf8;
+            box-shadow: 0 2px 10px rgba(2, 132, 199, 0.4);
+        }
+
+        /* Config Bar */
+        .config-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .config-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .config-left select {
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: #0f172a;
+            font-size: 14px;
+            font-weight: 600;
+            outline: none;
+            color: #f8fafc;
+            cursor: pointer;
+        }
+
+        /* Workspace */
+        .workspace-card {
+            background: var(--card-bg);
+            padding: 28px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .workspace-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn-refresh {
+            background: #1e293b;
+            color: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .btn-refresh:hover {
+            background: #334155;
+        }
+
+        /* 3-Column Matching Game Board */
+        .game-board {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .column-header {
+            font-size: 15px;
+            font-weight: 700;
+            text-align: center;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .col-kr .column-header {
+            color: #38bdf8;
+            border-bottom: 2px solid #0284c7;
+        }
+
+        .col-lit .column-header {
+            color: #fbbf24;
+            border-bottom: 2px solid #d97706;
+        }
+
+        .col-fig .column-header {
+            color: #34d399;
+            border-bottom: 2px solid #059669;
+        }
+
+        .column-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Cards Styles */
+        .word-card {
+            background: #0b1329;
+            border: 1px solid var(--border-color);
+            padding: 14px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s ease;
+            color: var(--text-dark);
+            min-height: 52px;
+            display: flex;
+            align-items: center;
+            line-height: 1.4;
+        }
+
+        .word-card:hover:not(.matched) {
+            border-color: #64748b;
+            background-color: #1e293b;
+            transform: translateY(-1px);
+        }
+
+        /* Selected State by Column */
+        .col-kr .word-card.selected {
+            background-color: var(--primary-bg);
+            border-color: #38bdf8;
+            color: #38bdf8;
+            font-weight: 700;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+
+        .col-lit .word-card.selected {
+            background-color: var(--amber-bg);
+            border-color: #fbbf24;
+            color: #fbbf24;
+            font-weight: 700;
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+        }
+
+        .col-fig .word-card.selected {
+            background-color: var(--success-bg);
+            border-color: #34d399;
+            color: #34d399;
+            font-weight: 700;
+            box-shadow: 0 0 10px rgba(52, 211, 153, 0.3);
+        }
+
+        /* Matched & Error States */
+        .word-card.matched {
+            background-color: rgba(6, 78, 59, 0.5) !important;
+            border-color: #059669 !important;
+            color: #34d399 !important;
+            cursor: default;
+            opacity: 0.35;
+            pointer-events: none;
+            text-decoration: line-through;
+        }
+
+        .word-card.wrong {
+            background-color: var(--danger-bg) !important;
+            border-color: #f87171 !important;
+            color: #fca5a5 !important;
+            animation: shake 0.35s;
+        }
+
+        /* Success Banner */
+        .success-banner {
+            display: none;
+            text-align: center;
+            color: #34d399;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 16px;
+            background-color: var(--success-bg);
+            border: 1px solid #059669;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        /* Search & Dictionary View */
+        .search-container {
+            display: none;
+        }
+
+        .search-box-input {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 12px;
+            background-color: #0b1329;
+            border: 1px solid var(--border-color);
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .search-box-input:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+        }
+
+        .dict-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .dict-card {
+            background: #0b1329;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            transition: border-color 0.2s;
+        }
+        .dict-card:hover {
+            border-color: #38bdf8;
+        }
+
+        .dict-kr {
+            font-size: 18px;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 8px;
+        }
+
+        .dict-line {
+            font-size: 14px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            line-height: 1.5;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 24px;
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+            background: #0f172a;
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-5px); }
+            40% { transform: translateX(5px); }
+            60% { transform: translateX(-3px); }
+            80% { transform: translateX(3px); }
+        }
+
+        @media (max-width: 900px) {
+            .game-board { grid-template-columns: 1fr; gap: 20px; }
+            .config-bar { flex-direction: column; gap: 14px; align-items: stretch; }
+            .dict-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Màn hình xác minh Password -->
+    <div id="password-screen" class="fixed inset-0 bg-[#0b1329] z-50 flex items-center justify-center p-4">
+        <div class="bg-[#131d38] border border-slate-700/60 p-8 rounded-2xl shadow-2xl max-w-md w-full text-center">
+            <h2 class="text-2xl font-bold text-white mb-2">🔒 Xác minh truy cập</h2>
+            <p class="text-slate-400 text-sm mb-6">Vui lòng nhập mật khẩu để vào ứng dụng ôn tập</p>
+            <form onsubmit="checkPassword(event)" class="space-y-4">
+                <div>
+                    <input type="password" id="pass-input" placeholder="Nhập mật khẩu..." autofocus
+                           class="w-full px-4 py-3 rounded-xl bg-[#0b1329] border border-slate-700 text-white placeholder-slate-500 text-center text-lg tracking-widest focus:outline-none focus:border-sky-500 transition">
+                </div>
+                <p id="pass-error" class="text-red-400 text-sm hidden">Mật khẩu không chính xác!</p>
+                <button type="submit" 
+                        class="w-full py-3 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold rounded-xl transition cursor-pointer">
+                    Xác nhận
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Màn hình chính ứng dụng -->
+    <div id="app-screen" class="w-full flex flex-col hidden min-h-screen">
+
+        <!-- Header -->
+        <div class="brand-header">
+            <div class="w-full max-w-6xl mx-auto text-left mb-3 px-4">
+                <a href="index.html#topik" class="back-btn text-base">
+                    ← TOPIK 6 WITH ME
+                </a>
+            </div>
+            <div class="brand-title">🎯 Ứng dụng Ôn tập từ vựng tiếng Hàn</div>
+            <div class="brand-subtitle">(Câu 25-27 kỹ năng Đọc TOPIK II - Tiêu đề báo chí & Biểu hiện ẩn dụ)</div>
+            <div class="brand-desc">Lựa chọn 1 thẻ từ mỗi cột để ghép bộ 3: <strong>Tiếng Hàn → Nghĩa đen → Nghĩa bóng</strong> tương ứng.</div>
+        </div>
+
+        <!-- Main Workspace -->
+        <div class="main-container">
+
+            <!-- Chuyển đổi chế độ -->
+            <div class="nav-tabs">
+                <button class="nav-btn active" id="btn-mode-game" onclick="switchMode('game')">
+                    🧩 Ghép cặp 3 Cột (3-Way Matching)
+                </button>
+                <button class="nav-btn" id="btn-mode-dict" onclick="switchMode('dict')">
+                    🔍 Tra cứu nhanh & Xem toàn bộ (80 từ)
+                </button>
+            </div>
+
+            <!-- VIEW 1: CHẾ ĐỘ GHÉP THẺ 3 CỘT -->
+            <div id="game-view">
+                <div class="config-bar">
+                    <div class="config-left">
+                        <label for="pair-count" class="text-sm font-semibold text-slate-300">Số lượng cụm từ mỗi lượt:</label>
+                        <select id="pair-count" onchange="initGame()">
+                            <option value="3">3 Cụm từ</option>
+                            <option value="5" selected>5 Cụm từ</option>
+                            <option value="7">7 Cụm từ</option>
+                            <option value="10">10 Cụm từ</option>
+                        </select>
+                    </div>
+
+                    <div class="text-sm font-semibold text-slate-200">
+                        Tiến độ hoàn thành: <span id="correct-count" style="color:var(--success)" class="text-base font-bold">0</span> / <span id="max-count" class="text-base font-bold">0</span>
+                    </div>
+                </div>
+
+                <div class="success-banner" id="success-banner">
+                    🎉 Xuất sắc! Bạn đã nối chính xác toàn bộ bộ 3 của lượt này! Nhấn "Làm lượt mới" để tiếp tục luyện tập.
+                </div>
+
+                <div class="workspace-card">
+                    <div class="workspace-header">
+                        <div class="text-xl font-extrabold text-sky-400">Bảng ghép 3 cột tương ứng</div>
+                        <button class="btn-refresh" onclick="initGame()">🔄 Xáo trộn & Làm lượt mới</button>
+                    </div>
+
+                    <div class="game-board">
+                        <!-- Cột 1: Tiếng Hàn -->
+                        <div class="col-kr">
+                            <div class="column-header">🔵 1. Từ gốc (Tiếng Hàn)</div>
+                            <div class="column-cards" id="col-korean"></div>
+                        </div>
+
+                        <!-- Cột 2: Nghĩa đen -->
+                        <div class="col-lit">
+                            <div class="column-header">🟡 2. Nghĩa đen trực tiếp</div>
+                            <div class="column-cards" id="col-literal"></div>
+                        </div>
+
+                        <!-- Cột 3: Nghĩa bóng -->
+                        <div class="col-fig">
+                            <div class="column-header">🟢 3. Nghĩa bóng (TOPIK 25-27)</div>
+                            <div class="column-cards" id="col-figurative"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: CHẾ ĐỘ TRA CỨU NHANH TỪ VỰNG -->
+            <div id="dict-view" class="search-container">
+                <div class="workspace-card">
+                    <div class="mb-4">
+                        <input type="text" id="dict-search-input" class="search-box-input" 
+                               placeholder="🔍 Nhập từ tiếng Hàn hoặc nghĩa tiếng Việt để tra cứu..."
+                               oninput="handleSearch()">
+                    </div>
+                    <div class="text-xs text-slate-400 flex justify-between items-center mb-2 px-1">
+                        <span>Hiển thị kết quả: <strong id="search-result-count" class="text-sky-400">80</strong> / 80 cụm từ</span>
+                        <span class="italic text-slate-500">Mẹo: Có thể gõ cả tiếng Hàn và tiếng Việt có dấu/không dấu</span>
+                    </div>
+
+                    <div class="dict-grid" id="dict-result-container"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Chân trang -->
+        <div class="footer">
+            Ứng dụng được thiết kế bởi <strong class="text-slate-300">ThS. Lương Quốc An (HUFLIT)</strong>, dựa trên công cụ <strong class="text-slate-300">Gemini</strong>.
+        </div>
+    </div>
+
+<script>
+    function checkPassword(e) {
+        e.preventDefault();
+        const input = document.getElementById('pass-input').value;
+        if (input === '2112') {
+            document.getElementById('password-screen').classList.add('hidden');
+            document.getElementById('app-screen').classList.remove('hidden');
+            initGame();
+            renderDictionary(vocabDatabase);
+        } else {
+            document.getElementById('pass-error').classList.remove('hidden');
+        }
+    }
+
+    const vocabDatabase = [
+        { id: 1, kr: "등(을) 돌리다", lit: "quay lưng", fig: "quay lưng, ngoảnh mặt" },
+        { id: 2, kr: "한숨(을) 쉬다", lit: "thở dài", fig: "buồn rầu, bất lực" },
+        { id: 3, kr: "가뭄", lit: "hạn hán", fig: "khan hiếm, thiếu thốn" },
+        { id: 4, kr: "탈출(하다)", lit: "thoát khỏi", fig: "vượt qua bế tắc" },
+        { id: 5, kr: "목소리", lit: "tiếng nói", fig: "dư luận, quan điểm" },
+        { id: 6, kr: "여전하다", lit: "y như trước", fig: "không đổi, vẫn tiếp diễn" },
+        { id: 7, kr: "부르다", lit: "gọi về", fig: "kéo theo, mang lại" },
+        { id: 8, kr: "반짝", lit: "loé sáng, chớp chớp", fig: "thoáng qua, chốc lát" },
+        { id: 9, kr: "이랬다저랬다", lit: "lúc thế này lúc thế khác", fig: "thất thường" },
+        { id: 10, kr: "빗발치다", lit: "đổ dồn như mưa rào", fig: "dồn dập tới tấp" },
+        { id: 11, kr: "잠자다", lit: "ngủ say", fig: "đóng băng, ảm đạm" },
+        { id: 12, kr: "깨우다", lit: "đánh thức", fig: "khuấy động, hồi sinh" },
+        { id: 13, kr: "때 이른", lit: "sớm hơn thời vụ", fig: "đến sớm bất thường" },
+        { id: 14, kr: "상승 곡선(을 그리다)", lit: "vẽ đường cong đi lên", fig: "đà tăng trưởng mạnh" },
+        { id: 15, kr: "줄줄이", lit: "nối đuôi nhau", fig: "hàng loạt, liên tiếp" },
+        { id: 16, kr: "북적(거리다)", lit: "chen chúc nhộn nhịp", fig: "đông đúc, tấp nập" },
+        { id: 17, kr: "빨간 불(이 켜지다)", lit: "đèn đỏ bật sáng", fig: "báo động nguy cấp" },
+        { id: 18, kr: "구름 관중", lit: "khán giả đông như mây tụ", fig: "biển người, đông nghẹt" },
+        { id: 19, kr: "눈(을) 돌리다", lit: "chuyển hướng ánh nhìn", fig: "chuyển hướng mục tiêu" },
+        { id: 20, kr: "훨훨 (날다)", lit: "tung cánh bay phấp phới", fig: "bứt phá, phát triển mạnh" },
+        { id: 21, kr: "간판", lit: "biển hiệu", fig: "gương mặt chủ lực" },
+        { id: 22, kr: "싹쓸이(하다)", lit: "quét sạch sành sanh", fig: "càn quét, thâu tóm hết" },
+        { id: 23, kr: "지구촌", lit: "làng địa cầu", fig: "toàn cầu" },
+        { id: 24, kr: "몸살(을 앓다)", lit: "đau ốm toàn thân", fig: "điêu đứng, khốn đốn" },
+        { id: 25, kr: "기지개(를 켜다)", lit: "vươn vai thức dậy", fig: "khởi sắc, ấm dần lại" },
+        { id: 26, kr: "맞수", lit: "đối thủ ngang cơ", fig: "kỳ phùng địch thủ" },
+        { id: 27, kr: "꺾다", lit: "bẻ gãy", fig: "đánh bại, hạ gục" },
+        { id: 28, kr: "~행(行)", lit: "chuyến đi hướng tới", fig: "thẳng tiến đến" },
+        { id: 29, kr: "첫 걸음", lit: "bước chân đầu tiên", fig: "bước khởi đầu" },
+        { id: 30, kr: "두 손(을) 들다", lit: "giơ cả hai tay", fig: "nhiệt liệt ủng hộ" },
+        { id: 31, kr: "침묵(하다)", lit: "im lặng", fig: "tịt ngòi, ngắt mạch" },
+        { id: 32, kr: "행진(을 마감하다)", lit: "khép lại cuộc diễu hành", fig: "đứt mạch kỷ lục" },
+        { id: 33, kr: "울상(을 짓다)", lit: "mếu máo sắp khóc", fig: "rầu rĩ, thất bát" },
+        { id: 34, kr: "환호(하다)", lit: "reo hò vui mừng", fig: "phấn khởi, vui sướng" },
+        { id: 35, kr: "뚝 (떨어지다)", lit: "rơi lộp độp", fig: "tụt dốc, giảm mạnh" },
+        { id: 36, kr: "접전", lit: "giao chiến giáp lá cà", fig: "giằng co quyết liệt" },
+        { id: 37, kr: "정상(을 차지하다)", lit: "chiếm lĩnh đỉnh núi", fig: "vô địch, lên đỉnh cao" },
+        { id: 38, kr: "돌이킬 수 없다", lit: "không thể quay lại", fig: "không thể cứu vãn" },
+        { id: 39, kr: "둘(을) 다 잡다", lit: "bắt trọn cả hai", fig: "đạt cả hai mục tiêu" },
+        { id: 40, kr: "쑥쑥 (오르다)", lit: "vù vù, thoăn thoắt", fig: "tăng vùn vụt" },
+        { id: 41, kr: "첫 단추(를) 끼우다", lit: "cài chiếc cúc áo đầu tiên", fig: "khởi đầu thuận lợi" },
+        { id: 42, kr: "시급하다", lit: "cấp bách", fig: "cần làm ngay" },
+        { id: 43, kr: "껑충 (뛰다)", lit: "nhảy phắt lên cao", fig: "tăng vọt đột biến" },
+        { id: 44, kr: "하늘의 별 따기", lit: "hái sao trên trời", fig: "cực kỳ khó" },
+        { id: 45, kr: "열쇠", lit: "chìa khóa", fig: "mấu chốt, manh mối" },
+        { id: 46, kr: "열풍", lit: "luồng gió nóng dữ dội", fig: "cơn sốt, trào lưu bùng nổ" },
+        { id: 47, kr: "톡톡 튀다", lit: "nảy bật lên tanh tách", fig: "nổi bật, độc lạ" },
+        { id: 48, kr: "안갯속", lit: "trong màn sương mù", fig: "mịt mờ, bất định" },
+        { id: 49, kr: "발(을) 벗고 나서다", lit: "đi chân trần xông xáo", fig: "xông xáo, dốc sức giúp" },
+        { id: 50, kr: "뒷전(이다/으로 밀리다)", lit: "xó sau lưng", fig: "bị xem nhẹ" },
+        { id: 51, kr: "미지수", lit: "ẩn số trong toán học", fig: "chưa chắc chắn" },
+        { id: 52, kr: "목숨(을) 건지다", lit: "vớt lại mạng sống", fig: "may mắn thoát chết" },
+        { id: 53, kr: "침묵(을) 깨다", lit: "phá vỡ sự im lặng", fig: "lên tiếng trở lại" },
+        { id: 54, kr: "-설", lit: "lời đồn", fig: "tin đồn, nghi vấn" },
+        { id: 55, kr: "성큼 (다가오다)", lit: "bước sải dài dứt khoát", fig: "đến rất gần" },
+        { id: 56, kr: "반 토막(이 나다)", lit: "bị chặt làm nửa cục", fig: "giảm một nửa" },
+        { id: 57, kr: "돌풍(을 일으키다)", lit: "cơn gió lốc bất ngờ nổi lên", fig: "tạo cơn sốt" },
+        { id: 58, kr: "시끌(벅적하다)", lit: "ồn ã", fig: "dậy sóng, tranh cãi" },
+        { id: 59, kr: "줄다리기(를 하다)", lit: "chơi trò kéo co", fig: "giằng co đấu trí" },
+        { id: 60, kr: "불티(나게 팔리다)", lit: "tàn lửa bay rào rào", fig: "bán chạy, cháy hàng" },
+        { id: 61, kr: "비상(이 걸리다)", lit: "trạng thái khẩn cấp", fig: "báo động khẩn" },
+        { id: 62, kr: "맹활약(하다)", lit: "hoạt động mãnh liệt", fig: "tỏa sáng rực rỡ" },
+        { id: 63, kr: "발길(을) 끊다", lit: "cắt đứt bước chân", fig: "vắng bóng, không lui tới" },
+        { id: 64, kr: "끙끙(대다/앓다)", lit: "rên rỉ đau đớn", fig: "chật vật, lao đao" },
+        { id: 65, kr: "단숨에", lit: "trong một hơi thở", fig: "một mạch, thần tốc" },
+        { id: 66, kr: "징검다리", lit: "cầu đá bước qua suối", fig: "cầu nối trung gian" },
+        { id: 67, kr: "휘청(거리다)", lit: "bước đi lảo đảo xiêu vẹo", fig: "chao đảo, lao đao" },
+        { id: 68, kr: "날개(를) 달다", lit: "được chắp thêm cánh", fig: "tăng vọt phi mã" },
+        { id: 69, kr: "뛰다", lit: "nhảy lên", fig: "giá leo thang" },
+        { id: 70, kr: "눈 깜짝할 새", lit: "trong cái chớp mắt", fig: "trong nháy mắt" },
+        { id: 71, kr: "돌파(하다)", lit: "chọc thủng vượt qua", fig: "vượt mốc, cán mốc" },
+        { id: 72, kr: "(시기를) 당기다", lit: "kéo lại gần", fig: "đẩy sớm lên" },
+        { id: 73, kr: "썰렁(하다)", lit: "lạnh lẽo, vắng ngắt", fig: "thờ ơ, ế ẩm" },
+        { id: 74, kr: "(속도를) 늦추다", lit: "hãm bớt lại", fig: "hãm chậm lại" },
+        { id: 75, kr: "새바람(이 불다/을 일으키다)", lit: "làn gió mới", fig: "luồng sinh khí mới" },
+        { id: 76, kr: "한산하다", lit: "nhàn rỗi thưa thớt", fig: "vắng vẻ, thông thoáng" },
+        { id: 77, kr: "잇단 (잇따른)", lit: "nối gót liên tiếp", fig: "liên tục, dồn dập" },
+        { id: 78, kr: "발(이) 묶이다", lit: "bị trói chặt chân", fig: "bị mắc kẹt" },
+        { id: 79, kr: "청신호(가 켜지다)", lit: "đèn xanh bật lên", fig: "tín hiệu khả quan" },
+        { id: 80, kr: "부심(하다)", lit: "nát óc suy tính", fig: "trăn trở suy nghĩ" }
+    ];
+
+    function shuffleArray(array) {
+        let arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    let currentSelectedKr = null;
+    let currentSelectedLit = null;
+    let currentSelectedFig = null;
+    let currentMatchedCount = 0;
+    let currentGameTotal = 0;
+
+    function initGame() {
+        currentSelectedKr = null;
+        currentSelectedLit = null;
+        currentSelectedFig = null;
+        currentMatchedCount = 0;
+        document.getElementById('success-banner').style.display = 'none';
+
+        const pairCountSelect = parseInt(document.getElementById('pair-count').value);
+        const shuffledPool = shuffleArray(vocabDatabase);
+        const selectedItems = shuffledPool.slice(0, pairCountSelect);
+        
+        currentGameTotal = selectedItems.length;
+        document.getElementById('correct-count').innerText = 0;
+        document.getElementById('max-count').innerText = currentGameTotal;
+
+        const krList = shuffleArray(selectedItems.map(item => ({ id: item.id, text: item.kr })));
+        const litList = shuffleArray(selectedItems.map(item => ({ id: item.id, text: item.lit })));
+        const figList = shuffleArray(selectedItems.map(item => ({ id: item.id, text: item.fig })));
+
+        renderColumn('col-korean', krList, 'kr');
+        renderColumn('col-literal', litList, 'lit');
+        renderColumn('col-figurative', figList, 'fig');
+    }
+
+    function renderColumn(containerId, list, type) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+        list.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'word-card';
+            card.innerText = item.text;
+            card.dataset.id = item.id;
+            card.onclick = () => onCardClicked(card, type);
+            container.appendChild(card);
+        });
+    }
+
+    function onCardClicked(card, type) {
+        if (card.classList.contains('matched') || card.classList.contains('wrong')) return;
+
+        if (type === 'kr') {
+            if (currentSelectedKr === card) {
+                card.classList.remove('selected');
+                currentSelectedKr = null;
+                return;
+            }
+            if (currentSelectedKr) currentSelectedKr.classList.remove('selected');
+            currentSelectedKr = card;
+            card.classList.add('selected');
+        } else if (type === 'lit') {
+            if (currentSelectedLit === card) {
+                card.classList.remove('selected');
+                currentSelectedLit = null;
+                return;
+            }
+            if (currentSelectedLit) currentSelectedLit.classList.remove('selected');
+            currentSelectedLit = card;
+            card.classList.add('selected');
+        } else if (type === 'fig') {
+            if (currentSelectedFig === card) {
+                card.classList.remove('selected');
+                currentSelectedFig = null;
+                return;
+            }
+            if (currentSelectedFig) currentSelectedFig.classList.remove('selected');
+            currentSelectedFig = card;
+            card.classList.add('selected');
+        }
+
+        if (currentSelectedKr && currentSelectedLit && currentSelectedFig) {
+            checkTripletMatch();
+        }
+    }
+
+    function checkTripletMatch() {
+        const krId = currentSelectedKr.dataset.id;
+        const litId = currentSelectedLit.dataset.id;
+        const figId = currentSelectedFig.dataset.id;
+
+        if (krId === litId && litId === figId) {
+            currentSelectedKr.className = 'word-card matched';
+            currentSelectedLit.className = 'word-card matched';
+            currentSelectedFig.className = 'word-card matched';
+
+            currentMatchedCount++;
+            document.getElementById('correct-count').innerText = currentMatchedCount;
+
+            currentSelectedKr = null;
+            currentSelectedLit = null;
+            currentSelectedFig = null;
+
+            if (currentMatchedCount === currentGameTotal) {
+                document.getElementById('success-banner').style.display = 'block';
+            }
+        } else {
+            const cKr = currentSelectedKr;
+            const cLit = currentSelectedLit;
+            const cFig = currentSelectedFig;
+
+            cKr.classList.add('wrong');
+            cLit.classList.add('wrong');
+            cFig.classList.add('wrong');
+
+            currentSelectedKr = null;
+            currentSelectedLit = null;
+            currentSelectedFig = null;
+
+            setTimeout(() => {
+                cKr.classList.remove('wrong', 'selected');
+                cLit.classList.remove('wrong', 'selected');
+                cFig.classList.remove('wrong', 'selected');
+            }, 400);
+        }
+    }
+
+    function switchMode(mode) {
+        const btnGame = document.getElementById('btn-mode-game');
+        const btnDict = document.getElementById('btn-mode-dict');
+        const gameView = document.getElementById('game-view');
+        const dictView = document.getElementById('dict-view');
+
+        if (mode === 'game') {
+            btnGame.classList.add('active');
+            btnDict.classList.remove('active');
+            gameView.style.display = 'block';
+            dictView.style.display = 'none';
+        } else {
+            btnDict.classList.add('active');
+            btnGame.classList.remove('active');
+            gameView.style.display = 'none';
+            dictView.style.display = 'block';
+            document.getElementById('dict-search-input').focus();
+        }
+    }
+
+    function renderDictionary(data) {
+        const container = document.getElementById('dict-result-container');
+        container.innerHTML = '';
+        document.getElementById('search-result-count').innerText = data.length;
+
+        if (data.length === 0) {
+            container.innerHTML = `<div class="text-center text-slate-500 py-8 col-span-full">Không tìm thấy từ vựng nào khớp với từ khóa tìm kiếm.</div>`;
+            return;
+        }
+
+        data.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'dict-card';
+            card.innerHTML = `
+                <div class="dict-kr">${item.kr}</div>
+                <div class="dict-line text-amber-400">
+                    <span class="font-bold text-xs uppercase px-1.5 py-0.5 rounded bg-amber-950/80 border border-amber-800">Nghĩa đen</span>
+                    <span>${item.lit}</span>
+                </div>
+                <div class="dict-line text-emerald-400 mt-1">
+                    <span class="font-bold text-xs uppercase px-1.5 py-0.5 rounded bg-emerald-950/80 border border-emerald-800">Nghĩa bóng</span>
+                    <span>${item.fig}</span>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function handleSearch() {
+        const keyword = document.getElementById('dict-search-input').value.toLowerCase().trim();
+        if (!keyword) {
+            renderDictionary(vocabDatabase);
+            return;
+        }
+
+        const filtered = vocabDatabase.filter(item => 
+            item.kr.toLowerCase().includes(keyword) ||
+            item.lit.toLowerCase().includes(keyword) ||
+            item.fig.toLowerCase().includes(keyword)
+        );
+
+        renderDictionary(filtered);
+    }
+</script>
+
+</body>
+</html>
