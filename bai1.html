@@ -584,7 +584,7 @@
             </div>
         </div>
 
-        <!-- 9. DỊCH CHUYỂN ĐƯỜNG CUNG VÀ ĐƯỜNG CẦU (ĐÃ SỬA CHUẨN TỌA ĐỘ ĐIỂM GIAO NHAU E1) -->
+        <!-- 9. DỊCH CHUYỂN ĐƯỜNG CUNG VÀ ĐƯỜNG CẦU -->
         <div class="bg-slate-800/90 rounded-2xl border border-indigo-500/30 shadow-lg overflow-hidden transition-all hover:border-indigo-500/50">
             <button onclick="toggleAccordion('content-9')" class="w-full flex items-center justify-between p-5 bg-indigo-950/40 hover:bg-indigo-900/30 text-left transition-colors focus:outline-none">
                 <div class="flex items-center gap-4">
@@ -617,33 +617,33 @@
                             <h4 id="shift-theory-title" class="text-indigo-300 font-bold text-sm md:text-base">Quy luật dịch chuyển đường Cầu</h4>
                             <p id="shift-theory-desc" class="text-slate-300 text-xs md:text-sm mt-1 leading-relaxed">
                                 Xảy ra do các <strong class="text-sky-400">yếu tố phi giá</strong>. 
-                                <strong>Sang phải</strong> = Cầu tăng; <strong>Sang trái</strong> = Cầu giảm.
+                                <strong>Sang trái</strong> = Cầu giảm; <strong>Sang phải</strong> = Cầu tăng.
                             </p>
                         </div>
 
-                        <!-- Các kịch bản thực tế -->
+                        <!-- Các kịch bản thực tế (ĐÃ ĐẢO VỊ TRÍ: Sang Trái ở bên Trái, Sang Phải ở bên Phải) -->
                         <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700">
                             <label class="block text-xs font-bold text-slate-300 mb-2 uppercase tracking-wider">Chọn tình huống thực tế để xem dịch chuyển:</label>
                             
                             <div id="demand-scenarios" class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                                <button onclick="applyScenario('demand', 20, 'Thu nhập người dân tăng / Hàng hóa được ưa chuộng')" class="p-2.5 rounded-lg border border-sky-500/30 bg-sky-950/40 hover:bg-sky-900/50 text-sky-200 text-left transition-all">
-                                    <strong class="block text-sky-400">👉 Sang Phải (Cầu Tăng)</strong>
-                                    Thu nhập tăng, người tiêu dùng chuộng hàng hơn
-                                </button>
                                 <button onclick="applyScenario('demand', -20, 'Kinh tế suy thoái / Sản phẩm lỗi thời')" class="p-2.5 rounded-lg border border-slate-700 bg-slate-800/60 hover:bg-slate-700 text-slate-300 text-left transition-all">
                                     <strong class="block text-red-400">👈 Sang Trái (Cầu Giảm)</strong>
                                     Thắt chặt chi tiêu, thị hiếu giảm sút
                                 </button>
+                                <button onclick="applyScenario('demand', 20, 'Thu nhập người dân tăng / Hàng hóa được ưa chuộng')" class="p-2.5 rounded-lg border border-sky-500/30 bg-sky-950/40 hover:bg-sky-900/50 text-sky-200 text-left transition-all">
+                                    <strong class="block text-sky-400">👉 Sang Phải (Cầu Tăng)</strong>
+                                    Thu nhập tăng, người tiêu dùng chuộng hàng hơn
+                                </button>
                             </div>
 
                             <div id="supply-scenarios" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                                <button onclick="applyScenario('supply', 20, 'Cải tiến công nghệ vượt bậc / Chi phí đầu vào giảm')" class="p-2.5 rounded-lg border border-emerald-500/30 bg-emerald-950/40 hover:bg-emerald-900/50 text-emerald-200 text-left transition-all">
-                                    <strong class="block text-emerald-400">👉 Sang Phải (Cung Tăng)</strong>
-                                    Công nghệ hiện đại hơn, giá nguyên liệu rẻ
-                                </button>
                                 <button onclick="applyScenario('supply', -20, 'Thiên tai mất mùa / Thuế sản xuất tăng vọt')" class="p-2.5 rounded-lg border border-slate-700 bg-slate-800/60 hover:bg-slate-700 text-slate-300 text-left transition-all">
                                     <strong class="block text-amber-400">👈 Sang Trái (Cung Giảm)</strong>
                                     Chi phí đầu vào tăng, thời tiết bất lợi
+                                </button>
+                                <button onclick="applyScenario('supply', 20, 'Cải tiến công nghệ vượt bậc / Chi phí đầu vào giảm')" class="p-2.5 rounded-lg border border-emerald-500/30 bg-emerald-950/40 hover:bg-emerald-900/50 text-emerald-200 text-left transition-all">
+                                    <strong class="block text-emerald-400">👉 Sang Phải (Cung Tăng)</strong>
+                                    Công nghệ hiện đại hơn, giá nguyên liệu rẻ
                                 </button>
                             </div>
 
@@ -1092,14 +1092,14 @@
                 scenD.classList.remove('hidden');
                 scenS.classList.add('hidden');
                 theoryTitle.innerText = "Quy luật dịch chuyển đường CẦU (Demand Shift)";
-                theoryDesc.innerHTML = "Do các <strong>yếu tố phi giá</strong> làm thay đổi lượng cầu ở MỌI mức giá: Thu nhập người dân, sở thích, kỳ vọng tương lai, giá hàng thay thế/bổ sung. Đường dịch <strong>Sang Phải = Cầu Tăng</strong>; dịch <strong>Sang Trái = Cầu Giảm</strong>.";
+                theoryDesc.innerHTML = "Do các <strong>yếu tố phi giá</strong> làm thay đổi lượng cầu ở MỌI mức giá: Thu nhập người dân, sở thích, kỳ vọng tương lai, giá hàng thay thế/bổ sung. Đường dịch <strong>Sang Trái = Cầu Giảm</strong>; dịch <strong>Sang Phải = Cầu Tăng</strong>.";
             } else {
                 btnS.className = "px-5 py-2.5 rounded-full font-bold text-xs md:text-sm border transition-all shadow-md bg-emerald-600 border-emerald-400 text-white shadow-emerald-900/50";
                 btnD.className = "px-5 py-2.5 rounded-full font-bold text-xs md:text-sm border transition-all shadow-sm bg-slate-800 border-sky-500/30 text-sky-300 hover:bg-sky-900/40";
                 scenS.classList.remove('hidden');
                 scenD.classList.add('hidden');
                 theoryTitle.innerText = "Quy luật dịch chuyển đường CUNG (Supply Shift)";
-                theoryDesc.innerHTML = "Do các <strong>yếu tố phi giá của người bán</strong>: Tiến bộ khoa học công nghệ, giá cả các yếu tố đầu vào (vốn, nguyên liệu, lương nhân công), chính sách thuế/trợ cấp, thiên tai thời tiết. Đường dịch <strong>Sang Phải = Cung Tăng</strong>; dịch <strong>Sang Trái = Cung Giảm</strong>.";
+                theoryDesc.innerHTML = "Do các <strong>yếu tố phi giá của người bán</strong>: Tiến bộ khoa học công nghệ, giá cả các yếu tố đầu vào (vốn, nguyên liệu, lương nhân công), chính sách thuế/trợ cấp, thiên tai thời tiết. Đường dịch <strong>Sang Trái = Cung Giảm</strong>; dịch <strong>Sang Phải = Cung Tăng</strong>.";
             }
             resetShift();
         }
@@ -1131,17 +1131,7 @@
             offsetLabel.innerText = offset > 0 ? `Dịch Sang Phải (+${offset})` : `Dịch Sang Trái (${offset})`;
             offsetLabel.className = offset > 0 ? "font-extrabold text-emerald-400" : "font-extrabold text-red-400";
 
-            /*
-               HÌNH HỌC TỌA ĐỘ TRONG SVG:
-               - E0 = (65, 60)
-               - Đường Cung S0 đứng yên nối từ (30, 95) tới (100, 25)
-                 => Phương trình: y = 125 - x (Trên SVG: x tăng thì y giảm, tức Giá P cao lên)
-               - Đường Cầu D0 đứng yên nối từ (30, 25) tới (100, 95)
-                 => Phương trình: y = x - 5 (Trên SVG: x tăng thì y tăng, tức Giá P thấp xuống)
-            */
-
             if (currentShiftMode === 'demand') {
-                // 1. Dịch Cầu: Cầu di chuyển, Cung S0 ĐỨNG YÊN. Điểm E1 trượt trên S0
                 curveD0.setAttribute('stroke-dasharray', '2,2');
                 curveD0.setAttribute('stroke-opacity', '0.35');
                 curveS0.removeAttribute('stroke-dasharray');
@@ -1155,10 +1145,8 @@
                 curveDDyn.classList.remove('hidden');
                 labelDDyn.classList.remove('hidden');
 
-                // Đường Cầu dịch một đoạn offset theo phương ngang x.
-                // Giao điểm với S0: x_new = 65 + offset/2, y_new = 125 - x_new = 60 - offset/2
                 const newX = 65 + (offset / 2);
-                const newY = 125 - newX; // Nằm 100% trên đường Cung S0
+                const newY = 125 - newX;
 
                 updateNewEquilibrium(newX, newY);
 
@@ -1169,7 +1157,6 @@
                     impactText.innerHTML = `${scenarioTxt}Đường Cầu dịch sang trái (<strong class="text-red-400">Cầu Giảm</strong>) cắt đường Cung S₀ đứng yên: <br>➡️ <strong class="text-red-400">Giá cân bằng GIẢM (P* ↓)</strong> và <strong class="text-red-400">Sản lượng cân bằng GIẢM (Q* ↓)</strong>.`;
                 }
             } else {
-                // 2. Dịch Cung: Cung di chuyển, Cầu D0 ĐỨNG YÊN. Điểm E1 trượt trên D0
                 curveS0.setAttribute('stroke-dasharray', '2,2');
                 curveS0.setAttribute('stroke-opacity', '0.35');
                 curveD0.removeAttribute('stroke-dasharray');
@@ -1183,10 +1170,8 @@
                 curveSDyn.classList.remove('hidden');
                 labelSDyn.classList.remove('hidden');
 
-                // Đường Cung dịch một đoạn offset theo phương ngang x.
-                // Giao điểm với D0: x_new = 65 + offset/2, y_new = x_new - 5 = 60 + offset/2
                 const newX = 65 + (offset / 2);
-                const newY = newX - 5; // Nằm 100% trên đường Cầu D0
+                const newY = newX - 5;
 
                 updateNewEquilibrium(newX, newY);
 
@@ -1216,13 +1201,11 @@
             labelE1.setAttribute('x', x + 3);
             labelE1.setAttribute('y', y - 3);
 
-            // Dóng nét đứt sang trục P (x=20)
             projP1.setAttribute('y1', y);
             projP1.setAttribute('y2', y);
             projP1.setAttribute('x1', 20);
             projP1.setAttribute('x2', x);
 
-            // Dóng nét đứt xuống trục Q (y=105)
             projQ1.setAttribute('x1', x);
             projQ1.setAttribute('x2', x);
             projQ1.setAttribute('y1', y);
