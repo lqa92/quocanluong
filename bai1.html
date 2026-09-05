@@ -19,13 +19,16 @@
             opacity: 0;
         }
         .accordion-content.active {
-            max-height: 1200px;
+            max-height: 2000px;
             opacity: 100;
             padding-top: 1rem;
             padding-bottom: 1.5rem;
         }
         .scale-balance {
             transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .shift-transition {
+            transition: transform 0.25s ease-out;
         }
     </style>
 </head>
@@ -71,7 +74,6 @@
                     <circle cx="65" cy="56" r="2.5" fill="#fb7185" opacity="0.6" />
                 </svg>
             </div>
-          
             
             <div class="mt-6 flex justify-center gap-3">
                 <button onclick="toggleAll(true)" class="bg-white/10 hover:bg-white/20 text-white font-semibold text-xs md:text-sm px-4 py-2 rounded-full backdrop-blur-sm transition-all border border-white/20 shadow-sm">
@@ -86,6 +88,7 @@
 
     <main class="max-w-5xl mx-auto px-4 mt-8 grid grid-cols-1 gap-4">
 
+        <!-- 1. CUNG -->
         <div class="bg-slate-800/90 rounded-2xl border border-emerald-500/30 shadow-lg overflow-hidden transition-all hover:border-emerald-500/50">
             <button onclick="toggleAccordion('content-1')" class="w-full flex items-center justify-between p-5 bg-emerald-950/40 hover:bg-emerald-900/30 text-left transition-colors focus:outline-none">
                 <div class="flex items-center gap-4">
@@ -131,8 +134,7 @@
                                 </svg>
                             </div>
                             <div class="relative bg-amber-800 border-2 border-amber-900 w-28 h-12 rounded-t-lg flex flex-wrap justify-center items-center p-1 gap-1">
-                                <div id="apples-container" class="absolute -top-6 left-0 right-0 flex justify-center gap-1 flex-wrap">
-                                    </div>
+                                <div id="apples-container" class="absolute -top-6 left-0 right-0 flex justify-center gap-1 flex-wrap"></div>
                                 <span class="text-[10px] text-amber-200 font-bold uppercase tracking-widest pointer-events-none">Sản Phẩm</span>
                             </div>
                         </div>
@@ -154,6 +156,7 @@
             </div>
         </div>
 
+        <!-- 2. CẦU -->
         <div class="bg-slate-800/90 rounded-2xl border border-sky-500/30 shadow-lg overflow-hidden transition-all hover:border-sky-500/50">
             <button onclick="toggleAccordion('content-2')" class="w-full flex items-center justify-between p-5 bg-sky-950/40 hover:bg-sky-900/30 text-left transition-colors focus:outline-none">
                 <div class="flex items-center gap-4">
@@ -200,8 +203,7 @@
                             </div>
                             <div class="relative bg-sky-700 border-2 border-sky-800 w-20 h-12 rounded-b-xl flex flex-wrap justify-center items-center p-1 gap-0.5">
                                 <path d="M10,0 Q40,-20 70,0" fill="none" stroke="#0284c7" stroke-width="4" class="absolute -top-5 left-0 right-0 h-5" />
-                                <div id="basket-apples" class="absolute -top-3 left-0 right-0 flex justify-center gap-1 flex-wrap">
-                                    </div>
+                                <div id="basket-apples" class="absolute -top-3 left-0 right-0 flex justify-center gap-1 flex-wrap"></div>
                                 <span class="text-[10px] text-sky-100 font-bold uppercase tracking-widest pointer-events-none">GIỎ HÀNG</span>
                             </div>
                         </div>
@@ -223,6 +225,7 @@
             </div>
         </div>
 
+        <!-- 3. LƯỢNG CUNG -->
         <div class="bg-slate-800/90 rounded-2xl border border-emerald-500/30 shadow-lg overflow-hidden transition-all hover:border-emerald-500/50">
             <button onclick="toggleAccordion('content-3')" class="w-full flex items-center justify-between p-5 bg-emerald-950/40 hover:bg-emerald-900/30 text-left transition-colors focus:outline-none">
                 <div class="flex items-center gap-4">
@@ -276,6 +279,7 @@
             </div>
         </div>
 
+        <!-- 4. LƯỢNG CẦU -->
         <div class="bg-slate-800/90 rounded-2xl border border-sky-500/30 shadow-lg overflow-hidden transition-all hover:border-sky-500/50">
             <button onclick="toggleAccordion('content-4')" class="w-full flex items-center justify-between p-5 bg-sky-950/40 hover:bg-sky-900/30 text-left transition-colors focus:outline-none">
                 <div class="flex items-center gap-4">
@@ -329,6 +333,7 @@
             </div>
         </div>
 
+        <!-- 5. HÀM CUNG -->
         <div class="bg-slate-800/90 rounded-2xl border border-emerald-500/30 shadow-lg overflow-hidden transition-all hover:border-emerald-500/50">
             <button onclick="toggleAccordion('content-5')" class="w-full flex items-center justify-between p-5 bg-emerald-950/40 hover:bg-emerald-900/30 text-left transition-colors focus:outline-none">
                 <div class="flex items-center gap-4">
@@ -384,6 +389,7 @@
             </div>
         </div>
 
+        <!-- 6. HÀM CẦU -->
         <div class="bg-slate-800/90 rounded-2xl border border-sky-500/30 shadow-lg overflow-hidden transition-all hover:border-sky-500/50">
             <button onclick="toggleAccordion('content-6')" class="w-full flex items-center justify-between p-5 bg-sky-950/40 hover:bg-sky-900/30 text-left transition-colors focus:outline-none">
                 <div class="flex items-center gap-4">
@@ -439,6 +445,7 @@
             </div>
         </div>
 
+        <!-- 7. MỐI QUAN HỆ CUNG CẦU VỚI GIÁ -->
         <div class="bg-slate-800/90 rounded-2xl border border-purple-500/30 shadow-lg overflow-hidden transition-all hover:border-purple-500/50">
             <button onclick="toggleAccordion('content-7')" class="w-full flex items-center justify-between p-5 bg-purple-950/40 hover:bg-purple-900/30 text-left transition-colors focus:outline-none">
                 <div class="flex items-center gap-4">
@@ -507,10 +514,11 @@
             </div>
         </div>
 
+        <!-- 8. TÓM TẮT & SANDBOX -->
         <div class="bg-slate-800/90 rounded-2xl border border-amber-500/30 shadow-lg overflow-hidden transition-all hover:border-amber-500/50">
             <button onclick="toggleAccordion('content-8')" class="w-full flex items-center justify-between p-5 bg-amber-950/40 hover:bg-amber-900/30 text-left transition-colors focus:outline-none">
                 <div class="flex items-center gap-4">
-                    <span class="flex items-center justify-center w-8 h-8 rounded-full bg-amber-500 text-slate-950 font-extrabold text-sm shadow-sm">★</span>
+                    <span class="flex items-center justify-center w-8 h-8 rounded-full bg-amber-500 text-slate-950 font-extrabold text-sm shadow-sm">8</span>
                     <h2 class="text-lg md:text-xl font-bold text-amber-400">TÓM TẮT QUY LUẬT & TRẢI NGHIỆM TỔNG HỢP</h2>
                 </div>
                 <span id="icon-content-8" class="text-amber-400 transition-transform duration-300">
@@ -576,6 +584,164 @@
             </div>
         </div>
 
+        <!-- 9. DỊCH CHUYỂN ĐƯỜNG CUNG VÀ ĐƯỜNG CẦU (ĐÃ SỬA CHUẨN TỌA ĐỘ ĐIỂM GIAO NHAU E1) -->
+        <div class="bg-slate-800/90 rounded-2xl border border-indigo-500/30 shadow-lg overflow-hidden transition-all hover:border-indigo-500/50">
+            <button onclick="toggleAccordion('content-9')" class="w-full flex items-center justify-between p-5 bg-indigo-950/40 hover:bg-indigo-900/30 text-left transition-colors focus:outline-none">
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-500 text-slate-950 font-extrabold text-sm shadow-sm">9</span>
+                    <div>
+                        <h2 class="text-lg md:text-xl font-bold text-indigo-400">DỊCH CHUYỂN ĐƯỜNG CUNG & ĐƯỜNG CẦU</h2>
+                        <p class="text-xs text-indigo-300/70 font-normal">Phân biệt di chuyển dọc theo đường và sự dịch chuyển sang trái / sang phải</p>
+                    </div>
+                </div>
+                <span id="icon-content-9" class="text-indigo-400 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            
+            <div id="content-9" class="accordion-content px-6">
+                <!-- Chuyển đổi giữa dịch chuyển Cầu và Cung -->
+                <div class="flex justify-center gap-3 mb-6">
+                    <button id="tab-shift-demand" onclick="switchShiftMode('demand')" class="px-5 py-2.5 rounded-full font-bold text-xs md:text-sm border transition-all shadow-md bg-sky-600 border-sky-400 text-white shadow-sky-900/50">
+                        🔄 Dịch Chuyển Đường CẦU (D)
+                    </button>
+                    <button id="tab-shift-supply" onclick="switchShiftMode('supply')" class="px-5 py-2.5 rounded-full font-bold text-xs md:text-sm border transition-all shadow-sm bg-slate-800 border-emerald-500/30 text-emerald-300 hover:bg-emerald-900/40">
+                        🔄 Dịch Chuyển Đường CUNG (S)
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+                    <!-- Bảng điều khiển kịch bản tương tác -->
+                    <div class="md:col-span-6 space-y-4">
+                        <div class="bg-indigo-950/40 border-l-4 border-indigo-500 p-4 rounded-r-lg">
+                            <h4 id="shift-theory-title" class="text-indigo-300 font-bold text-sm md:text-base">Quy luật dịch chuyển đường Cầu</h4>
+                            <p id="shift-theory-desc" class="text-slate-300 text-xs md:text-sm mt-1 leading-relaxed">
+                                Xảy ra do các <strong class="text-sky-400">yếu tố phi giá</strong>. 
+                                <strong>Sang phải</strong> = Cầu tăng; <strong>Sang trái</strong> = Cầu giảm.
+                            </p>
+                        </div>
+
+                        <!-- Các kịch bản thực tế -->
+                        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700">
+                            <label class="block text-xs font-bold text-slate-300 mb-2 uppercase tracking-wider">Chọn tình huống thực tế để xem dịch chuyển:</label>
+                            
+                            <div id="demand-scenarios" class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                                <button onclick="applyScenario('demand', 20, 'Thu nhập người dân tăng / Hàng hóa được ưa chuộng')" class="p-2.5 rounded-lg border border-sky-500/30 bg-sky-950/40 hover:bg-sky-900/50 text-sky-200 text-left transition-all">
+                                    <strong class="block text-sky-400">👉 Sang Phải (Cầu Tăng)</strong>
+                                    Thu nhập tăng, người tiêu dùng chuộng hàng hơn
+                                </button>
+                                <button onclick="applyScenario('demand', -20, 'Kinh tế suy thoái / Sản phẩm lỗi thời')" class="p-2.5 rounded-lg border border-slate-700 bg-slate-800/60 hover:bg-slate-700 text-slate-300 text-left transition-all">
+                                    <strong class="block text-red-400">👈 Sang Trái (Cầu Giảm)</strong>
+                                    Thắt chặt chi tiêu, thị hiếu giảm sút
+                                </button>
+                            </div>
+
+                            <div id="supply-scenarios" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                                <button onclick="applyScenario('supply', 20, 'Cải tiến công nghệ vượt bậc / Chi phí đầu vào giảm')" class="p-2.5 rounded-lg border border-emerald-500/30 bg-emerald-950/40 hover:bg-emerald-900/50 text-emerald-200 text-left transition-all">
+                                    <strong class="block text-emerald-400">👉 Sang Phải (Cung Tăng)</strong>
+                                    Công nghệ hiện đại hơn, giá nguyên liệu rẻ
+                                </button>
+                                <button onclick="applyScenario('supply', -20, 'Thiên tai mất mùa / Thuế sản xuất tăng vọt')" class="p-2.5 rounded-lg border border-slate-700 bg-slate-800/60 hover:bg-slate-700 text-slate-300 text-left transition-all">
+                                    <strong class="block text-amber-400">👈 Sang Trái (Cung Giảm)</strong>
+                                    Chi phí đầu vào tăng, thời tiết bất lợi
+                                </button>
+                            </div>
+
+                            <!-- Thanh kéo trượt tự do -->
+                            <div class="mt-4 pt-3 border-t border-slate-800">
+                                <label class="block text-xs font-bold text-slate-400 mb-1 flex justify-between">
+                                    <span>Hoặc tự tay kéo đường dịch chuyển:</span>
+                                    <span id="shift-offset-label" class="font-extrabold text-indigo-400">Ở vị trí gốc (0)</span>
+                                </label>
+                                <input id="shift-slider" type="range" min="-30" max="30" value="0" step="5" oninput="manualShift(this.value)" class="w-full accent-indigo-500 cursor-pointer">
+                                <div class="flex justify-between text-[10px] text-slate-400 font-bold mt-1">
+                                    <span>← DỊCH TRÁI (GIẢM)</span>
+                                    <span>GỐC</span>
+                                    <span>DỊCH PHẢI (TĂNG) →</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Thẻ phân tích kết quả -->
+                        <div class="bg-slate-900/90 p-4 rounded-xl border border-indigo-500/30 space-y-2">
+                            <div class="text-xs font-bold text-indigo-400 uppercase">Tác động đến điểm Cân Bằng Mới ($P^*, Q^*$):</div>
+                            <div id="shift-impact-text" class="text-xs md:text-sm text-slate-200 leading-relaxed font-semibold">
+                                Chưa có sự dịch chuyển. Đồ thị đang ở trạng thái cân bằng ban đầu.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Đồ thị trực quan hoá dịch chuyển bằng SVG -->
+                    <div class="md:col-span-6 bg-slate-900/90 p-4 rounded-xl border border-slate-700 flex flex-col items-center">
+                        <div class="flex items-center justify-between w-full px-2 mb-2">
+                            <span class="text-xs font-bold text-indigo-300 uppercase tracking-wider">Mô hình cân bằng cung cầu</span>
+                            <button onclick="resetShift()" class="text-[11px] px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-600 transition-colors">
+                                Đặt lại gốc
+                            </button>
+                        </div>
+                        
+                        <div class="relative w-full max-w-[340px] h-[260px]">
+                            <svg class="w-full h-full" viewBox="0 0 120 120">
+                                <!-- Hệ trục tọa độ: Gốc tại (20, 105) -->
+                                <line x1="20" y1="10" x2="20" y2="105" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/>
+                                <line x1="20" y1="105" x2="115" y2="105" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/>
+                                <text x="6" y="15" font-size="7" font-weight="bold" fill="#94a3b8">Giá (P)</text>
+                                <text x="100" y="115" font-size="7" font-weight="bold" fill="#94a3b8">Lượng (Q)</text>
+
+                                <!-- ĐƯỜNG CUNG GỐC S0: Điểm đầu (30, 95) -> Điểm cuối (100, 25). Dốc lên (P tăng khi Q tăng) -->
+                                <line id="curve-s-base" x1="30" y1="95" x2="100" y2="25" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+                                <text id="label-s-base" x="102" y="24" font-size="7" font-weight="extrabold" fill="#10b981">S₀</text>
+
+                                <!-- ĐƯỜNG CUNG MỚI S1 (Dịch chuyển song song) -->
+                                <g id="group-supply-shift" class="shift-transition">
+                                    <line id="curve-s-dynamic" x1="30" y1="95" x2="100" y2="25" stroke="#34d399" stroke-width="3" stroke-linecap="round" class="hidden"/>
+                                    <text id="label-s-dynamic" x="102" y="24" font-size="8" font-weight="extrabold" fill="#34d399" class="hidden">S₁</text>
+                                </g>
+
+                                <!-- ĐƯỜNG CẦU GỐC D0: Điểm đầu (30, 25) -> Điểm cuối (100, 95). Dốc xuống (P giảm khi Q tăng) -->
+                                <line id="curve-d-base" x1="30" y1="25" x2="100" y2="95" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round"/>
+                                <text id="label-d-base" x="102" y="99" font-size="7" font-weight="extrabold" fill="#0ea5e9">D₀</text>
+
+                                <!-- ĐƯỜNG CẦU MỚI D1 (Dịch chuyển song song) -->
+                                <g id="group-demand-shift" class="shift-transition">
+                                    <line id="curve-d-dynamic" x1="30" y1="25" x2="100" y2="95" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" class="hidden"/>
+                                    <text id="label-d-dynamic" x="102" y="99" font-size="8" font-weight="extrabold" fill="#38bdf8" class="hidden">D₁</text>
+                                </g>
+
+                                <!-- Điểm Cân Bằng Cũ E0 tại giao điểm chuẩn (65, 60) -->
+                                <circle id="dot-e0" cx="65" cy="60" r="3" fill="#cbd5e1"/>
+                                <text id="label-e0" x="68" y="58" font-size="6" font-weight="bold" fill="#cbd5e1">E₀</text>
+
+                                <!-- Dóng tọa độ E0 -->
+                                <line id="proj-p0" x1="20" y1="60" x2="65" y2="60" stroke="#64748b" stroke-dasharray="2,2" stroke-width="0.8"/>
+                                <line id="proj-q0" x1="65" y1="60" x2="65" y2="105" stroke="#64748b" stroke-dasharray="2,2" stroke-width="0.8"/>
+                                <text x="10" y="62" font-size="5.5" font-weight="bold" fill="#64748b">P₀*</text>
+                                <text x="62" y="112" font-size="5.5" font-weight="bold" fill="#64748b">Q₀*</text>
+
+                                <!-- Điểm Cân Bằng Mới E1: Bám dính hoàn toàn trên đường đứng yên -->
+                                <g id="group-eq-new" class="shift-transition opacity-0">
+                                    <line id="proj-p1" x1="20" y1="60" x2="65" y2="60" stroke="#f59e0b" stroke-dasharray="2,2" stroke-width="1"/>
+                                    <line id="proj-q1" x1="65" y1="60" x2="65" y2="105" stroke="#f59e0b" stroke-dasharray="2,2" stroke-width="1"/>
+                                    <circle id="dot-e1" cx="65" cy="60" r="4" fill="#f59e0b"/>
+                                    <text id="label-e1" x="69" y="57" font-size="7" font-weight="extrabold" fill="#f59e0b">E₁</text>
+                                    <text id="label-p1" x="8" y="62" font-size="6" font-weight="bold" fill="#f59e0b">P₁*</text>
+                                    <text id="label-q1" x="62" y="112" font-size="6" font-weight="bold" fill="#f59e0b">Q₁*</text>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <!-- Chú thích đồ thị -->
+                        <div class="flex flex-wrap justify-center gap-4 text-[11px] text-slate-400 mt-2">
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-sky-400 inline-block"></span> Đường Cầu (D)</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-emerald-400 inline-block"></span> Đường Cung (S)</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span> Giao điểm mới (E₁)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10. MINI QUIZ -->
         <div class="mt-4 bg-slate-800/90 rounded-2xl border border-slate-700 shadow-md p-6">
             <h2 class="text-xl md:text-2xl font-black text-slate-100 text-center mb-6 flex items-center justify-center gap-2">
                 <span>📝</span> MINI QUIZ: 퀵 챌린지! (퀴즈)
@@ -648,22 +814,20 @@
     </footer>
 
     <script>
-        // Init variables and states
         window.onload = function() {
-            // Expand Section 1 & 7 by default for immediate engagement
             toggleAccordion('content-1');
             toggleAccordion('content-7');
+            toggleAccordion('content-9');
             
-            // Set up initial interactive values
             updateSellerStall(3);
             updateBuyerBasket(1);
             updateGraphS(50);
             updateGraphD(50);
             setMarketState('equilibrium');
             runSandbox(15000);
+            switchShiftMode('demand');
         }
 
-        // Accordion utility
         function toggleAccordion(id) {
             const content = document.getElementById(id);
             const icon = document.getElementById('icon-' + id);
@@ -692,10 +856,8 @@
             });
         }
 
-        // Dynamic Apple generator SVG helper
         function generateApplesSVG(count) {
             let html = '';
-            // Generate simple beautiful red/green apple icons
             for (let i = 0; i < count; i++) {
                 html += `
                     <svg class="w-5 h-5 drop-shadow" viewBox="0 0 20 20">
@@ -708,69 +870,64 @@
             return html;
         }
 
-        // Widget 1: Seller Stall controller
         function updateSellerStall(val) {
             const bubble = document.getElementById('seller-bubble');
             const mouth = document.getElementById('seller-mouth');
             const container = document.getElementById('apples-container');
             const priceVal = document.getElementById('price-val-1');
             
-            if (val == 1) { // Low
+            if (val == 1) {
                 priceVal.innerText = "Thấp (10.000đ)";
                 priceVal.className = "font-extrabold text-sm text-red-400";
                 bubble.innerText = "Giá bèo bọt quá, tôi gom hàng không bán nhiều đâu!";
-                mouth.setAttribute('d', 'M43,50 Q50,42 57,50'); // Sad/Straight mouth
-                container.innerHTML = generateApplesSVG(3); // 3 apples
-            } else if (val == 2) { // Mid
+                mouth.setAttribute('d', 'M43,50 Q50,42 57,50');
+                container.innerHTML = generateApplesSVG(3);
+            } else if (val == 2) {
                 priceVal.innerText = "Trung bình (15.000đ)";
                 priceVal.className = "font-extrabold text-sm text-amber-400";
                 bubble.innerText = "Bán tầm trung là vừa sức rồi!";
-                mouth.setAttribute('d', 'M43,45 H57'); // Neutral line
-                container.innerHTML = generateApplesSVG(6); // 6 apples
-            } else { // High
+                mouth.setAttribute('d', 'M43,45 H57');
+                container.innerHTML = generateApplesSVG(6);
+            } else {
                 priceVal.innerText = "Cao (20.000đ)";
                 priceVal.className = "font-extrabold text-sm text-emerald-400";
                 bubble.innerText = "Giá cao hời quá! Tôi gom hết táo ra bán nhiều luôn!";
-                mouth.setAttribute('d', 'M43,45 Q50,55 57,45'); // Smile
-                container.innerHTML = generateApplesSVG(10); // 10 apples
+                mouth.setAttribute('d', 'M43,45 Q50,55 57,45');
+                container.innerHTML = generateApplesSVG(10);
             }
         }
 
-        // Widget 2: Buyer Basket controller
         function updateBuyerBasket(val) {
             const bubble = document.getElementById('buyer-bubble');
             const mouth = document.getElementById('buyer-mouth');
             const container = document.getElementById('basket-apples');
             const priceVal = document.getElementById('price-val-2');
             
-            if (val == 1) { // Low
+            if (val == 1) {
                 priceVal.innerText = "Thấp (10.000đ)";
                 priceVal.className = "font-extrabold text-sm text-emerald-400";
                 bubble.innerText = "Giá hời rẻ quá! Tranh thủ gom mua thật nhiều nào!";
-                mouth.setAttribute('d', 'M43,45 Q50,55 57,45'); // Big Smile
-                container.innerHTML = generateApplesSVG(10); // 10 apples
-            } else if (val == 2) { // Mid
+                mouth.setAttribute('d', 'M43,45 Q50,55 57,45');
+                container.innerHTML = generateApplesSVG(10);
+            } else if (val == 2) {
                 priceVal.innerText = "Trung bình (15.000đ)";
                 priceVal.className = "font-extrabold text-sm text-amber-400";
                 bubble.innerText = "Giá trung bình, mua vừa đủ dùng thôi!";
-                mouth.setAttribute('d', 'M43,45 H57'); // Neutral line
-                container.innerHTML = generateApplesSVG(6); // 6 apples
-            } else { // High
+                mouth.setAttribute('d', 'M43,45 H57');
+                container.innerHTML = generateApplesSVG(6);
+            } else {
                 priceVal.innerText = "Cao (20.000đ)";
                 priceVal.className = "font-extrabold text-sm text-red-400";
                 bubble.innerText = "Đắt đỏ quá sức! Thôi mua tạm bợ ít quả thôi!";
-                mouth.setAttribute('d', 'M43,50 Q50,42 57,50'); // Sad
-                container.innerHTML = generateApplesSVG(3); // 3 apples
+                mouth.setAttribute('d', 'M43,50 Q50,42 57,50');
+                container.innerHTML = generateApplesSVG(3);
             }
         }
 
-        // Widget 3 & 4 Table Row selection
         function selectQsRow(rowId) {
-            // Remove previous active styles
             for (let i = 1; i <= 3; i++) {
                 document.getElementById('row-qs-' + i).classList.remove('bg-emerald-950/80');
             }
-            // Add to current row
             document.getElementById('row-qs-' + rowId).classList.add('bg-emerald-950/80');
         }
 
@@ -781,7 +938,6 @@
             document.getElementById('row-qd-' + rowId).classList.add('bg-sky-950/80');
         }
 
-        // Widget 5: Graph S dynamic projections
         function updateGraphS(val) {
             const yVal = parseFloat(val);
             const ratio = (yVal - 25) / 50;
@@ -800,7 +956,6 @@
             document.getElementById('graph-s-dot').setAttribute('cy', currentY);
         }
 
-        // Widget 6: Graph D dynamic projections
         function updateGraphD(val) {
             const ratio = (val - 25) / 50;
             const currentY = 75 - (ratio * 50);
@@ -818,7 +973,6 @@
             document.getElementById('graph-d-dot').setAttribute('cy', currentY);
         }
 
-        // Widget 7: Market State & Scale tilt controller
         function setMarketState(state) {
             const btnSurplus = document.getElementById('btn-state-surplus');
             const btnEqui = document.getElementById('btn-state-equilibrium');
@@ -831,23 +985,19 @@
             const trayCung = document.getElementById('tray-cung-apples');
             const trayCau = document.getElementById('tray-cau-apples');
 
-            // Reset buttons styling
             [btnSurplus, btnEqui, btnShort].forEach(btn => {
                 btn.className = "px-4 py-2 rounded-xl text-xs md:text-sm font-bold border transition-all shadow-sm bg-slate-800 border-purple-500/30 text-purple-300 hover:bg-purple-900/40";
             });
 
             if (state === 'surplus') {
                 btnSurplus.className = "px-4 py-2 rounded-xl text-xs md:text-sm font-bold border transition-all shadow-md bg-purple-600 border-purple-500 text-white shadow-purple-900/50";
-                
                 titleEl.innerText = "📉 Thặng Dư Cung (Dư thừa hàng hóa)";
                 descEl.innerHTML = `
                     <p>Giá cao hơn mức giá cân bằng (P > P*): <strong>Lượng cung > Lượng cầu</strong>.</p>
                     <p class="text-emerald-400 font-bold">Người bán hào hứng bày nhiều nhưng người dân thắt chặt tiêu dùng.</p>
                     <p class="text-slate-400 text-xs">💡 Để giải quyết đống hàng dư ế ẩm, các bên bán buộc phải cạnh tranh hạ giá. Do đó, <strong>Giá có xu hướng giảm trở về cân bằng</strong>.</p>
                 `;
-                
-                scaleLever.style.transform = "rotate(-12deg)"; // Left (Cung) is heavier
-                
+                scaleLever.style.transform = "rotate(-12deg)";
                 trayCung.innerHTML = `
                     <circle cx="20" cy="100" r="3.5" fill="#22c55e"/>
                     <circle cx="30" cy="100" r="3.5" fill="#22c55e"/>
@@ -855,21 +1005,16 @@
                     <circle cx="25" cy="94" r="3.5" fill="#22c55e"/>
                     <circle cx="35" cy="94" r="3.5" fill="#22c55e"/>
                 `;
-                trayCau.innerHTML = `
-                    <circle cx="170" cy="100" r="3.5" fill="#22c55e"/>
-                `;
+                trayCau.innerHTML = `<circle cx="170" cy="100" r="3.5" fill="#22c55e"/>`;
             } else if (state === 'equilibrium') {
                 btnEqui.className = "px-4 py-2 rounded-xl text-xs md:text-sm font-bold border transition-all shadow-md bg-purple-600 border-purple-500 text-white shadow-purple-900/50";
-                
                 titleEl.innerText = "⚖️ Cân Bằng Thị Trường";
                 descEl.innerHTML = `
                     <p>Tại mức giá cân bằng (P* = 15.000đ): <strong>Lượng cung = Lượng cầu (Q* = 20 quả)</strong>.</p>
                     <p class="text-purple-400 font-bold">Người bán vui vẻ cung cấp vừa đúng lượng người mua muốn mua sắm.</p>
                     <p class="text-slate-400 text-xs">💡 Thị trường đạt trạng thái hài hòa, không có hiện tượng chen lấn tranh mua hay ế ẩm hạ giá. Giá cả ổn định.</p>
                 `;
-                
-                scaleLever.style.transform = "rotate(0deg)"; // Perfect flat
-                
+                scaleLever.style.transform = "rotate(0deg)";
                 trayCung.innerHTML = `
                     <circle cx="22" cy="100" r="3.5" fill="#22c55e"/>
                     <circle cx="30" cy="100" r="3.5" fill="#22c55e"/>
@@ -882,19 +1027,14 @@
                 `;
             } else if (state === 'shortage') {
                 btnShort.className = "px-4 py-2 rounded-xl text-xs md:text-sm font-bold border transition-all shadow-md bg-purple-600 border-purple-500 text-white shadow-purple-900/50";
-                
                 titleEl.innerText = "📈 Thiếu Hụt Cung (Khan hiếm hàng hóa)";
                 descEl.innerHTML = `
                     <p>Giá thấp hơn mức giá cân bằng (P < P*): <strong>Lượng cầu > Lượng cung</strong>.</p>
                     <p class="text-sky-400 font-bold">Người dân tranh nhau ôm hàng giá rẻ nhưng cửa hàng lại ghìm giữ không muốn bán.</p>
                     <p class="text-slate-400 text-xs">💡 Sự khan hiếm nghiêm trọng khiến những người mua sẵn sàng trả thêm tiền để có được hàng. Do đó, <strong>Giá cả có xu hướng tăng trở lại mức cân bằng</strong>.</p>
                 `;
-                
-                scaleLever.style.transform = "rotate(12deg)"; // Right (Cau) is heavier
-                
-                trayCung.innerHTML = `
-                    <circle cx="30" cy="100" r="3.5" fill="#22c55e"/>
-                `;
+                scaleLever.style.transform = "rotate(12deg)";
+                trayCung.innerHTML = `<circle cx="30" cy="100" r="3.5" fill="#22c55e"/>`;
                 trayCau.innerHTML = `
                     <circle cx="160" cy="100" r="3.5" fill="#22c55e"/>
                     <circle cx="170" cy="100" r="3.5" fill="#22c55e"/>
@@ -905,7 +1045,6 @@
             }
         }
 
-        // Widget 8: Global Sandbox playground
         function runSandbox(price) {
             const label = document.getElementById('sandbox-price-label');
             const qsVal = document.getElementById('sandbox-qs');
@@ -933,7 +1072,191 @@
             }
         }
 
-        // Mini Quiz validation logic
+        // =========================================================================
+        // MỤC 9: DỊCH CHUYỂN CUNG - CẦU & ĐIỂM CẮT E1 CHUẨN XÁC VỚI ĐƯỜNG ĐỐI DIỆN
+        // =========================================================================
+        let currentShiftMode = 'demand';
+
+        function switchShiftMode(mode) {
+            currentShiftMode = mode;
+            const btnD = document.getElementById('tab-shift-demand');
+            const btnS = document.getElementById('tab-shift-supply');
+            const scenD = document.getElementById('demand-scenarios');
+            const scenS = document.getElementById('supply-scenarios');
+            const theoryTitle = document.getElementById('shift-theory-title');
+            const theoryDesc = document.getElementById('shift-theory-desc');
+
+            if (mode === 'demand') {
+                btnD.className = "px-5 py-2.5 rounded-full font-bold text-xs md:text-sm border transition-all shadow-md bg-sky-600 border-sky-400 text-white shadow-sky-900/50";
+                btnS.className = "px-5 py-2.5 rounded-full font-bold text-xs md:text-sm border transition-all shadow-sm bg-slate-800 border-emerald-500/30 text-emerald-300 hover:bg-emerald-900/40";
+                scenD.classList.remove('hidden');
+                scenS.classList.add('hidden');
+                theoryTitle.innerText = "Quy luật dịch chuyển đường CẦU (Demand Shift)";
+                theoryDesc.innerHTML = "Do các <strong>yếu tố phi giá</strong> làm thay đổi lượng cầu ở MỌI mức giá: Thu nhập người dân, sở thích, kỳ vọng tương lai, giá hàng thay thế/bổ sung. Đường dịch <strong>Sang Phải = Cầu Tăng</strong>; dịch <strong>Sang Trái = Cầu Giảm</strong>.";
+            } else {
+                btnS.className = "px-5 py-2.5 rounded-full font-bold text-xs md:text-sm border transition-all shadow-md bg-emerald-600 border-emerald-400 text-white shadow-emerald-900/50";
+                btnD.className = "px-5 py-2.5 rounded-full font-bold text-xs md:text-sm border transition-all shadow-sm bg-slate-800 border-sky-500/30 text-sky-300 hover:bg-sky-900/40";
+                scenS.classList.remove('hidden');
+                scenD.classList.add('hidden');
+                theoryTitle.innerText = "Quy luật dịch chuyển đường CUNG (Supply Shift)";
+                theoryDesc.innerHTML = "Do các <strong>yếu tố phi giá của người bán</strong>: Tiến bộ khoa học công nghệ, giá cả các yếu tố đầu vào (vốn, nguyên liệu, lương nhân công), chính sách thuế/trợ cấp, thiên tai thời tiết. Đường dịch <strong>Sang Phải = Cung Tăng</strong>; dịch <strong>Sang Trái = Cung Giảm</strong>.";
+            }
+            resetShift();
+        }
+
+        function applyScenario(type, offset, scenarioName) {
+            document.getElementById('shift-slider').value = offset;
+            manualShift(offset, scenarioName);
+        }
+
+        function manualShift(offsetVal, scenarioName = null) {
+            const offset = parseFloat(offsetVal);
+            const offsetLabel = document.getElementById('shift-offset-label');
+            const impactText = document.getElementById('shift-impact-text');
+            
+            const curveD0 = document.getElementById('curve-d-base');
+            const curveS0 = document.getElementById('curve-s-base');
+            const groupD = document.getElementById('group-demand-shift');
+            const groupS = document.getElementById('group-supply-shift');
+            const curveDDyn = document.getElementById('curve-d-dynamic');
+            const labelDDyn = document.getElementById('label-d-dynamic');
+            const curveSDyn = document.getElementById('curve-s-dynamic');
+            const labelSDyn = document.getElementById('label-s-dynamic');
+
+            if (offset === 0) {
+                resetShift();
+                return;
+            }
+
+            offsetLabel.innerText = offset > 0 ? `Dịch Sang Phải (+${offset})` : `Dịch Sang Trái (${offset})`;
+            offsetLabel.className = offset > 0 ? "font-extrabold text-emerald-400" : "font-extrabold text-red-400";
+
+            /*
+               HÌNH HỌC TỌA ĐỘ TRONG SVG:
+               - E0 = (65, 60)
+               - Đường Cung S0 đứng yên nối từ (30, 95) tới (100, 25)
+                 => Phương trình: y = 125 - x (Trên SVG: x tăng thì y giảm, tức Giá P cao lên)
+               - Đường Cầu D0 đứng yên nối từ (30, 25) tới (100, 95)
+                 => Phương trình: y = x - 5 (Trên SVG: x tăng thì y tăng, tức Giá P thấp xuống)
+            */
+
+            if (currentShiftMode === 'demand') {
+                // 1. Dịch Cầu: Cầu di chuyển, Cung S0 ĐỨNG YÊN. Điểm E1 trượt trên S0
+                curveD0.setAttribute('stroke-dasharray', '2,2');
+                curveD0.setAttribute('stroke-opacity', '0.35');
+                curveS0.removeAttribute('stroke-dasharray');
+                curveS0.setAttribute('stroke-opacity', '1');
+
+                groupS.style.transform = "translateX(0px)";
+                curveSDyn.classList.add('hidden');
+                labelSDyn.classList.add('hidden');
+
+                groupD.style.transform = `translateX(${offset}px)`;
+                curveDDyn.classList.remove('hidden');
+                labelDDyn.classList.remove('hidden');
+
+                // Đường Cầu dịch một đoạn offset theo phương ngang x.
+                // Giao điểm với S0: x_new = 65 + offset/2, y_new = 125 - x_new = 60 - offset/2
+                const newX = 65 + (offset / 2);
+                const newY = 125 - newX; // Nằm 100% trên đường Cung S0
+
+                updateNewEquilibrium(newX, newY);
+
+                const scenarioTxt = scenarioName ? `<div class="text-sky-300 font-bold mb-1">Tình huống: ${scenarioName}</div>` : '';
+                if (offset > 0) {
+                    impactText.innerHTML = `${scenarioTxt}Đường Cầu dịch sang phải (<strong class="text-sky-400">Cầu Tăng</strong>) cắt đường Cung S₀ đứng yên: <br>➡️ <strong class="text-amber-400">Giá cân bằng TĂNG (P* ↑)</strong> và <strong class="text-emerald-400">Sản lượng cân bằng TĂNG (Q* ↑)</strong>.`;
+                } else {
+                    impactText.innerHTML = `${scenarioTxt}Đường Cầu dịch sang trái (<strong class="text-red-400">Cầu Giảm</strong>) cắt đường Cung S₀ đứng yên: <br>➡️ <strong class="text-red-400">Giá cân bằng GIẢM (P* ↓)</strong> và <strong class="text-red-400">Sản lượng cân bằng GIẢM (Q* ↓)</strong>.`;
+                }
+            } else {
+                // 2. Dịch Cung: Cung di chuyển, Cầu D0 ĐỨNG YÊN. Điểm E1 trượt trên D0
+                curveS0.setAttribute('stroke-dasharray', '2,2');
+                curveS0.setAttribute('stroke-opacity', '0.35');
+                curveD0.removeAttribute('stroke-dasharray');
+                curveD0.setAttribute('stroke-opacity', '1');
+
+                groupD.style.transform = "translateX(0px)";
+                curveDDyn.classList.add('hidden');
+                labelDDyn.classList.add('hidden');
+
+                groupS.style.transform = `translateX(${offset}px)`;
+                curveSDyn.classList.remove('hidden');
+                labelSDyn.classList.remove('hidden');
+
+                // Đường Cung dịch một đoạn offset theo phương ngang x.
+                // Giao điểm với D0: x_new = 65 + offset/2, y_new = x_new - 5 = 60 + offset/2
+                const newX = 65 + (offset / 2);
+                const newY = newX - 5; // Nằm 100% trên đường Cầu D0
+
+                updateNewEquilibrium(newX, newY);
+
+                const scenarioTxt = scenarioName ? `<div class="text-emerald-300 font-bold mb-1">Tình huống: ${scenarioName}</div>` : '';
+                if (offset > 0) {
+                    impactText.innerHTML = `${scenarioTxt}Đường Cung dịch sang phải (<strong class="text-emerald-400">Cung Tăng</strong>) cắt đường Cầu D₀ đứng yên: <br>➡️ <strong class="text-emerald-400">Sản lượng cân bằng TĂNG (Q* ↑)</strong> nhưng làm <strong class="text-red-400">Giá cân bằng GIẢM (P* ↓)</strong>.`;
+                } else {
+                    impactText.innerHTML = `${scenarioTxt}Đường Cung dịch sang trái (<strong class="text-amber-400">Cung Giảm</strong>) cắt đường Cầu D₀ đứng yên: <br>➡️ <strong class="text-amber-400">Giá cân bằng TĂNG (P* ↑)</strong> nhưng làm <strong class="text-red-400">Sản lượng cân bằng GIẢM (Q* ↓)</strong>.`;
+                }
+            }
+        }
+
+        function updateNewEquilibrium(x, y) {
+            const groupEqNew = document.getElementById('group-eq-new');
+            const dotE1 = document.getElementById('dot-e1');
+            const labelE1 = document.getElementById('label-e1');
+            const projP1 = document.getElementById('proj-p1');
+            const projQ1 = document.getElementById('proj-q1');
+            const labelP1 = document.getElementById('label-p1');
+            const labelQ1 = document.getElementById('label-q1');
+
+            groupEqNew.classList.remove('opacity-0');
+            
+            dotE1.setAttribute('cx', x);
+            dotE1.setAttribute('cy', y);
+
+            labelE1.setAttribute('x', x + 3);
+            labelE1.setAttribute('y', y - 3);
+
+            // Dóng nét đứt sang trục P (x=20)
+            projP1.setAttribute('y1', y);
+            projP1.setAttribute('y2', y);
+            projP1.setAttribute('x1', 20);
+            projP1.setAttribute('x2', x);
+
+            // Dóng nét đứt xuống trục Q (y=105)
+            projQ1.setAttribute('x1', x);
+            projQ1.setAttribute('x2', x);
+            projQ1.setAttribute('y1', y);
+            projQ1.setAttribute('y2', 105);
+
+            labelP1.setAttribute('y', y + 2);
+            labelQ1.setAttribute('x', x - 3);
+        }
+
+        function resetShift() {
+            document.getElementById('shift-slider').value = 0;
+            document.getElementById('shift-offset-label').innerText = "Ở vị trí gốc (0)";
+            document.getElementById('shift-offset-label').className = "font-extrabold text-indigo-400";
+            document.getElementById('shift-impact-text').innerText = "Chưa có sự dịch chuyển. Đồ thị đang ở trạng thái cân bằng ban đầu.";
+
+            const curveD0 = document.getElementById('curve-d-base');
+            const curveS0 = document.getElementById('curve-s-base');
+            curveD0.removeAttribute('stroke-dasharray');
+            curveD0.setAttribute('stroke-opacity', '1');
+            curveS0.removeAttribute('stroke-dasharray');
+            curveS0.setAttribute('stroke-opacity', '1');
+
+            document.getElementById('group-demand-shift').style.transform = "translateX(0px)";
+            document.getElementById('curve-d-dynamic').classList.add('hidden');
+            document.getElementById('label-d-dynamic').classList.add('hidden');
+
+            document.getElementById('group-supply-shift').style.transform = "translateX(0px)";
+            document.getElementById('curve-s-dynamic').classList.add('hidden');
+            document.getElementById('label-s-dynamic').classList.add('hidden');
+
+            document.getElementById('group-eq-new').classList.add('opacity-0');
+        }
+
+        // Mini Quiz
         const answers = {
             1: 'C',
             2: 'B',
@@ -945,13 +1268,11 @@
             const parent = btnElement.parentElement;
             const buttons = parent.querySelectorAll('button');
 
-            // Disable other options
             buttons.forEach(btn => {
                 btn.disabled = true;
                 btn.className = "text-left p-3 rounded-lg border border-slate-800 bg-slate-900/40 text-slate-500 opacity-60 font-semibold cursor-not-allowed";
             });
 
-            // Is correct?
             if (chosenOption === answers[questionNum]) {
                 btnElement.className = "text-left p-3 rounded-lg border-2 border-emerald-500 bg-emerald-950/80 text-emerald-300 font-black shadow-sm";
                 feedback.className = "mt-2 p-2.5 rounded text-xs font-bold bg-emerald-950 border border-emerald-800 text-emerald-300 block";
@@ -961,7 +1282,6 @@
                 feedback.className = "mt-2 p-2.5 rounded text-xs font-bold bg-red-950 border border-red-800 text-red-300 block";
                 feedback.innerHTML = "❌ Chưa đúng rồi! " + getQuizExplanation(questionNum);
                 
-                // Highlight the correct one
                 buttons.forEach(btn => {
                     if (btn.innerText.trim().startsWith(answers[questionNum])) {
                         btn.className = "text-left p-3 rounded-lg border border-emerald-500 bg-emerald-950/50 text-emerald-300 font-bold";
@@ -972,7 +1292,7 @@
 
         function getQuizExplanation(qNum) {
             if (qNum === 1) {
-                return "Theo Quy luật Cung Cầu, khi giá tăng cao (P↑), bên bán sẽ tích cực sản xuất bán hàng (Q<sub>S</sub>↑) but người dân sẽ tiết kiệm tiêu dùng bớt mua lại (Q<sub>D</sub>↓).";
+                return "Theo Quy luật Cung Cầu, khi giá tăng cao (P↑), bên bán sẽ tích cực sản xuất bán hàng (Q<sub>S</sub>↑) nhưng người dân sẽ tiết kiệm tiêu dùng bớt mua lại (Q<sub>D</sub>↓).";
             } else if (qNum === 2) {
                 return "Thặng dư cung xuất hiện khi giá cả quá đắt đỏ so với nhu cầu thực của thị trường (Cung > Cầu), lượng tồn kho ứ đọng bắt buộc người bán phải xả hàng giảm giá.";
             } else {
