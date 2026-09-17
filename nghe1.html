@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Học Ngữ pháp Tiếng Hàn</title>
+    <!-- Tích hợp Google Fonts cho Tiếng Việt và Tiếng Hàn -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables cho Theme Mặc định (Sáng - Tông Xanh lá bền vững) */
+        :root {
+            --bg-body: #f4f7f5;
+            --bg-card: #ffffff;
+            --bg-alt: #f8faf9;
+            --text-main: #2d3748;
+            --text-muted: #64748b;
+            
+            /* Tông Xanh lá bền vững (Forest Green) */
+            --primary: #2d6a4f; 
+            --primary-hover: #1b4332;
+            --primary-bg-light: rgba(45, 106, 79, 0.08);
+            --primary-focus: rgba(45, 106, 79, 0.2);
+            
+            /* Tông Đỏ trầm (Muted Terracotta) khớp với xanh lá */
+            --highlight: #bc4749; 
+            
+            --border: #e2e8f0;
+            --success-bg: #d1fae5;
+            --success-text: #065f46;
+            --error-bg: #fee2e2;
+            --error-text: #991b1b;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+        }
+
+        /* CSS Variables cho Theme Tối (Dark Mode) */
+        [data-theme="dark"] {
+            --bg-body: #111827;
+            --bg-card: #1f2937;
+            --bg-alt: #374151;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            
+            /* Xanh lá sáng hơn cho nền tối */
+            --primary: #52b788; 
+            --primary-hover: #40916c;
+            --primary-bg-light: rgba(82, 183, 136, 0.15);
+            --primary-focus: rgba(82, 183, 136, 0.3);
+            
+            /* Đỏ san hô trầm cho nền tối */
+            --highlight: #e56b6f; 
+            
+            --border: #4b5563;
+            --success-bg: #064e3b;
+            --success-text: #34d399;
+            --error-bg: #7f1d1d;
+            --error-text: #f87171;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Responsive Dark Mode cho lựa chọn "Hệ thống" */
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]):not([data-theme="dark"]) {
+                --bg-body: #111827;
+                --bg-card: #1f2937;
+                --bg-alt: #374151;
+                --text-main: #f9fafb;
+                --text-muted: #9ca3af;
+                --primary: #52b788;
+                --primary-hover: #40916c;
+                --primary-bg-light: rgba(82, 183, 136, 0.15);
+                --primary-focus: rgba(82, 183, 136, 0.3);
+                --highlight: #e56b6f;
+                --border: #4b5563;
+                --success-bg: #064e3b;
+                --success-text: #34d399;
+                --error-bg: #7f1d1d;
+                --error-text: #f87171;
+                --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Noto Sans', 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 30px 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .grammar-container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Back Navigation Button */
+        .back-nav {
+            background: var(--bg-card);
+            padding: 15px 25px;
+            border-bottom: 1px solid var(--border);
+        }
+        .back-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+        .back-btn:hover {
+            color: var(--primary-hover);
+            transform: translateX(-3px);
+        }
+
+        /* Header & Theme Switcher */
+        .top-subtitle {
+            background-color: var(--primary);
+            color: #fff;
+            padding: 10px 25px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 15px 25px;
+            background: var(--bg-card);
+        }
+        .theme-switch {
+            display: flex;
+            background: var(--bg-alt);
+            border-radius: 20px;
+            padding: 4px;
+            border: 1px solid var(--border);
+        }
+        .theme-btn {
+            background: transparent;
+            border: none;
+            border-radius: 16px;
+            padding: 6px 12px;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+        }
+        .theme-btn:hover { color: var(--text-main); }
+        .theme-btn.active {
+            background: var(--bg-card);
+            color: var(--primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-weight: bold;
+        }
+
+        /* Main Tabs (문법1 & 문법2) */
+        .main-tab-menu {
+            display: flex;
+            background: var(--bg-alt);
+            border-bottom: 2px solid var(--primary);
+        }
+        .main-tab-btn {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .main-tab-btn:hover {
+            color: var(--primary);
+            background: var(--primary-bg-light);
+        }
+        .main-tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        /* Main Tab Content Wrapper */
+        .main-tab-content {
+            display: none;
+        }
+        .main-tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        /* Sub Tabs (Lý thuyết / Ví dụ / Luyện tập) */
+        .tab-menu {
+            display: flex;
+            padding: 20px 25px 0;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: var(--bg-alt);
+            color: var(--text-muted);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            position: relative;
+        }
+        .tab-btn:hover { color: var(--primary); background: var(--border); }
+        .tab-btn.active {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--border);
+            border-bottom: 1px solid var(--bg-card);
+            margin-bottom: -1px;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            padding: 30px 25px;
+            animation: fadeIn 0.4s ease;
+        }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Elements inside Tabs */
+        .theory-box {
+            background: var(--primary-bg-light);
+            padding: 15px 20px;
+            border-left: 4px solid var(--primary);
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 1.05em;
+        }
+        .theory-list {
+            background: var(--bg-alt);
+            padding: 20px 20px 20px 40px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .theory-list li { margin-bottom: 12px; }
+        .theory-list li:last-child { margin-bottom: 0; }
+        
+        .ko-text {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 500;
+        }
+        .highlight-grammar {
+            color: var(--highlight);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            font-weight: 700;
+        }
+
+        /* Examples */
+        .example-item {
+            background: var(--bg-alt);
+            padding: 18px 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+        .example-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .example-item::after {
+            content: 'Click để xem';
+            position: absolute;
+            right: 20px;
+            top: 18px;
+            font-size: 0.85em;
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+        .ex-vi { font-weight: 600; font-size: 1.1em; }
+        .ex-ko { 
+            font-size: 1.2em; 
+            margin-top: 10px; 
+            display: none; 
+            padding-top: 12px;
+            border-top: 1px dashed var(--border);
+        }
+        .example-item.show::after { content: 'Ẩn'; }
+        .example-item.show .ex-ko { display: block; animation: fadeIn 0.3s ease; }
+
+        /* Practice */
+        .practice-item {
+            background: var(--bg-alt);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+        .question-text {
+            font-size: 1.1em;
+            font-weight: 500;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        input[type="text"] {
+            padding: 8px 12px;
+            font-size: 16px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            width: 170px;
+            background: var(--bg-card);
+            color: var(--text-main);
+            outline: none;
+            font-family: 'Noto Sans KR', sans-serif;
+            text-align: center;
+        }
+        input[type="text"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-focus);
+        }
+        .btn-check {
+            padding: 9px 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-check:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
+        .btn-check:active { transform: translateY(1px); }
+        
+        .feedback {
+            margin-top: 12px;
+            font-size: 0.95em;
+            display: none;
+            padding: 12px 15px;
+            border-radius: 6px;
+            line-height: 1.5;
+        }
+        .feedback.correct { 
+            background-color: var(--success-bg); 
+            color: var(--success-text); 
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            display: block; 
+        }
+        .feedback.incorrect { 
+            background-color: var(--error-bg); 
+            color: var(--error-text); 
+            border: 1px solid rgba(248, 113, 113, 0.3);
+            display: block; 
+        }
+
+        .guide-text {
+            color: var(--text-muted);
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Footer */
+        .footer-credit {
+            text-align: center;
+            padding: 15px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            background: var(--bg-alt);
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="grammar-container">
+    <!-- Nút Quay lại ENJOY KOREAN -->
+    <div class="back-nav">
+        <a href="https://lqa92.github.io/quocanluong/index.html#korean" class="back-btn">← Quay lại ENJOY KOREAN</a>
+    </div>
+
+    <!-- Subtitle Trên Cùng -->
+    <div class="top-subtitle">
+        Cùng học trước ngữ pháp trong môn Nghe tiếng Hàn 1
+    </div>
+
+    <!-- Theme Switcher -->
+    <div class="header">
+        <div class="theme-switch">
+            <button class="theme-btn" id="theme-light" onclick="setTheme('light')" title="Giao diện Sáng">Sáng</button>
+            <button class="theme-btn" id="theme-dark" onclick="setTheme('dark')" title="Giao diện Tối">Tối</button>
+            <button class="theme-btn active" id="theme-system" onclick="setTheme('system')" title="Theo Hệ thống">Hệ thống</button>
+        </div>
+    </div>
+
+    <!-- Menu Chọn Ngữ Pháp (Tab Lớn) -->
+    <div class="main-tab-menu">
+        <button class="main-tab-btn active" onclick="openMainTab('grammar1', this)">문법1. N-이다</button>
+        <button class="main-tab-btn" onclick="openMainTab('grammar2', this)">문법2. N-에서 왔다</button>
+    </div>
+
+
+    <!-- ======================= KHỐI NGỮ PHÁP 1 ======================= -->
+    <div id="grammar1" class="main-tab-content active">
+        <!-- Tab Menu Nhỏ -->
+        <div class="tab-menu">
+            <button class="tab-btn active" onclick="openSubTab('theory1', this, 'grammar1')">Lý thuyết</button>
+            <button class="tab-btn" onclick="openSubTab('examples1', this, 'grammar1')">Ví dụ</button>
+            <button class="tab-btn" onclick="openSubTab('practice1', this, 'grammar1')">Luyện tập</button>
+        </div>
+
+        <!-- 1. Lý thuyết -->
+        <div id="theory1" class="tab-content active">
+            <div class="theory-box">
+                Gắn sau Danh từ, dùng để diễn tả ý nghĩa: <strong>“là N”</strong>
+            </div>
+            <ul class="theory-list">
+                <li><strong>Đuôi trang trọng:</strong> <span class="ko-text">이다</span> → <strong class="ko-text" style="color:var(--primary)">입니다</strong> (câu tường thuật), <strong class="ko-text" style="color:var(--primary)">입니까</strong> (câu hỏi)</li>
+                <li><strong>Đuôi thân mật, lịch sự:</strong> <span class="ko-text">이다</span> → <strong class="ko-text" style="color:var(--primary)">이에요</strong> (N có patchim) hoặc <strong class="ko-text" style="color:var(--primary)">예요</strong> (N không có patchim)</li>
+            </ul>
+            <p class="guide-text" style="margin-top: 15px;">
+                <em>Ghi chú: Với đuôi -요, nếu là câu hỏi thì chỉ cần thêm dấu chấm hỏi (?) cuối câu và lên giọng là được.</em>
+            </p>
+        </div>
+
+        <!-- 2. Ví dụ -->
+        <div id="examples1" class="tab-content">
+            <div class="guide-text">Nhấp vào câu tiếng Việt để xem bản dịch tiếng Hàn tương ứng.</div>
+            
+            <div class="example-item" onclick="this.classList.toggle('show')">
+                <div class="ex-vi">(Tôi) là Quốc An.</div>
+                <div class="ex-ko ko-text">꾸억안<span class="highlight-grammar">입니다</span>. / 꾸억안<span class="highlight-grammar">이에요</span>.</div>
+            </div>
+            <div class="example-item" onclick="this.classList.toggle('show')">
+                <div class="ex-vi">(Cái này) là nước ép.</div>
+                <div class="ex-ko ko-text">주스<span class="highlight-grammar">입니다</span>. / 주스<span class="highlight-grammar">예요</span>.</div>
+            </div>
+            <div class="example-item" onclick="this.classList.toggle('show')">
+                <div class="ex-vi">(Người này) là ai vậy?</div>
+                <div class="ex-ko ko-text">누구<span class="highlight-grammar">입니까</span>? / 누구<span class="highlight-grammar">예요</span>?</div>
+            </div>
+            <div class="example-item" onclick="this.classList.toggle('show')">
+                <div class="ex-vi">(Bạn) là người Hàn Quốc hả?</div>
+                <div class="ex-ko ko-text">한국 사람<span class="highlight-grammar">입니까</span>? / 한국 사람<span class="highlight-grammar">이에요</span>?</div> 
+            </div>
+        </div>
+
+        <!-- 3. Luyện tập -->
+        <div id="practice1" class="tab-content">
+            <div class="guide-text">Gõ đuôi câu phù hợp (trang trọng hoặc thân mật đều được) vào ô trống và nhấn "Kiểm tra".</div>
+            
+            <div class="practice-item">
+                <div style="margin-bottom:8px; color:var(--text-muted)">1) (Tôi) là học sinh.</div>
+                <div class="question-text ko-text">
+                    학생 <input type="text" id="q1_1"> .
+                    <button class="btn-check" onclick="checkAnswer('q1_1', ['입니다', '이에요'], '학생 kết thúc bằng phụ âm (có patchim) nên dùng <strong>입니다</strong> hoặc <strong>이에요</strong>.')">Kiểm tra</button>
+                </div>
+                <div id="fb-q1_1" class="feedback"></div>
+            </div>
+
+            <div class="practice-item">
+                <div style="margin-bottom:8px; color:var(--text-muted)">2) (Đây) là cái nón.</div>
+                <div class="question-text ko-text">
+                    모자 <input type="text" id="q1_2"> .
+                    <button class="btn-check" onclick="checkAnswer('q1_2', ['입니다', '예요'], '모자 kết thúc bằng nguyên âm (không có patchim) nên dùng <strong>입니다</strong> hoặc <strong>예요</strong>.')">Kiểm tra</button>
+                </div>
+                <div id="fb-q1_2" class="feedback"></div>
+            </div>
+
+            <div class="practice-item">
+                <div style="margin-bottom:8px; color:var(--text-muted)">3) (Bạn) là giáo viên hả?</div>
+                <div class="question-text ko-text">
+                    선생님 <input type="text" id="q1_3"> ?
+                    <button class="btn-check" onclick="checkAnswer('q1_3', ['입니까', '이에요'], 'Câu hỏi + 선생님 có patchim nên dùng <strong>입니까?</strong> hoặc <strong>이에요?</strong>')">Kiểm tra</button>
+                </div>
+                <div id="fb-q1_3" class="feedback"></div>
+            </div>
+
+            <div class="practice-item">
+                <div style="margin-bottom:8px; color:var(--text-muted)">4) (Cái này) là kimchi hả?</div>
+                <div class="question-text ko-text">
+                    김치 <input type="text" id="q1_4"> ?
+                    <button class="btn-check" onclick="checkAnswer('q1_4', ['입니까', '예요'], 'Câu hỏi + 김치 không có patchim nên dùng <strong>입니까?</strong> hoặc <strong>예요?</strong>')">Kiểm tra</button>
+                </div>
+                <div id="fb-q1_4" class="feedback"></div>
+            </div>
+
+            <div class="practice-item">
+                <div style="margin-bottom:8px; color:var(--text-muted)">5) (Bạn) là người nước nào?</div>
+                <div class="question-text ko-text">
+                    어느 나라 사람 <input type="text" id="q1_5"> ?
+                    <button class="btn-check" onclick="checkAnswer('q1_5', ['입니까', '이에요'], 'Câu hỏi + 사람 có patchim nên dùng <strong>입니까?</strong> hoặc <strong>이에요?</strong>')">Kiểm tra</button>
+                </div>
+                <div id="fb-q1_5" class="feedback"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ======================= KHỐI NGỮ PHÁP 2 ======================= -->
+    <div id="grammar2" class="main-tab-content">
+        <!-- Tab Menu Nhỏ -->
+        <div class="tab-menu">
+            <button class="tab-btn active" onclick="openSubTab('theory2', this, 'grammar2')">Lý thuyết</button>
+            <button class="tab-btn" onclick="openSubTab('examples2', this, 'grammar2')">Ví dụ</button>
+            <button class="tab-btn" onclick="openSubTab('practice2', this, 'grammar2')">Luyện tập</button>
+        </div>
+
+        <!-- 1. Lý thuyết -->
+        <div id="theory2" class="tab-content active">
+            <div class="theory-box">
+                Gắn sau Danh từ (thường là danh từ chỉ quốc gia, địa điểm, nơi chốn), dùng để diễn tả ý nghĩa: <strong>“đến từ N”</strong> (thường dùng để giới thiệu quê quán, quốc tịch hoặc nơi xuất phát).
+            </div>
+            <ul class="theory-list">
+                <li><strong>Đuôi trang trọng:</strong> <span class="ko-text">에서 왔다</span> → <strong class="ko-text" style="color:var(--primary)">에서 왔습니다</strong> (câu tường thuật), <strong class="ko-text" style="color:var(--primary)">에서 왔습니까</strong> (câu hỏi)</li>
+                <li><strong>Đuôi thân mật, lịch sự:</strong> <span class="ko-text">에서 왔다</span> → <strong class="ko-text" style="color:var(--primary)">에서 왔어요</strong></li>
+            </ul>
+            <p class="guide-text" style="margin-top: 15px;">
+                <em>Ghi chú: Với đuôi -요, nếu là câu hỏi thì chỉ cần thêm dấu chấm hỏi (?) cuối câu và lên giọng là được.</em>
+            </p>
+        </div>
+
+        <!-- 2. Ví dụ -->
+        <div id="examples2" class="tab-content">
+            <div class="guide-text">Nhấp vào câu tiếng Việt để xem bản dịch tiếng Hàn tương ứng.</div>
+            
+            <div class="example-item" onclick="this.classList.toggle('show')">
+                <div class="ex-vi">(Tôi) đến từ Việt Nam.</div>
+                <div class="ex-ko ko-text">베트남<span class="highlight-grammar">에서 왔습니다</span>. / 베트남<span class="highlight-grammar">에서 왔어요</span>.</div>
+            </div>
+            <div class="example-item" onclick="this.classList.toggle('show')">
+                <div class="ex-vi">(Anh ấy) đến từ Mỹ.</div>
+                <div class="ex-ko ko-text">미국<span class="highlight-grammar">에서 왔습니다</span>. / 미국<span class="highlight-grammar">에서 왔어요</span>.</div>
+            </div>
+            <div class="example-item" onclick="this.classList.toggle('show')">
+                <div class="ex-vi">(Bạn) đến từ đâu vậy?</div>
+                <div class="ex-ko ko-text">어디<span class="highlight-grammar">에서 왔습니까</span>? / 어디<span class="highlight-grammar">에서 왔어요</span>?</div>
+            </div>
+            <div class="example-item" onclick="this.classList.toggle('show')">
+                <div class="ex-vi">(Bạn) đến từ Hàn Quốc hả?</div>
+                <div class="ex-ko ko-text">한국<span class="highlight-grammar">에서 왔습니까</span>? / 한국<span class="highlight-grammar">에서 왔어요</span>?</div> 
+            </div>
+        </div>
+
+        <!-- 3. Luyện tập -->
+        <div id="practice2" class="tab-content">
+            <div class="guide-text">Gõ đuôi câu phù hợp (trang trọng hoặc thân mật đều được) vào ô trống và nhấn "Kiểm tra".</div>
+            
+            <div class="practice-item">
+                <div style="margin-bottom:8px; color:var(--text-muted)">1) (Tôi) đến từ Hà Nội.</div>
+                <div class="question-text ko-text">
+                    하노이 <input type="text" id="q2_1"> .
+                    <button class="btn-check" onclick="checkAnswer('q2_1', ['에서 왔습니다', '에서 왔어요'], 'Đây là câu kể, dùng <strong>에서 왔습니다</strong> hoặc <strong>에서 왔어요</strong>.')">Kiểm tra</button>
+                </div>
+                <div id="fb-q2_1" class="feedback"></div>
+            </div>
+
+            <div class="practice-item">
+                <div style="margin-bottom:8px; color:var(--text-muted)">2) (Cô ấy) đến từ Trung Quốc.</div>
+                <div class="question-text ko-text">
+                    중국 <input type="text" id="q2_2"> .
+                    <button class="btn-check" onclick="checkAnswer('q2_2', ['에서 왔습니다', '에서 왔어요'], 'Đây là câu kể, dùng <strong>에서 왔습니다</strong> hoặc <strong>에서 왔어요</strong>.')">Kiểm tra</button>
+                </div>
+                <div id="fb-q2_2" class="feedback"></div>
+            </div>
+
+            <div class="practice-item">
+                <div style="margin-bottom:8px; color:var(--text-muted)">3) (Bạn) đến từ Nhật Bản hả?</div>
+                <div class="question-text ko-text">
+                    일본 <input type="text" id="q2_3"> ?
+                    <button class="btn-check" onclick="checkAnswer('q2_3', ['에서 왔습니까', '에서 왔어요'], 'Đây là câu hỏi, dùng <strong>에서 왔습니까?</strong> hoặc <strong>에서 왔어요?</strong>')">Kiểm tra</button>
+                </div>
+                <div id="fb-q2_3" class="feedback"></div>
+            </div>
+
+            <div class="practice-item">
+                <div style="margin-bottom:8px; color:var(--text-muted)">4) (Anh ấy) đến từ Úc hả?</div>
+                <div class="question-text ko-text">
+                    호주 <input type="text" id="q2_4"> ?
+                    <button class="btn-check" onclick="checkAnswer('q2_4', ['에서 왔습니까', '에서 왔어요'], 'Đây là câu hỏi, dùng <strong>에서 왔습니까?</strong> hoặc <strong>에서 왔어요?</strong>')">Kiểm tra</button>
+                </div>
+                <div id="fb-q2_4" class="feedback"></div>
+            </div>
+
+            <div class="practice-item">
+                <div style="margin-bottom:8px; color:var(--text-muted)">5) (Người đó) đến từ nước nào vậy?</div>
+                <div class="question-text ko-text">
+                    어느 나라 <input type="text" id="q2_5"> ?
+                    <button class="btn-check" onclick="checkAnswer('q2_5', ['에서 왔습니까', '에서 왔어요'], 'Đây là câu hỏi, dùng <strong>에서 왔습니까?</strong> hoặc <strong>에서 왔어요?</strong>')">Kiểm tra</button>
+                </div>
+                <div id="fb-q2_5" class="feedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dòng thông tin tác giả -->
+    <div class="footer-credit">
+        Ứng dụng được thiết kế bởi ThS. Lương Quốc An (HUFLIT), dựa trên công cụ Gemini
+    </div>
+</div>
+
+<script>
+    /* ----- LOGIC THEME (Sáng/Tối) ----- */
+    const currentTheme = localStorage.getItem('theme') || 'system';
+    setTheme(currentTheme, false);
+
+    function setTheme(theme, save = true) {
+        if (theme === 'system') {
+            document.documentElement.removeAttribute('data-theme');
+            if (save) localStorage.removeItem('theme');
+        } else {
+            document.documentElement.setAttribute('data-theme', theme);
+            if (save) localStorage.setItem('theme', theme);
+        }
+        
+        document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`theme-${theme}`).classList.add('active');
+    }
+
+    /* ----- LOGIC CHUYỂN TAB LỚN (문법1 / 문법2) ----- */
+    function openMainTab(tabId, btn) {
+        // Ẩn tất cả nội dung tab lớn
+        document.querySelectorAll('.main-tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        // Bỏ active tất cả nút tab lớn
+        document.querySelectorAll('.main-tab-btn').forEach(button => {
+            button.classList.remove('active');
+        });
+
+        // Kích hoạt tab lớn được chọn
+        document.getElementById(tabId).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    /* ----- LOGIC CHUYỂN TAB NHỎ (Lý thuyết / Ví dụ / Luyện tập) ----- */
+    function openSubTab(tabId, btn, parentId) {
+        let parentContainer = document.getElementById(parentId);
+        
+        // Ẩn nội dung tab nhỏ trong khối ngữ pháp hiện tại
+        parentContainer.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        // Bỏ active nút tab nhỏ trong khối ngữ pháp hiện tại
+        parentContainer.querySelectorAll('.tab-btn').forEach(button => {
+            button.classList.remove('active');
+        });
+
+        // Kích hoạt tab nhỏ được chọn
+        document.getElementById(tabId).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    /* ----- LOGIC KIỂM TRA ĐÁP ÁN ----- */
+    function checkAnswer(inputId, validAnswers, explanation) {
+        let inputField = document.getElementById(inputId);
+        let feedback = document.getElementById('fb-' + inputId);
+        let userAnswer = inputField.value.trim();
+
+        if (userAnswer === "") {
+            feedback.className = 'feedback incorrect';
+            feedback.innerHTML = 'Vui lòng nhập đáp án trước khi kiểm tra!';
+            return;
+        }
+
+        if (validAnswers.includes(userAnswer)) {
+            feedback.className = 'feedback correct';
+            feedback.innerHTML = '<strong>Chính xác!</strong> <br>' + explanation;
+        } else {
+            feedback.className = 'feedback incorrect';
+            let formattedValid = validAnswers.map(ans => `<strong class="ko-text">${ans}</strong>`).join(' hoặc ');
+            feedback.innerHTML = '<strong>Chưa chính xác.</strong> <br>Hãy kiểm tra lại ngữ cảnh câu (câu hỏi hay câu trần thuật).<br>Đáp án đúng có thể là: ' + formattedValid;
+        }
+    }
+</script>
+
+</body>
+</html>
