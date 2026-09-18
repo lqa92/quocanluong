@@ -231,7 +231,7 @@
             </div>
         </div>
 
-        <!-- 4. ĐƯỜNG BÀNG QUAN -->
+        <!-- 4. ĐƯỜNG BÀNG QUAN (ĐÃ FIX DỐC XUỐNG) -->
         <div class="bg-slate-800/90 rounded-2xl border border-orange-500/30 shadow-lg overflow-hidden scale-up hover:border-orange-500/50">
             <button onclick="toggleAccordion('content-4')" class="w-full flex items-center justify-between p-5 bg-orange-950/40 hover:bg-orange-900/30 text-left transition-colors focus:outline-none">
                 <div class="flex items-center gap-4">
@@ -253,6 +253,10 @@
                         </div>
                         
                         <div class="space-y-3 mt-4 text-xs md:text-sm">
+                            <div class="flex items-start gap-2 bg-slate-900/80 border border-orange-500/20 p-2.5 rounded-lg shadow-sm">
+                                <span class="text-orange-400 mt-0.5"><i class="fa-solid fa-circle-chevron-right"></i></span>
+                                <div><strong>Dốc xuống:</strong> Đường bàng quan dốc xuống từ trái sang phải, thể hiện sự đánh đổi (muốn tiêu dùng thêm hàng X thì buộc phải giảm hàng Y).</div>
+                            </div>
                             <div class="flex items-start gap-2 bg-slate-900/80 border border-orange-500/20 p-2.5 rounded-lg shadow-sm">
                                 <span class="text-orange-400 mt-0.5"><i class="fa-solid fa-circle-chevron-right"></i></span>
                                 <div><strong>Tính lồi:</strong> Đường bàng quan luôn lồi về phía gốc tọa độ do tỷ lệ thay thế biên (MRS) giảm dần.</div>
@@ -278,14 +282,15 @@
                                 <text x="5" y="15" font-size="6" font-weight="bold" fill="#94a3b8">Hàng Y</text>
                                 <text x="84" y="93" font-size="6" font-weight="bold" fill="#94a3b8">Hàng X</text>
 
-                                <path d="M25,75 Q35,35 75,25" fill="none" stroke="#f97316" stroke-width="2.5" stroke-linecap="round"/>
-                                <text x="77" y="27" font-size="6" font-weight="bold" fill="#f97316">U1</text>
+                                <!-- Curves U1, U2, U3 (Đã vẽ lại dốc xuống từ trái sang phải) -->
+                                <path d="M20,39 Q29,64 71,84" fill="none" stroke="#f97316" stroke-width="2.5" stroke-linecap="round"/>
+                                <text x="73" y="84" font-size="6" font-weight="bold" fill="#f97316">U1</text>
 
-                                <path d="M30,80 Q45,40 85,30" fill="none" stroke="#fb923c" stroke-width="2" stroke-dasharray="2,2" stroke-linecap="round"/>
-                                <text x="87" y="32" font-size="6" font-weight="bold" fill="#fb923c">U2</text>
+                                <path d="M25,27 Q37,55 81,83" fill="none" stroke="#fb923c" stroke-width="2" stroke-dasharray="2,2" stroke-linecap="round"/>
+                                <text x="83" y="83" font-size="6" font-weight="bold" fill="#fb923c">U2</text>
 
-                                <path d="M35,85 Q55,45 92,35" fill="none" stroke="#fdba74" stroke-width="2" stroke-dasharray="2,2" stroke-linecap="round"/>
-                                <text x="94" y="37" font-size="6" font-weight="bold" fill="#fdba74">U3</text>
+                                <path d="M30,15 Q45,46 91,72" fill="none" stroke="#fdba74" stroke-width="2" stroke-dasharray="2,2" stroke-linecap="round"/>
+                                <text x="93" y="72" font-size="6" font-weight="bold" fill="#fdba74">U3</text>
                             </svg>
                         </div>
                         <div class="text-[11px] text-slate-400 italic mt-2 text-center">Các điểm nằm trên cùng 1 đường (như U<sub>1</sub>) cho cùng độ thỏa mãn.</div>
@@ -620,7 +625,8 @@
         // Init state
         window.onload = function() {
             toggleAccordion('content-1');
-            toggleAccordion('content-7'); // Mở phần trọng tâm "Lựa chọn tối ưu"
+            toggleAccordion('content-4'); // Mở thêm phần đường bàng quan để user thấy ngay đường dốc xuống
+            toggleAccordion('content-7'); 
             
             changeUtilityFace(1);
             resetCookies();
@@ -867,7 +873,7 @@
             if (qNum === 1) {
                 return "Luật hữu dụng biên giảm dần (한계효용체감의 법칙) chỉ ra rằng càng tiêu dùng nhiều một đơn vị hàng hóa nhất định thì mức thỏa mãn tăng thêm (MU) sẽ càng giảm dần. Do đó đáp án đúng là B.";
             } else if (qNum === 2) {
-                return "Tại tiếp điểm (접점) giữa đường ngân sách và đường bàng quan, người tiêu dùng đạt điểm cân bằng tối ưu hóa độ thỏa mãn cao nhất với số tiền hiện có. Người tiêu dùng sử dụng hết sạch tiền trong ví. Chọn C.";
+                return "Tại tiếp điểm (접점) giữa đường ngân sách và 무차별곡선, người tiêu dùng đạt điểm cân bằng tối ưu hóa độ thỏa mãn cao nhất với số tiền hiện có. Người tiêu dùng sử dụng hết sạch tiền trong ví. Chọn C.";
             } else {
                 return "Đường bàng quan (Indifference Curve) có các đặc điểm cơ bản như: không bao giờ cắt nhau (đáp án A khẳng định cắt nhau là sai), dốc xuống từ trái sang phải, lồi về phía gốc tọa độ, càng xa gốc tọa độ độ thỏa mãn càng lớn. Do đó đáp án sai cần chọn là A.";
             }
