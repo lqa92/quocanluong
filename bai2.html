@@ -263,7 +263,7 @@
                             </div>
                             <div class="flex items-start gap-2 bg-slate-900/80 border border-orange-500/20 p-2.5 rounded-lg shadow-sm">
                                 <span class="text-orange-400 mt-0.5"><i class="fa-solid fa-circle-chevron-right"></i></span>
-                                <div><strong>Càng xa gốc tọa độ:</strong> Độ thỏa mãn hữu dụng càng tăng (U3 > U2 > U1).</div>
+                                <div><strong>Càng xa gốc tọa độ:</strong> Độ thỏa mãn hữu dụng càng tăng (U<sub>3</sub> > U<sub>2</sub> > U<sub>1</sub>).</div>
                             </div>
                         </div>
                     </div>
@@ -288,7 +288,7 @@
                                 <text x="94" y="37" font-size="6" font-weight="bold" fill="#fdba74">U3</text>
                             </svg>
                         </div>
-                        <div class="text-[11px] text-slate-400 italic mt-2 text-center">Các điểm nằm trên cùng 1 đường (như U1) cho cùng độ thỏa mãn.</div>
+                        <div class="text-[11px] text-slate-400 italic mt-2 text-center">Các điểm nằm trên cùng 1 đường (như U<sub>1</sub>) cho cùng độ thỏa mãn.</div>
                     </div>
                 </div>
             </div>
@@ -311,11 +311,11 @@
                     <div>
                         <div class="bg-purple-950/50 border-l-4 border-purple-500 p-4 rounded-r-lg mb-3">
                             <p class="text-slate-200 leading-relaxed text-sm md:text-base font-semibold">
-                                <strong class="text-purple-400">Đường ngân sách</strong> là tập hợp các kết hợp hàng hóa X và Y mà người tiêu dùng có thể mua được với toàn bộ thu nhập (I) và mức giá cả của hai mặt hàng ($P_x$ và $P_y$) cho trước.
+                                <strong class="text-purple-400">Đường ngân sách</strong> là tập hợp các kết hợp hàng hóa X và Y mà người tiêu dùng có thể mua được với toàn bộ thu nhập (I) và mức giá cả của hai mặt hàng (P<sub>x</sub> và P<sub>y</sub>) cho trước.
                             </p>
                         </div>
                         <p class="text-slate-300 text-sm leading-relaxed mb-4">
-                            ✍️ Phương trình ngân sách: <strong class="text-purple-400">$I = P_x \cdot X + P_y \cdot Y$</strong>
+                            ✍️ Phương trình ngân sách: <strong class="text-purple-400">I = P<sub>x</sub> &middot; X + P<sub>y</sub> &middot; Y</strong>
                         </p>
                         
                         <div class="space-y-3 bg-slate-900/80 p-4 rounded-xl border border-purple-500/20">
@@ -329,7 +329,7 @@
                             
                             <div class="grid grid-cols-2 gap-2">
                                 <div>
-                                    <label class="text-xs font-bold text-slate-300 block">Giá của X (Px):</label>
+                                    <label class="text-xs font-bold text-slate-300 block">Giá của X (P<sub>x</sub>):</label>
                                     <select id="sand-px" onchange="drawBudgetSimulator()" class="w-full mt-1 p-1 bg-slate-800 border border-slate-600 rounded text-xs font-semibold text-slate-200 focus:outline-none">
                                         <option value="10000">10.000đ</option>
                                         <option value="15000" selected>15.000đ</option>
@@ -337,7 +337,7 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="text-xs font-bold text-slate-300 block">Giá của Y (Py):</label>
+                                    <label class="text-xs font-bold text-slate-300 block">Giá của Y (P<sub>y</sub>):</label>
                                     <select id="sand-py" onchange="drawBudgetSimulator()" class="w-full mt-1 p-1 bg-slate-800 border border-slate-600 rounded text-xs font-semibold text-slate-200 focus:outline-none">
                                         <option value="10000">10.000đ</option>
                                         <option value="20000" selected>20.000đ</option>
@@ -437,7 +437,7 @@
             </div>
         </div>
 
-        <!-- 7. LỰA CHỌN TỐI ƯU (BỎ MRS THEO YÊU CẦU + VẼ CHUẨN TIẾP TUYẾN) -->
+        <!-- 7. LỰA CHỌN TỐI ƯU -->
         <div class="bg-slate-800/90 rounded-2xl border border-rose-500/30 shadow-lg overflow-hidden scale-up hover:border-rose-500/50">
             <button onclick="toggleAccordion('content-7')" class="w-full flex items-center justify-between p-5 bg-rose-950/40 hover:bg-rose-900/30 text-left transition-colors focus:outline-none">
                 <div class="flex items-center gap-4">
@@ -458,7 +458,7 @@
                             </p>
                         </div>
                         <p class="text-slate-400 text-xs">
-                            Tại điểm E, người tiêu dùng tiêu hết sạch ngân sách của mình, đồng thời đạt được mức độ thoả mãn (đường U2) lớn nhất có thể. Không thể với tới U3 vì nằm ngoài ví tiền.
+                            Tại điểm E, người tiêu dùng tiêu hết sạch ngân sách của mình, đồng thời đạt được mức độ thoả mãn (đường U<sub>2</sub>) lớn nhất có thể. Không thể với tới U<sub>3</sub> vì nằm ngoài ví tiền.
                         </p>
                     </div>
                     
@@ -495,7 +495,7 @@
                                 <line x1="45" y1="55" x2="45" y2="85" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="1,1"/>
                             </svg>
                         </div>
-                        <p class="text-[10px] text-slate-400 italic mt-2 text-center">Đường bàng quan U2 tiếp xúc (tiếp tuyến) tại điểm (E) duy nhất đem lại thỏa mãn cao nhất với ngân sách.</p>
+                        <p class="text-[10px] text-slate-400 italic mt-2 text-center">Đường bàng quan U<sub>2</sub> tiếp xúc (tiếp tuyến) tại điểm (E) duy nhất đem lại thỏa mãn cao nhất với ngân sách.</p>
                     </div>
                 </div>
             </div>
@@ -540,7 +540,7 @@
             </div>
         </div>
 
-        <!-- 9. MINI QUIZ IN KOREAN (100% TIẾNG HÀN) -->
+        <!-- 9. MINI QUIZ IN KOREAN -->
         <div class="mt-4 bg-slate-800/90 rounded-2xl border border-slate-700 shadow-md p-6">
             <h2 class="text-xl md:text-2xl font-black text-slate-100 text-center mb-6 flex items-center justify-center gap-2">
                 <span class="text-rose-500 animate-pulse"><i class="fa-solid fa-circle-question"></i></span> MINI QUIZ: 퀵 챌린지! (퀴즈)
@@ -762,15 +762,9 @@
         }
 
         // 3. Highlight MU Bar
-        function highlightBar(num, mu) {
-            const exp = document.getElementById('bar-explanation');
-            let satisfactionText = "";
-            if (num === 1) satisfactionText = "Cực kỳ hạnh phúc và thỏa mãn tối đa.";
-            if (num === 2) satisfactionText = "Vẫn dễ chịu nhưng không bùng nổ như đơn vị đầu tiên.";
-            if (num === 3) satisfactionText = "Ăn/sử dụng cho có, không còn cảm xúc mấy.";
-            if (num === 4) satisfactionText = "Độ thỏa mãn cận biên gần về mức 0 bão hòa hoàn toàn.";
-            
-            exp.innerHTML = `🌟 <strong>Đơn vị thứ ${num}</strong>: Lượng MU mang lại là <span class="text-rose-400 font-bold">${mu} đơn vị hữu dụng</span>. <br>Trạng thái tâm lý: ${satisfactionText}`;
+        function highlightBar(unit, mu) {
+            const expl = document.getElementById('bar-explanation');
+            expl.innerHTML = `<strong class="text-rose-400">Đơn vị thứ ${unit}:</strong> Mang lại MU = ${mu}. ${mu > 5 ? 'Thỏa mãn lớn!' : mu > 0 ? 'Thỏa mãn ít.' : 'Đã bão hòa.'}`;
         }
 
         // 5. Budget Line Simulator
