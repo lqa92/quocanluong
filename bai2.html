@@ -231,7 +231,7 @@
             </div>
         </div>
 
-        <!-- 4. ĐƯỜNG BÀNG QUAN (ĐÃ FIX DỐC XUỐNG) -->
+        <!-- 4. ĐƯỜNG BÀNG QUAN -->
         <div class="bg-slate-800/90 rounded-2xl border border-orange-500/30 shadow-lg overflow-hidden scale-up hover:border-orange-500/50">
             <button onclick="toggleAccordion('content-4')" class="w-full flex items-center justify-between p-5 bg-orange-950/40 hover:bg-orange-900/30 text-left transition-colors focus:outline-none">
                 <div class="flex items-center gap-4">
@@ -282,7 +282,6 @@
                                 <text x="5" y="15" font-size="6" font-weight="bold" fill="#94a3b8">Hàng Y</text>
                                 <text x="84" y="93" font-size="6" font-weight="bold" fill="#94a3b8">Hàng X</text>
 
-                                <!-- Curves U1, U2, U3 (Đã vẽ lại dốc xuống từ trái sang phải) -->
                                 <path d="M20,39 Q29,64 71,84" fill="none" stroke="#f97316" stroke-width="2.5" stroke-linecap="round"/>
                                 <text x="73" y="84" font-size="6" font-weight="bold" fill="#f97316">U1</text>
 
@@ -773,7 +772,7 @@
             expl.innerHTML = `<strong class="text-rose-400">Đơn vị thứ ${unit}:</strong> Mang lại MU = ${mu}. ${mu > 5 ? 'Thỏa mãn lớn!' : mu > 0 ? 'Thỏa mãn ít.' : 'Đã bão hòa.'}`;
         }
 
-        // 5. Budget Line Simulator
+        // 5. Budget Line Simulator (ĐÃ FIX LỖI KẸT SỐ SVG BẰNG textContent)
         function drawBudgetSimulator() {
             const income = parseInt(document.getElementById('sand-i').value);
             const px = parseInt(document.getElementById('sand-px').value);
@@ -798,11 +797,18 @@
             const dotB = document.getElementById('intercept-b');
             dotB.setAttribute('cx', svgX);
 
-            document.getElementById('txt-intercept-a').setAttribute('y', svgY + 2);
-            document.getElementById('txt-intercept-a').innerText = `A (0, ${maxY.toFixed(1)})`;
+            // Hàm định dạng số: xoá đuôi .0 nếu là số nguyên
+            const formatNum = (num) => Number.isInteger(num) ? num : num.toFixed(1);
 
-            document.getElementById('txt-intercept-b').setAttribute('x', svgX - 25);
-            document.getElementById('txt-intercept-b').innerText = `B (${maxX.toFixed(1)}, 0)`;
+            // Cập nhật giá trị điểm cắt A (Y) bằng textContent
+            const txtA = document.getElementById('txt-intercept-a');
+            txtA.setAttribute('y', svgY + 2);
+            txtA.textContent = `A (0, ${formatNum(maxY)})`;
+
+            // Cập nhật giá trị điểm cắt B (X) bằng textContent
+            const txtB = document.getElementById('txt-intercept-b');
+            txtB.setAttribute('x', svgX - 25);
+            txtB.textContent = `B (${formatNum(maxX)}, 0)`;
         }
 
         // 6. Wallet Constraint
