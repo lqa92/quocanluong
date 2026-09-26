@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Độc quyền và độc quyền nhóm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f2f5f8; --sheet:#ffffff; --ink:#1d2a3a; --muted:#5d6b7c; --rule:#d6dee7; --gold:#cf9a5f;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#121821; --sheet:#1a222d; --ink:#e8eef5; --muted:#9aa8b8; --rule:#2e3a48; --gold:#e2ad70;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#121821; --sheet:#1a222d; --ink:#e8eef5; --muted:#9aa8b8; --rule:#2e3a48; --gold:#e2ad70;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0; background:var(--paper); color:var(--ink);
+  font-family:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif; font-size:16px; line-height:1.5}
+.topbar{position:sticky; top:env(safe-area-inset-top,0px); z-index:10; background:var(--paper);
+  border-bottom:1px solid var(--rule)}
+.topbar-in{max-width:1200px; margin:0 auto; padding:14px 20px 0; display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:8px 20px}
+.brand{padding-bottom:12px}
+.brand b{display:block; font-size:1.05rem; font-weight:800; letter-spacing:-.01em}
+.brand span{font-size:.85rem; color:var(--muted)}
+.tabs{display:flex; gap:4px}
+.tab{font:inherit; font-size:.98rem; font-weight:700; cursor:pointer; background:transparent; color:var(--muted);
+  border:0; border-bottom:3px solid transparent; padding:10px 16px 11px; border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink); border-bottom-color:var(--gold); background:var(--sheet)}
+.tab:focus-visible{outline:3px solid var(--gold); outline-offset:-3px}
+.tab small{display:block; font-size:.75rem; font-weight:500; color:var(--muted)}
+iframe{display:block; width:100%; border:0; height:1400px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="brand"><b>Cấu trúc thị trường: mô phỏng đặt giá</b><span>Chọn một tab để xem từng loại doanh nghiệp</span></div>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-mono" aria-controls="panel-mono" aria-selected="true">Độc quyền<small>Hàng thiết yếu và hàng xa xỉ</small></button>
+      <button class="tab" role="tab" id="tab-olig" aria-controls="panel-olig" aria-selected="false" tabindex="-1">Độc quyền nhóm<small>Đường cầu gãy khúc</small></button>
+    </div>
+  </div>
+</div>
+<iframe id="panel-mono" role="tabpanel" aria-labelledby="tab-mono" title="Doanh nghiệp độc quyền" scrolling="no" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;vi&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, viewport-fit=cover&quot;&gt;
+&lt;title&gt;Sức mạnh độc quyền&lt;/title&gt;
+&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;
+&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;
+&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;style&gt;
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --paper:#f2f5f8; --sheet:#ffffff; --ink:#1d2a3a; --muted:#5d6b7c; --rule:#d6dee7; --grid:#e8edf2; --soft:#eef2f6;
+  --ess:#2a64b0; --lux:#b8692a; --profit:#2f855a; --profit-fill:rgba(47,133,90,.22); --cost-fill:rgba(93,107,124,.14);
+  --mr:#7b5cc4; --mc:#1d2a3a; --neg:#c8402f; --gold:#cf9a5f;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme=&quot;light&quot;]){
+    color-scheme:dark;
+    --paper:#121821; --sheet:#1a222d; --ink:#e8eef5; --muted:#9aa8b8; --rule:#2e3a48; --grid:#232d39; --soft:#212a35;
+    --ess:#6fa6ee; --lux:#e6a266; --profit:#62c28f; --profit-fill:rgba(98,194,143,.2); --cost-fill:rgba(154,168,184,.14);
+    --mr:#b09af0; --mc:#e8eef5; --neg:#f07a66; --gold:#e2ad70;
+  }
+}
+:root[data-theme=&quot;dark&quot;]{
+  color-scheme:dark;
+  --paper:#121821; --sheet:#1a222d; --ink:#e8eef5; --muted:#9aa8b8; --rule:#2e3a48; --grid:#232d39; --soft:#212a35;
+  --ess:#6fa6ee; --lux:#e6a266; --profit:#62c28f; --profit-fill:rgba(98,194,143,.2); --cost-fill:rgba(154,168,184,.14);
+  --mr:#b09af0; --mc:#e8eef5; --neg:#f07a66; --gold:#e2ad70;
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0; background:var(--paper); color:var(--ink);
+  font-family:&#x27;Be Vietnam Pro&#x27;,system-ui,-apple-system,&#x27;Segoe UI&#x27;,Roboto,Arial,sans-serif;
+  font-size:16px; line-height:1.55; font-variant-numeric:tabular-nums}
+.wrap{max-width:1200px; margin:0 auto; padding:28px 20px 48px}
+header{max-width:800px; margin-bottom:18px}
+h1{font-size:clamp(1.6rem,3.6vw,2.4rem); line-height:1.15; margin:0 0 8px; font-weight:800; letter-spacing:-.02em; text-wrap:balance}
+.lead{margin:0; max-width:72ch}
+.e{color:var(--ess); font-weight:700} .l{color:var(--lux); font-weight:700}
+.sheet{background:var(--sheet); border:1px solid var(--rule); border-radius:14px; padding:18px; margin-bottom:18px}
+button{font:inherit; font-size:.9rem; font-weight:600; cursor:pointer; border-radius:999px;
+  padding:7px 14px; border:1.5px solid var(--rule); background:transparent; color:var(--ink)}
+button:hover{border-color:var(--ink)}
+button.primary{background:var(--ink); color:var(--sheet); border-color:var(--ink)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--gold); outline-offset:2px}
+.bar{display:flex; flex-wrap:wrap; gap:10px 18px; align-items:center}
+.bar .btns{display:flex; flex-wrap:wrap; gap:8px}
+.toggle{display:flex; gap:8px; align-items:center; font-size:.92rem; cursor:pointer}
+.toggle input{width:18px; height:18px; accent-color:var(--gold)}
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+@media (max-width:920px){.duo{grid-template-columns:1fr}}
+.card-h{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap}
+.card-h h2{margin:0; font-size:1.3rem; letter-spacing:-.01em}
+.card-h p{margin:2px 0 0; color:var(--muted); font-size:.9rem}
+.pill{font-size:.8rem; font-weight:700; padding:4px 10px; border-radius:999px; white-space:nowrap}
+.pill.ess{color:var(--ess); background:color-mix(in srgb,var(--ess) 14%,transparent)}
+.pill.lux{color:var(--lux); background:color-mix(in srgb,var(--lux) 14%,transparent)}
+svg{display:block; width:100%; height:auto; user-select:none; -webkit-user-select:none}
+svg.drag{touch-action:none}
+.pr{display:flex; justify-content:space-between; align-items:baseline; margin-top:6px}
+.pr label{font-weight:600}
+.pr .big{font-size:1.5rem; font-weight:800}
+.pr .big small{font-size:.8rem; font-weight:500; color:var(--muted)}
+input[type=range]{width:100%; height:28px; margin:4px 0 0}
+#slEss{accent-color:var(--ess)} #slLux{accent-color:var(--lux)}
+.verdict{margin:10px 0 12px; padding:10px 12px; border-radius:10px; background:var(--soft); font-size:.93rem; min-height:3.2em}
+.table-wrap{overflow-x:auto}
+table.ledger{width:100%; border-collapse:collapse; font-size:.92rem}
+.ledger th,.ledger td{padding:8px 6px; border-bottom:1px solid var(--rule); text-align:right; white-space:nowrap}
+.ledger th:first-child,.ledger td:first-child{text-align:left; white-space:normal}
+.ledger thead th{font-size:.78rem; color:var(--muted); font-weight:600}
+.ledger td.now{font-weight:700}
+.ledger tr.hl td{background:color-mix(in srgb,var(--profit) 9%,transparent)}
+.pos{color:var(--profit)} .neg{color:var(--neg)} .zero{color:var(--muted)}
+h2.sec{font-size:1.3rem; margin:0 0 4px}
+.intro{color:var(--muted); margin:0 0 12px; max-width:75ch}
+.cmp{display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:22px; align-items:start}
+@media (max-width:920px){.cmp{grid-template-columns:1fr}}
+.legend{display:flex; gap:16px; flex-wrap:wrap; font-size:.84rem; color:var(--muted); margin-top:6px}
+.legend i{display:inline-block; width:18px; height:4px; border-radius:2px; vertical-align:middle; margin-right:6px}
+.legend i.box{height:12px; width:14px}
+.takeaway{border-left:5px solid var(--gold); padding:4px 0 4px 14px}
+.takeaway h3{margin:0 0 8px; font-size:1.05rem}
+.takeaway p{margin:0 0 10px}
+table.opt{width:100%; border-collapse:collapse; font-size:.92rem; margin:6px 0 12px}
+.opt th,.opt td{padding:8px 6px; border-bottom:1px solid var(--rule); text-align:right}
+.opt th:first-child,.opt td:first-child{text-align:left}
+.opt thead th{font-size:.78rem; color:var(--muted); font-weight:600}
+.notes{font-size:.9rem; color:var(--muted)}
+.notes h3{color:var(--ink); font-size:1rem; margin:0 0 6px}
+.notes ul{margin:0; padding-left:18px}
+.notes code{font-family:inherit; font-weight:600; color:var(--ink)}
+.g-grid{stroke:var(--grid)} .g-axis{stroke:var(--ink); stroke-width:1.5}
+.g-tick{fill:var(--muted); font-size:12px} .g-title{fill:var(--ink); font-size:12.5px; font-weight:600}
+.g-cost{fill:var(--cost-fill)} .g-profit{fill:var(--profit-fill)}
+.g-mc{stroke:var(--mc); stroke-width:2; stroke-dasharray:7 5}
+.g-mr{fill:none; stroke:var(--mr); stroke-width:2.5}
+.g-guide{stroke:var(--muted); stroke-width:1.2; stroke-dasharray:4 4}
+.g-lbl{font-size:12px; fill:var(--muted); paint-order:stroke; stroke:var(--sheet); stroke-width:4px; stroke-linejoin:round}
+.g-lbl-b{font-size:13px; font-weight:700; fill:var(--ink); paint-order:stroke; stroke:var(--sheet); stroke-width:4px; stroke-linejoin:round}
+.g-base{fill:var(--sheet); stroke:var(--ink); stroke-width:2}
+.g-pt{fill:var(--ink); stroke:var(--sheet); stroke-width:3; cursor:grab}
+.g-opt{fill:var(--sheet); stroke:var(--mr); stroke-width:2.5}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main class=&quot;wrap&quot;&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Sức mạnh độc quyền: hàng thiết yếu và hàng xa xỉ&lt;/h1&gt;
+    &lt;p class=&quot;lead&quot;&gt;Cùng một doanh nghiệp độc quyền (người bán duy nhất trên thị trường). Giả định doanh nghiệp này bán một trong hai loại mặt hàng: &lt;span class=&quot;e&quot;&gt;hàng thiết yếu&lt;/span&gt; với đường cầu &lt;b&gt;dốc&lt;/b&gt;, hoặc &lt;span class=&quot;l&quot;&gt;hàng xa xỉ&lt;/span&gt; với đường cầu &lt;b&gt;thoải&lt;/b&gt;. Ở cả hai tình huống, doanh nghiệp đang bán ở giá &lt;b&gt;50 nghìn đ&lt;/b&gt;, bán được &lt;b&gt;100 nghìn sp&lt;/b&gt;, chi phí biên (MC) là &lt;b&gt;20 nghìn đ/sp&lt;/b&gt;. Khác biệt duy nhất là độ dốc của đường cầu. Kéo chấm đen trên đồ thị hoặc thanh trượt để thay đổi giá.&lt;/p&gt;
+  &lt;/header&gt;
+
+  &lt;section class=&quot;sheet&quot;&gt;
+    &lt;div class=&quot;bar&quot;&gt;
+      &lt;div class=&quot;btns&quot;&gt;
+        &lt;button type=&quot;button&quot; data-set=&quot;50&quot;&gt;Về giá 50&lt;/button&gt;
+        &lt;button type=&quot;button&quot; data-set=&quot;60&quot;&gt;Tăng lên 60&lt;/button&gt;
+        &lt;button type=&quot;button&quot; data-set=&quot;75&quot;&gt;Tăng lên 75&lt;/button&gt;
+        &lt;button type=&quot;button&quot; data-set=&quot;40&quot;&gt;Giảm xuống 40&lt;/button&gt;
+        &lt;button type=&quot;button&quot; data-set=&quot;opt&quot; class=&quot;primary&quot;&gt;Đặt giá có lợi nhất cho từng mặt hàng&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;link&quot; checked&gt; Đặt cùng một mức giá cho cả hai tình huống&lt;/label&gt;
+      &lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;showMR&quot;&gt; Hiện doanh thu biên (MR) và điểm tối ưu&lt;/label&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;div class=&quot;duo&quot;&gt;
+    &lt;section class=&quot;sheet&quot; id=&quot;card-ess&quot;&gt;
+      &lt;div class=&quot;card-h&quot;&gt;
+        &lt;div&gt;&lt;h2 class=&quot;e&quot;&gt;Tình huống 1: Hàng thiết yếu&lt;/h2&gt;&lt;p&gt;Ví dụ: điện, nước sạch, thuốc đặc trị&lt;/p&gt;&lt;/div&gt;
+        &lt;span class=&quot;pill ess&quot;&gt;Đường cầu dốc&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;svg id=&quot;chEss&quot; class=&quot;drag&quot; viewBox=&quot;0 0 540 410&quot; role=&quot;img&quot; aria-label=&quot;Đồ thị cầu hàng thiết yếu&quot;&gt;&lt;/svg&gt;
+      &lt;div class=&quot;pr&quot;&gt;&lt;label for=&quot;slEss&quot;&gt;Giá bán&lt;/label&gt;&lt;span class=&quot;big&quot;&gt;&lt;span id=&quot;pEss&quot;&gt;50&lt;/span&gt; &lt;small&gt;nghìn đ&lt;/small&gt;&lt;/span&gt;&lt;/div&gt;
+      &lt;input type=&quot;range&quot; id=&quot;slEss&quot; min=&quot;20&quot; max=&quot;100&quot; step=&quot;1&quot; value=&quot;50&quot;&gt;
+      &lt;div class=&quot;verdict&quot; id=&quot;vEss&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;table-wrap&quot;&gt;&lt;table class=&quot;ledger&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Giá 50&lt;/th&gt;&lt;th&gt;Hiện tại&lt;/th&gt;&lt;th&gt;Thay đổi&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody id=&quot;tEss&quot;&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;section class=&quot;sheet&quot; id=&quot;card-lux&quot;&gt;
+      &lt;div class=&quot;card-h&quot;&gt;
+        &lt;div&gt;&lt;h2 class=&quot;l&quot;&gt;Tình huống 2: Hàng xa xỉ&lt;/h2&gt;&lt;p&gt;Ví dụ: túi hàng hiệu, du lịch cao cấp&lt;/p&gt;&lt;/div&gt;
+        &lt;span class=&quot;pill lux&quot;&gt;Đường cầu thoải&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;svg id=&quot;chLux&quot; class=&quot;drag&quot; viewBox=&quot;0 0 540 410&quot; role=&quot;img&quot; aria-label=&quot;Đồ thị cầu hàng xa xỉ&quot;&gt;&lt;/svg&gt;
+      &lt;div class=&quot;pr&quot;&gt;&lt;label for=&quot;slLux&quot;&gt;Giá bán&lt;/label&gt;&lt;span class=&quot;big&quot;&gt;&lt;span id=&quot;pLux&quot;&gt;50&lt;/span&gt; &lt;small&gt;nghìn đ&lt;/small&gt;&lt;/span&gt;&lt;/div&gt;
+      &lt;input type=&quot;range&quot; id=&quot;slLux&quot; min=&quot;20&quot; max=&quot;100&quot; step=&quot;1&quot; value=&quot;50&quot;&gt;
+      &lt;div class=&quot;verdict&quot; id=&quot;vLux&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;table-wrap&quot;&gt;&lt;table class=&quot;ledger&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Giá 50&lt;/th&gt;&lt;th&gt;Hiện tại&lt;/th&gt;&lt;th&gt;Thay đổi&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody id=&quot;tLux&quot;&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;
+    &lt;/section&gt;
+  &lt;/div&gt;
+
+  &lt;section class=&quot;sheet&quot;&gt;
+    &lt;h2 class=&quot;sec&quot;&gt;So sánh: lợi nhuận ở từng mức giá&lt;/h2&gt;
+    &lt;p class=&quot;intro&quot;&gt;Đường cong cho biết doanh nghiệp kiếm được bao nhiêu ở từng mức giá, với mỗi loại mặt hàng. Đỉnh của đường cong là mức giá có lợi nhất.&lt;/p&gt;
+    &lt;div class=&quot;cmp&quot;&gt;
+      &lt;div&gt;
+        &lt;svg id=&quot;chProfit&quot; viewBox=&quot;0 0 640 320&quot; role=&quot;img&quot; aria-label=&quot;Lợi nhuận theo mức giá của hai mặt hàng&quot;&gt;&lt;/svg&gt;
+        &lt;div class=&quot;legend&quot;&gt;
+          &lt;span&gt;&lt;i style=&quot;background:var(--ess)&quot;&gt;&lt;/i&gt;Hàng thiết yếu&lt;/span&gt;
+          &lt;span&gt;&lt;i style=&quot;background:var(--lux)&quot;&gt;&lt;/i&gt;Hàng xa xỉ&lt;/span&gt;
+          &lt;span&gt;&lt;i style=&quot;background:var(--mr)&quot;&gt;&lt;/i&gt;Đỉnh lợi nhuận&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;takeaway&quot;&gt;
+        &lt;h3&gt;Mức giá có lợi nhất cho từng mặt hàng&lt;/h3&gt;
+        &lt;div class=&quot;table-wrap&quot;&gt;&lt;table class=&quot;opt&quot;&gt;
+          &lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Giá&lt;/th&gt;&lt;th&gt;Lượng bán&lt;/th&gt;&lt;th&gt;Giá cao hơn chi phí&lt;/th&gt;&lt;th&gt;Lợi nhuận&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+          &lt;tbody id=&quot;optBody&quot;&gt;&lt;/tbody&gt;
+        &lt;/table&gt;&lt;/div&gt;
+        &lt;p id=&quot;insight&quot;&gt;&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class=&quot;sheet&quot;&gt;
+    &lt;h2 class=&quot;sec&quot;&gt;Chú thích đồ thị&lt;/h2&gt;
+    &lt;div class=&quot;legend&quot; style=&quot;margin-bottom:10px&quot;&gt;
+      &lt;span&gt;&lt;i class=&quot;box&quot; style=&quot;background:var(--profit-fill);outline:1px solid var(--profit)&quot;&gt;&lt;/i&gt;Lợi nhuận = (P − MC) × Q&lt;/span&gt;
+      &lt;span&gt;&lt;i class=&quot;box&quot; style=&quot;background:var(--cost-fill)&quot;&gt;&lt;/i&gt;Chi phí sản xuất = MC × Q&lt;/span&gt;
+      &lt;span&gt;&lt;i style=&quot;background:repeating-linear-gradient(90deg,var(--mc) 0 6px,transparent 6px 10px)&quot;&gt;&lt;/i&gt;Chi phí biên MC = 20&lt;/span&gt;
+      &lt;span&gt;&lt;i style=&quot;background:var(--mr)&quot;&gt;&lt;/i&gt;Doanh thu biên MR&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;notes&quot;&gt;
+      &lt;h3&gt;Số liệu giả định&lt;/h3&gt;
+      &lt;ul&gt;
+        &lt;li&gt;Hàng thiết yếu: &lt;code&gt;P = 150 − Q&lt;/code&gt;. Giá tăng 1 nghìn đ thì người mua chỉ bớt 1 nghìn sp, vì dù đắt họ vẫn cần dùng.&lt;/li&gt;
+        &lt;li&gt;Hàng xa xỉ: &lt;code&gt;P = 70 − 0,2Q&lt;/code&gt;. Giá tăng 1 nghìn đ thì người mua bớt tới 5 nghìn sp, vì họ dễ dàng không mua nữa hoặc chuyển sang thứ khác.&lt;/li&gt;
+        &lt;li&gt;Cả hai đường cầu cùng đi qua điểm P = 50, Q = 100 để so sánh công bằng. MC = 20 nghìn đ/sp, bỏ qua chi phí cố định.&lt;/li&gt;
+        &lt;li&gt;Đơn vị: giá nghìn đ, lượng nghìn sp, doanh thu và lợi nhuận triệu đ.&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+
+&lt;script&gt;
+(function(){
+  const MC = 20, P0 = 50, PMIN = 20, PMAX = 100;
+  const SC = {
+    ess:{key:&#x27;ess&#x27;, a:150, b:1,   col:&#x27;--ess&#x27;, svg:&#x27;chEss&#x27;, sl:&#x27;slEss&#x27;, out:&#x27;pEss&#x27;, v:&#x27;vEss&#x27;, t:&#x27;tEss&#x27;},
+    lux:{key:&#x27;lux&#x27;, a:70,  b:0.2, col:&#x27;--lux&#x27;, svg:&#x27;chLux&#x27;, sl:&#x27;slLux&#x27;, out:&#x27;pLux&#x27;, v:&#x27;vLux&#x27;, t:&#x27;tLux&#x27;}
+  };
+  const Qd = (s,p) =&gt; Math.max(0, (s.a - p) / s.b);
+  const profit = (s,p) =&gt; (p - MC) * Qd(s,p);
+  const opt = s =&gt; ({p:(s.a + MC)/2, q:(s.a - MC)/(2*s.b)});
+  const price = {ess:P0, lux:P0};
+  let linked = true, showMR = false;
+
+  const $ = id =&gt; document.getElementById(id);
+  const fmt = (n,d=1) =&gt; Number(n).toLocaleString(&#x27;vi-VN&#x27;, {maximumFractionDigits:d});
+  const sgn = (n,d=1) =&gt; (n &gt; 0.0001 ? &#x27;+&#x27; : n &lt; -0.0001 ? &#x27;−&#x27; : &#x27;&#x27;) + fmt(Math.abs(n), d);
+  const cls = n =&gt; n &gt; 0.0001 ? &#x27;pos&#x27; : n &lt; -0.0001 ? &#x27;neg&#x27; : &#x27;zero&#x27;;
+  const NS = &#x27;http://www.w3.org/2000/svg&#x27;;
+  function el(tag, a, parent){ const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); parent.appendChild(e); return e; }
+
+  /* ---------- per-product chart ---------- */
+  const W = 540, H = 410, m = {l:54, r:16, t:16, b:48}, QM = 260, PM = 160;
+  const xs = q =&gt; m.l + q/QM * (W - m.l - m.r);
+  const ys = p =&gt; m.t + (1 - p/PM) * (H - m.t - m.b);
+
+  function buildChart(s){
+    const svg = $(s.svg);
+    for (let q = 0; q &lt;= QM; q += 40){
+      if (q) el(&#x27;line&#x27;, {x1:xs(q), x2:xs(q), y1:ys(0), y2:ys(PM), class:&#x27;g-grid&#x27;}, svg);
+      el(&#x27;text&#x27;, {x:xs(q), y:ys(0)+18, &#x27;text-anchor&#x27;:&#x27;middle&#x27;, class:&#x27;g-tick&#x27;}, svg).textContent = q;
+    }
+    for (let p = 0; p &lt;= PM; p += 20){
+      if (p) el(&#x27;line&#x27;, {x1:xs(0), x2:xs(QM), y1:ys(p), y2:ys(p), class:&#x27;g-grid&#x27;}, svg);
+      el(&#x27;text&#x27;, {x:xs(0)-8, y:ys(p)+4, &#x27;text-anchor&#x27;:&#x27;end&#x27;, class:&#x27;g-tick&#x27;}, svg).textContent = p;
+    }
+    el(&#x27;text&#x27;, {x:xs(QM), y:H-10, &#x27;text-anchor&#x27;:&#x27;end&#x27;, class:&#x27;g-title&#x27;}, svg).textContent = &#x27;Lượng cầu Q (nghìn sp)&#x27;;
+    el(&#x27;text&#x27;, {x:14, y:ys(PM/2), &#x27;text-anchor&#x27;:&#x27;middle&#x27;, class:&#x27;g-title&#x27;, transform:`rotate(-90 14 ${ys(PM/2)})`}, svg).textContent = &#x27;Giá P (nghìn đ)&#x27;;
+
+    const r = {};
+    r.cost = el(&#x27;rect&#x27;, {class:&#x27;g-cost&#x27;}, svg);
+    r.prof = el(&#x27;rect&#x27;, {class:&#x27;g-profit&#x27;}, svg);
+    r.profL = el(&#x27;text&#x27;, {class:&#x27;g-lbl&#x27;, &#x27;text-anchor&#x27;:&#x27;middle&#x27;, style:&#x27;fill:var(--profit);font-weight:700&#x27;}, svg);
+
+    el(&#x27;line&#x27;, {x1:xs(0), y1:ys(0), x2:xs(QM)+6, y2:ys(0), class:&#x27;g-axis&#x27;}, svg);
+    el(&#x27;line&#x27;, {x1:xs(0), y1:ys(0), x2:xs(0), y2:ys(PM)-6, class:&#x27;g-axis&#x27;}, svg);
+
+    el(&#x27;line&#x27;, {x1:xs(0), x2:xs(QM), y1:ys(MC), y2:ys(MC), class:&#x27;g-mc&#x27;}, svg);
+    el(&#x27;text&#x27;, {x:xs(QM)-2, y:ys(MC)-7, &#x27;text-anchor&#x27;:&#x27;end&#x27;, class:&#x27;g-lbl&#x27;, style:&#x27;fill:var(--ink);font-weight:700&#x27;}, svg).textContent = &#x27;MC = 20&#x27;;
+
+    r.mrG = el(&#x27;g&#x27;, {style:&#x27;display:none&#x27;}, svg);
+    const qMR0 = Math.min(QM, s.a/(2*s.b));
+    el(&#x27;polyline&#x27;, {points:`${xs(0)},${ys(s.a)} ${xs(qMR0)},${ys(s.a - 2*s.b*qMR0)}`, class:&#x27;g-mr&#x27;}, r.mrG);
+    const o = opt(s);
+    el(&#x27;line&#x27;, {x1:xs(o.q), x2:xs(o.q), y1:ys(o.p), y2:ys(MC), style:&#x27;stroke:var(--mr);stroke-width:1.5;stroke-dasharray:3 3&#x27;}, r.mrG);
+    el(&#x27;circle&#x27;, {cx:xs(o.q), cy:ys(MC), r:4, style:&#x27;fill:var(--mr)&#x27;}, r.mrG);
+    el(&#x27;circle&#x27;, {cx:xs(o.q), cy:ys(o.p), r:7, class:&#x27;g-opt&#x27;}, r.mrG);
+    el(&#x27;text&#x27;, {x:xs(o.q)+12, y:ys(o.p)-10, class:&#x27;g-lbl&#x27;, style:&#x27;fill:var(--mr);font-weight:700&#x27;}, r.mrG).textContent = `Tối ưu: P = ${fmt(o.p)}`;
+    const mrLblQ = s.key === &#x27;ess&#x27; ? 30 : 95;
+    el(&#x27;text&#x27;, {x:xs(mrLblQ)+6, y:ys(s.a - 2*s.b*mrLblQ)+16, class:&#x27;g-lbl&#x27;, style:&#x27;fill:var(--mr);font-weight:700&#x27;}, r.mrG).textContent = &#x27;MR&#x27;;
+
+    const qEnd = Math.min(QM, s.a/s.b);
+    el(&#x27;line&#x27;, {x1:xs(0), y1:ys(s.a), x2:xs(qEnd), y2:ys(s.a - s.b*qEnd), style:`stroke:var(${s.col});stroke-width:6;stroke-linecap:round`}, svg);
+    if (s.key === &#x27;ess&#x27;) el(&#x27;text&#x27;, {x:xs(18), y:ys(150-18)-4, class:&#x27;g-lbl-b&#x27;, style:&#x27;fill:var(--ess)&#x27;}, svg).textContent = &#x27;D: đường cầu dốc&#x27;;
+    else el(&#x27;text&#x27;, {x:xs(250), y:ys(70-0.2*250)-12, &#x27;text-anchor&#x27;:&#x27;end&#x27;, class:&#x27;g-lbl-b&#x27;, style:&#x27;fill:var(--lux)&#x27;}, svg).textContent = &#x27;D: đường cầu thoải&#x27;;
+
+    r.gH = el(&#x27;line&#x27;, {class:&#x27;g-guide&#x27;}, svg); r.gV = el(&#x27;line&#x27;, {class:&#x27;g-guide&#x27;}, svg);
+    r.dq = el(&#x27;line&#x27;, {&#x27;stroke-width&#x27;:2.5, style:`stroke:var(${s.col})`}, svg);
+    r.dqT = el(&#x27;text&#x27;, {&#x27;text-anchor&#x27;:&#x27;middle&#x27;, class:&#x27;g-lbl&#x27;, style:`fill:var(${s.col});font-weight:700`}, svg);
+    el(&#x27;circle&#x27;, {cx:xs(100), cy:ys(P0), r:6, class:&#x27;g-base&#x27;}, svg);
+    r.hit = el(&#x27;circle&#x27;, {r:26, fill:&#x27;transparent&#x27;, style:&#x27;cursor:grab&#x27;}, svg);
+    r.pt = el(&#x27;circle&#x27;, {r:9.5, class:&#x27;g-pt&#x27;}, svg);
+    r.ptL = el(&#x27;text&#x27;, {class:&#x27;g-lbl-b&#x27;}, svg);
+
+    let drag = false;
+    const fromEv = ev =&gt; {
+      const pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY;
+      const loc = pt.matrixTransform(svg.getScreenCTM().inverse());
+      return Math.round(Math.min(PMAX, Math.max(PMIN, PM * (1 - (loc.y - m.t) / (H - m.t - m.b)))));
+    };
+    svg.addEventListener(&#x27;pointerdown&#x27;, ev =&gt; { drag = true; svg.setPointerCapture(ev.pointerId); stopAnim(); setPrice(s.key, fromEv(ev)); });
+    svg.addEventListener(&#x27;pointermove&#x27;, ev =&gt; { if (drag) setPrice(s.key, fromEv(ev)); });
+    svg.addEventListener(&#x27;pointerup&#x27;, () =&gt; drag = false);
+    svg.addEventListener(&#x27;pointercancel&#x27;, () =&gt; drag = false);
+    s.r = r;
+  }
+
+  function updateChart(s){
+    const r = s.r, p = price[s.key], q = Qd(s,p), x = xs(q), y = ys(p);
+    r.cost.setAttribute(&#x27;x&#x27;, xs(0)); r.cost.setAttribute(&#x27;y&#x27;, ys(MC)); r.cost.setAttribute(&#x27;width&#x27;, x - xs(0)); r.cost.setAttribute(&#x27;height&#x27;, ys(0) - ys(MC));
+    r.prof.setAttribute(&#x27;x&#x27;, xs(0)); r.prof.setAttribute(&#x27;y&#x27;, y); r.prof.setAttribute(&#x27;width&#x27;, x - xs(0)); r.prof.setAttribute(&#x27;height&#x27;, Math.max(0, ys(MC) - y));
+    const showPL = q &gt; 30 &amp;&amp; p - MC &gt; 14;
+    r.profL.style.display = showPL ? &#x27;&#x27; : &#x27;none&#x27;;
+    r.profL.setAttribute(&#x27;x&#x27;, (xs(0) + x)/2 + 10); r.profL.setAttribute(&#x27;y&#x27;, (y + ys(MC))/2 + 4);
+    r.profL.textContent = `Lợi nhuận ${fmt(profit(s,p),0)}`;
+    r.gH.setAttribute(&#x27;x1&#x27;, xs(0)); r.gH.setAttribute(&#x27;x2&#x27;, x); r.gH.setAttribute(&#x27;y1&#x27;, y); r.gH.setAttribute(&#x27;y2&#x27;, y);
+    r.gV.setAttribute(&#x27;x1&#x27;, x); r.gV.setAttribute(&#x27;x2&#x27;, x); r.gV.setAttribute(&#x27;y1&#x27;, y); r.gV.setAttribute(&#x27;y2&#x27;, ys(0));
+    const moved = Math.abs(q - 100) &gt; 0.5;
+    r.dq.style.display = r.dqT.style.display = moved ? &#x27;&#x27; : &#x27;none&#x27;;
+    if (moved){
+      const yb = ys(0) - 12;
+      r.dq.setAttribute(&#x27;x1&#x27;, xs(100)); r.dq.setAttribute(&#x27;x2&#x27;, x); r.dq.setAttribute(&#x27;y1&#x27;, yb); r.dq.setAttribute(&#x27;y2&#x27;, yb);
+      r.dqT.setAttribute(&#x27;x&#x27;, (xs(100) + x)/2); r.dqT.setAttribute(&#x27;y&#x27;, yb - 7);
+      r.dqT.textContent = `ΔQ = ${sgn(q - 100)}`;
+    }
+    [r.pt, r.hit].forEach(c =&gt; { c.setAttribute(&#x27;cx&#x27;, x); c.setAttribute(&#x27;cy&#x27;, y); });
+    const right = x &lt; W - 170;
+    r.ptL.setAttribute(&#x27;x&#x27;, right ? x + 14 : x - 14); r.ptL.setAttribute(&#x27;y&#x27;, y - 14);
+    r.ptL.setAttribute(&#x27;text-anchor&#x27;, right ? &#x27;start&#x27; : &#x27;end&#x27;);
+    r.ptL.textContent = q &gt; 0 ? `P = ${fmt(p)}; Q = ${fmt(q)}` : `P = ${fmt(p)}: không ai mua`;
+    r.mrG.style.display = showMR ? &#x27;&#x27; : &#x27;none&#x27;;
+
+    $(s.out).textContent = fmt(p);
+    $(s.sl).value = Math.round(p);
+    const q0 = 100, tr = p*q, tr0 = P0*q0, pi = profit(s,p), pi0 = (P0-MC)*q0;
+    const rows = [
+      [&#x27;Giá (nghìn đ)&#x27;, P0, p, p - P0, 1, &#x27;price&#x27;],
+      [&#x27;Lượng cầu (nghìn sp)&#x27;, q0, q, q - q0, 1, &#x27;&#x27;],
+      [&#x27;Doanh thu (triệu đ)&#x27;, tr0, tr, tr - tr0, 0, &#x27;&#x27;],
+      [&#x27;Chi phí sản xuất (triệu đ)&#x27;, MC*q0, MC*q, MC*(q - q0), 0, &#x27;cost&#x27;],
+      [&#x27;Lợi nhuận (triệu đ)&#x27;, pi0, pi, pi - pi0, 0, &#x27;hl&#x27;]
+    ];
+    $(s.t).innerHTML = rows.map(([n, a, b, d, dg, kind]) =&gt; {
+      let dc = cls(d);
+      if (kind === &#x27;cost&#x27;) dc = d &gt; 0.0001 ? &#x27;neg&#x27; : d &lt; -0.0001 ? &#x27;pos&#x27; : &#x27;zero&#x27;;
+      if (kind === &#x27;price&#x27;) dc = &#x27;zero&#x27;;
+      return `&lt;tr class=&quot;${kind===&#x27;hl&#x27;?&#x27;hl&#x27;:&#x27;&#x27;}&quot;&gt;&lt;td&gt;${n}&lt;/td&gt;&lt;td&gt;${fmt(a,dg)}&lt;/td&gt;&lt;td class=&quot;now&quot;&gt;${fmt(b,dg)}&lt;/td&gt;&lt;td class=&quot;${dc}&quot;&gt;${sgn(d,dg)}&lt;/td&gt;&lt;/tr&gt;`;
+    }).join(&#x27;&#x27;);
+
+    let v;
+    const dP = (p - P0)/P0*100, dQ = (q - q0)/q0*100;
+    if (Math.abs(p - P0) &lt; 0.01) v = &#x27;Đang ở giá ban đầu. Kéo giá lên hoặc xuống để xem người mua phản ứng thế nào.&#x27;;
+    else if (q &lt;= 0) v = `Giá ${fmt(p)}: &lt;b&gt;không còn ai mua&lt;/b&gt;. Người mua bỏ hẳn khi giá quá cao, doanh thu và lợi nhuận về 0.`;
+    else if (p &gt; P0) v = `Tăng giá ${fmt(dP)}% → lượng cầu giảm &lt;b&gt;${fmt(-dQ)}%&lt;/b&gt;. ` + (pi &gt; pi0
+      ? `Người mua vẫn cần dùng nên phần lớn vẫn mua, lợi nhuận &lt;b class=&quot;pos&quot;&gt;tăng ${fmt(pi-pi0,0)}&lt;/b&gt; triệu đ.`
+      : `Người mua bỏ đi rất nhiều, lợi nhuận &lt;b class=&quot;neg&quot;&gt;giảm ${fmt(pi0-pi,0)}&lt;/b&gt; triệu đ.`);
+    else v = `Giảm giá ${fmt(-dP)}% → lượng cầu tăng &lt;b&gt;${fmt(dQ)}%&lt;/b&gt;. ` + (pi &gt; pi0
+      ? `Hút thêm được nhiều người mua, lợi nhuận &lt;b class=&quot;pos&quot;&gt;tăng ${fmt(pi-pi0,0)}&lt;/b&gt; triệu đ.`
+      : s.key === &#x27;ess&#x27;
+        ? `Người mua không mua thêm bao nhiêu, lợi nhuận &lt;b class=&quot;neg&quot;&gt;giảm ${fmt(pi0-pi,0)}&lt;/b&gt; triệu đ.`
+        : `Bán thêm được nhiều nhưng giá đã quá sát chi phí, lợi nhuận &lt;b class=&quot;neg&quot;&gt;giảm ${fmt(pi0-pi,0)}&lt;/b&gt; triệu đ.`);
+    $(s.v).innerHTML = v;
+  }
+
+  /* ---------- profit vs price chart ---------- */
+  const PW = 640, PH = 320, pm = {l:62, r:18, t:18, b:44}, YM = 5000;
+  const px = p =&gt; pm.l + (p - PMIN)/(PMAX - PMIN) * (PW - pm.l - pm.r);
+  const py = v =&gt; pm.t + (1 - v/YM) * (PH - pm.t - pm.b);
+  const pr = {};
+  (function buildProfit(){
+    const svg = $(&#x27;chProfit&#x27;);
+    for (let v = 0; v &lt;= YM; v += 1000){
+      el(&#x27;line&#x27;, {x1:pm.l, x2:PW-pm.r, y1:py(v), y2:py(v), class:&#x27;g-grid&#x27;}, svg);
+      el(&#x27;text&#x27;, {x:pm.l-8, y:py(v)+4, &#x27;text-anchor&#x27;:&#x27;end&#x27;, class:&#x27;g-tick&#x27;}, svg).textContent = fmt(v,0);
+    }
+    for (let p = PMIN; p &lt;= PMAX; p += 10)
+      el(&#x27;text&#x27;, {x:px(p), y:py(0)+18, &#x27;text-anchor&#x27;:&#x27;middle&#x27;, class:&#x27;g-tick&#x27;}, svg).textContent = p;
+    el(&#x27;line&#x27;, {x1:pm.l, x2:PW-pm.r, y1:py(0), y2:py(0), class:&#x27;g-axis&#x27;}, svg);
+    el(&#x27;text&#x27;, {x:PW-pm.r, y:PH-6, &#x27;text-anchor&#x27;:&#x27;end&#x27;, class:&#x27;g-title&#x27;}, svg).textContent = &#x27;Giá đặt (nghìn đ)&#x27;;
+    el(&#x27;text&#x27;, {x:14, y:py(YM/2), &#x27;text-anchor&#x27;:&#x27;middle&#x27;, class:&#x27;g-title&#x27;, transform:`rotate(-90 14 ${py(YM/2)})`}, svg).textContent = &#x27;Lợi nhuận (triệu đ)&#x27;;
+    [&#x27;ess&#x27;,&#x27;lux&#x27;].forEach(k =&gt; {
+      const s = SC[k]; const pts = [];
+      for (let p = PMIN; p &lt;= PMAX; p += 0.5) pts.push(`${px(p).toFixed(1)},${py(profit(s,p)).toFixed(1)}`);
+      el(&#x27;polyline&#x27;, {points:pts.join(&#x27; &#x27;), fill:&#x27;none&#x27;, style:`stroke:var(${s.col});stroke-width:3.5;stroke-linejoin:round`}, svg);
+      const o = opt(s), op = profit(s, o.p);
+      el(&#x27;line&#x27;, {x1:px(o.p), x2:px(o.p), y1:py(op), y2:py(0), style:&#x27;stroke:var(--mr);stroke-width:1.3;stroke-dasharray:3 3&#x27;}, svg);
+      el(&#x27;circle&#x27;, {cx:px(o.p), cy:py(op), r:5.5, style:&#x27;fill:var(--mr)&#x27;}, svg);
+      el(&#x27;text&#x27;, {x:px(o.p), y:py(op)-12, &#x27;text-anchor&#x27;:&#x27;middle&#x27;, class:&#x27;g-lbl&#x27;, style:&#x27;fill:var(--mr);font-weight:700&#x27;}, svg).textContent = `đỉnh: giá ${fmt(o.p)} → ${fmt(op,0)}`;
+    });
+    [&#x27;ess&#x27;,&#x27;lux&#x27;].forEach(k =&gt; {
+      pr[k] = {
+        v: el(&#x27;line&#x27;, {style:`stroke:var(${SC[k].col});stroke-width:1.2;stroke-dasharray:2 3`}, svg),
+        c: el(&#x27;circle&#x27;, {r:8, style:`fill:var(${SC[k].col});stroke:var(--sheet);stroke-width:3`}, svg)
+      };
+    });
+  })();
+  function updateProfit(){
+    [&#x27;ess&#x27;,&#x27;lux&#x27;].forEach(k =&gt; {
+      const p = price[k], v = profit(SC[k], p);
+      pr[k].c.setAttribute(&#x27;cx&#x27;, px(p)); pr[k].c.setAttribute(&#x27;cy&#x27;, py(v));
+      pr[k].v.setAttribute(&#x27;x1&#x27;, px(p)); pr[k].v.setAttribute(&#x27;x2&#x27;, px(p)); pr[k].v.setAttribute(&#x27;y1&#x27;, py(v)); pr[k].v.setAttribute(&#x27;y2&#x27;, py(0));
+    });
+  }
+
+  $(&#x27;optBody&#x27;).innerHTML = [&#x27;ess&#x27;,&#x27;lux&#x27;].map(k =&gt; {
+    const s = SC[k], o = opt(s);
+    return `&lt;tr&gt;&lt;td&gt;&lt;span class=&quot;${k===&#x27;ess&#x27;?&#x27;e&#x27;:&#x27;l&#x27;}&quot;&gt;${k===&#x27;ess&#x27;?&#x27;Thiết yếu&#x27;:&#x27;Xa xỉ&#x27;}&lt;/span&gt;&lt;/td&gt;&lt;td&gt;${fmt(o.p)}&lt;/td&gt;&lt;td&gt;${fmt(o.q)}&lt;/td&gt;&lt;td&gt;+${fmt(o.p-MC)}&lt;/td&gt;&lt;td&gt;&lt;b&gt;${fmt(profit(s,o.p),0)}&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;`;
+  }).join(&#x27;&#x27;);
+
+  const CORE = &#x27;Đường cầu càng &lt;b&gt;dốc&lt;/b&gt;, người mua càng khó từ bỏ sản phẩm, nên nhà độc quyền càng có thể đặt giá &lt;b&gt;cao hơn nhiều so với chi phí&lt;/b&gt; mà vẫn giữ được khách. Đó là sức mạnh độc quyền lớn. Với đường cầu &lt;b&gt;thoải&lt;/b&gt;, chỉ cần tăng giá một chút là mất nhiều khách, nên dù là người bán duy nhất, doanh nghiệp cũng không thể đẩy giá lên cao.&#x27;;
+  function updateInsight(){
+    const pe = price.ess, pl = price.lux, qe = Qd(SC.ess,pe), ql = Qd(SC.lux,pl);
+    const atOpt = Math.abs(pe - opt(SC.ess).p) &lt; 0.01 &amp;&amp; Math.abs(pl - opt(SC.lux).p) &lt; 0.01;
+    let t = &#x27;&#x27;;
+    if (atOpt){
+      t = &#x27;Doanh nghiệp đang đặt mức giá có lợi nhất cho từng mặt hàng. Với hàng thiết yếu, doanh nghiệp đặt giá &lt;b&gt;85&lt;/b&gt;, cao hơn chi phí 65 nghìn đ/sp. Với hàng xa xỉ, doanh nghiệp chỉ đặt được &lt;b&gt;45&lt;/b&gt;, cao hơn chi phí 25 nghìn đ/sp; đặt cao hơn nữa là lợi nhuận giảm.&lt;br&gt;&lt;br&gt;&#x27;;
+    } else if (linked &amp;&amp; Math.abs(pe - P0) &gt; 0.01){
+      t = `Cùng đặt giá &lt;b&gt;${fmt(pe)}&lt;/b&gt;: nếu bán hàng thiết yếu, doanh nghiệp bán được ${fmt(qe)} nghìn sp, lợi nhuận &lt;span class=&quot;e&quot;&gt;${fmt(profit(SC.ess,pe),0)}&lt;/span&gt;; nếu bán hàng xa xỉ, bán được ${fmt(ql)} nghìn sp, lợi nhuận &lt;span class=&quot;l&quot;&gt;${fmt(profit(SC.lux,pl),0)}&lt;/span&gt;. `;
+      t += pe &gt; P0
+        ? &#x27;Khi tăng giá, người mua hàng thiết yếu phần lớn vẫn phải mua, còn người mua hàng xa xỉ bỏ đi rất nhiều.&lt;br&gt;&lt;br&gt;&#x27;
+        : &#x27;Khi giảm giá, hàng xa xỉ hút thêm rất nhiều người mua, còn hàng thiết yếu bán thêm không đáng kể.&lt;br&gt;&lt;br&gt;&#x27;;
+    }
+    $(&#x27;insight&#x27;).innerHTML = t + CORE;
+  }
+
+  function renderAll(){ updateChart(SC.ess); updateChart(SC.lux); updateProfit(); updateInsight(); }
+  function setPrice(k, p){
+    p = Math.min(PMAX, Math.max(PMIN, p));
+    if (linked){ price.ess = price.lux = p; } else price[k] = p;
+    renderAll();
+  }
+  let anim = null;
+  const reduce = matchMedia(&#x27;(prefers-reduced-motion: reduce)&#x27;).matches;
+  function stopAnim(){ if (anim) cancelAnimationFrame(anim); anim = null; }
+  function animateTo(target){
+    stopAnim();
+    if (reduce){ price.ess = target.ess; price.lux = target.lux; renderAll(); return; }
+    const from = {...price}, t0 = performance.now(), dur = 550;
+    const step = t =&gt; {
+      const k = Math.min(1, (t - t0)/dur), e = 1 - Math.pow(1 - k, 3);
+      price.ess = from.ess + (target.ess - from.ess)*e;
+      price.lux = from.lux + (target.lux - from.lux)*e;
+      if (k &gt;= 1){ price.ess = target.ess; price.lux = target.lux; }
+      renderAll();
+      if (k &lt; 1) anim = requestAnimationFrame(step);
+    };
+    anim = requestAnimationFrame(step);
+  }
+
+  buildChart(SC.ess); buildChart(SC.lux);
+  $(&#x27;slEss&#x27;).addEventListener(&#x27;input&#x27;, e =&gt; { stopAnim(); setPrice(&#x27;ess&#x27;, +e.target.value); });
+  $(&#x27;slLux&#x27;).addEventListener(&#x27;input&#x27;, e =&gt; { stopAnim(); setPrice(&#x27;lux&#x27;, +e.target.value); });
+  $(&#x27;link&#x27;).addEventListener(&#x27;change&#x27;, e =&gt; {
+    linked = e.target.checked;
+    if (linked) animateTo({ess:price.ess, lux:price.ess});
+  });
+  $(&#x27;showMR&#x27;).addEventListener(&#x27;change&#x27;, e =&gt; { showMR = e.target.checked; renderAll(); });
+  document.querySelectorAll(&#x27;[data-set]&#x27;).forEach(b =&gt; b.addEventListener(&#x27;click&#x27;, () =&gt; {
+    if (b.dataset.set === &#x27;opt&#x27;){
+      linked = false; $(&#x27;link&#x27;).checked = false;
+      showMR = true; $(&#x27;showMR&#x27;).checked = true;
+      animateTo({ess:opt(SC.ess).p, lux:opt(SC.lux).p});
+    } else {
+      linked = true; $(&#x27;link&#x27;).checked = true;
+      const v = +b.dataset.set; animateTo({ess:v, lux:v});
+    }
+  }));
+  renderAll();
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+<iframe id="panel-olig" role="tabpanel" aria-labelledby="tab-olig" title="Doanh nghiệp độc quyền nhóm" scrolling="no" hidden srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;vi&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, viewport-fit=cover&quot;&gt;
+&lt;title&gt;Đường cầu gãy khúc – mô phỏng tăng/giảm giá&lt;/title&gt;
+&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;
+&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;
+&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;style&gt;
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --paper:#f2f5f8; --sheet:#ffffff; --ink:#1d2a3a; --muted:#5d6b7c; --rule:#d6dee7; --grid:#e6ecf2;
+  --curve:#cf9a5f; --curve-ghost:#e3c6a3; --raise:#c8402f; --cut:#2a64b0; --mr:#7b5cc4; --mc:#2f855a;
+  --rev:rgba(207,154,95,.16); --neutral:#5d6b7c;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme=&quot;light&quot;]){
+    --paper:#121821; --sheet:#1a222d; --ink:#e8eef5; --muted:#9aa8b8; --rule:#2e3a48; --grid:#232d39;
+    --curve:#e2ad70; --curve-ghost:#6e5638; --raise:#f07a66; --cut:#6fa6ee; --mr:#b09af0; --mc:#62c28f;
+    --rev:rgba(226,173,112,.14); --neutral:#9aa8b8;
+  }
+}
+:root[data-theme=&quot;dark&quot;]{
+  --paper:#121821; --sheet:#1a222d; --ink:#e8eef5; --muted:#9aa8b8; --rule:#2e3a48; --grid:#232d39;
+  --curve:#e2ad70; --curve-ghost:#6e5638; --raise:#f07a66; --cut:#6fa6ee; --mr:#b09af0; --mc:#62c28f;
+  --rev:rgba(226,173,112,.14); --neutral:#9aa8b8;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:&#x27;Be Vietnam Pro&#x27;,system-ui,-apple-system,&#x27;Segoe UI&#x27;,Roboto,Arial,sans-serif;
+  font-size:16px; line-height:1.55; font-variant-numeric:tabular-nums;
+}
+.wrap{max-width:1180px; margin:0 auto; padding:28px 20px 48px}
+header{max-width:760px; margin-bottom:22px}
+h1{font-size:clamp(1.6rem,3.6vw,2.4rem); line-height:1.15; margin:0 0 6px; font-weight:800; letter-spacing:-.02em}
+.sub{color:var(--muted); margin:0 0 10px; font-size:.95rem}
+.lead{margin:0; max-width:68ch}
+.layout{display:grid; gap:18px; grid-template-columns:minmax(0,1.45fr) minmax(0,1fr); align-items:start}
+@media (max-width:900px){.layout{grid-template-columns:1fr}}
+.sheet{background:var(--sheet); border:1px solid var(--rule); border-radius:14px; padding:18px}
+.chart-sheet{padding:10px 10px 16px}
+svg{display:block; width:100%; height:auto; touch-action:none; user-select:none; -webkit-user-select:none}
+.controls{padding:6px 10px 0}
+.price-row{display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap}
+.price-row label{font-weight:600}
+.price-big{font-size:1.6rem; font-weight:800}
+.price-big small{font-size:.85rem; font-weight:500; color:var(--muted)}
+input[type=range]{width:100%; accent-color:var(--curve); margin:8px 0 2px; height:28px}
+.ends{display:flex; justify-content:space-between; font-size:.8rem; color:var(--muted)}
+.btns{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
+button{
+  font:inherit; font-size:.9rem; font-weight:600; cursor:pointer; border-radius:999px;
+  padding:7px 14px; border:1.5px solid var(--rule); background:transparent; color:var(--ink);
+}
+button:hover{border-color:var(--ink)}
+button.minus{color:var(--cut); border-color:color-mix(in srgb,var(--cut) 40%,transparent)}
+button.plus{color:var(--raise); border-color:color-mix(in srgb,var(--raise) 40%,transparent)}
+button:focus-visible,input:focus-visible,tr:focus-visible{outline:3px solid var(--curve); outline-offset:2px}
+.toggle{display:flex; gap:8px; align-items:center; margin-top:14px; font-size:.92rem; cursor:pointer}
+.toggle input{width:18px; height:18px; accent-color:var(--mr)}
+
+.verdict{border-left:5px solid var(--neutral); padding:4px 0 4px 14px; margin-bottom:14px}
+.verdict h2{margin:0 0 4px; font-size:1.25rem; line-height:1.3}
+.verdict p{margin:0}
+.verdict.up{border-color:var(--raise)} .verdict.up h2{color:var(--raise)}
+.verdict.down{border-color:var(--cut)} .verdict.down h2{color:var(--cut)}
+
+.ledger{width:100%; border-collapse:collapse; font-size:.93rem}
+.ledger th,.ledger td{padding:9px 6px; border-bottom:1px solid var(--rule); text-align:right; white-space:nowrap}
+.ledger th:first-child,.ledger td:first-child{text-align:left; white-space:normal}
+.ledger thead th{font-size:.8rem; color:var(--muted); font-weight:600}
+.ledger td.now{font-weight:700}
+.pos{color:var(--mc)} .neg{color:var(--raise)} .zero{color:var(--muted)}
+.side h3{font-size:1rem; margin:0 0 6px}
+.side p{margin:0}
+.block{margin-top:18px; padding-top:16px; border-top:1px dashed var(--rule)}
+.mc-row{display:flex; justify-content:space-between; align-items:baseline}
+.mc-row b{font-size:1.15rem}
+#mc{accent-color:var(--mc)}
+.note{font-size:.88rem; color:var(--muted); margin-top:8px}
+#goOpt{margin-top:10px}
+
+.scen{margin-top:18px}
+.scen h3{margin:0 0 4px; font-size:1.1rem}
+.table-wrap{overflow-x:auto; margin-top:10px}
+.scen table{width:100%; border-collapse:collapse; font-size:.93rem; min-width:620px}
+.scen th,.scen td{padding:9px 10px; text-align:right; border-bottom:1px solid var(--rule)}
+.scen th:first-child,.scen td:first-child{text-align:left}
+.scen thead th{font-size:.8rem; color:var(--muted); font-weight:600}
+.scen tbody tr{cursor:pointer}
+.scen tbody tr:hover{background:var(--grid)}
+.scen tbody tr.active{background:color-mix(in srgb,var(--curve) 18%,transparent)}
+.scen td .lbl{font-weight:600}
+
+.assume{margin-top:18px; font-size:.9rem; color:var(--muted)}
+.assume h3{color:var(--ink); font-size:1rem; margin:0 0 6px}
+.assume ul{margin:0; padding-left:18px}
+.assume code{font-family:inherit; font-weight:600; color:var(--ink)}
+
+/* SVG */
+.g-grid{stroke:var(--grid); stroke-width:1}
+.g-axis{stroke:var(--ink); stroke-width:1.6}
+.g-tick{fill:var(--muted); font-size:12px}
+.g-title{fill:var(--ink); font-size:13px; font-weight:600}
+.g-demand{fill:none; stroke:var(--curve); stroke-width:7; stroke-linecap:round; stroke-linejoin:round}
+.g-ext{fill:none; stroke:var(--curve-ghost); stroke-width:2.5; stroke-dasharray:7 6}
+.g-lbl{font-size:12px; fill:var(--muted); paint-order:stroke; stroke:var(--sheet); stroke-width:4px; stroke-linejoin:round}
+.g-lbl-strong{font-size:13px; font-weight:700; fill:var(--ink); paint-order:stroke; stroke:var(--sheet); stroke-width:4px; stroke-linejoin:round}
+.g-rev{fill:var(--rev)}
+.g-guide{stroke:var(--muted); stroke-width:1.2; stroke-dasharray:4 4}
+.g-base{fill:var(--sheet); stroke:var(--ink); stroke-width:2}
+.g-point{fill:var(--ink); stroke:var(--sheet); stroke-width:3; cursor:grab}
+.g-hit{fill:transparent; cursor:grab}
+.g-ghost{fill:var(--sheet); stroke-width:2; stroke-dasharray:3 2}
+.g-mr{fill:none; stroke:var(--mr); stroke-width:2.5}
+.g-mrgap{stroke:var(--mr); stroke-width:2; stroke-dasharray:2 4}
+.g-mc{stroke:var(--mc); stroke-width:2.5}
+.dragging .g-point,.dragging .g-hit{cursor:grabbing}
+@media (prefers-reduced-motion: no-preference){
+  .g-point{transition:r .15s}
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main class=&quot;wrap&quot;&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Đường cầu gãy khúc của doanh nghiệp độc quyền nhóm&lt;/h1&gt;
+    &lt;p class=&quot;sub&quot;&gt;Kinked demand curve · 굴절 수요 곡선 · Mô hình Sweezy&lt;/p&gt;
+    &lt;p class=&quot;lead&quot;&gt;Doanh nghiệp đang bán ở giá &lt;b&gt;50 nghìn đ&lt;/b&gt;, sản lượng &lt;b&gt;100 nghìn sản phẩm&lt;/b&gt;. Kéo chấm đen trên đồ thị lên hoặc xuống (hoặc dùng thanh trượt) để thử tăng/giảm giá và xem sản lượng thay đổi khác nhau thế nào.&lt;/p&gt;
+  &lt;/header&gt;
+
+  &lt;div class=&quot;layout&quot;&gt;
+    &lt;section class=&quot;sheet chart-sheet&quot; aria-label=&quot;Đồ thị&quot;&gt;
+      &lt;svg id=&quot;chart&quot; viewBox=&quot;0 0 640 470&quot; role=&quot;img&quot; aria-label=&quot;Đồ thị đường cầu gãy khúc, có thể kéo để đổi giá&quot;&gt;&lt;/svg&gt;
+      &lt;div class=&quot;controls&quot;&gt;
+        &lt;div class=&quot;price-row&quot;&gt;
+          &lt;label for=&quot;price&quot;&gt;Giá bán&lt;/label&gt;
+          &lt;span class=&quot;price-big&quot;&gt;&lt;span id=&quot;priceOut&quot;&gt;50&lt;/span&gt; &lt;small&gt;nghìn đ / sp&lt;/small&gt;&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;input type=&quot;range&quot; id=&quot;price&quot; min=&quot;30&quot; max=&quot;60&quot; step=&quot;0.5&quot; value=&quot;50&quot; aria-describedby=&quot;priceHint&quot;&gt;
+        &lt;div class=&quot;ends&quot; id=&quot;priceHint&quot;&gt;&lt;span&gt;30 · giảm giá&lt;/span&gt;&lt;span&gt;50&lt;/span&gt;&lt;span&gt;tăng giá · 60&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;btns&quot;&gt;
+          &lt;button class=&quot;minus&quot; data-pct=&quot;-20&quot;&gt;Giảm 20%&lt;/button&gt;
+          &lt;button class=&quot;minus&quot; data-pct=&quot;-10&quot;&gt;Giảm 10%&lt;/button&gt;
+          &lt;button data-pct=&quot;0&quot;&gt;Về giá 50&lt;/button&gt;
+          &lt;button class=&quot;plus&quot; data-pct=&quot;10&quot;&gt;Tăng 10%&lt;/button&gt;
+          &lt;button class=&quot;plus&quot; data-pct=&quot;15&quot;&gt;Tăng 15%&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;showMR&quot;&gt; Hiện doanh thu biên (MR) và chi phí biên (MC) trên đồ thị&lt;/label&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;aside class=&quot;sheet side&quot; aria-live=&quot;polite&quot;&gt;
+      &lt;div class=&quot;verdict&quot; id=&quot;verdict&quot;&gt;&lt;h2 id=&quot;vTitle&quot;&gt;&lt;/h2&gt;&lt;p id=&quot;vText&quot;&gt;&lt;/p&gt;&lt;/div&gt;
+
+      &lt;table class=&quot;ledger&quot; aria-label=&quot;So sánh trước và sau&quot;&gt;
+        &lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Giá 50&lt;/th&gt;&lt;th&gt;Hiện tại&lt;/th&gt;&lt;th&gt;Thay đổi&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+        &lt;tbody&gt;
+          &lt;tr&gt;&lt;td&gt;Giá (nghìn đ)&lt;/td&gt;&lt;td&gt;50&lt;/td&gt;&lt;td class=&quot;now&quot; id=&quot;lP&quot;&gt;&lt;/td&gt;&lt;td id=&quot;dP&quot;&gt;&lt;/td&gt;&lt;/tr&gt;
+          &lt;tr&gt;&lt;td&gt;Sản lượng (nghìn sp)&lt;/td&gt;&lt;td&gt;100&lt;/td&gt;&lt;td class=&quot;now&quot; id=&quot;lQ&quot;&gt;&lt;/td&gt;&lt;td id=&quot;dQ&quot;&gt;&lt;/td&gt;&lt;/tr&gt;
+          &lt;tr&gt;&lt;td&gt;Doanh thu (triệu đ)&lt;/td&gt;&lt;td&gt;5.000&lt;/td&gt;&lt;td class=&quot;now&quot; id=&quot;lTR&quot;&gt;&lt;/td&gt;&lt;td id=&quot;dTR&quot;&gt;&lt;/td&gt;&lt;/tr&gt;
+          &lt;tr&gt;&lt;td&gt;Lợi nhuận (triệu đ)&lt;/td&gt;&lt;td id=&quot;lPi0&quot;&gt;&lt;/td&gt;&lt;td class=&quot;now&quot; id=&quot;lPi&quot;&gt;&lt;/td&gt;&lt;td id=&quot;dPi&quot;&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+
+      &lt;div class=&quot;block&quot;&gt;
+        &lt;h3&gt;Nếu đối thủ phản ứng ngược lại thì sao?&lt;/h3&gt;
+        &lt;p id=&quot;cf&quot;&gt;&lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;block&quot;&gt;
+        &lt;div class=&quot;mc-row&quot;&gt;&lt;h3&gt;&lt;label for=&quot;mc&quot;&gt;Chi phí biên MC&lt;/label&gt;&lt;/h3&gt;&lt;b&gt;&lt;span id=&quot;mcOut&quot;&gt;25&lt;/span&gt; nghìn đ&lt;/b&gt;&lt;/div&gt;
+        &lt;input type=&quot;range&quot; id=&quot;mc&quot; min=&quot;0&quot; max=&quot;50&quot; step=&quot;1&quot; value=&quot;25&quot;&gt;
+        &lt;p id=&quot;mcText&quot;&gt;&lt;/p&gt;
+        &lt;button id=&quot;goOpt&quot;&gt;Đặt giá tối ưu lợi nhuận&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/aside&gt;
+  &lt;/div&gt;
+
+  &lt;section class=&quot;sheet scen&quot;&gt;
+    &lt;h3&gt;Bảng so sánh các kịch bản&lt;/h3&gt;
+    &lt;p class=&quot;note&quot; style=&quot;margin:0&quot;&gt;Bấm vào một dòng để xem trên đồ thị. Lợi nhuận tính với MC hiện tại.&lt;/p&gt;
+    &lt;div class=&quot;table-wrap&quot;&gt;
+      &lt;table&gt;
+        &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Kịch bản&lt;/th&gt;&lt;th&gt;Giá&lt;/th&gt;&lt;th&gt;Sản lượng&lt;/th&gt;&lt;th&gt;% thay đổi Q&lt;/th&gt;&lt;th&gt;Doanh thu&lt;/th&gt;&lt;th&gt;Lợi nhuận&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+        &lt;tbody id=&quot;scenBody&quot;&gt;&lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class=&quot;assume&quot;&gt;
+    &lt;h3&gt;Số liệu giả định của mô hình&lt;/h3&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Khi tăng giá (đối thủ &lt;b&gt;không&lt;/b&gt; tăng theo): &lt;code&gt;P = 60 − 0,1Q&lt;/code&gt; → cầu co giãn mạnh, |E| = 5 quanh điểm gãy.&lt;/li&gt;
+      &lt;li&gt;Khi giảm giá (đối thủ &lt;b&gt;giảm theo&lt;/b&gt;): &lt;code&gt;P = 90 − 0,4Q&lt;/code&gt; → cầu ít co giãn hơn, |E| = 1,25.&lt;/li&gt;
+      &lt;li&gt;Doanh thu biên: &lt;code&gt;MR₁ = 60 − 0,2Q&lt;/code&gt; (đoạn trên), &lt;code&gt;MR₂ = 90 − 0,8Q&lt;/code&gt; (đoạn dưới). Tại Q = 100, MR nhảy từ 40 xuống 10 — tạo khoảng hở.&lt;/li&gt;
+      &lt;li&gt;Lợi nhuận = (P − MC) × Q, bỏ qua chi phí cố định. Đơn vị: giá nghìn đ, sản lượng nghìn sp, doanh thu và lợi nhuận triệu đ.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+
+&lt;script&gt;
+(function(){
+  const P0 = 50, Q0 = 100, PMIN = 30, PMAX_SL = 60;
+  const qUp   = p =&gt; Math.max(0, (60 - p) / 0.1);   // đoạn trên: đối thủ không theo
+  const qDown = p =&gt; Math.max(0, (90 - p) / 0.4);   // đoạn dưới: đối thủ theo
+  const demandQ = p =&gt; p &gt;= P0 ? qUp(p) : qDown(p);
+
+  let price = P0, mc = 25;
+
+  const fmt = (n, d=1) =&gt; Number(n).toLocaleString(&#x27;vi-VN&#x27;, {maximumFractionDigits:d, minimumFractionDigits:0});
+  const sgn = (n, d=1) =&gt; (n &gt; 0.0001 ? &#x27;+&#x27; : n &lt; -0.0001 ? &#x27;−&#x27; : &#x27;&#x27;) + fmt(Math.abs(n), d);
+  const cls = n =&gt; n &gt; 0.0001 ? &#x27;pos&#x27; : n &lt; -0.0001 ? &#x27;neg&#x27; : &#x27;zero&#x27;;
+
+  /* ---------- SVG ---------- */
+  const NS = &#x27;http://www.w3.org/2000/svg&#x27;;
+  const svg = document.getElementById(&#x27;chart&#x27;);
+  const W = 640, H = 470, m = {l:62, r:22, t:22, b:58};
+  const QM = 160, PM = 70;
+  const xs = q =&gt; m.l + q / QM * (W - m.l - m.r);
+  const ys = p =&gt; m.t + (1 - p / PM) * (H - m.t - m.b);
+  function el(tag, a, parent){
+    const e = document.createElementNS(NS, tag);
+    for (const k in a) e.setAttribute(k, a[k]);
+    (parent || svg).appendChild(e); return e;
+  }
+  const pts = arr =&gt; arr.map(([q,p]) =&gt; xs(q).toFixed(1)+&#x27;,&#x27;+ys(p).toFixed(1)).join(&#x27; &#x27;);
+
+  const defs = el(&#x27;defs&#x27;, {});
+  [[&#x27;arRaise&#x27;,&#x27;--raise&#x27;],[&#x27;arCut&#x27;,&#x27;--cut&#x27;]].forEach(([id, v]) =&gt; {
+    const mk = el(&#x27;marker&#x27;, {id, viewBox:&#x27;0 0 10 10&#x27;, refX:&#x27;8&#x27;, refY:&#x27;5&#x27;, markerWidth:&#x27;7&#x27;, markerHeight:&#x27;7&#x27;, orient:&#x27;auto-start-reverse&#x27;}, defs);
+    el(&#x27;path&#x27;, {d:&#x27;M0,0 L10,5 L0,10 z&#x27;, style:&#x27;fill:var(&#x27;+v+&#x27;)&#x27;}, mk);
+  });
+
+  // grid + ticks
+  for (let q = 0; q &lt;= QM; q += 20){
+    if (q) el(&#x27;line&#x27;, {x1:xs(q), y1:ys(0), x2:xs(q), y2:ys(PM), class:&#x27;g-grid&#x27;});
+    el(&#x27;text&#x27;, {x:xs(q), y:ys(0)+18, &#x27;text-anchor&#x27;:&#x27;middle&#x27;, class:&#x27;g-tick&#x27;}).textContent = q;
+  }
+  for (let p = 0; p &lt;= PM; p += 10){
+    if (p) el(&#x27;line&#x27;, {x1:xs(0), y1:ys(p), x2:xs(QM), y2:ys(p), class:&#x27;g-grid&#x27;});
+    el(&#x27;text&#x27;, {x:xs(0)-8, y:ys(p)+4, &#x27;text-anchor&#x27;:&#x27;end&#x27;, class:&#x27;g-tick&#x27;}).textContent = p;
+  }
+  el(&#x27;line&#x27;, {x1:xs(0), y1:ys(0), x2:xs(QM)+8, y2:ys(0), class:&#x27;g-axis&#x27;});
+  el(&#x27;line&#x27;, {x1:xs(0), y1:ys(0), x2:xs(0), y2:ys(PM)-8, class:&#x27;g-axis&#x27;});
+  el(&#x27;text&#x27;, {x:xs(QM), y:H-12, &#x27;text-anchor&#x27;:&#x27;end&#x27;, class:&#x27;g-title&#x27;}).textContent = &#x27;Sản lượng Q (nghìn sp)&#x27;;
+  el(&#x27;text&#x27;, {x:14, y:ys(PM/2), &#x27;text-anchor&#x27;:&#x27;middle&#x27;, class:&#x27;g-title&#x27;, transform:`rotate(-90 14 ${ys(PM/2)})`}).textContent = &#x27;Giá P (nghìn đ)&#x27;;
+
+  // dynamic revenue rect (under curves)
+  const revRect = el(&#x27;rect&#x27;, {class:&#x27;g-rev&#x27;});
+  const revLbl  = el(&#x27;text&#x27;, {class:&#x27;g-lbl&#x27;}); revLbl.textContent = &#x27;Doanh thu = P × Q&#x27;;
+
+  // MR / MC group
+  const mrG = el(&#x27;g&#x27;, {style:&#x27;display:none&#x27;});
+  el(&#x27;polyline&#x27;, {points:pts([[0,60],[100,40]]), class:&#x27;g-mr&#x27;}, mrG);
+  el(&#x27;line&#x27;, {x1:xs(100), y1:ys(40), x2:xs(100), y2:ys(10), class:&#x27;g-mrgap&#x27;}, mrG);
+  el(&#x27;polyline&#x27;, {points:pts([[100,10],[112.5,0]]), class:&#x27;g-mr&#x27;}, mrG);
+  const mrL = el(&#x27;text&#x27;, {x:xs(22), y:ys(55.6)+18, class:&#x27;g-lbl&#x27;, style:&#x27;fill:var(--mr);font-weight:700&#x27;}, mrG); mrL.textContent = &#x27;MR&#x27;;
+  const gapL = el(&#x27;text&#x27;, {x:xs(100)+8, y:ys(25), class:&#x27;g-lbl&#x27;, style:&#x27;fill:var(--mr)&#x27;}, mrG); gapL.textContent = &#x27;khoảng hở MR (10 → 40)&#x27;;
+  const mcLine = el(&#x27;line&#x27;, {x1:xs(0), x2:xs(QM), class:&#x27;g-mc&#x27;}, mrG);
+  const mcLbl = el(&#x27;text&#x27;, {x:xs(QM)-4, &#x27;text-anchor&#x27;:&#x27;end&#x27;, class:&#x27;g-lbl&#x27;, style:&#x27;fill:var(--mc);font-weight:700&#x27;}, mrG);
+
+  // counterfactual extensions
+  el(&#x27;polyline&#x27;, {points:pts([[100,50],[160,44]]), class:&#x27;g-ext&#x27;});
+  el(&#x27;polyline&#x27;, {points:pts([[75,60],[100,50]]), class:&#x27;g-ext&#x27;});
+  const e1 = el(&#x27;text&#x27;, {x:xs(158), y:ys(44)-10, &#x27;text-anchor&#x27;:&#x27;end&#x27;, class:&#x27;g-lbl&#x27;}); e1.textContent = &#x27;nếu đối thủ không giảm theo&#x27;;
+  const e2 = el(&#x27;text&#x27;, {x:xs(75)+4, y:ys(60)-8, &#x27;text-anchor&#x27;:&#x27;middle&#x27;, class:&#x27;g-lbl&#x27;}); e2.textContent = &#x27;nếu đối thủ tăng theo&#x27;;
+
+  // demand
+  el(&#x27;polyline&#x27;, {points:pts([[0,60],[100,50],[150,30]]), class:&#x27;g-demand&#x27;});
+  const d1 = el(&#x27;text&#x27;, {x:xs(3), y:ys(60)-14, class:&#x27;g-lbl-strong&#x27;}); d1.textContent = &#x27;Tăng giá: đối thủ không theo&#x27;;
+  const d2 = el(&#x27;text&#x27;, {x:xs(117), y:ys(28), &#x27;text-anchor&#x27;:&#x27;end&#x27;, class:&#x27;g-lbl-strong&#x27;}); d2.textContent = &#x27;Giảm giá: đối thủ giảm theo&#x27;;
+
+  // guides, deltas
+  const gH = el(&#x27;line&#x27;, {class:&#x27;g-guide&#x27;}), gV = el(&#x27;line&#x27;, {class:&#x27;g-guide&#x27;});
+  const dqLine = el(&#x27;line&#x27;, {&#x27;stroke-width&#x27;:2.5});
+  const dqTxt  = el(&#x27;text&#x27;, {&#x27;text-anchor&#x27;:&#x27;middle&#x27;, class:&#x27;g-lbl&#x27;, style:&#x27;font-weight:700&#x27;});
+  const dpLine = el(&#x27;line&#x27;, {&#x27;stroke-width&#x27;:2.5});
+  const dpTxt  = el(&#x27;text&#x27;, {class:&#x27;g-lbl&#x27;, style:&#x27;font-weight:700&#x27;});
+
+  // base point
+  el(&#x27;circle&#x27;, {cx:xs(100), cy:ys(50), r:7, class:&#x27;g-base&#x27;});
+  const baseL = el(&#x27;text&#x27;, {x:xs(100)-12, y:ys(50)+22, &#x27;text-anchor&#x27;:&#x27;end&#x27;, class:&#x27;g-lbl&#x27;}); baseL.textContent = &#x27;E₀ (Q=100; P=50)&#x27;;
+
+  // ghost (counterfactual) point
+  const cfLink = el(&#x27;line&#x27;, {class:&#x27;g-guide&#x27;});
+  const ghost = el(&#x27;circle&#x27;, {r:6, class:&#x27;g-ghost&#x27;});
+
+  // current point
+  const hit = el(&#x27;circle&#x27;, {r:26, class:&#x27;g-hit&#x27;});
+  const pt  = el(&#x27;circle&#x27;, {r:10, class:&#x27;g-point&#x27;});
+  const ptL = el(&#x27;text&#x27;, {class:&#x27;g-lbl-strong&#x27;});
+
+  /* ---------- DOM ---------- */
+  const $ = id =&gt; document.getElementById(id);
+  const slider = $(&#x27;price&#x27;), mcSl = $(&#x27;mc&#x27;);
+
+  function optimum(c){
+    if (c &gt;= 10 &amp;&amp; c &lt;= 40) return {p:50, q:100, gap:true};
+    if (c &lt; 10){ const q = (90 - c) / 0.8; return {p:90 - 0.4*q, q, gap:false}; }
+    const q = Math.max(0, (60 - c) / 0.2); return {p:60 - 0.1*q, q, gap:false};
+  }
+
+  const scen = [
+    [&#x27;Giảm 20%&#x27;, 40], [&#x27;Giảm 10%&#x27;, 45], [&#x27;Giảm 5%&#x27;, 47.5], [&#x27;Giữ giá&#x27;, 50],
+    [&#x27;Tăng 5%&#x27;, 52.5], [&#x27;Tăng 10%&#x27;, 55], [&#x27;Tăng 15%&#x27;, 57.5]
+  ];
+
+  function render(){
+    const p = price, q = demandQ(p);
+    const TR = p*q, TR0 = P0*Q0, pi = (p-mc)*q, pi0 = (P0-mc)*Q0;
+    const dPp = (p-P0)/P0*100, dQp = (q-Q0)/Q0*100;
+    const up = p &gt; P0 + 1e-9, down = p &lt; P0 - 1e-9;
+    const col = up ? &#x27;var(--raise)&#x27; : &#x27;var(--cut)&#x27;;
+
+    // chart
+    const x = xs(q), y = ys(p);
+    revRect.setAttribute(&#x27;x&#x27;, xs(0)); revRect.setAttribute(&#x27;y&#x27;, y);
+    revRect.setAttribute(&#x27;width&#x27;, Math.max(0, x - xs(0))); revRect.setAttribute(&#x27;height&#x27;, ys(0) - y);
+    revLbl.setAttribute(&#x27;x&#x27;, xs(0)+24); revLbl.setAttribute(&#x27;y&#x27;, y+18);
+    revLbl.style.display = q &gt; 45 ? &#x27;&#x27; : &#x27;none&#x27;;
+    gH.setAttribute(&#x27;x1&#x27;, xs(0)); gH.setAttribute(&#x27;x2&#x27;, x); gH.setAttribute(&#x27;y1&#x27;, y); gH.setAttribute(&#x27;y2&#x27;, y);
+    gV.setAttribute(&#x27;x1&#x27;, x); gV.setAttribute(&#x27;x2&#x27;, x); gV.setAttribute(&#x27;y1&#x27;, y); gV.setAttribute(&#x27;y2&#x27;, ys(0));
+    [pt, hit].forEach(c =&gt; { c.setAttribute(&#x27;cx&#x27;, x); c.setAttribute(&#x27;cy&#x27;, y); });
+    const right = x &lt; W - 170;
+    ptL.setAttribute(&#x27;x&#x27;, right ? x+14 : x-14); ptL.setAttribute(&#x27;y&#x27;, y-14);
+    ptL.setAttribute(&#x27;text-anchor&#x27;, right ? &#x27;start&#x27; : &#x27;end&#x27;);
+    ptL.textContent = `P=${fmt(p)}; Q=${fmt(q)}`;
+    baseL.style.display = (up || down) ? &#x27;&#x27; : &#x27;none&#x27;;
+
+    const showD = up || down;
+    [dqLine, dqTxt, dpLine, dpTxt].forEach(e =&gt; e.style.display = showD ? &#x27;&#x27; : &#x27;none&#x27;);
+    if (showD){
+      const yb = ys(0) - 14;
+      dqLine.setAttribute(&#x27;x1&#x27;, xs(Q0)); dqLine.setAttribute(&#x27;x2&#x27;, x);
+      dqLine.setAttribute(&#x27;y1&#x27;, yb); dqLine.setAttribute(&#x27;y2&#x27;, yb);
+      dqLine.style.stroke = col; dqLine.setAttribute(&#x27;marker-end&#x27;, `url(#${up?&#x27;arRaise&#x27;:&#x27;arCut&#x27;})`);
+      dqTxt.setAttribute(&#x27;x&#x27;, (xs(Q0)+x)/2); dqTxt.setAttribute(&#x27;y&#x27;, yb-8);
+      dqTxt.style.fill = col; dqTxt.textContent = `ΔQ = ${sgn(q-Q0)}`;
+      const xb = xs(0) + 12;
+      dpLine.setAttribute(&#x27;x1&#x27;, xb); dpLine.setAttribute(&#x27;x2&#x27;, xb);
+      dpLine.setAttribute(&#x27;y1&#x27;, ys(P0)); dpLine.setAttribute(&#x27;y2&#x27;, y);
+      dpLine.style.stroke = col; dpLine.setAttribute(&#x27;marker-end&#x27;, `url(#${up?&#x27;arRaise&#x27;:&#x27;arCut&#x27;})`);
+      dpTxt.setAttribute(&#x27;x&#x27;, xb+8); dpTxt.setAttribute(&#x27;y&#x27;, (ys(P0)+y)/2 + 4);
+      dpTxt.style.fill = col; dpTxt.textContent = `ΔP = ${sgn(p-P0)}`;
+      dpTxt.style.display = Math.abs(p-P0) &gt;= 2 ? &#x27;&#x27; : &#x27;none&#x27;;
+    }
+
+    // counterfactual
+    const qcf = up ? qDown(p) : down ? qUp(p) : null;
+    const showCf = qcf !== null &amp;&amp; qcf &lt;= QM;
+    [ghost, cfLink].forEach(e =&gt; e.style.display = showCf ? &#x27;&#x27; : &#x27;none&#x27;);
+    if (showCf){
+      ghost.setAttribute(&#x27;cx&#x27;, xs(qcf)); ghost.setAttribute(&#x27;cy&#x27;, y); ghost.style.stroke = col;
+      cfLink.setAttribute(&#x27;x1&#x27;, x); cfLink.setAttribute(&#x27;x2&#x27;, xs(qcf));
+      cfLink.setAttribute(&#x27;y1&#x27;, y); cfLink.setAttribute(&#x27;y2&#x27;, y);
+    }
+
+    // MC line
+    mcLine.setAttribute(&#x27;y1&#x27;, ys(mc)); mcLine.setAttribute(&#x27;y2&#x27;, ys(mc));
+    mcLbl.setAttribute(&#x27;y&#x27;, ys(mc) - 6); mcLbl.textContent = `MC = ${mc}`;
+
+    // readouts
+    $(&#x27;priceOut&#x27;).textContent = fmt(p);
+    slider.value = p;
+    $(&#x27;lP&#x27;).textContent = fmt(p);   setD(&#x27;dP&#x27;, dPp, &#x27;%&#x27;);
+    $(&#x27;lQ&#x27;).textContent = fmt(q);   setD(&#x27;dQ&#x27;, dQp, &#x27;%&#x27;);
+    $(&#x27;lTR&#x27;).textContent = fmt(TR, 0); setD(&#x27;dTR&#x27;, TR-TR0, &#x27;&#x27;, 0);
+    $(&#x27;lPi0&#x27;).textContent = fmt(pi0, 0);
+    $(&#x27;lPi&#x27;).textContent = fmt(pi, 0); setD(&#x27;dPi&#x27;, pi-pi0, &#x27;&#x27;, 0);
+
+    // verdict
+    const v = $(&#x27;verdict&#x27;);
+    v.className = &#x27;verdict&#x27; + (up ? &#x27; up&#x27; : down ? &#x27; down&#x27; : &#x27;&#x27;);
+    const E = showD ? Math.abs(dQp/dPp) : 0;
+    const piSent = pi &lt; pi0 - 0.5
+      ? `Lợi nhuận giảm ${fmt(pi0-pi,0)} triệu đ so với giữ giá 50 → doanh nghiệp không có lý do đổi giá.`
+      : pi &gt; pi0 + 0.5
+        ? `Với MC = ${mc}, lợi nhuận lại tăng ${fmt(pi-pi0,0)} triệu đ — MC đã ra ngoài khoảng hở MR nên đổi giá theo hướng này có lợi.`
+        : &#x27;&#x27;;
+    if (up){
+      $(&#x27;vTitle&#x27;).textContent = `Tăng giá ${fmt(dPp)}% → sản lượng giảm ${fmt(-dQp)}%`;
+      $(&#x27;vText&#x27;).innerHTML = `Đối thủ &lt;b&gt;giữ nguyên giá&lt;/b&gt;, khách chuyển sang họ. Sản lượng giảm gấp &lt;b&gt;${fmt(E)} lần&lt;/b&gt; mức tăng giá, doanh thu ${TR&lt;TR0?&#x27;giảm&#x27;:&#x27;tăng&#x27;} ${fmt(Math.abs(TR-TR0),0)} triệu đ. ${piSent}`;
+    } else if (down){
+      $(&#x27;vTitle&#x27;).textContent = `Giảm giá ${fmt(-dPp)}% → sản lượng chỉ tăng ${fmt(dQp)}%`;
+      $(&#x27;vText&#x27;).innerHTML = `Đối thủ &lt;b&gt;giảm giá theo&lt;/b&gt; để giữ thị phần, nên bạn không giành thêm được nhiều khách. Sản lượng chỉ tăng &lt;b&gt;${fmt(E)} lần&lt;/b&gt; mức giảm giá, doanh thu ${TR&lt;TR0?&#x27;giảm&#x27;:&#x27;chỉ tăng&#x27;} ${fmt(Math.abs(TR-TR0),0)} triệu đ. ${piSent}`;
+    } else {
+      $(&#x27;vTitle&#x27;).textContent = &#x27;Đang ở điểm gãy&#x27;;
+      $(&#x27;vText&#x27;).innerHTML = &#x27;Phía trên điểm này đường cầu rất thoải (tăng giá là mất nhiều khách), phía dưới thì dốc (giảm giá cũng không bán thêm được bao nhiêu). Thử kéo chấm đen lên hoặc xuống.&#x27;;
+    }
+
+    // counterfactual text
+    let cf;
+    if (up){
+      const c = qDown(p);
+      cf = `Nếu đối thủ cũng tăng giá theo, ở giá ${fmt(p)} bạn vẫn bán được &lt;b&gt;${fmt(c)}&lt;/b&gt; nghìn sp (${sgn((c-Q0)/Q0*100)}%) thay vì ${fmt(q)}. Chính việc đối thủ đứng yên khiến tăng giá bị “phạt” nặng: chênh lệch ${fmt(c-q)} nghìn sp.`;
+    } else if (down){
+      const c = qUp(p);
+      cf = `Nếu đối thủ không giảm theo, ở giá ${fmt(p)} bạn sẽ bán được &lt;b&gt;${fmt(c)}&lt;/b&gt; nghìn sp (${sgn((c-Q0)/Q0*100)}%) nhờ giành khách của họ. Nhưng họ giảm theo nên bạn chỉ bán ${fmt(q)} — mất ${fmt(c-q)} nghìn sp lẽ ra có được.`;
+    } else {
+      cf = &#x27;Đổi giá để xem: đường nét đứt trên đồ thị cho biết sản lượng nếu đối thủ phản ứng ngược với giả định của mô hình.&#x27;;
+    }
+    $(&#x27;cf&#x27;).innerHTML = cf;
+
+    // MC text
+    const o = optimum(mc);
+    $(&#x27;mcOut&#x27;).textContent = mc;
+    $(&#x27;mcText&#x27;).innerHTML = o.gap
+      ? `MC nằm trong khoảng hở MR (10 → 40), nên giá tối ưu &lt;b&gt;vẫn là 50&lt;/b&gt;, Q = 100. Chi phí thay đổi trong khoảng này mà giá không đổi — đây là lý do giá trong độc quyền nhóm thường &lt;b&gt;cứng nhắc&lt;/b&gt;.`
+      : `MC đã ra ngoài khoảng hở MR, giá tối ưu dịch sang &lt;b&gt;${fmt(o.p)}&lt;/b&gt; (Q = ${fmt(o.q)}), lợi nhuận tối đa ${fmt((o.p-mc)*o.q,0)} triệu đ.`;
+
+    // scenarios
+    const body = $(&#x27;scenBody&#x27;);
+    body.innerHTML = &#x27;&#x27;;
+    scen.forEach(([name, sp]) =&gt; {
+      const sq = demandQ(sp), sdq = (sq-Q0)/Q0*100;
+      const tr = document.createElement(&#x27;tr&#x27;);
+      tr.tabIndex = 0;
+      if (Math.abs(sp - p) &lt; 1e-9) tr.className = &#x27;active&#x27;;
+      tr.innerHTML = `&lt;td&gt;&lt;span class=&quot;lbl&quot;&gt;${name}&lt;/span&gt;&lt;/td&gt;&lt;td&gt;${fmt(sp)}&lt;/td&gt;&lt;td&gt;${fmt(sq)}&lt;/td&gt;
+        &lt;td class=&quot;${cls(sdq)}&quot;&gt;${sgn(sdq)}%&lt;/td&gt;&lt;td&gt;${fmt(sp*sq,0)}&lt;/td&gt;&lt;td&gt;${fmt((sp-mc)*sq,0)}&lt;/td&gt;`;
+      const go = () =&gt; animateTo(sp);
+      tr.addEventListener(&#x27;click&#x27;, go);
+      tr.addEventListener(&#x27;keydown&#x27;, e =&gt; { if (e.key === &#x27;Enter&#x27; || e.key === &#x27; &#x27;){ e.preventDefault(); go(); }});
+      body.appendChild(tr);
+    });
+  }
+
+  function setD(id, n, unit, d=1){
+    const e = $(id);
+    e.className = cls(n);
+    e.textContent = sgn(n, d) + unit;
+  }
+
+  const clampP = p =&gt; Math.min(PMAX_SL, Math.max(PMIN, p));
+  function setPrice(p){ price = clampP(p); render(); }
+
+  // animation for buttons
+  let anim = null;
+  const reduce = matchMedia(&#x27;(prefers-reduced-motion: reduce)&#x27;).matches;
+  function animateTo(target){
+    target = clampP(target);
+    if (anim) cancelAnimationFrame(anim);
+    if (reduce){ setPrice(target); return; }
+    const from = price, t0 = performance.now(), dur = 450;
+    const step = t =&gt; {
+      const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      price = from + (target - from) * e;
+      if (k &gt;= 1) price = target;
+      render();
+      if (k &lt; 1) anim = requestAnimationFrame(step);
+    };
+    anim = requestAnimationFrame(step);
+  }
+
+  // drag on chart
+  let dragging = false;
+  function priceFromEvent(ev){
+    const s = svg.createSVGPoint(); s.x = ev.clientX; s.y = ev.clientY;
+    const loc = s.matrixTransform(svg.getScreenCTM().inverse());
+    const p = PM * (1 - (loc.y - m.t) / (H - m.t - m.b));
+    return Math.round(clampP(p) * 2) / 2;
+  }
+  svg.addEventListener(&#x27;pointerdown&#x27;, ev =&gt; {
+    dragging = true; svg.classList.add(&#x27;dragging&#x27;);
+    svg.setPointerCapture(ev.pointerId);
+    if (anim) cancelAnimationFrame(anim);
+    setPrice(priceFromEvent(ev));
+    pt.setAttribute(&#x27;r&#x27;, 13);
+  });
+  svg.addEventListener(&#x27;pointermove&#x27;, ev =&gt; { if (dragging) setPrice(priceFromEvent(ev)); });
+  const end = () =&gt; { dragging = false; svg.classList.remove(&#x27;dragging&#x27;); pt.setAttribute(&#x27;r&#x27;, 10); };
+  svg.addEventListener(&#x27;pointerup&#x27;, end);
+  svg.addEventListener(&#x27;pointercancel&#x27;, end);
+
+  slider.addEventListener(&#x27;input&#x27;, () =&gt; { if (anim) cancelAnimationFrame(anim); setPrice(parseFloat(slider.value)); });
+  document.querySelectorAll(&#x27;.btns button&#x27;).forEach(b =&gt;
+    b.addEventListener(&#x27;click&#x27;, () =&gt; animateTo(P0 * (1 + parseFloat(b.dataset.pct)/100))));
+  $(&#x27;showMR&#x27;).addEventListener(&#x27;change&#x27;, e =&gt; { mrG.style.display = e.target.checked ? &#x27;&#x27; : &#x27;none&#x27;; });
+  mcSl.addEventListener(&#x27;input&#x27;, () =&gt; { mc = parseInt(mcSl.value, 10); render(); });
+  $(&#x27;goOpt&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+    $(&#x27;showMR&#x27;).checked = true; mrG.style.display = &#x27;&#x27;;
+    animateTo(optimum(mc).p);
+  });
+
+  render();
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+<script>
+(function(){
+  const tabs = [...document.querySelectorAll('.tab')];
+  const frames = {'tab-mono':document.getElementById('panel-mono'), 'tab-olig':document.getElementById('panel-olig')};
+  function fit(f){
+    try{
+      const b = f.contentDocument && f.contentDocument.body;
+      if (b) f.style.height = Math.ceil(b.getBoundingClientRect().height) + 'px';
+    }catch(e){}
+  }
+  Object.values(frames).forEach(f => {
+    f.addEventListener('load', () => {
+      fit(f);
+      try{
+        const b = f.contentDocument.body;
+        if ('ResizeObserver' in window) new ResizeObserver(() => fit(f)).observe(b);
+        f.contentDocument.fonts && f.contentDocument.fonts.ready.then(() => fit(f));
+      }catch(e){}
+    });
+  });
+  function show(id, focus){
+    tabs.forEach(t => {
+      const on = t.id === id;
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+      frames[t.id].hidden = !on;
+    });
+    fit(frames[id]);
+    if (focus) document.getElementById(id).focus();
+    window.scrollTo({top:0});
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => show(t.id));
+    t.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
+        e.preventDefault();
+        const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        show(n.id, true);
+      }
+    });
+  });
+  window.addEventListener('resize', () => Object.values(frames).forEach(f => { if (!f.hidden) fit(f); }));
+  if (location.hash === '#doc-quyen-nhom') show('tab-olig');
+})();
+</script>
+</body>
+</html>
