@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Kết quả kiểm tra · Giáo viên</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f3ee; --paper:#ffffff; --ink:#1d2433; --ink-2:#5b6474; --ink-3:#8a93a3;
+  --line:#e6e1d8; --line-2:#d9d2c5;
+  --accent:#1f5f8b; --accent-soft:#e7f0f7; --warm:#c8894b; --warm-soft:#f7ede2;
+  --ok:#2f7d4f; --ok-soft:#e6f4ec; --no:#c0392b; --no-soft:#fbeaea;
+  --radius:14px; --shadow:0 1px 2px rgba(29,36,51,.06),0 6px 24px rgba(29,36,51,.06);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:clamp(24px,5vw,32px);margin:4px 0 4px;letter-spacing:-.02em}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--warm)}
+.muted{color:var(--ink-2)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-top:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{border:1.5px solid var(--line-2);background:var(--paper);border-radius:12px;padding:10px 18px;font-weight:600;cursor:pointer;font-size:15px}
+.btn:hover:not(:disabled){border-color:var(--ink-3)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.warm{background:var(--warm);border-color:var(--warm);color:#fff}
+.btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:16px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stat b{display:block;font-size:24px;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--ink-2)}
+.msg{border-radius:10px;padding:10px 14px;font-weight:600;font-size:14px;margin-top:12px}
+.msg.err{background:var(--no-soft);color:var(--no)}
+.msg.info{background:var(--accent-soft);color:var(--accent)}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.tbl th,.tbl td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.tbl th{font-size:13px;color:var(--ink-2);font-weight:600;background:#faf8f4;position:sticky;top:0}
+.scroll{overflow:auto;max-height:520px;border:1px solid var(--line);border-radius:10px;margin-top:12px}
+.hide{display:none!important}
+@media (max-width:640px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="eyebrow">Dành cho giáo viên</div>
+  <h1>Kết quả kiểm tra tổng hợp</h1>
+  <div class="muted">Dữ liệu từ tab “Ôn tập tổng hợp” của trang trắc nghiệm Bài 1–4.</div>
+
+  <section class="card" id="login">
+    <p style="margin-top:0">Đăng nhập bằng tài khoản Google của giáo viên để xem và tải kết quả.</p>
+    <button class="btn primary" id="btn-login">Đăng nhập bằng Google</button>
+    <div id="login-msg"></div>
+  </section>
+
+  <section id="main" class="hide">
+    <div class="card">
+      <div class="row" style="justify-content:space-between">
+        <div class="muted">Đăng nhập: <b id="who"></b></div>
+        <div class="row">
+          <button class="btn" id="btn-reload">↻ Tải lại dữ liệu</button>
+          <button class="btn warm" id="btn-excel" disabled>⬇ Tải file Excel</button>
+          <button class="btn" id="btn-logout">Đăng xuất</button>
+        </div>
+      </div>
+      <div id="main-msg"></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="s-luot">–</b><span>Lượt nộp bài</span></div>
+      <div class="stat"><b id="s-sv">–</b><span>Sinh viên đã nộp</span></div>
+      <div class="stat"><b id="s-chua">–</b><span>Sinh viên chưa nộp</span></div>
+      <div class="stat"><b id="s-tb">–</b><span>Điểm TB (thang 10)</span></div>
+    </div>
+    <div class="card">
+      <b>Các lượt nộp gần nhất</b>
+      <div class="scroll"><table class="tbl"><thead><tr>
+        <th>Thời điểm nộp</th><th>MSSV</th><th>Điểm</th><th>Thang 10</th><th>Bài 1</th><th>Bài 2</th><th>Bài 3</th><th>Bài 4</th><th>Thời gian làm</th><th>Hết giờ</th>
+      </tr></thead><tbody id="tbody"></tbody></table></div>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBqf355rEj0yW2ekCTHuxrg3et-PuAmzLA",
+  authDomain: "tienghanthuongmai-4ab3b.firebaseapp.com",
+  projectId: "tienghanthuongmai-4ab3b",
+  storageBucket: "tienghanthuongmai-4ab3b.firebasestorage.app",
+  messagingSenderId: "120606416640",
+  appId: "1:120606416640:web:55f4236535115efb94dde5"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const DS_MSSV = ["22328","60060","60095","60125","60143","60162","60179","60194","60199","60225","60308","60311","60323","60332","60370","60382","60402","60442","60459","60469","60498","60522","60540","60573","60582","60645","60685","60693","60850","60914","60946","60956","60995","61043","61045","61061","61063","61065","61074","61083","61091","61101","61118","61139","61148","61164","61166","61168","61174","61203","61207","61224","61242","61258","61262","61270","61276","61281","90027","90034","90089","90110","90132","90165","90176","90210","90259","90292","90336","90417","90452","90515","90531","90555","90591","90592","90680","90702","90707","90718","90756","90794","90797","90806","90847","90872","90890","90903","90904","90929","90962","90965","90993","91029","91061","91086","91090","91131","91187","91189","91211","91220","91225","91245","91254","91829","92059","92066","92093","92178","92193"];
+const $ = id => document.getElementById(id);
+let rows = [];
+
+function msg(el, text, kind){ $(el).innerHTML = text ? `<div class="msg ${kind||'info'}">${text}</div>` : ''; }
+function pad(n){ return String(n).padStart(2,'0'); }
+function fmtDate(d){ return d ? `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}` : ''; }
+function fmtDur(s){ s = Math.max(0, Math.round(s||0)); return pad(Math.floor(s/60)) + ':' + pad(s%60); }
+function thang10(r){ return r.tongCau ? Math.round(r.diem / r.tongCau * 100) / 10 : 0; }
+function bai(r, k){ const b = (r.theoBai||[]).find(x => x.bai === k); return b ? `${b.dung}/${b.tong}` : ''; }
+
+$('btn-login').onclick = async () => {
+  msg('login-msg', '');
+  try { await signInWithPopup(auth, new GoogleAuthProvider()); }
+  catch (e) { console.error(e); msg('login-msg', 'Đăng nhập không thành công: ' + (e.code || e.message), 'err'); }
+};
+$('btn-logout').onclick = () => signOut(auth);
+$('btn-reload').onclick = () => load();
+$('btn-excel').onclick = () => exportExcel();
+
+onAuthStateChanged(auth, user => {
+  $('login').classList.toggle('hide', !!user);
+  $('main').classList.toggle('hide', !user);
+  if (user) { $('who').textContent = user.email; load(); }
+});
+
+async function load(){
+  msg('main-msg', 'Đang tải dữ liệu…');
+  $('btn-excel').disabled = true;
+  try {
+    const snap = await getDocs(collection(db, 'ketqua'));
+    rows = snap.docs.map(d => { const x = d.data(); return { ...x, ngay: x.thoiGian && x.thoiGian.toDate ? x.thoiGian.toDate() : null }; });
+    rows.sort((a, b) => (b.ngay || 0) - (a.ngay || 0));
+    render();
+    msg('main-msg', rows.length ? '' : 'Chưa có sinh viên nào nộp bài.');
+    $('btn-excel').disabled = !rows.length;
+  } catch (e) {
+    console.error(e);
+    const denied = (e.code || '').includes('permission');
+    msg('main-msg', denied ? 'Tài khoản này không có quyền xem kết quả. Hãy đăng nhập đúng tài khoản giáo viên (hoặc kiểm tra lại Firestore Rules).' : 'Không tải được dữ liệu: ' + (e.code || e.message), 'err');
+  }
+}
+
+function render(){
+  const daNop = new Set(rows.map(r => r.mssv));
+  $('s-luot').textContent = rows.length;
+  $('s-sv').textContent = daNop.size;
+  $('s-chua').textContent = DS_MSSV.filter(m => !daNop.has(m)).length;
+  $('s-tb').textContent = rows.length ? (rows.reduce((s, r) => s + thang10(r), 0) / rows.length).toFixed(2) : '–';
+  $('tbody').innerHTML = rows.map(r => `<tr><td>${fmtDate(r.ngay)}</td><td><b>${r.mssv}</b></td><td>${r.diem}/${r.tongCau}</td><td>${thang10(r)}</td><td>${bai(r,1)}</td><td>${bai(r,2)}</td><td>${bai(r,3)}</td><td>${bai(r,4)}</td><td>${fmtDur(r.thoiGianLamGiay)}</td><td>${r.hetGio ? 'Có' : ''}</td></tr>`).join('');
+}
+
+function sheet(aoa, widths){
+  const ws = XLSX.utils.aoa_to_sheet(aoa);
+  ws['!cols'] = widths.map(w => ({ wch: w }));
+  ws['!autofilter'] = { ref: XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: aoa.length - 1, c: aoa[0].length - 1 } }) };
+  ws['!freeze'] = { xSplit: 0, ySplit: 1 };
+  return ws;
+}
+
+function exportExcel(){
+  if (!window.XLSX) { msg('main-msg', 'Chưa tải được thư viện Excel. Kiểm tra mạng rồi tải lại trang.', 'err'); return; }
+  const asc = rows.slice().sort((a, b) => (a.ngay || 0) - (b.ngay || 0));
+
+  // Sheet 1: mỗi lượt nộp một dòng
+  const s1 = [['STT','MSSV','Điểm','Tổng câu','Điểm thang 10','Bài 1 (đúng)','Bài 2 (đúng)','Bài 3 (đúng)','Bài 4 (đúng)','Thời gian làm (phút:giây)','Hết giờ','Thời điểm nộp']];
+  asc.forEach((r, i) => {
+    const b = k => { const x = (r.theoBai||[]).find(y => y.bai === k); return x ? x.dung : ''; };
+    s1.push([i + 1, r.mssv, r.diem, r.tongCau, thang10(r), b(1), b(2), b(3), b(4), fmtDur(r.thoiGianLamGiay), r.hetGio ? 'Có' : 'Không', fmtDate(r.ngay)]);
+  });
+
+  // Sheet 2: theo danh sách 111 MSSV
+  const s2 = [['STT','MSSV','Số lần nộp','Điểm cao nhất (/40)','Điểm lần cuối (/40)','Điểm cao nhất (thang 10)','Thời điểm nộp lần cuối','Trạng thái']];
+  DS_MSSV.forEach((m, i) => {
+    const list = asc.filter(r => r.mssv === m);
+    if (!list.length) { s2.push([i + 1, m, 0, '', '', '', '', 'Chưa nộp']); return; }
+    const best = list.reduce((a, b) => (b.diem > a.diem ? b : a));
+    const last = list[list.length - 1];
+    s2.push([i + 1, m, list.length, best.diem, last.diem, thang10(best), fmtDate(last.ngay), 'Đã nộp']);
+  });
+
+  // Sheet 3: chi tiết từng câu
+  const s3 = [['MSSV','Thời điểm nộp','Câu trong đề','Bài','Câu số (đề gốc)','SV chọn','Đáp án đúng','Kết quả']];
+  const C = ['', '①', '②', '③', '④'];
+  asc.forEach(r => (r.chiTiet||[]).forEach((c, j) => {
+    s3.push([r.mssv, fmtDate(r.ngay), j + 1, c.bai, c.cau, c.chon ? C[c.chon] : '(bỏ trống)', C[c.dapAnDung], c.dung ? 'Đúng' : 'Sai']);
+  }));
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, sheet(s1, [6,10,8,9,14,12,12,12,12,22,9,18]), 'Lượt nộp bài');
+  XLSX.utils.book_append_sheet(wb, sheet(s2, [6,10,11,18,18,22,22,12]), 'Theo MSSV');
+  XLSX.utils.book_append_sheet(wb, sheet(s3, [10,18,13,6,15,12,13,9]), 'Chi tiết câu trả lời');
+  const d = new Date();
+  XLSX.writeFile(wb, `KetQua_OnTapTongHop_${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}.xlsx`);
+}
+</script>
+</body>
+</html>
