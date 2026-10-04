@@ -180,6 +180,18 @@ main.wrap{flex:1;width:100%}
 .timeout{background:var(--no-soft);color:var(--no);border-radius:10px;padding:8px 12px;font-weight:600;font-size:14px;margin-bottom:12px;display:inline-block}
 .kbd{font-size:13px;color:var(--ink-3);margin-top:14px}
 .kbd span{border:1px solid var(--line-2);border-bottom-width:2px;border-radius:5px;padding:0 5px;background:var(--paper);font-size:12px}
+/* MSSV (tab Ôn tập tổng hợp) */
+.mssvbox{margin-top:22px;max-width:440px;background:var(--paper);border:1.5px solid var(--line-2);border-radius:var(--radius,14px);padding:14px 16px}
+.mssvbox.need{border-color:var(--warm);box-shadow:0 0 0 3px var(--warm-soft)}
+.mssvbox label{display:block;font-weight:700;margin-bottom:8px}
+.mssvbox select{width:100%;font:inherit;font-size:16px;padding:9px 12px;border:1.5px solid var(--line-2);border-radius:10px;background:var(--paper);color:var(--ink);font-variant-numeric:tabular-nums}
+.mssvbox select:focus-visible{outline:3px solid var(--accent);outline-offset:1px}
+.mssvbox .hint{font-size:13px;color:var(--ink-3);margin-top:6px}
+.savestat{margin-top:10px;font-size:14px;font-weight:600;border-radius:10px;padding:8px 12px;display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap}
+.savestat.saving{background:var(--accent-soft);color:var(--accent)}
+.savestat.ok{background:var(--ok-soft);color:var(--ok)}
+.savestat.err{background:var(--no-soft);color:var(--no)}
+.savestat .btn{padding:4px 12px;font-size:13px}
 </style>
 </head>
 <body>
@@ -203,6 +215,11 @@ const app=document.getElementById('app'), hdr=document.getElementById('hdr'), ta
 let tab='b1', view='home';
 const practice={}; LESSONS.forEach(L=>practice[L.key]={i:0,ans:{}});
 let test=null, timerId=null, reviewFilter='all';
+/* ---- MSSV + Firebase (chỉ dùng cho tab Ôn tập tổng hợp) ---- */
+const DS_MSSV=["22328","60060","60095","60125","60143","60162","60179","60194","60199","60225","60308","60311","60323","60332","60370","60382","60402","60442","60459","60469","60498","60522","60540","60573","60582","60645","60685","60693","60850","60914","60946","60956","60995","61043","61045","61061","61063","61065","61074","61083","61091","61101","61118","61139","61148","61164","61166","61168","61174","61203","61207","61224","61242","61258","61262","61270","61276","61281","90027","90034","90089","90110","90132","90165","90176","90210","90259","90292","90336","90417","90452","90515","90531","90555","90591","90592","90680","90702","90707","90718","90756","90794","90797","90806","90847","90872","90890","90903","90904","90929","90962","90965","90993","91029","91061","91086","91090","91131","91187","91189","91211","91220","91225","91245","91254","91829","92059","92066","92093","92178","92193"];
+let mixMSSV='';
+window.__fbReady=new Promise(r=>{window.__fbResolve=r;});
+function withTimeout(p,ms){return Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),ms))]);}
 const lastSet={mix:[]}; LESSONS.forEach(L=>lastSet[L.key]=[]);
 
 function LI(){return Math.max(0,LESSONS.findIndex(L=>L.key===tab));}
@@ -240,7 +257,15 @@ function renderHome(){
       <div class="eyebrow">Ôn tập tổng hợp · Bài 1 – Bài ${LESSONS.length}</div>
       <h1>종합 연습</h1>
     </section>
-    <div class="modes one">
+    <div class="mssvbox" id="mssvbox">
+      <label for="chon-mssv">Mã số sinh viên (MSSV)</label>
+      <select id="chon-mssv">
+        <option value="">-- Chọn MSSV của bạn --</option>
+        ${DS_MSSV.map(m=>`<option value="${m}" ${m===mixMSSV?'selected':''}>${m}</option>`).join('')}
+      </select>
+      <div class="hint">Chọn đúng MSSV trước khi bắt đầu. Kết quả bài kiểm tra sẽ được lưu theo MSSV này.</div>
+    </div>
+    <div class="modes one" style="margin-top:16px">
       <button class="mode t" data-act="test">
         <div class="ic">⏱</div>
         <h2>Kiểm tra tổng hợp</h2>
@@ -329,7 +354,7 @@ function startTest(){
   if(tab==='mix'){const h=c.n/LESSONS.length;items=shuffle(LESSONS.flatMap(L=>pickFrom(L.qs,h,lastSet.mix)));}
   else items=pickFrom(QS(),c.n,lastSet[tab]);
   lastSet[tab]=items.map(q=>q.id);
-  test={scope:tab,n:c.n,sec:c.sec,items,i:0,ans:{},start:Date.now(),deadline:Date.now()+c.sec*1000,done:false,timeout:false};
+  test={scope:tab,n:c.n,sec:c.sec,items,i:0,ans:{},start:Date.now(),deadline:Date.now()+c.sec*1000,done:false,timeout:false,mssv:tab==='mix'?mixMSSV:'',saveState:''};
   reviewFilter='all'; startTimer(); renderTest();
 }
 function startTimer(){stopTimer();timerId=setInterval(tick,250);}
@@ -346,7 +371,7 @@ function renderTest(scroll=true){
   view='test'; renderTabs();
   const T=test, q=T.items[T.i], a=T.ans[T.i], mix=T.scope==='mix';
   const left=(T.deadline-Date.now())/1000;
-  hdr.innerHTML=`<span class="pill timer ${left<=60?'low':''}" id="timer">⏱ ${fmt(left)}</span>`;
+  hdr.innerHTML=`${mix?`<span class="pill">MSSV ${T.mssv}</span> `:''}<span class="pill timer ${left<=60?'low':''}" id="timer">⏱ ${fmt(left)}</span>`;
   const n=answeredCount(), all=n===T.n;
   const grid=T.items.map((_,j)=>`<button class="cell ${T.ans[j]!==undefined?'done':''} ${j===T.i?'cur':''}" data-act="tgoto" data-k="${j}">${j+1}</button>`).join('');
   app.innerHTML=`
@@ -372,7 +397,10 @@ function renderTest(scroll=true){
 }
 function finishTest(){
   if(!test||test.done) return;
-  test.done=true; test.used=Math.min(test.sec,(Date.now()-test.start)/1000); stopTimer(); renderResult();
+  test.done=true; test.used=Math.min(test.sec,(Date.now()-test.start)/1000); stopTimer();
+  if(test.scope==='mix') test.saveState='saving';
+  renderResult();
+  if(test.scope==='mix') saveMix();
 }
 function renderResult(){
   view='result'; hdr.innerHTML=''; renderTabs();
@@ -392,6 +420,7 @@ function renderResult(){
       <div><h2 style="margin:0 0 2px">${msg}</h2>
         <div class="stats"><span class="stat ok">Đúng ${ok}</span><span class="stat no">Sai ${no}</span><span class="stat t">Thời gian ${fmt(T.used)}</span>${split}</div>
         <div class="row"><button class="btn warm" data-act="test">Làm đề mới (${T.n} câu khác)</button><button class="btn" data-act="home">Trang chủ</button></div>
+        ${mix?`<div id="savestat">${saveStatHTML(T)}</div>`:''}
       </div>
     </div>
   </article>
@@ -405,6 +434,35 @@ function renderResult(){
       <div class="fb ${right?'ok':(a===undefined?'neutral':'no')}"><div class="fb-h">${right?'Đúng':(a===undefined?'Chưa trả lời':'Sai')} · Đáp án đúng: ${CIRC[q.a]}${!right&&a!==undefined?` · Bạn chọn: ${CIRC[a]}`:''}</div><div class="fb-b">${q.e}</div></div>
     </article>`;}).join(''):'<p class="muted">Không có câu sai. Tuyệt vời!</p>'}</div>`;
   top0();
+}
+
+/* ---------------- LƯU KẾT QUẢ (Ôn tập tổng hợp) ---------------- */
+function saveStatHTML(T){
+  if(T.saveState==='ok') return `<div class="savestat ok">✓ Đã lưu kết quả cho MSSV ${T.mssv}</div>`;
+  if(T.saveState==='err') return `<div class="savestat err">✗ Chưa lưu được kết quả (MSSV ${T.mssv}). Kiểm tra mạng rồi bấm <button class="btn" data-act="retrysave">Thử lại</button></div>`;
+  return `<div class="savestat saving">⏳ Đang lưu kết quả cho MSSV ${T.mssv}… Đừng đóng trang.</div>`;
+}
+function updSave(){const el=document.getElementById('savestat');if(el&&test)el.innerHTML=saveStatHTML(test);}
+async function saveMix(){
+  const T=test; if(!T||T.scope!=='mix'||!T.done||T.saveState==='ok'||T._busy) return;
+  T._busy=true; T.saveState='saving'; updSave();
+  const chiTiet=T.items.map((q,j)=>({bai:q.L+1,cau:q.n,chon:T.ans[j]===undefined?0:T.ans[j]+1,dapAnDung:q.a+1,dung:T.ans[j]===q.a}));
+  const diem=chiTiet.filter(x=>x.dung).length;
+  const payload={
+    mssv:T.mssv,
+    baiKiemTra:'Ôn tập tổng hợp (Bài 1–'+LESSONS.length+')',
+    diem:diem, tongCau:T.n,
+    thoiGianLamGiay:Math.round(T.used), hetGio:!!T.timeout,
+    theoBai:LESSONS.map((_,li)=>({bai:li+1,dung:chiTiet.filter(x=>x.bai===li+1&&x.dung).length,tong:chiTiet.filter(x=>x.bai===li+1).length})),
+    chiTiet:chiTiet
+  };
+  try{
+    const luu=await withTimeout(window.__fbReady,15000);
+    await withTimeout(luu(payload),20000);
+    T.saveState='ok';
+  }catch(err){console.error('Lưu Firebase lỗi:',err);T.saveState='err';}
+  T._busy=false;
+  if(test===T) updSave();
 }
 
 /* ---------------- events ---------------- */
@@ -426,7 +484,10 @@ document.addEventListener('click',e=>{
     return renderHome();
   }
   if(act==='practice'&&tab!=='mix') return renderPractice();
-  if(act==='test'){ if(testActive()) return; return startTest(); }
+  if(act==='test'){ if(testActive()) return;
+    if(tab==='mix'&&!mixMSSV){ if(view!=='home') renderHome(); const b=document.getElementById('mssvbox'), s=document.getElementById('chon-mssv'); if(b){b.classList.add('need');b.scrollIntoView({block:'center'});} alert('Vui lòng chọn MSSV trước khi bắt đầu kiểm tra.'); if(s) s.focus(); return; }
+    return startTest(); }
+  if(act==='retrysave') return saveMix();
   if((view==='practice'||view==='psummary')&&tab!=='mix'){
     const P=PR(), N=QS().length;
     if(act==='pick'){const q=QS()[P.i];if(P.ans[q.n]===undefined){P.ans[q.n]=+t.dataset.i;renderPractice(false);} return;}
@@ -445,8 +506,11 @@ document.addEventListener('click',e=>{
   }
   if(view==='result'&&act==='filter'){reviewFilter=t.dataset.f;return renderResult();}
 });
+document.addEventListener('change',e=>{
+  if(e.target.id==='chon-mssv'){mixMSSV=e.target.value;const b=document.getElementById('mssvbox');if(b&&mixMSSV)b.classList.remove('need');}
+});
 document.addEventListener('keydown',e=>{
-  if(e.target.closest('input,textarea')||e.metaKey||e.ctrlKey||e.altKey) return;
+  if(e.target.closest('input,textarea,select')||e.metaKey||e.ctrlKey||e.altKey) return;
   const n=['1','2','3','4'].indexOf(e.key);
   if(view==='practice'){
     const P=PR(), qs=QS(), q=qs[P.i];
@@ -459,9 +523,26 @@ document.addEventListener('keydown',e=>{
     else if(e.key==='ArrowLeft'&&test.i>0){test.i--;renderTest();}
   }
 });
-window.addEventListener('beforeunload',e=>{if(testActive()){e.preventDefault();e.returnValue='';}});
+window.addEventListener('beforeunload',e=>{if(testActive()||(test&&test.scope==='mix'&&test.saveState==='saving')){e.preventDefault();e.returnValue='';}});
 renderHome();
 
+</script>
+<script type="module">
+/* Firebase: chỉ dùng để lưu kết quả tab Ôn tập tổng hợp */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyBqf355rEj0yW2ekCTHuxrg3et-PuAmzLA",
+  authDomain: "tienghanthuongmai-4ab3b.firebaseapp.com",
+  projectId: "tienghanthuongmai-4ab3b",
+  storageBucket: "tienghanthuongmai-4ab3b.firebasestorage.app",
+  messagingSenderId: "120606416640",
+  appId: "1:120606416640:web:55f4236535115efb94dde5"
+};
+const db = getFirestore(initializeApp(firebaseConfig));
+window.__fbResolve(async function (data) {
+  await addDoc(collection(db, "ketqua"), { ...data, thoiGian: serverTimestamp() });
+});
 </script>
 </body>
 </html>
