@@ -51,7 +51,7 @@ h1{font-size:clamp(24px,5vw,32px);margin:4px 0 4px;letter-spacing:-.02em}
 <main class="wrap">
   <div class="eyebrow">Dành cho giáo viên</div>
   <h1>Kết quả kiểm tra tổng hợp</h1>
-  <div class="muted">Dữ liệu từ tab “Ôn tập tổng hợp” của trang trắc nghiệm Bài 1–4.</div>
+  <div class="muted">Dữ liệu từ tab “Ôn tập tổng hợp” của trang trắc nghiệm Bài 1–5.</div>
 
   <section class="card" id="login">
     <p style="margin-top:0">Đăng nhập bằng tài khoản Google của giáo viên để xem và tải kết quả.</p>
@@ -80,7 +80,7 @@ h1{font-size:clamp(24px,5vw,32px);margin:4px 0 4px;letter-spacing:-.02em}
     <div class="card">
       <b>Các lượt nộp gần nhất</b>
       <div class="scroll"><table class="tbl"><thead><tr>
-        <th>Thời điểm nộp</th><th>MSSV</th><th>Điểm</th><th>Thang 10</th><th>Bài 1</th><th>Bài 2</th><th>Bài 3</th><th>Bài 4</th><th>Thời gian làm</th><th>Hết giờ</th>
+        <th>Thời điểm nộp</th><th>MSSV</th><th>Điểm</th><th>Thang 10</th><th>Bài 1</th><th>Bài 2</th><th>Bài 3</th><th>Bài 4</th><th>Bài 5</th><th>Thời gian làm</th><th>Hết giờ</th>
       </tr></thead><tbody id="tbody"></tbody></table></div>
     </div>
   </section>
@@ -153,7 +153,7 @@ function render(){
   $('s-sv').textContent = daNop.size;
   $('s-chua').textContent = DS_MSSV.filter(m => !daNop.has(m)).length;
   $('s-tb').textContent = rows.length ? (rows.reduce((s, r) => s + thang10(r), 0) / rows.length).toFixed(2) : '–';
-  $('tbody').innerHTML = rows.map(r => `<tr><td>${fmtDate(r.ngay)}</td><td><b>${r.mssv}</b></td><td>${r.diem}/${r.tongCau}</td><td>${thang10(r)}</td><td>${bai(r,1)}</td><td>${bai(r,2)}</td><td>${bai(r,3)}</td><td>${bai(r,4)}</td><td>${fmtDur(r.thoiGianLamGiay)}</td><td>${r.hetGio ? 'Có' : ''}</td></tr>`).join('');
+  $('tbody').innerHTML = rows.map(r => `<tr><td>${fmtDate(r.ngay)}</td><td><b>${r.mssv}</b></td><td>${r.diem}/${r.tongCau}</td><td>${thang10(r)}</td><td>${bai(r,1)}</td><td>${bai(r,2)}</td><td>${bai(r,3)}</td><td>${bai(r,4)}</td><td>${bai(r,5)}</td><td>${fmtDur(r.thoiGianLamGiay)}</td><td>${r.hetGio ? 'Có' : ''}</td></tr>`).join('');
 }
 
 function sheet(aoa, widths){
@@ -169,10 +169,10 @@ function exportExcel(){
   const asc = rows.slice().sort((a, b) => (a.ngay || 0) - (b.ngay || 0));
 
   // Sheet 1: mỗi lượt nộp một dòng
-  const s1 = [['STT','MSSV','Điểm','Tổng câu','Điểm thang 10','Bài 1 (đúng)','Bài 2 (đúng)','Bài 3 (đúng)','Bài 4 (đúng)','Thời gian làm (phút:giây)','Hết giờ','Thời điểm nộp']];
+  const s1 = [['STT','MSSV','Điểm','Tổng câu','Điểm thang 10','Bài 1 (đúng)','Bài 2 (đúng)','Bài 3 (đúng)','Bài 4 (đúng)','Bài 5 (đúng)','Thời gian làm (phút:giây)','Hết giờ','Thời điểm nộp']];
   asc.forEach((r, i) => {
     const b = k => { const x = (r.theoBai||[]).find(y => y.bai === k); return x ? x.dung : ''; };
-    s1.push([i + 1, r.mssv, r.diem, r.tongCau, thang10(r), b(1), b(2), b(3), b(4), fmtDur(r.thoiGianLamGiay), r.hetGio ? 'Có' : 'Không', fmtDate(r.ngay)]);
+    s1.push([i + 1, r.mssv, r.diem, r.tongCau, thang10(r), b(1), b(2), b(3), b(4), b(5), fmtDur(r.thoiGianLamGiay), r.hetGio ? 'Có' : 'Không', fmtDate(r.ngay)]);
   });
 
   // Sheet 2: theo danh sách 111 MSSV
@@ -193,7 +193,7 @@ function exportExcel(){
   }));
 
   const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, sheet(s1, [6,10,8,9,14,12,12,12,12,22,9,18]), 'Lượt nộp bài');
+  XLSX.utils.book_append_sheet(wb, sheet(s1, [6,10,8,9,14,12,12,12,12,12,22,9,18]), 'Lượt nộp bài');
   XLSX.utils.book_append_sheet(wb, sheet(s2, [6,10,11,18,18,22,22,12]), 'Theo MSSV');
   XLSX.utils.book_append_sheet(wb, sheet(s3, [10,18,13,6,15,12,13,9]), 'Chi tiết câu trả lời');
   const d = new Date();
