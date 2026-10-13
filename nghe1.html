@@ -231,7 +231,7 @@
             font-weight: bold;
         }
 
-        /* Main Tabs (1과, 2과, 3과) */
+        /* Main Tabs (1과, 2과, 3과, 4과) */
         .main-tab-menu {
             display: flex;
             background: var(--bg-alt);
@@ -382,6 +382,30 @@
         .theory-list li::marker { color: var(--primary); }
         .theory-list li { margin-bottom: 12px; }
         .theory-list li:last-child { margin-bottom: 0; }
+        /* Danh sách con bên trong lý thuyết */
+        .theory-list ul {
+            margin: 8px 0 0;
+            padding-left: 22px;
+            list-style: none;
+        }
+        .theory-list ul li { position: relative; }
+        .theory-list ul li::before {
+            content: '–';
+            position: absolute;
+            left: -16px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        .theory-list ul li { margin-bottom: 6px; }
+        /* Câu sai / câu đúng */
+        .wrong-text {
+            color: var(--error-text);
+            text-decoration: line-through;
+        }
+        .right-text {
+            color: var(--success-text);
+            font-weight: 700;
+        }
         
         .ko-text {
             font-family: var(--font);
@@ -553,6 +577,7 @@
 
         @media (max-width: 520px) {
             .top-subtitle::before, .top-subtitle::after { display: none; }
+            .main-tab-btn { padding: 14px 6px; font-size: 1rem; }
             .grammar-tab-btn { min-width: calc(50% - 5px); font-size: 0.95rem; }
             .tab-btn { font-size: 14px; padding: 10px 6px; }
             .ex-vi { padding-right: 0; padding-top: 18px; }
@@ -594,6 +619,7 @@
         <button class="main-tab-btn active" onclick="openMainTab('lesson1', this)">1과</button>
         <button class="main-tab-btn" onclick="openMainTab('lesson2', this)">2과</button>
         <button class="main-tab-btn" onclick="openMainTab('lesson3', this)">3과</button>
+        <button class="main-tab-btn" onclick="openMainTab('lesson4', this)">4과</button>
     </div>
 
 
@@ -1193,8 +1219,6 @@
         <div class="grammar-tab-menu">
             <button class="grammar-tab-btn active" onclick="openGrammarTab('grammar7', this, 'lesson3')">문법7. N-에</button>
             <button class="grammar-tab-btn" onclick="openGrammarTab('grammar8', this, 'lesson3')">문법8. V-(으)세요</button>
-            <button class="grammar-tab-btn" onclick="openGrammarTab('grammar9', this, 'lesson3')">문법9. V-을/ㄹ 거예요</button>
-            <button class="grammar-tab-btn" onclick="openGrammarTab('grammar10', this, 'lesson3')">문법10. V-고 싶어요</button>
         </div>
 
         <!-- ======================= KHỐI NGỮ PHÁP 7 ======================= -->
@@ -1407,10 +1431,21 @@
                 </div>
             </div>
         </div>
+    </div>
 
+
+    <!-- ############################## BÀI 4 (4과) ############################## -->
+    <div id="lesson4" class="main-tab-content">
+
+        <!-- Menu Chọn Ngữ Pháp -->
+        <div class="grammar-tab-menu">
+            <button class="grammar-tab-btn active" onclick="openGrammarTab('grammar9', this, 'lesson4')">문법9. V-을/ㄹ 거예요</button>
+            <button class="grammar-tab-btn" onclick="openGrammarTab('grammar10', this, 'lesson4')">문법10. V-고 싶어요</button>
+            <button class="grammar-tab-btn" onclick="openGrammarTab('grammar11', this, 'lesson4')">문법11. V/A-(으)세요</button>
+        </div>
 
         <!-- ======================= KHỐI NGỮ PHÁP 9 ======================= -->
-        <div id="grammar9" class="grammar-content">
+        <div id="grammar9" class="grammar-content active">
             <div class="tab-menu">
                 <button class="tab-btn active" onclick="openSubTab('theory9', this, 'grammar9')">Lý thuyết &amp; Ví dụ</button>
                 <button class="tab-btn" onclick="openSubTab('practice9', this, 'grammar9')">Luyện tập</button>
@@ -1610,6 +1645,180 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- ======================= KHỐI NGỮ PHÁP 11 ======================= -->
+        <div id="grammar11" class="grammar-content">
+            <div class="tab-menu">
+                <button class="tab-btn active" onclick="openSubTab('theory11', this, 'grammar11')">Lý thuyết &amp; Ví dụ</button>
+                <button class="tab-btn" onclick="openSubTab('practice11', this, 'grammar11')">Luyện tập</button>
+            </div>
+
+            <!-- 1. Lý thuyết & Ví dụ -->
+            <div id="theory11" class="tab-content active">
+                <div class="theory-box">
+                    Gắn sau Động từ, Tính từ để thể hiện <strong>sự tôn kính đối với chủ ngữ của câu</strong> (người lớn tuổi, cấp trên, giáo viên, khách hàng, người mới gặp…). Đây là dạng kính ngữ của đuôi <span class="ko-text">-아/어/여요</span>.
+                </div>
+                <ul class="theory-list">
+                    <li>Không dùng <span class="ko-text">-(으)세요</span> khi nói về bản thân: <span class="ko-text wrong-text">저는 회사원이세요</span> (sai) → <span class="ko-text right-text">저는 회사원이에요</span> (đúng)</li>
+                    <li>Dùng được cho cả <strong>câu tường thuật</strong> và <strong>câu nghi vấn</strong>.</li>
+                    <li>Động từ, tính từ có patchim gắn <strong class="ko-text" style="color:var(--primary)">-으세요</strong>, không có patchim gắn <strong class="ko-text" style="color:var(--primary)">-세요</strong> (<span class="ko-text">찾다 → 찾으세요</span>, <span class="ko-text">가다 → 가세요</span>)
+                        <ul>
+                            <li>Động từ, tính từ kết thúc bằng <span class="ko-text">ㄹ</span>: bỏ <span class="ko-text">ㄹ</span> rồi gắn <strong class="ko-text" style="color:var(--primary)">-세요</strong> (<span class="ko-text">만들다 → 만드세요</span>)</li>
+                            <li>Tính từ bất quy tắc <span class="ko-text">ㅎ</span>: bỏ <span class="ko-text">ㅎ</span> rồi gắn <strong class="ko-text" style="color:var(--primary)">-세요</strong> (<span class="ko-text">어떻다 → 어떠세요?</span>)</li>
+                            <li>Một số động từ đặc biệt: <span class="ko-text">먹다/마시다</span> → <strong class="ko-text" style="color:var(--primary)">드세요</strong>, <span class="ko-text">자다</span> → <strong class="ko-text" style="color:var(--primary)">주무세요</strong>, <span class="ko-text">있다</span> (ở) → <strong class="ko-text" style="color:var(--primary)">계세요</strong>, <span class="ko-text">있다</span> (có) → <strong class="ko-text" style="color:var(--primary)">있으세요</strong></li>
+                        </ul>
+                    </li>
+                    <li>Với danh từ (<span class="ko-text">N-이다</span>): N có patchim gắn <strong class="ko-text" style="color:var(--primary)">-이세요</strong>, không có patchim gắn <strong class="ko-text" style="color:var(--primary)">-세요</strong> (<span class="ko-text">선생님이세요</span>, <span class="ko-text">의사세요</span>)</li>
+                </ul>
+
+                <!-- Ví dụ -->
+                <h3 class="section-title">Ví dụ</h3>
+                <div class="guide-text">Nhấp vào câu tiếng Việt để xem bản dịch tiếng Hàn tương ứng.</div>
+                
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Mời vào. (Chị) tìm gì ạ?</div>
+                    <div class="ex-ko ko-text">어서 오<span class="highlight-grammar">세요</span>. 뭘 찾<span class="highlight-grammar">으세요</span>?</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">(Anh) có thẻ tích điểm không ạ?</div>
+                    <div class="ex-ko ko-text">포인트카드 있<span class="highlight-grammar">으세요</span>?</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Size (áo) thế nào ạ?</div>
+                    <div class="ex-ko ko-text">사이즈가 어떠<span class="highlight-grammar">세요</span>?</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">(Anh) là giáo viên hả?</div>
+                    <div class="ex-ko ko-text">선생님<span class="highlight-grammar">이세요</span>?</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Bác sĩ thật sự rất thân thiện.</div>
+                    <div class="ex-ko ko-text">의사 선생님이 정말 친절하<span class="highlight-grammar">세요</span>.</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Bà đang ngủ trong phòng.</div>
+                    <div class="ex-ko ko-text">할머니가 방에서 <span class="highlight-grammar">주무세요</span>.</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Thầy giáo uống nước.</div>
+                    <div class="ex-ko ko-text">선생님이 물을 <span class="highlight-grammar">드세요</span>.</div>
+                </div>
+            </div>
+
+            <!-- 2. Luyện tập -->
+            <div id="practice11" class="tab-content">
+                <div class="guide-text">Gõ dạng kính ngữ -(으)세요 phù hợp vào ô trống và nhấn "Kiểm tra".</div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">1) (Chị) tìm cái váy màu đỏ hả?</div>
+                    <div class="question-text ko-text">
+                        빨간색 치마를 <input type="text" id="q11_1"> ?
+                        <button class="btn-check" onclick="checkAnswer('q11_1', ['찾으세요'], '찾다 có patchim nên gắn <strong>으세요</strong> → <strong>찾으세요?</strong>')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q11_1" class="feedback"></div>
+                </div>
+
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">2) Cái mũ màu vàng này thế nào ạ?</div>
+                    <div class="question-text ko-text">
+                        이 노란색 모자가 <input type="text" id="q11_2"> ?
+                        <button class="btn-check" onclick="checkAnswer('q11_2', ['어떠세요'], '어떻다 là tính từ bất quy tắc ㅎ: bỏ ㅎ rồi gắn <strong>세요</strong> → <strong>어떠세요?</strong>')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q11_2" class="feedback"></div>
+                </div>
+
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">3) Cái quần này bất tiện hả anh/chị?</div>
+                    <div class="question-text ko-text">
+                        이 바지가 <input type="text" id="q11_3"> ?
+                        <button class="btn-check" onclick="checkAnswer('q11_3', ['불편하세요'], '불편하다 (bất tiện) không có patchim nên gắn <strong>세요</strong> → <strong>불편하세요?</strong>')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q11_3" class="feedback"></div>
+                </div>
+
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">4) Mẹ đang nấu ăn ở bếp.</div>
+                    <div class="question-text ko-text">
+                        어머니가 부엌에서 요리를 <input type="text" id="q11_4"> .
+                        <button class="btn-check" onclick="checkAnswer('q11_4', ['하세요'], '하다 không có patchim nên gắn <strong>세요</strong> → <strong>요리를 하세요</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q11_4" class="feedback"></div>
+                </div>
+
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">5) (Chú) là bác sĩ hả?</div>
+                    <div class="question-text ko-text">
+                        의사<input type="text" class="short-input" id="q11_5"> ?
+                        <button class="btn-check" onclick="checkAnswer('q11_5', ['세요', '이세요'], '의사 không có patchim nên gắn <strong>세요</strong> → <strong>의사세요?</strong>')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q11_5" class="feedback"></div>
+                </div>
+
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">6) (Chị) là nhân viên văn phòng hả?</div>
+                    <div class="question-text ko-text">
+                        회사원<input type="text" class="short-input" id="q11_6"> ?
+                        <button class="btn-check" onclick="checkAnswer('q11_6', ['이세요'], '회사원 có patchim nên gắn <strong>이세요</strong> → <strong>회사원이세요?</strong>')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q11_6" class="feedback"></div>
+                </div>
+
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">7) (Anh) đi làm ở đâu vậy?</div>
+                    <div class="question-text ko-text">
+                        어디에 <input type="text" id="q11_7"> ?
+                        <button class="btn-check" onclick="checkAnswer('q11_7', ['다니세요'], '다니다 (đi làm, đi học thường xuyên) không có patchim nên gắn <strong>세요</strong> → <strong>다니세요?</strong>')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q11_7" class="feedback"></div>
+                </div>
+
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">8) Thầy giáo gửi thư ở bưu điện.</div>
+                    <div class="question-text ko-text">
+                        선생님이 우체국에서 편지를 <input type="text" id="q11_8"> .
+                        <button class="btn-check" onclick="checkAnswer('q11_8', ['보내세요'], '보내다 (gửi) không có patchim nên gắn <strong>세요</strong> → <strong>보내세요</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q11_8" class="feedback"></div>
+                </div>
+
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">9) Thầy giáo ăn mì gói ở canteen.</div>
+                    <div class="question-text ko-text">
+                        선생님이 학생식당에서 라면을 <input type="text" id="q11_9"> .
+                        <button class="btn-check" onclick="checkAnswer('q11_9', ['드세요'], '먹다 là động từ đặc biệt, dạng kính ngữ là <strong>드세요</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q11_9" class="feedback"></div>
+                </div>
+
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">10) Bác sĩ có ở bệnh viện không ạ?</div>
+                    <div class="question-text ko-text">
+                        의사 선생님이 병원에 <input type="text" id="q11_10"> ?
+                        <button class="btn-check" onclick="checkAnswer('q11_10', ['계세요'], '있다 mang nghĩa “ở” là động từ đặc biệt, dạng kính ngữ là <strong>계세요?</strong>')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q11_10" class="feedback"></div>
+                </div>
+
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">11) Cô giáo thật sự rất đẹp.</div>
+                    <div class="question-text ko-text">
+                        선생님이 정말 <input type="text" id="q11_11"> .
+                        <button class="btn-check" onclick="checkAnswer('q11_11', ['예쁘세요', '아름다우세요'], '예쁘다 không có patchim nên gắn <strong>세요</strong> → <strong>예쁘세요</strong> (hoặc 아름답다 → <strong>아름다우세요</strong>).')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q11_11" class="feedback"></div>
+                </div>
+
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">12) Thầy giáo sống ở đảo Jeju.</div>
+                    <div class="question-text ko-text">
+                        선생님이 제주도에 <input type="text" id="q11_12"> .
+                        <button class="btn-check" onclick="checkAnswer('q11_12', ['사세요'], '살다 kết thúc bằng ㄹ: bỏ ㄹ rồi gắn <strong>세요</strong> → <strong>사세요</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q11_12" class="feedback"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Dòng thông tin tác giả -->
@@ -1638,7 +1847,7 @@
         document.getElementById(`theme-${theme}`).classList.add('active');
     }
 
-    /* ----- LOGIC CHUYỂN TAB LỚN (1과 / 2과 / 3과) ----- */
+    /* ----- LOGIC CHUYỂN TAB LỚN (1과 / 2과 / 3과 / 4과) ----- */
     function openMainTab(tabId, btn) {
         document.querySelectorAll('.main-tab-content').forEach(content => {
             content.classList.remove('active');
