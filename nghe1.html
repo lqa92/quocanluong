@@ -625,6 +625,7 @@
         <button class="main-tab-btn" onclick="openMainTab('lesson4', this)">4과</button>
         <button class="main-tab-btn" onclick="openMainTab('lesson5', this)">5과</button>
         <button class="main-tab-btn" onclick="openMainTab('lesson6', this)">6과</button>
+        <button class="main-tab-btn" onclick="openMainTab('lesson7', this)">7과</button>
     </div>
 
 
@@ -2474,6 +2475,434 @@
         </div>
 
     </div>
+
+    <!-- ############################## BÀI 7 (7과) ############################## -->
+    <div id="lesson7" class="main-tab-content">
+
+        <!-- Menu Chọn Ngữ Pháp -->
+        <div class="grammar-tab-menu">
+            <button class="grammar-tab-btn active" onclick="openGrammarTab('grammar18', this, 'lesson7')">문법18. V/A-지 않다</button>
+            <button class="grammar-tab-btn" onclick="openGrammarTab('grammar19', this, 'lesson7')">문법19. V/A-지만</button>
+            <button class="grammar-tab-btn" onclick="openGrammarTab('grammar20', this, 'lesson7')">문법20. V/A-고</button>
+            <button class="grammar-tab-btn" onclick="openGrammarTab('grammar21', this, 'lesson7')">문법21. V/A-아/어/여서</button>
+        </div>
+
+        <!-- ======================= KHỐI NGỮ PHÁP 18 ======================= -->
+        <div id="grammar18" class="grammar-content active">
+            <div class="tab-menu">
+                <button class="tab-btn active" onclick="openSubTab('theory18', this, 'grammar18')">Lý thuyết &amp; Ví dụ</button>
+                <button class="tab-btn" onclick="openSubTab('practice18', this, 'grammar18')">Luyện tập</button>
+            </div>
+
+            <!-- 1. Lý thuyết & Ví dụ -->
+            <div id="theory18" class="tab-content active">
+                <div class="theory-box">
+                    Gắn sau gốc động từ, tính từ để diễn tả <strong>phủ định</strong>: <strong>“không V/A”</strong>.
+                </div>
+                <ul class="theory-list">
+                    <li>Gắn trực tiếp vào gốc động từ, tính từ, <strong>không phân biệt</strong> có hay không có patchim: <strong class="ko-text" style="color:var(--primary)">춥다 → 춥지 않아요</strong>, <strong class="ko-text" style="color:var(--primary)">크다 → 크지 않아요</strong>.</li>
+                    <li>Cùng nghĩa với <strong class="ko-text" style="color:var(--primary)">안 + V/A</strong>: <strong class="ko-text" style="color:var(--primary)">춥지 않아요 = 안 추워요</strong>.</li>
+                    <li>Dùng <strong class="ko-text" style="color:var(--primary)">-지 않아요?</strong> để <strong>hỏi xác nhận</strong> khi người nói nghĩ điều đó đúng và muốn người nghe đồng ý: <strong>“… nhỉ?”</strong>, <strong>“… phải không?”</strong></li>
+                </ul>
+
+                <!-- Ví dụ -->
+                <h3 class="section-title">Ví dụ</h3>
+                <div class="guide-text">Nhấp vào câu tiếng Việt để xem bản dịch tiếng Hàn tương ứng.</div>
+                
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Hôm nay trời không lạnh.</div>
+                    <div class="ex-ko ko-text">오늘은 날씨가 <span class="highlight-grammar">춥지 않아요</span>. / <span class="highlight-grammar">안 추워요</span>.</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Cái áo thun này không lớn.</div>
+                    <div class="ex-ko ko-text">이 티셔츠는 <span class="highlight-grammar">크지 않아요</span>. / <span class="highlight-grammar">안 커요</span>.</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Cuối tuần tôi không dọn dẹp.</div>
+                    <div class="ex-ko ko-text">주말에 <span class="highlight-grammar">청소하지 않아요</span>.</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Hôm qua trời không mưa.</div>
+                    <div class="ex-ko ko-text">어제는 비가 <span class="highlight-grammar">오지 않았어요</span>. / <span class="highlight-grammar">안 왔어요</span>.</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">– Chẳng phải hôm nay trời nóng sao?<br>– Đúng rồi, nóng thật sự.</div>
+                    <div class="ex-ko ko-text">– 오늘 날씨가 <span class="highlight-grammar">덥지 않아요</span>?<br>– 네, 정말 더워요.</div>
+                </div>
+            </div>
+
+            <!-- 2. Luyện tập -->
+            <div id="practice18" class="tab-content">
+                <div class="guide-text">Gõ vế phủ định với <strong>-지 않아요</strong> hoặc <strong>안 + V/A</strong> vào ô trống (cả hai cách đều đúng) rồi nhấn "Kiểm tra".</div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">1) Cái váy này không nhỏ.</div>
+                    <div class="question-text ko-text">
+                        이 치마는 <input type="text" id="q18_1"> .
+                        <button class="btn-check" onclick="checkAnswer('q18_1', ['작지 않아요', '작지 않습니다', '안 작아요', '안 작습니다'], '작다 → <strong>작지 않아요</strong> hoặc <strong>안 작아요</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q18_1" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">2) Mùa hè ở New York không mát mẻ.</div>
+                    <div class="question-text ko-text">
+                        뉴욕의 여름은 <input type="text" id="q18_2"> .
+                        <button class="btn-check" onclick="checkAnswer('q18_2', ['시원하지 않아요', '시원하지 않습니다', '안 시원해요', '안 시원합니다'], '시원하다 → <strong>시원하지 않아요</strong> hoặc <strong>안 시원해요</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q18_2" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">3) Ngày mai tuyết không rơi.</div>
+                    <div class="question-text ko-text">
+                        내일은 눈이 <input type="text" id="q18_3"> .
+                        <button class="btn-check" onclick="checkAnswer('q18_3', ['오지 않아요', '오지 않습니다', '안 와요', '안 옵니다', '오지 않을 거예요', '안 올 거예요'], '오다 → <strong>오지 않아요</strong> hoặc <strong>안 와요</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q18_3" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">4) Ngày thường tôi không đạp xe đạp.</div>
+                    <div class="question-text ko-text">
+                        평일에는 자전거를 <input type="text" id="q18_4"> .
+                        <button class="btn-check" onclick="checkAnswer('q18_4', ['타지 않아요', '타지 않습니다', '안 타요', '안 탑니다'], '타다 → <strong>타지 않아요</strong> hoặc <strong>안 타요</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q18_4" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">5) Hôm qua tôi đã không đi mua sắm ở Hongdae.</div>
+                    <div class="question-text ko-text">
+                        어제 홍대에서 <input type="text" id="q18_5"> .
+                        <button class="btn-check" onclick="checkAnswer('q18_5', ['쇼핑하지 않았어요', '쇼핑하지 않았습니다', '쇼핑을 하지 않았어요', '쇼핑을 하지 않았습니다', '쇼핑 안 했어요', '쇼핑 안 했습니다', '쇼핑을 안 했어요', '쇼핑을 안 했습니다'], 'Quá khứ → <strong>쇼핑하지 않았어요</strong> hoặc <strong>쇼핑 안 했어요</strong> (với N하다, 안 đứng trước 하다).')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q18_5" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">6) Chẳng phải Minsoo thích kimbab sao?</div>
+                    <div class="question-text ko-text">
+                        민수 씨가 김밥을 <input type="text" id="q18_6"> ?
+                        <button class="btn-check" onclick="checkAnswer('q18_6', ['좋아하지 않아요', '좋아하지 않습니까', '안 좋아해요', '안 좋아합니까'], 'Hỏi xác nhận → <strong>좋아하지 않아요?</strong> (hoặc <strong>안 좋아해요?</strong>).')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q18_6" class="feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= KHỐI NGỮ PHÁP 19 ======================= -->
+        <div id="grammar19" class="grammar-content">
+            <div class="tab-menu">
+                <button class="tab-btn active" onclick="openSubTab('theory19', this, 'grammar19')">Lý thuyết &amp; Ví dụ</button>
+                <button class="tab-btn" onclick="openSubTab('practice19', this, 'grammar19')">Luyện tập</button>
+            </div>
+
+            <!-- 1. Lý thuyết & Ví dụ -->
+            <div id="theory19" class="tab-content active">
+                <div class="theory-box">
+                    Gắn sau gốc động từ, tính từ để nối hai vế câu có nội dung <strong>trái ngược</strong> nhau: <strong>“V/A nhưng …”</strong>.
+                </div>
+                <ul class="theory-list">
+                    <li>Gắn trực tiếp vào gốc động từ, tính từ, <strong>không phân biệt</strong> có hay không có patchim.</li>
+                    <li>Chia được quá khứ phía trước -지만: <strong class="ko-text" style="color:var(--primary)">-았/었/였지만</strong>.</li>
+                    <li><strong class="ko-text" style="color:var(--primary)">-지만</strong> nối hai vế trong một câu; còn <strong class="ko-text" style="color:var(--primary)">하지만</strong>, <strong class="ko-text" style="color:var(--primary)">그렇지만</strong> đứng đầu câu thứ hai.</li>
+                </ul>
+
+                <!-- Ví dụ -->
+                <h3 class="section-title">Ví dụ</h3>
+                <div class="guide-text">Nhấp vào câu tiếng Việt để xem bản dịch tiếng Hàn tương ứng.</div>
+                
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Mùa hè nóng nhưng mùa thu mát mẻ.</div>
+                    <div class="ex-ko ko-text">여름은 <span class="highlight-grammar">덥지만</span> 가을은 시원해요.</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Cái mũ này bảnh nhưng đắt.</div>
+                    <div class="ex-ko ko-text">이 모자는 <span class="highlight-grammar">멋있지만</span> 비싸요.</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Hôm qua trời mưa nhưng hôm nay trời trong lành.</div>
+                    <div class="ex-ko ko-text">어제는 비가 <span class="highlight-grammar">왔지만</span> 오늘은 맑아요.</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Kí túc xá nhỏ nhưng không bất tiện.</div>
+                    <div class="ex-ko ko-text">기숙사는 <span class="highlight-grammar">작지만</span> 불편하지 않아요.</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Tôi học Taekwondo nhưng đá bóng thì không học.</div>
+                    <div class="ex-ko ko-text">저는 태권도를 <span class="highlight-grammar">배우지만</span> 축구는 배우지 않아요.</div>
+                </div>
+            </div>
+
+            <!-- 2. Luyện tập -->
+            <div id="practice19" class="tab-content">
+                <div class="guide-text">Gõ động từ/tính từ chia với <strong>-지만</strong> vào ô trống và nhấn "Kiểm tra".</div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">1) Mùa đông lạnh nhưng mùa xuân ấm áp.</div>
+                    <div class="question-text ko-text">
+                        겨울은 <input type="text" id="q19_1">  봄은 따뜻해요.
+                        <button class="btn-check" onclick="checkAnswer('q19_1', ['춥지만'], '춥다 → <strong>춥지만</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q19_1" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">2) Cái váy màu đỏ đẹp nhưng nhỏ.</div>
+                    <div class="question-text ko-text">
+                        빨간색 치마는 <input type="text" id="q19_2">  작아요.
+                        <button class="btn-check" onclick="checkAnswer('q19_2', ['예쁘지만'], '예쁘다 → <strong>예쁘지만</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q19_2" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">3) Ngày thường tôi làm việc nhưng cuối tuần tôi nghỉ ngơi.</div>
+                    <div class="question-text ko-text">
+                        평일에는 <input type="text" id="q19_3">  주말에는 쉬어요.
+                        <button class="btn-check" onclick="checkAnswer('q19_3', ['일하지만', '일을 하지만'], '일하다 → <strong>일하지만</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q19_3" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">4) Hôm qua trời âm u nhưng hôm nay trời trong lành.</div>
+                    <div class="question-text ko-text">
+                        어제는 날씨가 <input type="text" id="q19_4">  오늘은 맑아요.
+                        <button class="btn-check" onclick="checkAnswer('q19_4', ['흐렸지만'], 'Hôm qua (quá khứ): 흐리다 → <strong>흐렸지만</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q19_4" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">5) Pizza ngon nhưng đắt.</div>
+                    <div class="question-text ko-text">
+                        피자는 <input type="text" id="q19_5">  비싸요.
+                        <button class="btn-check" onclick="checkAnswer('q19_5', ['맛있지만'], '맛있다 → <strong>맛있지만</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q19_5" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">6) Tôi đã đợi bạn ở ga tàu điện ngầm nhưng bạn không đến.</div>
+                    <div class="question-text ko-text">
+                        지하철역에서 친구를 <input type="text" id="q19_6">  친구가 오지 않았어요.
+                        <button class="btn-check" onclick="checkAnswer('q19_6', ['기다렸지만'], 'Quá khứ: 기다리다 → <strong>기다렸지만</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q19_6" class="feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= KHỐI NGỮ PHÁP 20 ======================= -->
+        <div id="grammar20" class="grammar-content">
+            <div class="tab-menu">
+                <button class="tab-btn active" onclick="openSubTab('theory20', this, 'grammar20')">Lý thuyết &amp; Ví dụ</button>
+                <button class="tab-btn" onclick="openSubTab('practice20', this, 'grammar20')">Luyện tập</button>
+            </div>
+
+            <!-- 1. Lý thuyết & Ví dụ -->
+            <div id="theory20" class="tab-content active">
+                <div class="theory-box">
+                    Gắn sau gốc động từ, tính từ để <strong>liệt kê</strong> hai hành động, trạng thái ngang hàng: <strong>“và”</strong>.
+                </div>
+                <ul class="theory-list">
+                    <li>Gắn trực tiếp vào gốc động từ, tính từ, <strong>không phân biệt</strong> có hay không có patchim: <strong class="ko-text" style="color:var(--primary)">봄은 따뜻하고 가을은 시원해요</strong>.</li>
+                    <li>Thì quá khứ chỉ cần chia ở <strong>vế sau</strong>: <strong class="ko-text" style="color:var(--primary)">어제는 비가 오고 바람이 불었어요</strong>.</li>
+                </ul>
+
+                <!-- Ví dụ -->
+                <h3 class="section-title">Ví dụ</h3>
+                <div class="guide-text">Nhấp vào câu tiếng Việt để xem bản dịch tiếng Hàn tương ứng.</div>
+                
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Mùa xuân ấm áp và nhiều hoa.</div>
+                    <div class="ex-ko ko-text">봄은 <span class="highlight-grammar">따뜻하고</span> 꽃이 많아요.</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Hôm nay trời lạnh và gió thổi.</div>
+                    <div class="ex-ko ko-text">오늘은 <span class="highlight-grammar">춥고</span> 바람이 불어요.</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Cái áo thun này rẻ và đẹp.</div>
+                    <div class="ex-ko ko-text">이 티셔츠는 <span class="highlight-grammar">싸고</span> 예뻐요.</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Ngày thường tôi đọc sách và học tiếng Hàn ở thư viện.</div>
+                    <div class="ex-ko ko-text">평일에는 도서관에서 책을 <span class="highlight-grammar">읽고</span> 한국어를 공부해요.</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Hôm qua trời mưa và gió thổi.</div>
+                    <div class="ex-ko ko-text">어제는 비가 <span class="highlight-grammar">오고</span> 바람이 불었어요.</div>
+                </div>
+            </div>
+
+            <!-- 2. Luyện tập -->
+            <div id="practice20" class="tab-content">
+                <div class="guide-text">Gõ động từ/tính từ chia với <strong>-고</strong> vào ô trống và nhấn "Kiểm tra".</div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">1) Mùa hè nóng và mưa nhiều.</div>
+                    <div class="question-text ko-text">
+                        여름은 <input type="text" id="q20_1">  비가 많이 와요.
+                        <button class="btn-check" onclick="checkAnswer('q20_1', ['덥고'], '덥다 → <strong>덥고</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q20_1" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">2) Hôm nay trời âm u và có gió thổi.</div>
+                    <div class="question-text ko-text">
+                        오늘은 날씨가 <input type="text" id="q20_2">  바람이 불어요.
+                        <button class="btn-check" onclick="checkAnswer('q20_2', ['흐리고'], '흐리다 → <strong>흐리고</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q20_2" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">3) Kí túc xá lớn và sạch sẽ.</div>
+                    <div class="question-text ko-text">
+                        기숙사가 <input type="text" id="q20_3">  깨끗해요.
+                        <button class="btn-check" onclick="checkAnswer('q20_3', ['크고'], '크다 → <strong>크고</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q20_3" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">4) Hôm qua tôi chụp ảnh và ngắm hoa ở sông Hàn.</div>
+                    <div class="question-text ko-text">
+                        어제 한강에서 사진을 <input type="text" id="q20_4">  꽃을 봤어요.
+                        <button class="btn-check" onclick="checkAnswer('q20_4', ['찍고'], '찍다 → <strong>찍고</strong> (quá khứ đã chia ở vế sau).')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q20_4" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">5) Cái mũ này rẻ và bảnh.</div>
+                    <div class="question-text ko-text">
+                        이 모자는 <input type="text" id="q20_5">  멋있어요.
+                        <button class="btn-check" onclick="checkAnswer('q20_5', ['싸고'], '싸다 → <strong>싸고</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q20_5" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">6) Mỗi thứ Hai tôi học Taekwondo và chơi đá bóng.</div>
+                    <div class="question-text ko-text">
+                        월요일마다 태권도를 <input type="text" id="q20_6">  축구를 해요.
+                        <button class="btn-check" onclick="checkAnswer('q20_6', ['배우고', '하고'], '배우다 → <strong>배우고</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q20_6" class="feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= KHỐI NGỮ PHÁP 21 ======================= -->
+        <div id="grammar21" class="grammar-content">
+            <div class="tab-menu">
+                <button class="tab-btn active" onclick="openSubTab('theory21', this, 'grammar21')">Lý thuyết &amp; Ví dụ</button>
+                <button class="tab-btn" onclick="openSubTab('practice21', this, 'grammar21')">Luyện tập</button>
+            </div>
+
+            <!-- 1. Lý thuyết & Ví dụ -->
+            <div id="theory21" class="tab-content active">
+                <div class="theory-box">
+                    Gắn sau gốc động từ, tính từ để diễn tả <strong>nguyên nhân, lý do</strong>: vế trước là nguyên nhân, vế sau là kết quả — <strong>“vì … nên …”</strong>.
+                </div>
+                <ul class="theory-list">
+                    <li>Vế trước <strong>không chia quá khứ</strong>, thì quá khứ chia ở vế sau: <strong class="ko-text" style="color:var(--primary)">비가 왔어서 쉬었어요 (X)</strong> → <strong class="ko-text" style="color:var(--primary)">비가 와서 쉬었어요 (O)</strong>.</li>
+                    <li>Vế sau <strong>không dùng</strong> đuôi mệnh lệnh <strong class="ko-text" style="color:var(--primary)">-(으)세요</strong>, đề nghị <strong class="ko-text" style="color:var(--primary)">-(으)ㅂ시다</strong>: <strong class="ko-text" style="color:var(--primary)">날씨가 추워서 조심하세요 (X)</strong>.</li>
+                </ul>
+
+                <!-- Ví dụ -->
+                <h3 class="section-title">Ví dụ</h3>
+                <div class="guide-text">Nhấp vào câu tiếng Việt để xem bản dịch tiếng Hàn tương ứng.</div>
+                
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Vì trời nóng nên tôi uống nước.</div>
+                    <div class="ex-ko ko-text">날씨가 <span class="highlight-grammar">더워서</span> 물을 마셔요.</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Vì trời mưa nên tôi đã nghỉ ngơi ở nhà.</div>
+                    <div class="ex-ko ko-text">비가 <span class="highlight-grammar">와서</span> 집에서 쉬었어요.</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Vì cái quần này lớn nên bất tiện.</div>
+                    <div class="ex-ko ko-text">이 바지가 <span class="highlight-grammar">커서</span> 불편해요.</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Vì gió thổi nên lạnh.</div>
+                    <div class="ex-ko ko-text">바람이 <span class="highlight-grammar">불어서</span> 추워요.</div>
+                </div>
+                <div class="example-item" onclick="this.classList.toggle('show')">
+                    <div class="ex-vi">Vì bị cảm nên hôm qua tôi đã không đến trường.</div>
+                    <div class="ex-ko ko-text">감기에 <span class="highlight-grammar">걸려서</span> 어제 학교에 가지 않았어요.</div>
+                </div>
+            </div>
+
+            <!-- 2. Luyện tập -->
+            <div id="practice21" class="tab-content">
+                <div class="guide-text">Gõ động từ/tính từ chia với <strong>-아/어/여서</strong> vào ô trống và nhấn "Kiểm tra".</div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">1) Vì trời lạnh nên tôi không đi leo núi.</div>
+                    <div class="question-text ko-text">
+                        날씨가 <input type="text" id="q21_1">  등산하지 않아요.
+                        <button class="btn-check" onclick="checkAnswer('q21_1', ['추워서'], '춥다 (bất quy tắc ㅂ) → <strong>추워서</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q21_1" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">2) Vì tuyết rơi nên tôi không thể đạp xe đạp.</div>
+                    <div class="question-text ko-text">
+                        눈이 <input type="text" id="q21_2">  자전거를 탈 수 없어요.
+                        <button class="btn-check" onclick="checkAnswer('q21_2', ['와서'], '오다 → 와요 → <strong>와서</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q21_2" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">3) Vì cái váy này nhỏ nên bất tiện.</div>
+                    <div class="question-text ko-text">
+                        이 치마가 <input type="text" id="q21_3">  불편해요.
+                        <button class="btn-check" onclick="checkAnswer('q21_3', ['작아서'], '작다 → 작아요 → <strong>작아서</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q21_3" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">4) Vì thời tiết đẹp nên tôi đã chụp ảnh ở sông Hàn.</div>
+                    <div class="question-text ko-text">
+                        날씨가 <input type="text" id="q21_4">  한강에서 사진을 찍었어요.
+                        <button class="btn-check" onclick="checkAnswer('q21_4', ['좋아서', '맑아서'], '좋다 → 좋아요 → <strong>좋아서</strong> (vế trước không chia quá khứ).')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q21_4" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">5) Vì không có tiết học tôi nghỉ ngơi ở kí túc xá.</div>
+                    <div class="question-text ko-text">
+                        수업이 <input type="text" id="q21_5">  기숙사에서 쉬어요.
+                        <button class="btn-check" onclick="checkAnswer('q21_5', ['없어서'], '없다 → 없어요 → <strong>없어서</strong>.')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q21_5" class="feedback"></div>
+                </div>
+                
+                <div class="practice-item">
+                    <div style="margin-bottom:8px; color:var(--text-muted)">6) Vì cuối tuần có thời gian nên tôi đã đi mua sắm.</div>
+                    <div class="question-text ko-text">
+                        주말에 시간이 <input type="text" id="q21_6">  쇼핑했어요.
+                        <button class="btn-check" onclick="checkAnswer('q21_6', ['있어서'], '있다 → 있어요 → <strong>있어서</strong> (vế trước không chia quá khứ).')">Kiểm tra</button>
+                    </div>
+                    <div id="fb-q21_6" class="feedback"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 
     <!-- Dòng thông tin tác giả -->
     <div class="footer-credit">
