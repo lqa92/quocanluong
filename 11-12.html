@@ -452,7 +452,7 @@
     function checkPassword(e) {
         e.preventDefault();
         const input = document.getElementById('pass-input').value;
-        if (input === '2112') {
+        if (input === '2112' || input === '2478') {
             document.getElementById('password-screen').classList.add('hidden');
             document.getElementById('app-screen').classList.remove('hidden');
         } else {
