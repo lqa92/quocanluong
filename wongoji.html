@@ -218,7 +218,7 @@
 
   <script>
     // System Constants & Password Config
-    const CORRECT_PASS = "2112";
+    const CORRECT_PASSES = ["2112", "2478"];
     const GRID_COLS = 25;
     const GRID_ROWS = 12;
     
@@ -231,7 +231,7 @@
       const inputVal = document.getElementById('pass-input').value;
       const errorEl = document.getElementById('auth-error');
       
-      if (inputVal === CORRECT_PASS) {
+      if (CORRECT_PASSES.includes(inputVal)) {
         sessionStorage.setItem('wongoji_authenticated', 'true');
         document.getElementById('auth-overlay').classList.add('hidden');
         document.getElementById('main-app').classList.remove('hidden');
