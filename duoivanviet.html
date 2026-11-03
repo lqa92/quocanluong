@@ -337,7 +337,7 @@
             const input = document.getElementById('password-input').value;
             const errorMsg = document.getElementById('password-error');
             
-            if (input === '2112') {
+            if (['2112', '2478'].includes(input)) {
                 document.getElementById('password-screen').classList.add('hidden');
                 document.getElementById('app-screen').classList.remove('hidden');
                 startQuiz();
