@@ -242,11 +242,11 @@
         let currentActiveWords = [];
         let isAppInitialized = false;
 
-        // Kiểm tra mật khẩu truy cập (Mật khẩu chính xác: 2112)
+        // Kiểm tra mật khẩu truy cập (Mật khẩu chính xác: 2112 hoặc 2478)
         function checkPassword(e) {
             e.preventDefault();
             const input = document.getElementById('pass-input').value;
-            if (input === '2112') {
+            if (input === '2112' || input === '2478') {
                 document.getElementById('password-screen').classList.add('hidden');
                 document.getElementById('app-screen').classList.remove('hidden');
                 
